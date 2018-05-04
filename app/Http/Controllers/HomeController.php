@@ -212,29 +212,57 @@ class HomeController extends Controller {
         	{
         		if( isset( $passportPic ) && count( $passportPic ) > 0 )
         		{
-        			$destinationPath = url('/') . '/uploads/profile_images/';
+        			$destinationPath = storage_path() . '/uploads/passport_images/';
 
-		        	if( $file->isValid() )  // If the file is valid or not
+		        	if( $passportPic->isValid() )  // If the file is valid or not
 		        	{
-		        	    $fileExt  = $file->getClientOriginalExtension();  
-		        	    $fileType = $file->getMimeType();
-		        	    $fileSize = $file->getSize();
+		        	    $fileExt  = $passportPic->getClientOriginalExtension();  
+		        	    $fileType = $passportPic->getMimeType();
+		        	    $fileSize = $passportPic->getSize();
 
 		        	    if( ( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000 )     // 3 MB = 3000000 Bytes
 		        	    {
 		        	        // Rename the file
 		        	        $fileNewName = str_random(10) . '.' . $fileExt;
 
-		        	        $file->move( $destinationPath, $fileNewName );
-
-		        	        /*if( $file->move( $destinationPath, $fileNewName ) )
+		        	        if( $passportPic->move( $destinationPath, $fileNewName ) )
 		        	        {
-		        	            
-		        	        }​*/
+		        	        	// Get the logged-in user id
+		        	        	$userId = Auth::id();
+
+		        	        	$userDetails = array(
+		        	        		'email' 	=> $email,
+		        	        		'first_name'=> $fname,
+		        	        		'last_name' => $lname,
+		        	        		'gender'	=> $gender,
+		        	        		'dob' 		=> $dob,
+		        	        		'is_passport' => $passportAvailable,
+		        	        		'passport_pic' => $fileNewName,
+		        	        		'passport_exp_date' => $passportExpDate,
+		        	        		'issuing_country' => $issuingCountry,
+		        	        		'country_of_Birth' => $countryOfBirth,	
+		        	        	);
+
+		        	        	if( User::where(['id' => $userId])->update($userDetails) )
+		        	        	{
+		        	        		$response['errCode'] = 0;
+		        	        		$response['errMsg'] = 'Profile updated successfully';
+		        	        	}
+		        	        	else
+		        	        	{
+		        	        		$response['errCode'] = 4;
+		        	        		$response['errMsg'] = 'Some issue in profile update';
+		        	        	}
+		        	        }
+		        	        else
+		        	        {
+		        	        	$response['errCode'] = 2;
+		        	        	$response['errMsg'] = 'Some issue in uploading the file';
+		        	        }
 		        	    }
 		        	    else
 		        	    {
-		        	    	$response['errCode'] = 2;
+		        	    	$response['errCode'] = 3;
 		        	    	$response['errMsg'] = 'Only image file with size less than 3MB is allowed';
 		        	    }
 		        	}
@@ -261,7 +289,7 @@ class HomeController extends Controller {
         		}
         		else
         		{
-        			$response['errCode'] = 3;
+        			$response['errCode'] = 4;
         			$response['errMsg'] = 'Some issue in profile update';
         		}
         	}

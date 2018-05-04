@@ -165,7 +165,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
                                         <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/aat_laravel/public/assets/passport_img/').$data['passport_pic'] }}" alt="" class="img-responsive model_image">
+                                            <img src="{{ url('/') . '/passport_images/' . $data['passport_pic'] }}" alt="AAT" class="img-responsive model_image">
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic" id="passport_pic" class="form-control&#x20;image_upload" id="passport_pic">
@@ -177,7 +177,7 @@
                                 <div class="form-group passport_data">
                                     <label class="control-label col-sm-3 custom-lbl">Passport Exp Date</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal"></label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['passport_exp_date'] }}</label>
                                         <div class="user-edit">
                                             <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="">
                                         </div>
