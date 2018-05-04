@@ -179,26 +179,31 @@
                                     <div class="col-sm-9">
                                         <label class="user-view inputlabl" style="font-weight: normal">{{ $data['passport_exp_date'] }}</label>
                                         <div class="user-edit">
-                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="">
+                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="{{ $data['passport_exp_date'] }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
-                                    <label class="control-label col-sm-3 custom-lbl">Issuing Country</label>
+                                   <label class="control-label col-sm-3 custom-lbl">Issuing Country</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['issuing_country'] != '' ? $data['issuing_country'] : 'NA' }}</label>
-                                        <div class="user-edit">
-                                            <select name="issuing_country" id="issuing_country" class="form-control">
-                                            	<option value="">Select</option>
-                                            	<option value="1">Algeria</option>
-                                                <option value="2">Andorra</option>
-                                                <option value="3" selected="selected">Angola</option>
-                                                <option value="4">Antigua and Barbuda</option>
-                                                <option value="5">Argentina</option>
-                                                <option value="6">Andorra</option>
-                                                <option value="7">Australia</option>
-                                                <option value="8">Austria</option></select>
-                                            </div>
+                                    <label class="user-view inputlabl" style="font-weight: normal">{{ $data['issuing_country'] != '' ? $data['issuing_country'] : 'NA' }}</label>
+                                    <div class="user-edit">
+                                        <select name="issuing_country" id="issuing_country" class="form-control">
+                                            <option value="">Select</option>
+                                        <?php
+                                         if (count($countries) > 0) {
+                                             foreach ($countries AS $country) {
+                                                 if ($user_country->issuing_country == $country->id) {
+                                                     ?>
+                                                     <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
+                                                 <?php } else {
+                                                     ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
+                                                 }
+                                             }
+                                         }
+                                         ?>
+                                    </select>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
@@ -208,14 +213,20 @@
                                         <div class="user-edit">
                                             <select name="country_of_birth" id="country_of_birth" class="form-control">
                                             	<option value="">Select</option>
-                                            	<option value="1">Algeria</option>
-                                                <option value="2">Andorra</option>
-                                                <option value="3">Angola</option>
-                                                <option value="4">Antigua and Barbuda</option>
-                                                <option value="5">Argentina</option>
-                                                <option value="6">Andorra</option>
-                                                <option value="7">Australia</option>
-                                                <option value="8">Austria</option></select>            </div>
+                                               <?php
+                                                if (count($countries) > 0) {
+                                                    foreach ($countries AS $country) {
+                                                        if ($user_country->country_of_Birth == $country->id) {
+                                                            ?>
+                                                            <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
+                                                        <?php } else {
+                                                            ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>    
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -311,7 +322,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="profile_info_view">
-                        <form method="POST" name="login" action="&#x2F;aat_backup&#x2F;public&#x2F;dashboard" enctype="multipart&#x2F;form-data" id="login">
+                        <form method="POST" name="frm_user_profile_info" action="&#x2F;aat_backup&#x2F;public&#x2F;dashboard" enctype="multipart&#x2F;form-data" id="frm_user_profile_info">
                             <div class="form-horizontal">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Profile Pic</label>
@@ -320,7 +331,7 @@
                                             <img src="{{url('/assets/profile_img/').$profile['profile_pic']}}" alt="tm-01" class="img-responsive model_image">
                                         </label>
                                         <div class="profile-edit">
-                                            <input type="file" name="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">                <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
+                                            <input type="file" name="profile_pic" id="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">                <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +343,7 @@
                                         <div class="profile-edit">
                                             <label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="0">No</label><label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="1" checked="checked">Yes</label>            </div>
                                         <div class="profile-edit">
-                                            <input type="text" name="helth_mental_conditions" class="form-control&#x20;helth_conditions" style="" value="a">            </div>
+                                            <input type="text" id="helth_mental_conditions" name="helth_mental_conditions" class="form-control&#x20;helth_conditions" style="" value="a">            </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -342,7 +353,7 @@
                                         <div class="profile-edit">
                                             <label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="0" checked="checked">No</label><label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="1">Yes</label>            </div>
                                         <div class="profile-edit">
-                                            <input type="text" name="mental_conditions" class="form-control&#x20;mental_conditions" style="display&#x3A;&#x20;none" value="">            </div>
+                                            <input type="text" id="mental_conditions" name="mental_conditions" class="form-control&#x20;mental_conditions" style="display&#x3A;&#x20;none" value="{{ $profile['mental_conditions'] }}">            </div>
                                     </div>
                                 </div>
 
@@ -351,7 +362,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['food_allergies'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="food_allergies" class="form-control" value="">            </div>
+                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="{{ $profile['food_allergies'] }}">            </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -359,7 +370,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['shirt_size'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="shirt_size" class="form-control" value="">            </div>
+                                            <input type="text" name="shirt_size" id="shirt_size" class="form-control" value="{{ $profile['shirt_size'] }}">            </div>
                                     </div>
                                 </div>       
 
@@ -376,7 +387,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['emergency_contact_name'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="emergency_contact_name" class="form-control" value="">                </div>
+                                            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control" value="{{ $profile['emergency_contact_name'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -384,7 +395,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['emergency_contact_phone'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="emergency_contact_phone" class="form-control" value="">                </div>
+                                            <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control" value="{{ $profile['emergency_contact_phone'] }}">                </div>
                                     </div>
                                 </div>
                                 <!-- end  Emergency contact information -->  
@@ -401,7 +412,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_previous_travel'] }}	</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_previous_travel" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_previous_travel" id="personality_previous_travel" class="form-control" value="{{ $profile['personality_previous_travel'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -409,7 +420,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_originally_from'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_originally_from" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_originally_from" id="personality_originally_from" class="form-control" value="">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -417,7 +428,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_school'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_school" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_school"  id="personality_school" class="form-control" value="">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group no-border">
@@ -425,7 +436,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_about'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_about" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_about" id="personality_about" class="form-control" value="">                </div>
                                     </div>
                                 </div>
 
@@ -433,7 +444,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-8 col-sm-offset-4">
                                         <div class="profile-edit update-btn">
-                                            <input type="submit" name="submit" value="Update&#x20;Profile&#x20;Info">            </div>
+                                            <input type="submit" name="submit"   id="submit_profile" value="Update&#x20;Profile&#x20;Info">            </div>
                                     </div>
                                 </div>
                             </div>

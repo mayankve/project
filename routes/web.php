@@ -37,6 +37,11 @@ Route::get('/dashboard','HomeController@userDashboard');
 // To update user basic information
 Route::post('/updateuserbasicinfo', 'HomeController@updateUserBasicInfo');
 
+// To update user basic information
+Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
+
+
+
 /* Front-end routes ends */
 
 
