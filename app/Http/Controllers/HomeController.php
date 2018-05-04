@@ -246,11 +246,11 @@ class HomeController extends Controller {
         		$userId = Auth::id();
 
         		$userDetails = array(
-        			'email' => $email,
-        			'first_name' => $fname,
+        			'email' 	=> $email,
+        			'first_name'=> $fname,
         			'last_name' => $lname,
-        			'gender' => $gender,
-        			'dob' => $dob,
+        			'gender'	=> $gender,
+        			'dob' 		=> $dob,
         			'is_passport' => $passportAvailable,
         		);
 
