@@ -105,13 +105,13 @@
                                     <div class="col-sm-9">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <label class="user-view inputlabl" style="font-weight: normal">{{$data['first_name'] . $data['last_name']}}</label>
+                                                <label class="user-view inputlabl" style="font-weight: normal">{{ ucwords( strtolower( $data['first_name'] ) ) . ' ' . ucwords( strtolower( $data['last_name'] ) ) }}</label>
                                             </div>
                                             <div class="user-edit col-sm-6">
-                                                <input type="text" name="first_name" id="first_name" class="form-control" value="">
+                                                <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $data['first_name'] }}">
                                             </div>
                                             <div class="user-edit col-sm-6">
-                                                <input type="text" name="last_name" id="last_name" class="form-control" value="">
+                                                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $data['last_name'] }}">
                                             </div>
                                         </div>
                                     </div>
@@ -119,34 +119,45 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 custom-lbl">Gender</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{$data['gender']}}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ ( $data['gender'] == '1' ) ? 'Male' : 'Female' }}</label>
                                         <div class="user-edit">
-                                            <select name="gender" id="gender" class="form-control"><option value="1" selected="">Male</option>
-                                                <option value="2">Female</option></select>            </div>
+                                            <select name="gender" id="gender" class="form-control">
+                                            	<option value="1" selected="">Male</option>
+                                                <option value="2">Female</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 custom-lbl">DOB</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{$data['dob']}}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ date('Y-m-d', strtotime($data['dob'])) }}</label>
                                         <div class="user-edit">
-                                            <input type="date" name="dob" class="form-control" id="dob" value="">            </div>
+                                            <input type="text" name="dob" class="form-control" id="dob" value="{{ date('Y-m-d', strtotime($data['dob'])) }}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class=" control-label col-sm-3 custom-lbl">Email</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{$data['email']}}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['email'] }}</label>
                                         <div class="user-edit">
-                                            <input type="email" name="email" id="email" class="form-control" value="">            </div>
+                                            <input type="email" name="email" id="email" class="form-control" value="{{ $data['email'] }}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group no-border">
                                     <label class="control-label col-sm-3 custom-lbl">Do You currently have a passport</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['is_passport']?'Yes':'No' }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['is_passport'] ? 'Yes':'No' }}</label>
                                         <div class="user-edit checkbtn">
-                                            <label><input type="radio" name="is_passport" class="is-passport" value="0">No</label><label><input type="radio" name="is_passport" class="is-passport" value="1" checked="checked">Yes</label>            </div>
+                                            <label>
+                                            	<input type="radio" name="is_passport" class="is-passport" value="0" {{ ( $data['is_passport'] == '0' ) ? 'checked' : '' }}>No
+                                            </label>
+                                            <label>
+                                            	<input type="radio" name="is_passport" class="is-passport" value="1" {{ ( $data['is_passport'] == '1' ) ? 'checked' : '' }}>Yes
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -166,9 +177,10 @@
                                 <div class="form-group passport_data">
                                     <label class="control-label col-sm-3 custom-lbl">Passport Exp Date</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{$data['passport_exp_date']}}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal"></label>
                                         <div class="user-edit">
-                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="">            </div>
+                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
@@ -241,7 +253,6 @@
                         changeMonth: true,
                         changeYear: true,
                         dateFormat: 'yy-mm-dd'
-
                     });
                     $('#passport_exp_date').datepicker({
                         changeMonth: true,
