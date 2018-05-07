@@ -50,7 +50,7 @@ Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	
 	// Dashboard page	
-	Route::get('/dashboard','AdminController@dashboard');
+	Route::get('/dashboard','HomeController@userDashboard');
 
 });
 
