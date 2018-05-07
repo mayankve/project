@@ -49,8 +49,11 @@ Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	
-	// Dashboard page	
-	Route::get('/dashboard','HomeController@userDashboard');
+	// Dashboard page
+	Route::get('/dashboard','AdminController@userDashboard');
+
+	//  Create trip
+	Route::get('/createtrip','AdminController@createTrip');
 
 });
 
