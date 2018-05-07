@@ -169,7 +169,7 @@
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic" id="passport_pic" class="form-control&#x20;image_upload" id="passport_pic">
-                                            <img id="passport_pic_img" class="img-responsive model_image" style="max-width: 80px; max-height: 80px;" />
+                                            <img id="passport_pic_img" class="img-responsive model_image"  style="max-width: 80px; max-height: 80px;" />
                                         </div>
                                     </div>
                                 </div>
@@ -328,7 +328,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Profile Pic</label>
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{url('/assets/profile_img/').$profile['profile_pic']}}" alt="tm-01" class="img-responsive model_image">
+                                            <img src="{{ url('/') . '/profile_images/' . $profile['profile_pic'] }}" alt="tm-01" class="img-responsive model_image" />
                                         </label>
                                         <div class="profile-edit">
                                             <input type="file" name="profile_pic" id="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">                <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
@@ -420,7 +420,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_originally_from'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_originally_from" id="personality_originally_from" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_originally_from" id="personality_originally_from" class="form-control" value="{{ $profile['personality_originally_from'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -428,7 +428,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_school'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_school"  id="personality_school" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_school"  id="personality_school" class="form-control" value="{{ $profile['personality_school'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group no-border">
@@ -436,7 +436,7 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_about'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_about" id="personality_about" class="form-control" value="">                </div>
+                                            <input type="text" name="personality_about" id="personality_about" class="form-control" value="{{ $profile['personality_about'] }}">                </div>
                                     </div>
                                 </div>
 

@@ -146,8 +146,7 @@ class HomeController extends Controller {
         //For Profile Info
         $countries = Country::all();
         $user_country = User::where('id', '=', $userId)->first();
-        $profileData = $user = DB::table('user_profile')->where('user_id', '$userId')->first();
-     
+        $profileData = UserProfile::where('user_id', '=', $userId)->first();
         return view('dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
     }
 
@@ -272,14 +271,15 @@ class HomeController extends Controller {
 
         return response()->json($response);
     }
-   /**
+
+    /**
      * Function to update user Profile information
      * @param void
      * @return url
      */
     public function updateUserProfileInfo(Request $request) {
-        
-        $profile_pic = $request->input('profile_pic');
+
+        $profile_pic = $request->file('profile_pic');
         $is_helth_mental = $request->input('is_helth_mental');
         $helth_mental_conditions = $request->input('helth_mental_conditions');
         $is_mental_conditions = $request->input('is_mental_conditions');
@@ -288,94 +288,59 @@ class HomeController extends Controller {
         $shirt_size = $request->input('shirt_size');
         $emergency_contact_name = $request->input('emergency_contact_name');
         $emergency_contact_phone = $request->input('emergency_contact_phone');
-        $personality_previous_travel = $request->file('personality_previous_travel');
+        $personality_previous_travel = $request->input('personality_previous_travel');
         $personality_originally_from = $request->input('personality_originally_from');
         $personality_school = $request->input('personality_school');
-        $personality_about = $request->file('personality_about');
+        $personality_about = $request->input('personality_about');
         // Server Side Validation
         $response = array();
+        $destinationPath = storage_path() . '/uploads/profile_images/';
+        if ($profile_pic->isValid()) {  // If the file is valid or not
+            $fileExt = $profile_pic->getClientOriginalExtension();
+            $fileType = $profile_pic->getMimeType();
+            $fileSize = $profile_pic->getSize();
 
+            if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
+                // Rename the file
+                $fileNewName = str_random(10) . '.' . $fileExt;
 
-//        if ($validation->fails()) {  // Some data is not valid as per the defined rules
-//            $error = $validation->errors()->first();
-//
-//            if (isset($error) && !empty($error)) {
-//                $response['errCode'] = 1;
-//                $response['errMsg'] = $error;
-//            }
-  //      } else {
-          //  if ($passportAvailable == '1') {  // Passport available
-                if (isset($profile_pic) && count($profile_pic) > 0) {
-                    $destinationPath = storage_path() . '/uploads/profile_images/';
-                    if ($profile_pic->isValid()) {  // If the file is valid or not
-                        $fileExt = $profile_pic->getClientOriginalExtension();
-                        $fileType = $profile_pic->getMimeType();
-                        $fileSize = $profile_pic->getSize();
+                if ($profile_pic->move($destinationPath, $fileNewName)) {
+                    // Get the logged-in user id
+                    $userId = Auth::id();
+                    $userProfileDetails = array(
+                        'profile_pic' => $fileNewName,
+                        'is_helth_mental' => $is_helth_mental,
+                        'helth_mental_conditions' => $helth_mental_conditions,
+                        'is_mental_conditions' => $is_mental_conditions,
+                        'mental_conditions' => $mental_conditions,
+                        'food_allergies' => $food_allergies,
+                        'shirt_size' => $shirt_size,
+                        'emergency_contact_name' => $emergency_contact_name,
+                        'emergency_contact_phone' => $emergency_contact_phone,
+                        'personality_previous_travel' => $personality_previous_travel,
+                        'personality_originally_from' => $personality_originally_from,
+                        'personality_school' => $personality_school,
+                        'personality_about' => $personality_about
+                    );
 
-                        if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
-                            // Rename the file
-                            $fileNewName = str_random(10) . '.' . $fileExt;
-
-                            if ($profile_pic->move($destinationPath, $fileNewName)) {
-                                // Get the logged-in user id
-                                $userId = Auth::id();
-
-                                $userProfileDetails = array(
-                                    'profile_pic' => $profile_pic,
-                                    'is_helth_mental' => $is_helth_mental,
-                                    'helth_mental_conditions' => $helth_mental_conditions,
-                                    'is_mental_conditions' => $is_mental_conditions,
-                                    'mental_conditions' => $mental_conditions,
-                                    'food_allergies' => $food_allergies,
-                                    'shirt_size' => $shirt_size,
-                                    'emergency_contact_name' => $emergency_contact_name,
-                                    'emergency_contact_phone' => $emergency_contact_phone,
-                                    'personality_previous_travel' => $personality_previous_travel,
-                                     'personality_school' =>$personality_school,
-                                     'personality_about' => $personality_about
-                                );
-
-                                if (UserProfile::where(['user_id' => $userId])->update($userProfileDetails)) {
-                                    $response['errCode'] = 0;
-                                    $response['errMsg'] = 'Profile updated successfully';
-                                } else {
-                                    $response['errCode'] = 4;
-                                    $response['errMsg'] = 'Some issue in profile update';
-                                }
-                            } else {
-                                $response['errCode'] = 2;
-                                $response['errMsg'] = 'Some issue in uploading the file';
-                            }
-                        } else {
-                            $response['errCode'] = 3;
-                            $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
-                        }
+                    if (UserProfile::where(['user_id' => $userId])->update($userProfileDetails)) {
+                        $response['errCode'] = 0;
+                        $response['errMsg'] = 'Profile updated successfully';
+                    } else {
+                        $response['errCode'] = 4;
+                        $response['errMsg'] = 'Some issue in profile update';
                     }
-                }
-          //} 
-          else {         // Passport is not available
-                // Get the logged-in user id
-                $userId = Auth::id();
-
-                $userDetails = array(
-                    'email' => $email,
-                    'first_name' => $fname,
-                    'last_name' => $lname,
-                    'gender' => $gender,
-                    'dob' => $dob,
-                    'is_passport' => $passportAvailable,
-                );
-
-                if (User::where(['id' => $userId])->update($userDetails)) {
-                    $response['errCode'] = 0;
-                    $response['errMsg'] = 'Profile updated successfully';
                 } else {
-                    $response['errCode'] = 4;
-                    $response['errMsg'] = 'Some issue in profile update';
+                    $response['errCode'] = 2;
+                    $response['errMsg'] = 'Some issue in uploading the file';
                 }
-           }
-     //   }
-
+            } else {
+                $response['errCode'] = 3;
+                $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
+            }
+            // }  
+        }
         return response()->json($response);
     }
+
 }

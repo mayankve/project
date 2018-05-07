@@ -110,8 +110,8 @@ $(document).ready(function(){
 				url: $('meta[name="route"]').attr('content') + '/updateuserbasicinfo',
 				method: 'post',
 				data: formData,
-                contentType : false,
-                processData : false,
+                                contentType : false,
+                                processData : false,
 				beforeSend: function() {
 					// Show the loading button
 			        $this.button('loading');
@@ -123,10 +123,12 @@ $(document).ready(function(){
 			    {
 			    	// Change the button to previous
 			    	$this.button('reset');
+                                
 			    },
 			    success: function(response){
 			    	if( response.errCode == 0 )
 			    	{
+                                        location.reload();
 			    		$('#server_response').find('.modal-header').html('Success');
 			    		$('#server_response').find('.modal-body').html(response.errMsg);
 			    		$('#server_response').modal('show');
@@ -146,80 +148,80 @@ $(document).ready(function(){
         $('#frm_user_profile_info').submit(function(e){
 		e.preventDefault(); 
 	});
-	$('#frm_user_profile_info').validate({
-		rules: {
-			profile_pic: {
-			required: true,
-			},
-			last_name: {
-			required: true,
-			},
-			gender:{
-			    required: true, 
-			},
-			 dob:{
-			    required: true, 
-			},
-			 email:{
-			    required: true, 
-			    email:true,
-			},
-			is_passport: {
-			required: true,
-			},
-			passport_pic:{
-				required: true,
-			},
-			passport_exp_date:{
-			     required: true,
-			},
-			issuing_country:{
-			     required: true,
-			},
-			country_of_birth:{
-			     required: true,
-			}
-		},
-		messages: {
-			email: {
-			required: 'Please enter email',
-			email: 'Please enter valid email'
-			},
-			first_name: {
-			required: 'Please enter first name',
-			},
-			 last_name: {
-			required: 'Please enter last name',
-			},
-			gender:{
-			    required: 'Please select gender',
-			},
-			dob:{
-			    required: 'Please select dob', 
-			},
-			is_passport:{
-			    required: 'Please enter passport', 
-			},
-			passport_pic:{
-				required: 'Please upload passport pic',
-			},
-			passport_exp_date:{
-			    required: 'Please select passport expiry date',
-			},
-			issuing_country:{
-			     required: 'Please select passport issuing country',
-			},
-			country_of_birth:{
-			     required: 'Please select country of birth',
-			}
-		}
-	});
+//	$('#frm_user_profile_info').validate({
+//		rules: {
+//			profile_pic: {
+//			required: true,
+//			},
+//			last_name: {
+//			required: true,
+//			},
+//			gender:{
+//			    required: true, 
+//			},
+//			 dob:{
+//			    required: true, 
+//			},
+//			 email:{
+//			    required: true, 
+//			    email:true,
+//			},
+//			is_passport: {
+//			required: true,
+//			},
+//			passport_pic:{
+//				required: true,
+//			},
+//			passport_exp_date:{
+//			     required: true,
+//			},
+//			issuing_country:{
+//			     required: true,
+//			},
+//			country_of_birth:{
+//			     required: true,
+//			}
+//		},
+//		messages: {
+//			email: {
+//			required: 'Please enter email',
+//			email: 'Please enter valid email'
+//			},
+//			first_name: {
+//			required: 'Please enter first name',
+//			},
+//			 last_name: {
+//			required: 'Please enter last name',
+//			},
+//			gender:{
+//			    required: 'Please select gender',
+//			},
+//			dob:{
+//			    required: 'Please select dob', 
+//			},
+//			is_passport:{
+//			    required: 'Please enter passport', 
+//			},
+//			passport_pic:{
+//				required: 'Please upload passport pic',
+//			},
+//			passport_exp_date:{
+//			    required: 'Please select passport expiry date',
+//			},
+//			issuing_country:{
+//			     required: 'Please select passport issuing country',
+//			},
+//			country_of_birth:{
+//			     required: 'Please select country of birth',
+//			}
+//		}
+//	});
 
 	// Check the user credentials for backend login
 	$('#submit_profile').click(function(){
 		// Check the validation
-		if( $('#frm_user_profile_info').valid() )
-		{
+//		if( $('#frm_user_profile_info').valid() )
+//		{
 			// hold the button reference
 			let $this = $(this);
 			let profile_pic = $('#profile_pic').prop('files')[0];
@@ -272,7 +274,8 @@ $(document).ready(function(){
 			    },
 			    success: function(response){
 			    	if( response.errCode == 0 )
-			    	{
+			    	{  
+                                        location.reload();
 			    		$('#server_response').find('.modal-header').html('Success');
 			    		$('#server_response').find('.modal-body').html(response.errMsg);
 			    		$('#server_response').modal('show');
@@ -285,7 +288,7 @@ $(document).ready(function(){
 			    	}
 			    }
 			});
-		}
+		//}
 	});
 	
 });
