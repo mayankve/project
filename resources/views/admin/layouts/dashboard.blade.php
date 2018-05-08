@@ -100,46 +100,21 @@
 	    			<div class="desh-fixed">
 	    			<h2><div class="hombtn"><i class="fa fa-home home-icon" aria-hidden="true"></i></div>Dashboard</h2>
 	    			</div>
-	    		    <!-- <ul class="nav tablist-menu" id="accordion1">
-	    		        <li><a href="/aat_backup/public/dashboard" class="tablinks  active" id="my_information"><i class="fa fa-info-circle" aria-hidden="true"></i>My Information</a></li>
-	    				<li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
-	    					<ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
-	    						<li> <a data-toggle="collapse" data-parent="#accordion1" href="#level23"  class="tablinks collapsed" aria-expanded="false">f</a>
-	    							<ul id="level23" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-	    							    <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/7" class="tablinks ">Maneesh</a></li>
-	    							    <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/6" class="tablinks ">Vaishnavesh</a></li>
-	    							</ul>
-	    						</li>
-	    						<li> <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
-	    							<ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-	    							    <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
-	    							</ul>
-	    						</li>
-	    					</ul>
-	    				</li>
-	    				<li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#my_trip"><i class="fa fa-plane" aria-hidden="true"></i>My Trips</a>
-	    					<ul id="my_trip" class="collapse sub-menu">
-	    						<li><a href="/aat_backup/public/dashboard/my-trips/design/23" class="tablinks ">f</a></li>
-	    						<li><a href="/aat_backup/public/dashboard/my-trips/design/12" class="tablinks ">Ghana, Togo, Benin & Morocco 2017</a></li>
-	    					</ul>
-	    				</li>
-	    		        <li><a href="/aat_backup/public/dashboard/list-trip" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
+	    		   <ul class="nav tablist-menu" id="accordion1">
+	    		        <li><a href="{{ url('admin/listtrip') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
 	    		        <li>
 	    		            <a data-toggle="collapse" href="#manage_trips" class="tablinks "  data-parent="#accordion1" href="#my_trip"><i class=" fa fa-cog fa-spin margin-bottom"></i>Manage Trips</a>
 	    		             <ul id="manage_trips" class="collapse sub-menu">
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/trip-spots" class="tablinks "> Trip spots</a></li>
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/addon-travelers" class="tablinks "> Add on Traveler List</a></li>
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/monthly-trip-projection" class="tablinks "> Monthly Trip Projection</a></li>
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/travelers-payment-status" class="tablinks "> Travelers Payment Status</a></li>
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/trip-payment" class="tablinks "> Trip Payment</a></li>
-	    		                <li><a href="/aat_backup/public/dashboard/manage-trip/hotel-roommates" class="tablinks "> Hotel Roommates</a></li>
+	    		                <li><a href="{{ url('admin/tripspot') }}" class="tablinks "> Trip spots</a></li>
+	    		                <li><a href="#" class="tablinks "> Add on Traveler List</a></li>
+	    		                <li><a href="#" class="tablinks "> Monthly Trip Projection</a></li>
+	    		                <li><a href="#" class="tablinks "> Travelers Payment Status</a></li>
+	    		                <li><a href="#" class="tablinks "> Trip Payment</a></li>
+	    		                <li><a href="#" class="tablinks "> Hotel Roommates</a></li>
 	    		            </ul>
 	    		        </li>
-	    		        <li><a href="/aat_backup/public/dashboard/create-trip" class="tablinks " id="my_information"><i class=" fa fa-cog fa-spin margin-bottom"></i>Create New Trip</a></li>
-	    		        <li><a href="/aat_backup/public/dashboard/upload-trip-video" class="tablinks " id="my_information"><i class=" fa fa-video-camera margin-bottom"></i>Upload Trip's Video</a></li>
-	    		    </ul> -->
-	    		    <ul class="nav tablist-menu" id="accordion1">
-	    		    	<li><a href="{{ url('admin/createtrip') }}" class="tablinks"><i class="fa fa-calendar margin-bottom"></i>Create Trip</a></li>
+	    		        <li><a href="{{ url('admin/createtrip') }}" class="tablinks " id="my_information"><i class=" fa fa-cog fa-spin margin-bottom"></i>Create New Trip</a></li>
+	    		        <li><a href="{{ url('admin/uploadvideo') }}" class="tablinks " id="my_information"><i class=" fa fa-video-camera margin-bottom"></i>Upload Trip's Video</a></li>
 	    		    </ul>
 	    			<!-- Brand link-->
 	    			<div class="brandlink">
@@ -155,9 +130,6 @@
 		    	</div>
 		    	<!-- Page Content -->
 	    	</div>
-
-	  
-
 		    <footer class="footer footer-color-black">
 		        <div class="container">
 		            <div class="col-md-2"> <div class="footer-logo"> <img src="{{ url('images/logo.png') }}" alt="logo"> </div> </div>

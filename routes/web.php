@@ -54,7 +54,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 	//  Create trip
 	Route::get('/createtrip','AdminController@createTrip');
-
+        
+       //  List trip
+	Route::get('/listtrip','AdminController@listTrip');
+        
+         // Trip Spots
+	Route::get('/tripspot','AdminController@tripSpot');
+        
+         // Upload Video
+	Route::get('/uploadvideo','AdminController@uploadVideo');
 });
 
 /* Admin routes ends */

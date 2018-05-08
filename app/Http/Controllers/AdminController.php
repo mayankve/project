@@ -30,9 +30,10 @@ class AdminController extends Controller
         $userId = Auth::id();
         //For Basic Info
         $userData = User::where('id', '=', $userId)->first();
-        //For Profile Info
+        //For Country Info
         $countries = Country::all();
         $user_country = User::where('id', '=', $userId)->first();
+         //For Profile Info
         $profileData = $user = DB::table('user_profile')->where('user_id', '$userId')->first();
      
         return view('admin/dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
@@ -275,5 +276,41 @@ class AdminController extends Controller
     public function createTrip()
     {
     	return view('admin/createTrip');
+    }
+      /**
+	* Function to return trip list view
+	* @param void
+	* @return url
+	*/
+    public function listTrip()
+    {
+        $trips = Trip::all();
+        return view('admin/triplist', ['trips' => $trips]);
+    	
+    }
+    
+     /**
+	* Function to return trip spot view
+	* @param void
+	* @return url
+	*/
+    public function tripSpot()
+    {
+    	return view('admin/tripspots');
+    }
+    
+    /**
+	* Function to return upload video view
+	* @param void
+	* @return url
+	*/
+    public function uploadVideo()
+    {
+    	return view('admin/uploadvideo');
+    }
+    
+     public function deleteVideo()
+    {
+    	return view('admin/uploadvideo');
     }
 }
