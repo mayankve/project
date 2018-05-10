@@ -63,6 +63,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         
          // Upload Video
 	Route::get('/uploadvideo','AdminController@uploadVideo');
+        
+        // Delelte Video
+	//Route::get('/deletevideo/{$id}','AdminController@deleteVideo');
 });
 
 /* Admin routes ends */
@@ -95,7 +98,6 @@ Route::get('/passport_images/{filename}', function ($filename)
 
     $file = File::get($path);
     $type = File::mimeType($path);
-
     $response = Response::make($file, 200);
     $response->header("Content-Type", $type);
     return $response;

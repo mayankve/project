@@ -279,20 +279,21 @@ class HomeController extends Controller {
      */
     public function updateUserProfileInfo(Request $request) {
 
-        $profile_pic = $request->file('profile_pic');
-        $is_helth_mental = $request->input('is_helth_mental');
-        $helth_mental_conditions = $request->input('helth_mental_conditions');
-        $is_mental_conditions = $request->input('is_mental_conditions');
-        $mental_conditions = $request->input('mental_conditions');
-        $food_allergies = $request->input('food_allergies');
-        $shirt_size = $request->input('shirt_size');
-        $emergency_contact_name = $request->input('emergency_contact_name');
-        $emergency_contact_phone = $request->input('emergency_contact_phone');
-        $personality_previous_travel = $request->input('personality_previous_travel');
-        $personality_originally_from = $request->input('personality_originally_from');
-        $personality_school = $request->input('personality_school');
-        $personality_about = $request->input('personality_about');
+        $profile_pic = $request->file('profile_pic')?$request->file('profile_pic'):'';
+        $is_helth_mental = $request->input('is_helth_mental')?$request->input('is_helth_mental'):0;
+        $helth_mental_conditions = $request->input('helth_mental_conditions')?$request->input('helth_mental_conditions'):'';
+        $is_mental_conditions = $request->input('is_mental_conditions')?$request->input('is_mental_conditions'):0;
+        $mental_conditions = $request->input('mental_conditions')?$request->input('mental_conditions'):'';
+        $food_allergies = $request->input('food_allergies')?$request->input('food_allergies'):'';
+        $shirt_size = $request->input('shirt_size')?$request->input('shirt_size'):'';
+        $emergency_contact_name = $request->input('emergency_contact_name')?$request->input('emergency_contact_name'):'';
+        $emergency_contact_phone = $request->input('emergency_contact_phone')? $request->input('emergency_contact_phone'):'';
+        $personality_previous_travel = $request->input('personality_previous_travel')?$request->input('personality_previous_travel'):'';
+        $personality_originally_from = $request->input('personality_originally_from')?$request->input('personality_originally_from'):'';
+        $personality_school = $request->input('personality_school')?$request->input('personality_school'):'';
+        $personality_about = $request->input('personality_about')?$request->input('personality_about'):'';
         // Server Side Validation
+        
         $response = array();
         $destinationPath = storage_path() . '/uploads/profile_images/';
         if ($profile_pic->isValid()) {  // If the file is valid or not
