@@ -255,7 +255,8 @@ class AdminController extends Controller {
      * @return url
      */
     public function tripSpot() {
-        return view('admin/tripspots');
+        $trips = Trip::all();
+        return view('admin/tripspots', ['trips' => $trips]);
     }
 
     /**

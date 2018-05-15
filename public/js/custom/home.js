@@ -308,9 +308,11 @@ $(document).ready(function () {
     $('.airline-plus').click(function () {
         var template = $('.airline-row').clone().find("input").val("");
         //template.end().appendTo('.airline-row:last');
+        template.append('<div><a class="remove-row" >Remove</a></fieldset></div>');
         template.end().appendTo('.airline-row');
-        var remove_button = '<div><a class="remove-row" >Remove</a></fieldset></div>';
-        remove_button.appendTo('.airline-row:last');
+      
+       // var remove_button = '<div><a class="remove-row" >Remove</a></fieldset></div>';
+       // remove_button.appendTo('.airline-row:last');
     });
     $('.include-plus').click(function () {
         $('.included-activity-row:last').clone()

@@ -24,7 +24,7 @@
     </li>
     <li class="active">
     <a>
-        Trip Listing    </a>
+        Trip Spots    </a>
     </li>
     </ol>
 </div>
@@ -51,20 +51,14 @@
           <th>Available</th>
         </tr>
       </thead>
-      <tbody>
+          <tbody>    
+          <tr>
+          <td>f</td>
+          <td>564</td>
+          <td>0</td>
+          <td>564</td>
+          </tr>
                
-                <tr>
-          <td>f</td>
-          <td>564</td>
-          <td>0</td>
-          <td>564</td>
-        </tr>
-                <tr>
-          <td>f</td>
-          <td>564</td>
-          <td>0</td>
-          <td>564</td>
-        </tr>
               </tbody>
     </table>
   </div>

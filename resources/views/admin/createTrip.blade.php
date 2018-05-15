@@ -124,7 +124,7 @@
             <div class="cust-input-group airline-row pt-4 pb-2">     
                 <fieldset class="trip_collection">
                     <fieldset><label class="mycss classes "><span>Airline Name</span>
-                            <select required="required" name="airline[0][airline_name]" class="form-control">
+                            <select required="required" name="airline[][airline_name]" class="form-control">
                                 <option value="1">Alaska Airlines</option>
                                 <option value="2">Allegiant Air</option>
                                 <option value="3">American Airlines</option>
@@ -137,24 +137,24 @@
                                 <option value="10">United Airlines</option>
                                 <option value="11">Virgin America</option></select></label>
                         <label><span>Departure Location</span>
-                            <input type="text" required="required" name="airline[0][airline_departure_location]" class="form-control " value=""></label>
+                            <input type="text" required="required" name="airline[][airline_departure_location]" class="form-control " value=""></label>
                         <label><span>Departure Date</span>
-                            <input type="date" required="required" name="airline[0][airline_departure_date]" class="form-control date" value=""></label>
+                            <input type="date" required="required" name="airline[][airline_departure_date]" class="form-control date" value=""></label>
                         <label><span>Departure Time</span>
-                            <input type="time" required="required" name="airline[0][airline_departure_time]" class="form-control time" value=""></label>
+                            <input type="time" required="required" name="airline[][airline_departure_time]" class="form-control time" value=""></label>
                         <label><span>Layovers (MM)</span>
-                            <input required="required" type="number" name="airline[0][airline_layovers]" class="form-control " value=""></label>
+                            <input required="required" type="number" name="airline[][airline_layovers]" class="form-control " value=""></label>
                         <label><span>Baggage Allowance (Kg)</span>
-                            <input type="number" required="required" name="airline[0][airline_baggage_allowance]" class="form-control " step="0.01" value=""></label><label><span>Our Cost</span><input type="number" name="airline[0][airline_our_cost]" class="form-control " value=""></label>
+                            <input type="number" required="required" name="airline[][airline_baggage_allowance]" class="form-control " step="0.01" value=""></label><label><span>Our Cost</span><input type="number" name="airline[][airline_our_cost]" class="form-control " value=""></label>
                         <label><span>Cost</span>
-                            <input type="number" name="airline[0][airline_cost]" class="form-control " value=""></label>
+                            <input type="number" name="airline[][airline_cost]" class="form-control " value=""></label>
                         <label><span>Due Date</span>
-                            <input type="date" name="airline[0][airline_due_date]" class="form-control date" value=""></label>
+                            <input type="date" name="airline[][airline_due_date]" class="form-control date" value=""></label>
                         <label class="mycss classes "><span>Reserve Type</span>
-                            <select name="airline[0][airline_reserve_type]" class="form-control"><option value="0">Flat</option>
+                            <select name="airline[][airline_reserve_type]" class="form-control"><option value="0">Flat</option>
                                 <option value="1">Percentage</option></select>
                         </label><label><span>Reserve Amount</span>
-                            <input type="number" name="airline[0][airline_reserve_amount]" required="required" class="form-control " value=""></label>
+                            <input type="number" name="airline[][airline_reserve_amount]" required="required" class="form-control " value=""></label>
                     </fieldset>  </fieldset> 
             </div>
         </div>
@@ -171,14 +171,14 @@
         </div> 
         <div class="col-md-12">
             <div class="cust-input-group included-activity-row pt-4 pb-2">     
-                <fieldset class="trip_collection"><fieldset><label class="mycss classes"><span>Activity Name</span><input type="text" name="included_activity[0][activity_name]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Detail</span><input type="text" name="included_activity[0][activity_detail]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Cost</span><input type="number" name="included_activity[0][activity_cost]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Our Cost</span><input type="number" name="included_activity[0][activity_our_cost]" class="form-control" value=""></label><label><span>Due Date</span><input type="date" name="included_activity[0][activity_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="included_activity[0][activity_reserve_type]" class="form-control"><option value="0">Flat</option>
-                                <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span><input type="number" name="included_activity[0][activity_reserve_amount]" class="form-control " value=""></label><label for="activity_image">Activity Image</label><input type="file" name="included_activity[0][activity_image]" class="form-control" id="activity_image"><button type="button" name="included_activity[0][activity_add_hotel]" class="addons_add_hotel" value="Add activity">Add More Hotel</button><fieldset class="addons_hotel_collection"><legend>Activity Hotel</legend><fieldset><label class="lbl_hotel_name"><span>Hotel Name</span><input type="text" name="included_activity[0][activity_hotels][0][hotel_name]" class="form-control " value=""></label><label class="lbl_hotel_type"><span>Type</span><input type="text" name="included_activity[0][activity_hotels][0][hotel_type]" class="form-control" value=""></label><label class="lbl_hotel_cost"><span>Cost</span><input type="number" name="included_activity[0][activity_hotels][0][hotel_cost]" class="form-control" value=""></label><label class="lbl_hotel_solo_cost"><span>Solo Cost</span><input type="number" name="included_activity[0][activity_hotels][0][hotel_solo_cost]" class="form-control" value=""></label><label class="lbl_hotel_our_cost"><span>Our Cost</span><input type="number" name="included_activity[0][activity_hotels][0][hotel_our_cost]" class="form-control" value=""></label><label class="lbl_hotel_our_cost"><span>Our Solo Cost</span>
-                                    <input type="number" name="included_activity[0][activity_hotels][0][hotel_our_solo_cost]" class="form-control" value=""></label><label><span>Due Date</span><input type="date" name="included_activity[0][activity_hotels][0][hotel_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="included_activity[0][activity_hotels][0][hotel_reserve_type]" class="form-control"><option value="0">Flat</option>
-                                        <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span><input type="number" name="included_activity[0][activity_hotels][0][hotel_reserve_amount]" class="form-control " value=""></label></fieldset>
+                <fieldset class="trip_collection"><fieldset><label class="mycss classes"><span>Activity Name</span><input type="text" name="included_activity[][activity_name]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Detail</span><input type="text" name="included_activity[][activity_detail]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Cost</span><input type="number" name="included_activity[][activity_cost]" class="form-control" value=""></label><label class="mycss classes"><span>Activity Our Cost</span><input type="number" name="included_activity[][activity_our_cost]" class="form-control" value=""></label><label><span>Due Date</span><input type="date" name="included_activity[][activity_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="included_activity[][activity_reserve_type]" class="form-control"><option value="0">Flat</option>
+                                <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span><input type="number" name="included_activity[][activity_reserve_amount]" class="form-control " value=""></label><label for="activity_image">Activity Image</label><input type="file" name="included_activity[][activity_image]" class="form-control" id="activity_image"><button type="button" name="included_activity[][activity_add_hotel]" class="addons_add_hotel" value="Add activity">Add More Hotel</button><fieldset class="addons_hotel_collection"><legend>Activity Hotel</legend><fieldset><label class="lbl_hotel_name"><span>Hotel Name</span><input type="text" name="included_activity[][activity_hotels][][hotel_name]" class="form-control " value=""></label><label class="lbl_hotel_type"><span>Type</span><input type="text" name="included_activity[][activity_hotels][][hotel_type]" class="form-control" value=""></label><label class="lbl_hotel_cost"><span>Cost</span><input type="number" name="included_activity[][activity_hotels][][hotel_cost]" class="form-control" value=""></label><label class="lbl_hotel_solo_cost"><span>Solo Cost</span><input type="number" name="included_activity[][activity_hotels][][hotel_solo_cost]" class="form-control" value=""></label><label class="lbl_hotel_our_cost"><span>Our Cost</span><input type="number" name="included_activity[][activity_hotels][][hotel_our_cost]" class="form-control" value=""></label><label class="lbl_hotel_our_cost"><span>Our Solo Cost</span>
+                                    <input type="number" name="included_activity[][activity_hotels][][hotel_our_solo_cost]" class="form-control" value=""></label><label><span>Due Date</span><input type="date" name="included_activity[][activity_hotels][][hotel_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="included_activity[][activity_hotels][][hotel_reserve_type]" class="form-control"><option value="0">Flat</option>
+                                        <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span><input type="number" name="included_activity[][activity_hotels][][hotel_reserve_amount]" class="form-control " value=""></label></fieldset>
                             <span data-template=""></span></fieldset>
-                        <button type="button" name="included_activity[0][activity_add_airline]" class="addons_add_hotel" value="Add airline">Add More Airline</button><fieldset class="addons_hotel_collection"><legend>Activity Airline</legend><fieldset><label class="mycss classes ">
+                        <button type="button" name="included_activity[][activity_add_airline]" class="addons_add_hotel" value="Add airline">Add More Airline</button><fieldset class="addons_hotel_collection"><legend>Activity Airline</legend><fieldset><label class="mycss classes ">
                                     <span>Airline Name</span>
-                                    <select name="included_activity[0][activity_airlines][0][airline_name]" class="form-control">
+                                    <select name="included_activity[][activity_airlines][][airline_name]" class="form-control">
                                         <option value="1">Alaska Airlines</option>
                                     </select>
                                 </label>
@@ -203,39 +203,39 @@
                             <div class="col-md-12">
                                 <div class="cust-input-group addons-row pt-4 pb-2"> 
                                     <fieldset class="trip_collection"><fieldset>
-                                            <label class="mycss classes"><span>Add ons Name</span><input type="text" name="addon[0][addons_name]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Detail</span><input type="text" name="addon[0][addons_detail]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Cost</span><input type="number" name="addon[0][addons_cost]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Our Cost</span><input type="number" name="addon[0][addons_our_cost]" class="form-control" value=""></label><label><span>Due Date</span>
-                                                <input type="date" required="required" name="addon[0][addons_due_date]" class="form-control date" value=""></label>
+                                            <label class="mycss classes"><span>Add ons Name</span><input type="text" name="addon[][addons_name]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Detail</span><input type="text" name="addon[][addons_detail]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Cost</span><input type="number" name="addon[][addons_cost]" class="form-control" value=""></label><label class="mycss classes"><span>Add ons Our Cost</span><input type="number" name="addon[][addons_our_cost]" class="form-control" value=""></label><label><span>Due Date</span>
+                                                <input type="date" required="required" name="addon[][addons_due_date]" class="form-control date" value=""></label>
                                             <label class="mycss classes "><span>Reserve Type</span>
-                                                <select name="addon[0][addons_reserve_type]"  required="required"class="form-control"><option value="0">Flat</option>
+                                                <select name="addon[][addons_reserve_type]"  required="required"class="form-control"><option value="0">Flat</option>
                                                     <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span>
-                                                <input required="required" type="number" name="addon[0][addons_reserve_amount]" class="form-control " value=""></label>
+                                                <input required="required" type="number" name="addon[][addons_reserve_amount]" class="form-control " value=""></label>
                                             <label for="addons_image">Add ons Image</label>
-                                            <input required="required" type="file" name="addon[0][addons_image]" class="form-control" id="addons_image">
-                                            <button type="button" name="addon[0][addons_add_hotel]" class="addons_add_hotel" value="Add hotel">Add More Hotel</button><fieldset class="addons_hotel_collection"><legend>Add ons Hotel</legend>
+                                            <input required="required" type="file" name="addon[][addons_image]" class="form-control" id="addons_image">
+                                            <button type="button" name="addon[][addons_add_hotel]" class="addons_add_hotel" value="Add hotel">Add More Hotel</button><fieldset class="addons_hotel_collection"><legend>Add ons Hotel</legend>
                                                 <fieldset><label class="lbl_hotel_name"><span>Hotel Name</span>
-                                                        <input required="required" type="text" name="addon[0][addons_hotels][0][hotel_name]" class="form-control " value=""></label>
+                                                        <input required="required" type="text" name="addon[][addons_hotels][][hotel_name]" class="form-control " value=""></label>
                                                     <label class="lbl_hotel_type"><span>Type</span>
-                                                        <input required="required" type="text" name="addon[0][addons_hotels][0][hotel_type]" class="form-control" value=""></label>
+                                                        <input required="required" type="text" name="addon[][addons_hotels][][hotel_type]" class="form-control" value=""></label>
                                                     <label class="lbl_hotel_cost"><span>Cost</span>
-                                                        <input required="required"  type="number" name="addon[0][addons_hotels][0][hotel_cost]" class="form-control" value=""></label>
+                                                        <input required="required"  type="number" name="addon[][addons_hotels][][hotel_cost]" class="form-control" value=""></label>
                                                     <label class="lbl_hotel_solo_cost"><span>Solo Cost</span>
-                                                        <input required="required" type="number" name="addon[0][addons_hotels][0][hotel_solo_cost]" class="form-control" value=""></label>
+                                                        <input required="required" type="number" name="addon[][addons_hotels][][hotel_solo_cost]" class="form-control" value=""></label>
                                                     <label class="lbl_hotel_our_cost"><span>Our Cost</span>
-                                                        <input  required="required" type="number" name="addon[0][addons_hotels][0][hotel_our_cost]" class="form-control" value=""></label>
+                                                        <input  required="required" type="number" name="addon[][addons_hotels][][hotel_our_cost]" class="form-control" value=""></label>
                                                     <label class="lbl_hotel_our_cost"><span>Our Solo Cost</span>
-                                                        <input required="required"  type="number" name="addon[0][addons_hotels][0][hotel_our_solo_cost]" class="form-control" value=""></label>
+                                                        <input required="required"  type="number" name="addon[][addons_hotels][][hotel_our_solo_cost]" class="form-control" value=""></label>
                                                     <label><span>Due Date</span>
-                                                        <input type="date" name="addon[0][addons_hotels][0][hotel_due_date]" class="form-control date" required="required" value=""></label>
+                                                        <input type="date" name="addon[][addons_hotels][][hotel_due_date]" class="form-control date" required="required" value=""></label>
                                                     <label class="mycss classes "><span>Reserve Type</span>
-                                                        <select required="required" name="addon[0][addons_hotels][0][hotel_reserve_type]" class="form-control">
+                                                        <select required="required" name="addon[][addons_hotels][][hotel_reserve_type]" class="form-control">
                                                             <option value="0">Flat</option>
                                                             <option value="1">Percentage</option></select>
                                                     </label><label><span>Reserve Amount</span>
-                                                        <input type="number" name="addon[0][addons_hotels][0][hotel_reserve_amount]" class="form-control " value=""></label>
+                                                        <input type="number" name="addon[][addons_hotels][][hotel_reserve_amount]" class="form-control " value=""></label>
                                                 </fieldset>
                                             </fieldset>
-                                            <button type="button" name="addon[0][addons_add_airline]" class="addons_add_hotel" value="Add Airline">Add More Airline</button><fieldset class="addons_hotel_collection"><legend>Add ons Airline</legend><fieldset><label class="mycss classes "><span>Airline Name</span>
-                                                        <select required="required" name="addon[0][addons_airlines][0][airline_name]" class="form-control">
+                                            <button type="button" name="addon[][addons_add_airline]" class="addons_add_hotel" value="Add Airline">Add More Airline</button><fieldset class="addons_hotel_collection"><legend>Add ons Airline</legend><fieldset><label class="mycss classes "><span>Airline Name</span>
+                                                        <select required="required" name="addon[][addons_airlines][][airline_name]" class="form-control">
                                                             <option value="1">Alaska Airlines</option>
                                                             <option value="2">Allegiant Air</option>
                                                             <option value="3">American Airlines</option>
@@ -248,17 +248,17 @@
                                                             <option value="10">United Airlines</option>
                                                             <option value="11">Virgin America</option></select></label>
                                                     <label><span>Departure Location</span>
-                                                        <input required="required" type="text" name="addon[0][addons_airlines][0][airline_departure_location]" required="required" class="form-control " value=""></label><label><span>Departure Date</span>
-                                                        <input required="required" type="date" name="addon[0][addons_airlines][0][airline_departure_date]" class="form-control date" value=""></label><label><span>Departure Time</span><input type="time" name="addon[0][addons_airlines][0][airline_departure_time]" class="form-control time" value=""></label>
+                                                        <input required="required" type="text" name="addon[][addons_airlines][][airline_departure_location]" required="required" class="form-control " value=""></label><label><span>Departure Date</span>
+                                                        <input required="required" type="date" name="addon[][addons_airlines][][airline_departure_date]" class="form-control date" value=""></label><label><span>Departure Time</span><input type="time" name="addon[][addons_airlines][][airline_departure_time]" class="form-control time" value=""></label>
                                                     <label><span>Layovers (MM)</span>
-                                                        <input  required="required" type="number" name="addon[0][addons_airlines][0][airline_layovers]" class="form-control " value=""></label><label><span>Baggage Allowance (Kg)</span><input type="number" name="addon[0][addons_airlines][0][airline_baggage_allowance]" class="form-control " step="0.01" value=""></label><label><span>Our Cost</span><input type="number" name="addon[0][addons_airlines][0][airline_our_cost]" class="form-control " value=""></label>
+                                                        <input  required="required" type="number" name="addon[][addons_airlines][][airline_layovers]" class="form-control " value=""></label><label><span>Baggage Allowance (Kg)</span><input type="number" name="addon[][addons_airlines][][airline_baggage_allowance]" class="form-control " step="0.01" value=""></label><label><span>Our Cost</span><input type="number" name="addon[][addons_airlines][][airline_our_cost]" class="form-control " value=""></label>
                                                     <label><span>Cost</span>
-                                                        <input required="required" type="number" name="addon[0][addons_airlines][0][airline_cost]" class="form-control " value=""></label>
+                                                        <input required="required" type="number" name="addon[][addons_airlines][][airline_cost]" class="form-control " value=""></label>
                                                     <label><span>Due Date</span>
-                                                        <input required="required" type="date" name="addon[0][addons_airlines][0][airline_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="addon[0][addons_airlines][0][airline_reserve_type]" class="form-control"><option value="0">Flat</option>
+                                                        <input required="required" type="date" name="addon[][addons_airlines][][airline_due_date]" class="form-control date" value=""></label><label class="mycss classes "><span>Reserve Type</span><select name="addon[][addons_airlines][][airline_reserve_type]" class="form-control"><option value="0">Flat</option>
                                                             <option value="1">Percentage</option></select></label>
                                                     <label><span>Reserve Amount</span>
-                                                        <input required="required" type="number" name="addon[0][addons_airlines][0][airline_reserve_amount]" class="form-control " value=""></label></fieldset></fieldset>    </div>
+                                                        <input required="required" type="number" name="addon[][addons_airlines][][airline_reserve_amount]" class="form-control " value=""></label></fieldset></fieldset>    </div>
                                             </div>
                                             </div>
 
@@ -275,22 +275,22 @@
                                                 <div class="col-md-12">
                                                     <div class="cust-input-group hotel-row pt-4 pb-2">     
                                                         <fieldset class="trip_collection"><fieldset><label class="lbl_hotel_name"><span>Hotel Name</span>
-                                                                    <input type="text" name="hotels[0][hotel_name]" required="required" class="form-control " value=""></label>
+                                                                    <input type="text" name="hotels[][hotel_name]" required="required" class="form-control " value=""></label>
                                                                 <label class="lbl_hotel_type"><span>Type</span>
-                                                                    <input type="text" required="required" name="hotels[0][hotel_type]" class="form-control" value=""></label>
+                                                                    <input type="text" required="required" name="hotels[][hotel_type]" class="form-control" value=""></label>
                                                                 <label class="lbl_hotel_cost"><span>Cost</span>
-                                                                    <input type="number" name="hotels[0][hotel_cost]" required="required" class="form-control" value=""></label>
+                                                                    <input type="number" name="hotels[][hotel_cost]" required="required" class="form-control" value=""></label>
                                                                 <label class="lbl_hotel_solo_cost"><span>Solo Cost</span>
-                                                                    <input type="number" name="hotels[0][hotel_solo_cost]" required="required" class="form-control" value=""></label>
-                                                                <label class="lbl_hotel_our_cost"><span>Our Cost</span><input type="number" name="hotels[0][hotel_our_cost]" class="form-control" value=""></label>
+                                                                    <input type="number" name="hotels[][hotel_solo_cost]" required="required" class="form-control" value=""></label>
+                                                                <label class="lbl_hotel_our_cost"><span>Our Cost</span><input type="number" name="hotels[][hotel_our_cost]" class="form-control" value=""></label>
                                                                 <label class="lbl_hotel_our_cost"><span>Our Solo Cost</span>
-                                                                    <input type="number" required="required" name="hotels[0][hotel_our_solo_cost]" class="form-control" value=""></label>
+                                                                    <input type="number" required="required" name="hotels[][hotel_our_solo_cost]" class="form-control" value=""></label>
                                                                 <label><span>Due Date</span>
-                                                                    <input type="date" name="hotels[0][hotel_due_date]" class="form-control date" required="required" value=""></label>
+                                                                    <input type="date" name="hotels[][hotel_due_date]" class="form-control date" required="required" value=""></label>
                                                                 <label class="mycss classes "><span>Reserve Type</span>
-                                                                    <select name="hotels[0][hotel_reserve_type]" class="form-control" required="required"><option value="0">Flat</option>
+                                                                    <select name="hotels[][hotel_reserve_type]" class="form-control" required="required"><option value="0">Flat</option>
                                                                         <option value="1">Percentage</option></select></label><label><span>Reserve Amount</span>
-                                                                    <input type="number" required="required" name="hotels[0][hotel_reserve_amount]" class="form-control " value=""></label>
+                                                                    <input type="number" required="required" name="hotels[][hotel_reserve_amount]" class="form-control " value=""></label>
                                                             </fieldset><span data-template=''>
 
                                                             </span></fieldset>    </div>
@@ -309,7 +309,7 @@
                                                 <div class="col-md-12">
                                                     <div class="cust-input-group todo-row pt-4 pb-2">     
                                                         <fieldset class="trip_collection"><fieldset><label><span>Do/Packing</span>
-                                                                    <input required="required" type="text" name="to_do[0][todo_name]" class="form-control" value=""></label>
+                                                                    <input required="required" type="text" name="to_do[][todo_name]" class="form-control" value=""></label>
                                                             </fieldset>   </div>
                                                 </div>
                                             </div>
