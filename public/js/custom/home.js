@@ -288,45 +288,103 @@ $(document).ready(function () {
         //}
     });
 
-//    $('.addMore').click(function () {
-//        var row = $(this).attr('row');
-//        var currentCount = $('.' + row + ' > fieldset > fieldset').length;
-//        var template = $('.' + row + ' > fieldset > span').data('template');
-//        template = template.replace(/__index__/g, currentCount)
-//                .replace('</fieldset>', '<a class="remove-row" >Remove</a></fieldset>');
-//        $('.' + row + ' > fieldset').append(template);
-//        return false;
-//    });
-//    $(document).on('click', '.remove-row', function () {
-//        $(this).parent().remove();
-//        totalCost();
-//    });
-//    $(document).on('change', '.traveler_name', function () {
-//        totalCost();
-//    });
-
+    // Add more airline details
     $('.airline-plus').click(function () {
-        var template = $('.airline-row').clone().find("input").val("");
-        //template.end().appendTo('.airline-row:last');
-        template.append('<div><a class="remove-row" >Remove</a></fieldset></div>');
-        template.end().appendTo('.airline-row');
-      
-       // var remove_button = '<div><a class="remove-row" >Remove</a></fieldset></div>';
-       // remove_button.appendTo('.airline-row:last');
+    	// Clone the first row
+        var template = $('.airline_details:first').clone();
+
+        // Reset the values
+        $(template).find('input').val('');
+        
+        // Add the remove option
+        $(template).find('#remove_airline_details').html('<div><a class="remove-row remove_airline_details">Remove</a></div>');
+
+        // Append it
+        $('.airline_details:last').after( $(template) );
     });
-    $('.include-plus').click(function () {
-        $('.included-activity-row:last').clone()
-                .find("input").val("").end()
-                .appendTo('.included-activity-row:last');
+
+    // Remove airline details
+    $(document).on('click', '.remove_airline_details', function(){
+    	$(this).closest('.airline_details').remove();
     });
-    $('.addon-plus').click(function () {
-        $('.addons-row:last').clone()
-                .find("input").val("").end()
-                .appendTo('.addons-row:last');
+
+    // Add more activities
+    $('.include-plus').click(function(){
+		// Clone the first row
+	    var template = $('.activities_details:first').clone();
+
+	    // Reset the values
+	    $(template).find('input').val('');
+	    
+	    // Add the remove option
+	    $(template).find('#remove_activities_details').html('<div><a class="remove-row remove_activities_details">Remove</a></div>');
+
+	    // Append it
+	    $('.activities_details:last').after( $(template) );
     });
-    $('.hotel-plus').click(function () {
-        $('.hotel-row:last').clone()
-                .find("input").val("").end()
-                .appendTo('.hotel-row:last');
+
+    // Remove activities details
+    $(document).on('click', '.remove_activities_details', function(){
+    	$(this).closest('.activities_details').remove();
+    });
+    
+    // Add more add-ons
+    $('.addon-plus').click(function(){
+		// Clone the first row
+	    var template = $('.add_on_details:first').clone();
+
+	    // Reset the values
+	    $(template).find('input').val('');
+	    
+	    // Add the remove option
+	    $(template).find('#remove_addon_plus_details').html('<div><a class="remove-row remove_addon_plus_details">Remove</a></div>');
+
+	    // Append it
+	    $('.add_on_details:last').after( $(template) );
+    });
+
+    // Remove add-ons details
+    $(document).on('click', '.remove_addon_plus_details', function(){
+    	$(this).closest('.add_on_details').remove();
+    });
+    
+    // Add more hotels
+    $('.hotel-plus').click(function(){
+		// Clone the first row
+	    var template = $('.hotel_details:first').clone();
+
+	    // Reset the values
+	    $(template).find('input').val('');
+	    
+	    // Add the remove option
+	    $(template).find('#remove_hotel_details').html('<div><a class="remove-row remove_hotel_details">Remove</a></div>');
+
+	    // Append it
+	    $('.hotel_details:last').after( $(template) );
+    });
+
+    // Remove hotel details
+    $(document).on('click', '.remove_hotel_details', function(){
+    	$(this).closest('.hotel_details').remove();
+    });
+
+    // Add more todo list
+    $('.todo-plus').click(function(){
+		// Clone the first row
+	    var template = $('.todo_details:first').clone();
+
+	    // Reset the values
+	    $(template).find('input').val('');
+	    
+	    // Add the remove option
+	    $(template).find('#remove_todo_details').html('<div><a class="remove-row remove_todo_details">Remove</a></div>');
+
+	    // Append it
+	    $('.todo_details:last').after( $(template) );
+    });
+
+    // Remove todo details
+    $(document).on('click', '.remove_todo_details', function(){
+    	$(this).closest('.todo_details').remove();
     });
 });
