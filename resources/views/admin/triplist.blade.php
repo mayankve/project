@@ -67,9 +67,7 @@
                 @endforeach
                 @endif
             </div>
-
         </div>
-
     </div>
     <script type="text/javascript">
         $('.confirmation').on('click', function () {

@@ -109,7 +109,6 @@
 	             </div>
 	    	</div>
 	    	<!-- Airline Row -->
-
 		    <div class="airline-contaner row-box">  
 		        <div class="form-title">     
 		            <div class="col-md-6 col-xs-10">
@@ -202,8 +201,8 @@
 			                    <label><span>Reserve Amount</span><input type="number" name="included_activity[][activity_reserve_amount]" class="form-control " value=""></label>
 			                    <label for="activity_image">Activity Image</label>
 			                    <input type="file" name="included_activity[][activity_image]" class="form-control" id="activity_image">
-			                    <button type="button" name="included_activity[][activity_add_hotel]" class="addons_add_hotel" value="Add activity">Add More Hotel</button>
-			                    <fieldset class="addons_hotel_collection">
+			                    <button type="button" name="included_activity[][activity_add_hotel]" class="addons_add_hotel add_activities_hotel" value="Add activity">Add More Hotel</button>
+			                    <fieldset class="addons_hotel_collection activities_hotels">
 			                    	<legend>Activity Hotel</legend>
 			                    	<fieldset>
 			                    		<label class="lbl_hotel_name"><span>Hotel Name</span><input type="text" name="included_activity[][activity_hotels][][hotel_name]" class="form-control " value=""></label>
@@ -222,11 +221,13 @@
 		                                	</select>
 		                                </label>
 		                                <label><span>Reserve Amount</span><input type="number" name="included_activity[][activity_hotels][][hotel_reserve_amount]" class="form-control " value=""></label>
+                                                  <div id="remove_activity_hotels"></div>
 		                            </fieldset>
-		                            <span data-template=""></span>
+		                            <!-- Remove detail container -->
+                                       
 		                        </fieldset>
-		                        <button type="button" name="included_activity[][activity_add_airline]" class="addons_add_hotel" value="Add airline">Add More Airline</button>
-		                        <fieldset class="addons_hotel_collection"><legend>Activity Airline</legend><fieldset>
+		                        <button type="button" name="included_activity[][activity_add_airline]" class="addons_add_hotel add_activities_airline" value="Add airline">Add More Airline</button>
+		                        <fieldset class="addons_hotel_collection activities_airlines"><legend>Activity Airline</legend><fieldset>
 		                        	<label class="mycss classes ">
 		                                <span>Airline Name</span>
 		                                <select name="included_activity[][activity_airlines][][airline_name]" class="form-control">
@@ -247,6 +248,7 @@
 		                                    </select>
 		                                </label>
 		                                <label><span>Reserve Amount</span><input type="number" name="" class="form-control&amp;#x20;" value=""></label></fieldset><span ></span>
+                                                  <div id="remove_activity_airline"></div>
 		                        </fieldset>
 		                    </fieldset>
 		                </fieldset>
@@ -284,8 +286,8 @@
 			                    </label>
 			                    <label for="addons_image">Add ons Image</label>
 			                    <input required="required" type="file" name="addon[][addons_image]" class="form-control" id="addons_image">
-			                    <button type="button" name="addon[][addons_add_hotel]" class="addons_add_hotel" value="Add hotel">Add More Hotel</button>
-			                    <fieldset class="addons_hotel_collection"><legend>Add ons Hotel</legend>
+			                    <button type="button" name="addon[][addons_add_hotel]" class="addons_add_hotel addon_more_hotel" value="Add hotel">Add More Hotel</button>
+			                    <fieldset class="addons_hotel_collection addon_hotels"><legend>Add ons Hotel</legend>
 			                        <fieldset>
 			                        	<label class="lbl_hotel_name"><span>Hotel Name</span>
 			                                <input required="required" type="text" name="addon[][addons_hotels][][hotel_name]" class="form-control " value="">
@@ -314,10 +316,11 @@
 			                                    <option value="1">Percentage</option></select>
 			                            </label><label><span>Reserve Amount</span>
 			                                <input type="number" name="addon[][addons_hotels][][hotel_reserve_amount]" class="form-control " value=""></label>
+                                                         <div id="remove_addon_hotels"></div>
 			                        </fieldset>
 			                    </fieldset>
-			                    <button type="button" name="addon[][addons_add_airline]" class="addons_add_hotel" value="Add Airline">Add More Airline</button>
-			                    <fieldset class="addons_hotel_collection"><legend>Add ons Airline</legend>
+			                    <button type="button" name="addon[][addons_add_airline]" class="addons_add_hotel add_addon_airline" value="Add Airline">Add More Airline</button>
+			                    <fieldset class="addons_hotel_collection addon_airlines"><legend>Add ons Airline</legend>
 			                    	<fieldset>
 			                    		<label class="mycss classes "><span>Airline Name</span>
 			                                <select required="required" name="addon[][addons_airlines][][airline_name]" class="form-control">
@@ -362,6 +365,7 @@
 			                            <label><span>Reserve Amount</span>
 			                                <input required="required" type="number" name="addon[][addons_airlines][][airline_reserve_amount]" class="form-control " value="">
 			                            </label>
+                                                    <div id="remove_addon_airlines"></div>
 			                        </fieldset>
 			                    </fieldset>
 			                </fieldset>
@@ -509,7 +513,7 @@
 	                    </div>
 	                    <div class="row">     
 	                        <div class="col-md-6 cust-input-group sendbtn regbtn mt-0 mb-3">
-	                            <input type="submit" name="submit" id="submitbutton" value="Create Trip">
+	                            <input type="submit" name="submit" id="trip_submit_button" value="Create Trip">
 	                        </div>
 	                    </div>
 	                </div>

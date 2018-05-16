@@ -221,20 +221,20 @@ $(document).ready(function () {
 //		if( $('#frm_user_profile_info').valid() )
 //		{
         // hold the button reference
-        let $this = $(this);
-                let profile_pic = $('#profile_pic').prop('files')[0];
-                let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
-                let helth_mental_conditions = $('#helth_mental_conditions').val();
-                let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
-                let mental_conditions = $('#mental_conditions').val();
-                let food_allergies = $('#food_allergies').val();
-                let shirt_size = $('#shirt_size').val();
-                let emergency_contact_name = $('#emergency_contact_name').val();
-                let emergency_contact_phone = $('#emergency_contact_phone').val();
-                let personality_previous_travel = $('#personality_previous_travel').val();
-                let personality_originally_from = $('#personality_originally_from').val();
-                let personality_school = $('#personality_school').val();
-                let
+    let $this = $(this);
+            let profile_pic = $('#profile_pic').prop('files')[0];
+            let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
+            let helth_mental_conditions = $('#helth_mental_conditions').val();
+            let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
+            let mental_conditions = $('#mental_conditions').val();
+            let food_allergies = $('#food_allergies').val();
+            let shirt_size = $('#shirt_size').val();
+            let emergency_contact_name = $('#emergency_contact_name').val();
+            let emergency_contact_phone = $('#emergency_contact_phone').val();
+            let personality_previous_travel = $('#personality_previous_travel').val();
+            let personality_originally_from = $('#personality_originally_from').val();
+            let personality_school = $('#personality_school').val();
+            let
         personality_about = $('#personality_about').val();
                 // Append these values in FormData
                 var formData = new FormData();
@@ -287,6 +287,8 @@ $(document).ready(function () {
         });
         //}
     });
+
+
 
     // Add more airline details
     $('.airline-plus').click(function () {
@@ -387,4 +389,94 @@ $(document).ready(function () {
     $(document).on('click', '.remove_todo_details', function(){
     	$(this).closest('.todo_details').remove();
     });
+
+
+  // Add Hotels for Include activities
+   
+    $('.add_activities_hotel').click(function () {
+    	// Clone the fieldset row
+        var template = $('.activities_hotels:first').clone();
+
+        // Reset the values
+        $(template).find('input').val('');
+        
+        // Add the remove option
+        $(template).find('#remove_activity_hotels').html('<div><a class="remove-row remove_activity_hotels">Remove</a></div>');
+
+        // Append it
+        $('.activities_hotels:last').after( $(template) );
+    });
+
+    // Remove hotel details
+    $(document).on('click', '.remove_activity_hotels', function(){
+    	$(this).closest('.activities_hotels').remove();
+    });
+
+
+  // Add Airlines for Include activities
+   
+    $('.add_activities_airline').click(function () {
+    	// Clone the fieldset row
+        var template = $('.activities_airlines:first').clone();
+
+        // Reset the values
+        $(template).find('input').val('');
+        
+        // Add the remove option
+        $(template).find('#remove_activity_airline').html('<div><a class="remove-row remove_activity_airline">Remove</a></div>');
+
+        // Append it
+        $('.activities_airlines:last').after( $(template) );
+    });
+
+    // Remove hotel details
+    $(document).on('click', '.remove_activity_airline', function(){
+    	$(this).closest('.activities_airlines').remove();
+    });
+
+
+// Add more hotel for Addon Upgrades
+   
+    $('.addon_more_hotel').click(function () {
+    	// Clone the fieldset row
+        var template = $('.addon_hotels:first').clone();
+
+        // Reset the values
+        $(template).find('input').val('');
+        
+        // Add the remove option
+        $(template).find('#remove_addon_hotels').html('<div><a class="remove-row remove_addon_hotels">Remove</a></div>');
+
+        // Append it
+        $('.addon_hotels:last').after( $(template) );
+    });
+
+    // Remove hotel details
+    $(document).on('click', '.remove_addon_hotels', function(){
+    	$(this).closest('.addon_hotels').remove();
+    });
+
+    // Add Airlines for Addon Upgrades activities
+
+        $('.add_addon_airline').click(function () {
+            // Clone the fieldset row
+            var template = $('.addon_airlines:first').clone();
+
+            // Reset the values
+            $(template).find('input').val('');
+
+            // Add the remove option
+            $(template).find('#remove_addon_airlines').html('<div><a class="remove-row remove_addon_airlines">Remove</a></div>');
+
+            // Append it
+            $('.addon_airlines:last').after( $(template) );
+        });
+
+        // Remove hotel details
+        $(document).on('click', '.remove_addon_airlines', function(){
+            $(this).closest('.addon_airlines').remove();
+        });
+
+
 });
+

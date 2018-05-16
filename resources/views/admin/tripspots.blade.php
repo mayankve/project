@@ -51,20 +51,23 @@
           <th>Available</th>
         </tr>
       </thead>
-          <tbody>    
-          <tr>
-          <td>f</td>
-          <td>564</td>
-          <td>0</td>
-          <td>564</td>
-          </tr>
-               
+          <tbody> 
+                @if(count($trips)>0)
+                @foreach($trips AS $trip)
+                    <tr>
+                    <td>{{$trip->name}}</td>
+                    <td>{{$trip->maximum_spots}}</td>
+                    <td>{{$trip->name}}</td>
+                    <td>{{$trip->name}}</td>
+                    </tr>
+              @endforeach
+                @endif   
               </tbody>
     </table>
   </div>
   <script>
-
-</script></div>
+</script>
+</div>
 <script type="text/javascript">
     $('.confirmation').on('click', function () {
         return confirm('Are you sure?');
