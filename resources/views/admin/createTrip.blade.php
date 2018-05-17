@@ -248,11 +248,11 @@
 		                                    </select>
 		                                </label>
 		                                <label><span>Reserve Amount</span><input type="number" name="" class="form-control&amp;#x20;" value=""></label></fieldset><span ></span>
-                                                  <div id="remove_activity_airline"></div>
 		                        </fieldset>
 		                    </fieldset>
 		                </fieldset>
 		                <!-- Remove detail container -->
+		                <div id="remove_activity_airline"></div>
 		                <div id="remove_activities_details"></div>
 		            </div>
 		    	</div>

@@ -287,9 +287,7 @@ $(document).ready(function () {
         });
         //}
     });
-
-
-
+    
     // Add more airline details
     $('.airline-plus').click(function () {
     	// Clone the first row
@@ -390,9 +388,7 @@ $(document).ready(function () {
     	$(this).closest('.todo_details').remove();
     });
 
-
-  // Add Hotels for Include activities
-   
+  	// Add Hotels for Include activities
     $('.add_activities_hotel').click(function () {
     	// Clone the fieldset row
         var template = $('.activities_hotels:first').clone();
@@ -412,9 +408,7 @@ $(document).ready(function () {
     	$(this).closest('.activities_hotels').remove();
     });
 
-
-  // Add Airlines for Include activities
-   
+  	// Add Airlines for Include activities
     $('.add_activities_airline').click(function () {
     	// Clone the fieldset row
         var template = $('.activities_airlines:first').clone();
@@ -435,8 +429,7 @@ $(document).ready(function () {
     });
 
 
-// Add more hotel for Addon Upgrades
-   
+	// Add more hotel for Addon Upgrades
     $('.addon_more_hotel').click(function () {
     	// Clone the fieldset row
         var template = $('.addon_hotels:first').clone();
@@ -457,26 +450,23 @@ $(document).ready(function () {
     });
 
     // Add Airlines for Addon Upgrades activities
+    $('.add_addon_airline').click(function () {
+        // Clone the fieldset row
+        var template = $('.addon_airlines:first').clone();
 
-        $('.add_addon_airline').click(function () {
-            // Clone the fieldset row
-            var template = $('.addon_airlines:first').clone();
+        // Reset the values
+        $(template).find('input').val('');
 
-            // Reset the values
-            $(template).find('input').val('');
+        // Add the remove option
+        $(template).find('#remove_addon_airlines').html('<div><a class="remove-row remove_addon_airlines">Remove</a></div>');
 
-            // Add the remove option
-            $(template).find('#remove_addon_airlines').html('<div><a class="remove-row remove_addon_airlines">Remove</a></div>');
+        // Append it
+        $('.addon_airlines:last').after( $(template) );
+    });
 
-            // Append it
-            $('.addon_airlines:last').after( $(template) );
-        });
-
-        // Remove hotel details
-        $(document).on('click', '.remove_addon_airlines', function(){
-            $(this).closest('.addon_airlines').remove();
-        });
-
+    // Remove hotel details
+    $(document).on('click', '.remove_addon_airlines', function(){
+        $(this).closest('.addon_airlines').remove();
+    });
 
 });
-
