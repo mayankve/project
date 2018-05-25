@@ -32,6 +32,8 @@
         <script type="text/javascript" src="{{ URL::asset('js/model_image.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery.validate.min.js') }}"></script>
 
+         <!-- Custom js for common functionality -->
+        <script type="text/javascript" src="{{ URL::asset('js/custom/home.js') }}"></script>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
 
         <!-- font  -->
@@ -68,18 +70,37 @@
               <!-- Navbar -->
               <ul class="nav navbar-nav navbar-right">
                   <li class=""><a href="{{url('/about') }}">About </a></li>
-                  <li class="dropdown dropdown-hov">
-                      <a href="javascript:void(0);">Trips <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                       @foreach ($tripLists as $trip)
-                           <li><a href="{{ url('/trip/' . $trip->id) }}">{{ ucwords( strtolower( $trip->name ) ) }}</a></li>
-                       @endforeach
-                      </ul>
-                  </li>
+                    <li class="dropdown dropdown-hov">
+                            <a href="/aat_zend/public/trip-list">Trips <span class="caret"></span></a>
+                            <ul class="dropdown-menu" style="display: none;">
+                                <li><a href="#">fddd</a></li>
+                                <li><a href="#">f</a></li>
+                                <li><a href="#">f</a></li>
+                                <li><a href="#">f</a></li>
+                                <li><a href="#">f</a></li>
+                            </ul>
+                    </li>
                   <li><a href="#"> Testimony </a></li>
                   <!--<li><a href="#!/"> Blog </a></li>-->
                   <li><a href="{{url('/contact') }}"> Contact</a></li>
-                  <li ><a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i> Client Login </a></li>
+               <?php
+                    $userId = Auth::id();
+                    if (!isset($userId)) {
+                        ?>
+                        <li><a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
+                        <?php } else {
+                        ?> 
+                            <div class="user-profile">
+                                <li class="dropdown dropdown-hov">
+                                    <a class="user-img"><img src="/aat_zend/public/assets/profile_img/80d93e10f0653f507e7402dbb531a8a1.jpg" alt="tm-01" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>
+                                    <ul class="dropdown-menu" style="display: none;">
+                                        <li><a href="{{ url('/dashboard') }}">View profile</a></li>
+                                        <!--<li><a href="{{ url('/changepassword')}}">Change password</a></li>-->
+                                        <li><a href="{{ url('/logout') }}"> <i class="fa fa-lock" aria-hidden="true"></i> Logout </a></li>
+                                    </ul>
+                                </li>
+                            </div>
+                    <?php } ?>
               </ul>
           </div>
       </div>

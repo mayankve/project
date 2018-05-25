@@ -1,6 +1,5 @@
 @extends('admin.layouts.dashboard')
-@section('title', 'Dashboard')
-
+@section('title', 'AAT:Create Trip')
 @section('content')
 
 <style type="text/css">
@@ -447,7 +446,7 @@
 	                    	</fieldset>
 	                    </fieldset>
 	                    <!-- Remove detail container -->
-	                    <div id="remove_todo_details"></div>
+	                    <div id="remove_trip_traveler"></div>
 	                </div>
 	            </div>
 	        </div>

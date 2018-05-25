@@ -31,6 +31,11 @@ Route::post('/userlogin', 'HomeController@userLogin');
 // Front-end logout
 Route::get('/logout', 'HomeController@logout');
 
+// Front end Change Password
+Route::get('/changepassword', 'HomeController@changePassword');
+// Front end Change Password
+Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
+
 //User Dashboard
 Route::get('/dashboard','HomeController@userDashboard');
 
@@ -40,6 +45,20 @@ Route::post('/updateuserbasicinfo', 'HomeController@updateUserBasicInfo');
 // To update user basic information
 Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 
+//List Trips for users
+Route::get('listtrip','HomeController@listTrip');
+
+//view Trips for users
+Route::get('tripview/{id}','HomeController@tripView');
+
+//Book Trip for users
+Route::get('book/{id}','HomeController@bookTripView');
+
+//Saving Trip for users
+Route::get('booktrip','HomeController@bookTrip');
+
+//Design Trip for users
+Route::get('mytripdesign/{id}','HomeController@myTripDesign');
 
 
 /* Front-end routes ends */
@@ -64,8 +83,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
          // Upload Video
 	Route::get('/uploadvideo','AdminController@uploadVideo');
         
+        //view Trips for admin
+        Route::get('/tripview/{id}','HomeController@tripView');
+        
+        //Book Trip for users
+        Route::get('/book/{id}','HomeController@bookTrip');
+        
         // Delelte Video
-	//Route::get('/deletevideo/{$id}','AdminController@deleteVideo');
+	Route::get('/deletevideo/{id}','AdminController@deleteVideo');
 });
 
 /* Admin routes ends */

@@ -162,7 +162,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-		Laratrust\LaratrustServiceProvider::class,
+		Laratrust\LaratrustServiceProvider::class,   
+		Collective\Html\HtmlServiceProvider::class,
 	 
 
         /*
@@ -228,6 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 		'Laratrust'   => Laratrust\LaratrustFacade::class,
+		'Form' => Collective\Html\FormFacade::class,
+		'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

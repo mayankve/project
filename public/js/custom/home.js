@@ -476,7 +476,34 @@ $(document).ready(function () {
         $(document).on('click', '.remove_addon_airlines', function(){
             $(this).closest('.addon_airlines').remove();
         });
+        
+        // Add new treveler template for trip booking
 
+        $('.add_more_traveler').click(function () {
+            // Clone the fieldset row
+            var template = $('.add_traveler:first').clone();
+            // update template attr dynamically
+            var num = $('.add_traveler').length;
 
+            $(template).find('.form-control').each(function() {
+                name = $(this).attr('name').replace('traveler[0]', 'traveler['+num+']');
+                $(this).prev('label').attr('for', name);
+                $(this).attr('id', name).attr('name', name);
+            });
+            // Reset the values
+            $(template).find('input').val('');
+            
+            // Add the remove option
+            $(template).find('#remove_trip_traveler').html('<div><a class="remove-row remove_trip_traveler">Remove</a></div>');
+
+            // Append it
+            $('.add_traveler:last').after( $(template) );
+        });
+        
+        // Remove hotel details
+        $(document).on('click', '.remove_trip_traveler', function(){
+            $(this).closest('.add_traveler').remove();
+        });
+        
 });
 

@@ -34,8 +34,9 @@ class AdminController extends Controller {
         $user_country = User::where('id', '=', $userId)->first();
         //For Profile Info
         $profileData = $user = DB::table('user_profile')->where('user_id', '$userId')->first();
-
-        return view('admin/dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
+        // $trips = Trip::all();
+        $trips = Trip::where('end_date', '!=', NULL)->where('is_deleted', '!=', '1');
+        return view('admin/dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country,'trips'=>$trips]);
     }
 
     /**
@@ -245,8 +246,12 @@ class AdminController extends Controller {
      * @return url
      */
     public function listTrip() {
+        //for Trips 
         $trips = Trip::all();
-        return view('admin/triplist', ['trips' => $trips]);
+        $userId = Auth::id();
+        //For Basic Info
+        $userData = User::where('id', '=', $userId)->first();
+        return view('admin/triplist', ['trips' => $trips,'data' => $userData]);
     }
 
     /**
