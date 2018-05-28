@@ -123,17 +123,11 @@
 		                    <fieldset>
 		                    	<label class="mycss classes "><span>Airline Name</span>
 		                            <select required="required" name="airline[][airline_name]" class="form-control">
-		                                <option value="1">Alaska Airlines</option>
-		                                <option value="2">Allegiant Air</option>
-		                                <option value="3">American Airlines</option>
-		                                <option value="4">Delta Air Lines</option>
-		                                <option value="5">Frontier Airlines</option>
-		                                <option value="6">Hawaiian Airlines</option>
-		                                <option value="7">JetBlue</option>
-		                                <option value="8">Southwest Airlines</option>
-		                                <option value="9">Spirit Airlines</option>
-		                                <option value="10">United Airlines</option>
-		                                <option value="11">Virgin America</option>
+			                         	@if( !$airlines->isEmpty() )
+				                         	@foreach ($airlines as $airline)
+				                         	    <option value="{{ $airline->id }}">{{ $airline->name }}</option>
+				                         	@endforeach
+			                         	@endif
 		                            </select>
 		                        </label>
 		                        <label><span>Departure Location</span>
@@ -230,7 +224,11 @@
 		                        	<label class="mycss classes ">
 		                                <span>Airline Name</span>
 		                                <select name="included_activity[][activity_airlines][][airline_name]" class="form-control">
-		                                    <option value="1">Alaska Airlines</option>
+    			                         	@if( !$airlines->isEmpty() )
+    				                         	@foreach ($airlines as $airline)
+    				                         	    <option value="{{ $airline->id }}">{{ $airline->name }}</option>
+    				                         	@endforeach
+    			                         	@endif
 		                                </select>
 		                            </label>
 		                            <label><span>Departure Location</span><input type="text" name="" class="form-control&amp;#x20;" value=""></label>
@@ -247,11 +245,11 @@
 		                                    </select>
 		                                </label>
 		                                <label><span>Reserve Amount</span><input type="number" name="" class="form-control&amp;#x20;" value=""></label></fieldset><span ></span>
-                                                  <div id="remove_activity_airline"></div>
 		                        </fieldset>
 		                    </fieldset>
 		                </fieldset>
 		                <!-- Remove detail container -->
+		                <div id="remove_activity_airline"></div>
 		                <div id="remove_activities_details"></div>
 		            </div>
 		    	</div>
@@ -323,17 +321,11 @@
 			                    	<fieldset>
 			                    		<label class="mycss classes "><span>Airline Name</span>
 			                                <select required="required" name="addon[][addons_airlines][][airline_name]" class="form-control">
-			                                    <option value="1">Alaska Airlines</option>
-			                                    <option value="2">Allegiant Air</option>
-			                                    <option value="3">American Airlines</option>
-			                                    <option value="4">Delta Air Lines</option>
-			                                    <option value="5">Frontier Airlines</option>
-			                                    <option value="6">Hawaiian Airlines</option>
-			                                    <option value="7">JetBlue</option>
-			                                    <option value="8">Southwest Airlines</option>
-			                                    <option value="9">Spirit Airlines</option>
-			                                    <option value="10">United Airlines</option>
-			                                    <option value="11">Virgin America</option>
+        			                         	@if( !$airlines->isEmpty() )
+        				                         	@foreach ($airlines as $airline)
+        				                         	    <option value="{{ $airline->id }}">{{ $airline->name }}</option>
+        				                         	@endforeach
+        			                         	@endif
 			                                </select>
 		                                </label>
 			                            <label><span>Departure Location</span>

@@ -81,19 +81,18 @@ $(document).ready(function () {
         {
         // hold the button reference
         let $this = $(this);
-                let fname = $('#first_name').val();
-                let lname = $('#last_name').val();
-                let gender = $('#gender').val();
-                let dob = $('#dob').val();
-                let email = $('#email').val();
-                let passportAvailable = $("input[name='is_passport']:checked").val();
-                let passportExpDate = $('#passport_exp_date').val();
-                let issuingCountry = $('#issuing_country').val();
-                let countryOfBirth = $('#country_of_birth').val();
-                let
-        passportPic = $('#passport_pic').prop('files')[0];
-                // Append these values in FormData
-                var formData = new FormData();
+        let fname = $('#first_name').val();
+        let lname = $('#last_name').val();
+        let gender = $('#gender').val();
+        let dob = $('#dob').val();
+        let email = $('#email').val();
+        let passportAvailable = $("input[name='is_passport']:checked").val();
+        let passportExpDate = $('#passport_exp_date').val();
+        let issuingCountry = $('#issuing_country').val();
+        let countryOfBirth = $('#country_of_birth').val();
+        let passportPic = $('#passport_pic').prop('files')[0];
+        // Append these values in FormData
+        var formData = new FormData();
         formData.append('fname', fname);
         formData.append('lname', lname);
         formData.append('gender', gender);
@@ -221,23 +220,22 @@ $(document).ready(function () {
 //		if( $('#frm_user_profile_info').valid() )
 //		{
         // hold the button reference
-    let $this = $(this);
-            let profile_pic = $('#profile_pic').prop('files')[0];
-            let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
-            let helth_mental_conditions = $('#helth_mental_conditions').val();
-            let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
-            let mental_conditions = $('#mental_conditions').val();
-            let food_allergies = $('#food_allergies').val();
-            let shirt_size = $('#shirt_size').val();
-            let emergency_contact_name = $('#emergency_contact_name').val();
-            let emergency_contact_phone = $('#emergency_contact_phone').val();
-            let personality_previous_travel = $('#personality_previous_travel').val();
-            let personality_originally_from = $('#personality_originally_from').val();
-            let personality_school = $('#personality_school').val();
-            let
-        personality_about = $('#personality_about').val();
-                // Append these values in FormData
-                var formData = new FormData();
+	    let $this = $(this);
+	    let profile_pic = $('#profile_pic').prop('files')[0];
+	    let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
+	    let helth_mental_conditions = $('#helth_mental_conditions').val();
+	    let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
+	    let mental_conditions = $('#mental_conditions').val();
+	    let food_allergies = $('#food_allergies').val();
+	    let shirt_size = $('#shirt_size').val();
+	    let emergency_contact_name = $('#emergency_contact_name').val();
+	    let emergency_contact_phone = $('#emergency_contact_phone').val();
+	    let personality_previous_travel = $('#personality_previous_travel').val();
+	    let personality_originally_from = $('#personality_originally_from').val();
+	    let personality_school = $('#personality_school').val();
+	    let personality_about = $('#personality_about').val();
+        // Append these values in FormData
+        var formData = new FormData();
         formData.append('profile_pic', profile_pic);
         formData.append('is_helth_mental', is_helth_mental);
         formData.append('helth_mental_conditions', helth_mental_conditions);
@@ -287,9 +285,7 @@ $(document).ready(function () {
         });
         //}
     });
-
-
-
+    
     // Add more airline details
     $('.airline-plus').click(function () {
     	// Clone the first row
@@ -390,9 +386,7 @@ $(document).ready(function () {
     	$(this).closest('.todo_details').remove();
     });
 
-
-  // Add Hotels for Include activities
-   
+  	// Add Hotels for Include activities
     $('.add_activities_hotel').click(function () {
     	// Clone the fieldset row
         var template = $('.activities_hotels:first').clone();
@@ -412,9 +406,7 @@ $(document).ready(function () {
     	$(this).closest('.activities_hotels').remove();
     });
 
-
-  // Add Airlines for Include activities
-   
+  	// Add Airlines for Include activities
     $('.add_activities_airline').click(function () {
     	// Clone the fieldset row
         var template = $('.activities_airlines:first').clone();
@@ -435,8 +427,7 @@ $(document).ready(function () {
     });
 
 
-// Add more hotel for Addon Upgrades
-   
+	// Add more hotel for Addon Upgrades
     $('.addon_more_hotel').click(function () {
     	// Clone the fieldset row
         var template = $('.addon_hotels:first').clone();
@@ -456,54 +447,5 @@ $(document).ready(function () {
     	$(this).closest('.addon_hotels').remove();
     });
 
-    // Add Airlines for Addon Upgrades activities
 
-        $('.add_addon_airline').click(function () {
-            // Clone the fieldset row
-            var template = $('.addon_airlines:first').clone();
-
-            // Reset the values
-            $(template).find('input').val('');
-
-            // Add the remove option
-            $(template).find('#remove_addon_airlines').html('<div><a class="remove-row remove_addon_airlines">Remove</a></div>');
-
-            // Append it
-            $('.addon_airlines:last').after( $(template) );
-        });
-
-        // Remove hotel details
-        $(document).on('click', '.remove_addon_airlines', function(){
-            $(this).closest('.addon_airlines').remove();
-        });
-        
-        // Add new treveler template for trip booking
-
-        $('.add_more_traveler').click(function () {
-            // Clone the fieldset row
-            var template = $('.add_traveler:first').clone();
-            // update template attr dynamically
-            var num = $('.add_traveler').length;
-
-            $(template).find('.form-control').each(function() {
-                name = $(this).attr('name').replace('traveler[0]', 'traveler['+num+']');
-                $(this).prev('label').attr('for', name);
-                $(this).attr('id', name).attr('name', name);
-            });
-            // Reset the values
-            $(template).find('input').val('');
-            
-            // Add the remove option
-            $(template).find('#remove_trip_traveler').html('<div><a class="remove-row remove_trip_traveler">Remove</a></div>');
-
-            // Append it
-            $('.add_traveler:last').after( $(template) );
-        });
-        
-        // Remove hotel details
-        $(document).on('click', '.remove_trip_traveler', function(){
-            $(this).closest('.add_traveler').remove();
-        });
-        
 });
-

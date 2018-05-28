@@ -16,6 +16,8 @@ use App\User;
 use App\Trip;
 use App\UserProfile;
 use App\Country;
+use App\Airline;
+
 use Validator;
 
 class AdminController extends Controller {
@@ -236,8 +238,12 @@ class AdminController extends Controller {
      * @param void
      * @return url
      */
-    public function createTrip() {
-        return view('admin/createTrip');
+    public function createTrip()
+    {
+        // Get the airlines list
+    	$airlines = Airline::where(['status' => '1'])->get();
+
+        return view('admin/createTrip', ['airlines' => $airlines]);
     }
 
     /**
