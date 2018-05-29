@@ -320,6 +320,6 @@ if (el) {
     })
 }
         </script>
-
+        @yield('scripts')
     </body>
 </html>

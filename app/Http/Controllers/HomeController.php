@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -529,20 +528,20 @@ class HomeController extends Controller {
 
         foreach ($tripAddons AS $key => $value) {
             //Trip Addon Traveler Details
-            $tripAddonTravelers = DB::table('trip_addon_traveler')
+           $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
                     ->where('is_deleted', '=', '0')
                     ->get();
 
             //Trip Addon Flight Details
-            $tripAddonFlights = DB::table('trip_addon_airline')
+          $tripAddons['tripAddonFlights'] = DB::table('trip_addon_airline')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
                     ->where('is_deleted', '=', '0')
                     ->get();
             //Trip Addon Hotel Details
-            $tripAddonHotels = DB::table('trip_addon_hotel')
+           $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
                     ->where('is_deleted', '=', '0')
@@ -559,13 +558,13 @@ class HomeController extends Controller {
         $includedActivityHotles = array();
         foreach ($tripIncludedActivities AS $key => $value) {
             //Included Activity Flight Details
-            $includedActivityFlights = DB::table('trip_included_activity_airline')
+            $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
                     ->where('trip_id', '=', $id)
                     ->where('activity_id', '=', $value->id)
                     ->where('is_deleted', '=', '0')
                     ->get();
             //Included Activity Hotel Details
-            $includedActivityHotles = DB::table('trip_included_activity_hotel')
+        $tripIncludedActivities['includedActivityHotles'] = DB::table('trip_included_activity_hotel')
                     ->where('trip_id', '=', $id)
                     ->where('activity_id', '=', $value->id)
                     ->where('is_deleted', '=', '0')
@@ -579,17 +578,17 @@ class HomeController extends Controller {
                 ->get();
         
         //Data to send for design my trip view
-        $data = array(
+            $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
             'tripTravelers' => $tripTravelers,
             'tripAddons' => $tripAddons,
-            'tripAddonAirlines' => $tripAddonFlights,
-            'tripAddonHotels' => $tripAddonHotels,
-            'tripAddonTravelers' => $tripAddonTravelers,
+//            'tripAddonAirlines' => $tripAddonFlights,
+//            'tripAddonHotels' => $tripAddonHotels,
+//            'tripAddonTravelers' => $tripAddonTravelers,
             'tripIncludedActivities' => $tripIncludedActivities,
-            'tripIncludedHotels' => $includedActivityHotles,
-            'tripIncludedflights' => $includedActivityFlights,
+//            'tripIncludedHotels' => $includedActivityHotles,
+//            'tripIncludedflights' => $includedActivityFlights,
             'tripTodo' => $tripTodo
         );
         // echo "<pre>"; print_r($data);die; 

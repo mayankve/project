@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -17,7 +16,6 @@ use App\Trip;
 use App\UserProfile;
 use App\Country;
 use App\Airline;
-
 use Validator;
 
 class AdminController extends Controller {

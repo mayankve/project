@@ -81,18 +81,18 @@ $(document).ready(function () {
         {
         // hold the button reference
         let $this = $(this);
-        let fname = $('#first_name').val();
-        let lname = $('#last_name').val();
-        let gender = $('#gender').val();
-        let dob = $('#dob').val();
-        let email = $('#email').val();
-        let passportAvailable = $("input[name='is_passport']:checked").val();
-        let passportExpDate = $('#passport_exp_date').val();
-        let issuingCountry = $('#issuing_country').val();
-        let countryOfBirth = $('#country_of_birth').val();
-        let passportPic = $('#passport_pic').prop('files')[0];
-        // Append these values in FormData
-        var formData = new FormData();
+                let fname = $('#first_name').val();
+                let lname = $('#last_name').val();
+                let gender = $('#gender').val();
+                let dob = $('#dob').val();
+                let email = $('#email').val();
+                let passportAvailable = $("input[name='is_passport']:checked").val();
+                let passportExpDate = $('#passport_exp_date').val();
+                let issuingCountry = $('#issuing_country').val();
+                let countryOfBirth = $('#country_of_birth').val();
+                let passportPic = $('#passport_pic').prop('files')[0];
+                // Append these values in FormData
+                var formData = new FormData();
         formData.append('fname', fname);
         formData.append('lname', lname);
         formData.append('gender', gender);
@@ -220,22 +220,23 @@ $(document).ready(function () {
 //		if( $('#frm_user_profile_info').valid() )
 //		{
         // hold the button reference
-	    let $this = $(this);
-	    let profile_pic = $('#profile_pic').prop('files')[0];
-	    let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
-	    let helth_mental_conditions = $('#helth_mental_conditions').val();
-	    let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
-	    let mental_conditions = $('#mental_conditions').val();
-	    let food_allergies = $('#food_allergies').val();
-	    let shirt_size = $('#shirt_size').val();
-	    let emergency_contact_name = $('#emergency_contact_name').val();
-	    let emergency_contact_phone = $('#emergency_contact_phone').val();
-	    let personality_previous_travel = $('#personality_previous_travel').val();
-	    let personality_originally_from = $('#personality_originally_from').val();
-	    let personality_school = $('#personality_school').val();
-	    let personality_about = $('#personality_about').val();
-        // Append these values in FormData
-        var formData = new FormData();
+        let $this = $(this);
+                let profile_pic = $('#profile_pic').prop('files')[0];
+                let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
+                let helth_mental_conditions = $('#helth_mental_conditions').val();
+                let is_mental_conditions = $("input[name='is_mental_conditions']:checked").val();
+                let mental_conditions = $('#mental_conditions').val();
+                let food_allergies = $('#food_allergies').val();
+                let shirt_size = $('#shirt_size').val();
+                let emergency_contact_name = $('#emergency_contact_name').val();
+                let emergency_contact_phone = $('#emergency_contact_phone').val();
+                let personality_previous_travel = $('#personality_previous_travel').val();
+                let personality_originally_from = $('#personality_originally_from').val();
+                let personality_school = $('#personality_school').val();
+                let
+        personality_about = $('#personality_about').val();
+                // Append these values in FormData
+                var formData = new FormData();
         formData.append('profile_pic', profile_pic);
         formData.append('is_helth_mental', is_helth_mental);
         formData.append('helth_mental_conditions', helth_mental_conditions);
@@ -285,166 +286,215 @@ $(document).ready(function () {
         });
         //}
     });
-    
+
     // Add more airline details
     $('.airline-plus').click(function () {
-    	// Clone the first row
+        // Clone the first row
         var template = $('.airline_details:first').clone();
 
         // Reset the values
         $(template).find('input').val('');
-        
+
         // Add the remove option
         $(template).find('#remove_airline_details').html('<div><a class="remove-row remove_airline_details">Remove</a></div>');
 
         // Append it
-        $('.airline_details:last').after( $(template) );
+        $('.airline_details:last').after($(template));
     });
 
     // Remove airline details
-    $(document).on('click', '.remove_airline_details', function(){
-    	$(this).closest('.airline_details').remove();
+    $(document).on('click', '.remove_airline_details', function () {
+        $(this).closest('.airline_details').remove();
     });
 
     // Add more activities
-    $('.include-plus').click(function(){
-		// Clone the first row
-	    var template = $('.activities_details:first').clone();
+    $('.include-plus').click(function () {
+        // Clone the first row
+        var template = $('.activities_details:first').clone();
 
-	    // Reset the values
-	    $(template).find('input').val('');
-	    
-	    // Add the remove option
-	    $(template).find('#remove_activities_details').html('<div><a class="remove-row remove_activities_details">Remove</a></div>');
+        // Reset the values
+        $(template).find('input').val('');
 
-	    // Append it
-	    $('.activities_details:last').after( $(template) );
+        // Add the remove option
+        $(template).find('#remove_activities_details').html('<div><a class="remove-row remove_activities_details">Remove</a></div>');
+
+        // Append it
+        $('.activities_details:last').after($(template));
     });
 
     // Remove activities details
-    $(document).on('click', '.remove_activities_details', function(){
-    	$(this).closest('.activities_details').remove();
+    $(document).on('click', '.remove_activities_details', function () {
+        $(this).closest('.activities_details').remove();
     });
-    
+
     // Add more add-ons
-    $('.addon-plus').click(function(){
-		// Clone the first row
-	    var template = $('.add_on_details:first').clone();
+    $('.addon-plus').click(function () {
+        // Clone the first row
+        var template = $('.add_on_details:first').clone();
 
-	    // Reset the values
-	    $(template).find('input').val('');
-	    
-	    // Add the remove option
-	    $(template).find('#remove_addon_plus_details').html('<div><a class="remove-row remove_addon_plus_details">Remove</a></div>');
+        // Reset the values
+        $(template).find('input').val('');
 
-	    // Append it
-	    $('.add_on_details:last').after( $(template) );
+        // Add the remove option
+        $(template).find('#remove_addon_plus_details').html('<div><a class="remove-row remove_addon_plus_details">Remove</a></div>');
+
+        // Append it
+        $('.add_on_details:last').after($(template));
     });
 
     // Remove add-ons details
-    $(document).on('click', '.remove_addon_plus_details', function(){
-    	$(this).closest('.add_on_details').remove();
+    $(document).on('click', '.remove_addon_plus_details', function () {
+        $(this).closest('.add_on_details').remove();
     });
-    
+
     // Add more hotels
-    $('.hotel-plus').click(function(){
-		// Clone the first row
-	    var template = $('.hotel_details:first').clone();
+    $('.hotel-plus').click(function () {
+        // Clone the first row
+        var template = $('.hotel_details:first').clone();
 
-	    // Reset the values
-	    $(template).find('input').val('');
-	    
-	    // Add the remove option
-	    $(template).find('#remove_hotel_details').html('<div><a class="remove-row remove_hotel_details">Remove</a></div>');
+        // Reset the values
+        $(template).find('input').val('');
 
-	    // Append it
-	    $('.hotel_details:last').after( $(template) );
+        // Add the remove option
+        $(template).find('#remove_hotel_details').html('<div><a class="remove-row remove_hotel_details">Remove</a></div>');
+
+        // Append it
+        $('.hotel_details:last').after($(template));
     });
 
     // Remove hotel details
-    $(document).on('click', '.remove_hotel_details', function(){
-    	$(this).closest('.hotel_details').remove();
+    $(document).on('click', '.remove_hotel_details', function () {
+        $(this).closest('.hotel_details').remove();
     });
 
     // Add more todo list
-    $('.todo-plus').click(function(){
-		// Clone the first row
-	    var template = $('.todo_details:first').clone();
+    $('.todo-plus').click(function () {
+        // Clone the first row
+        var template = $('.todo_details:first').clone();
 
-	    // Reset the values
-	    $(template).find('input').val('');
-	    
-	    // Add the remove option
-	    $(template).find('#remove_todo_details').html('<div><a class="remove-row remove_todo_details">Remove</a></div>');
+        // Reset the values
+        $(template).find('input').val('');
 
-	    // Append it
-	    $('.todo_details:last').after( $(template) );
+        // Add the remove option
+        $(template).find('#remove_todo_details').html('<div><a class="remove-row remove_todo_details">Remove</a></div>');
+
+        // Append it
+        $('.todo_details:last').after($(template));
     });
 
     // Remove todo details
-    $(document).on('click', '.remove_todo_details', function(){
-    	$(this).closest('.todo_details').remove();
+    $(document).on('click', '.remove_todo_details', function () {
+        $(this).closest('.todo_details').remove();
     });
 
-  	// Add Hotels for Include activities
+    // Add Hotels for Include activities
     $('.add_activities_hotel').click(function () {
-    	// Clone the fieldset row
+        // Clone the fieldset row
         var template = $('.activities_hotels:first').clone();
 
         // Reset the values
         $(template).find('input').val('');
-        
+
         // Add the remove option
         $(template).find('#remove_activity_hotels').html('<div><a class="remove-row remove_activity_hotels">Remove</a></div>');
 
         // Append it
-        $('.activities_hotels:last').after( $(template) );
+        $('.activities_hotels:last').after($(template));
     });
 
     // Remove hotel details
-    $(document).on('click', '.remove_activity_hotels', function(){
-    	$(this).closest('.activities_hotels').remove();
+    $(document).on('click', '.remove_activity_hotels', function () {
+        $(this).closest('.activities_hotels').remove();
     });
 
-  	// Add Airlines for Include activities
+    // Add Airlines for Include activities
     $('.add_activities_airline').click(function () {
-    	// Clone the fieldset row
+        // Clone the fieldset row
         var template = $('.activities_airlines:first').clone();
 
         // Reset the values
         $(template).find('input').val('');
-        
+
         // Add the remove option
         $(template).find('#remove_activity_airline').html('<div><a class="remove-row remove_activity_airline">Remove</a></div>');
 
         // Append it
-        $('.activities_airlines:last').after( $(template) );
+        $('.activities_airlines:last').after($(template));
     });
 
     // Remove hotel details
-    $(document).on('click', '.remove_activity_airline', function(){
-    	$(this).closest('.activities_airlines').remove();
+    $(document).on('click', '.remove_activity_airline', function () {
+        $(this).closest('.activities_airlines').remove();
     });
 
 
-	// Add more hotel for Addon Upgrades
+    // Add more hotel for Addon Upgrades
     $('.addon_more_hotel').click(function () {
-    	// Clone the fieldset row
+        // Clone the fieldset row
         var template = $('.addon_hotels:first').clone();
 
         // Reset the values
         $(template).find('input').val('');
-        
+
         // Add the remove option
         $(template).find('#remove_addon_hotels').html('<div><a class="remove-row remove_addon_hotels">Remove</a></div>');
 
         // Append it
-        $('.addon_hotels:last').after( $(template) );
+        $('.addon_hotels:last').after($(template));
     });
 
     // Remove hotel details
-    $(document).on('click', '.remove_addon_hotels', function(){
-    	$(this).closest('.addon_hotels').remove();
+    $(document).on('click', '.remove_addon_hotels', function () {
+        $(this).closest('.addon_hotels').remove();
+    });
+
+    // Add Airlines for Addon Upgrades activities
+    $('.add_addon_airline').click(function () {
+        // Clone the fieldset row
+        var template = $('.addon_airlines:first').clone();
+
+        // Reset the values
+        $(template).find('input').val('');
+
+
+        // Add the remove option
+        $(template).find('#remove_addon_airlines').html('<div><a class="remove-row remove_addon_airlines">Remove</a></div>');
+
+        // Append it
+        $('.addon_airlines:last').after($(template));
+    });
+
+    // Remove addon airline details
+    $(document).on('click', '.remove_addon_airlines', function () {
+        $(this).closest('.addon_airlines').remove();
+    });
+
+    
+    // Add new treveler template for trip booking
+    $('.add_more_traveler').click(function () {
+        // Clone the fieldset row
+        var template = $('.add_traveler:first').clone();
+        // update template attr dynamically
+        var num = $('.add_traveler').length;
+
+        $(template).find('.form-control').each(function () {
+            name = $(this).attr('name').replace('traveler[0]', 'traveler[' + num + ']');
+            $(this).prev('label').attr('for', name);
+            $(this).attr('id', name).attr('name', name);
+        });
+        // Reset the values
+        $(template).find('input').val('');
+
+        // Add the remove option
+        $(template).find('#remove_trip_traveler').html('<div><a class="remove-row remove_trip_traveler">Remove</a></div>');
+
+        // Append it
+        $('.add_traveler:last').after($(template));
+    });
+
+    // Remove traveler details template
+    $(document).on('click', '.remove_trip_traveler', function () {
+        $(this).closest('.add_traveler').remove();
     });
 
 
