@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as Controller;
+//use Illuminate\Routing\Controller as Controller;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Input;
@@ -11,12 +14,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Http\Request;
+use File;
 use App\User;
 use App\Trip;
 use App\UserProfile;
 use App\Country;
 use App\Airline;
+use App\TripAirline;
+use App\TripIncludedActivity;
+use App\TripIncludedActivityHotel;
+use App\TripIncludedActivityAirline;
+use App\TripAddon;
+use App\TripAddonHotel;
+use App\TripAddonAirline;
+use App\TripHotel;
+use App\TripTodo;
 
 use Validator;
 
@@ -241,8 +253,393 @@ class AdminController extends Controller {
     {
         // Get the airlines list
     	$airlines = Airline::where(['status' => '1'])->get();
+        $airlinesPluck = Airline::where(['status' => '1'])->pluck('name', 'id')->toArray();
 
-        return view('admin/createTrip', ['airlines' => $airlines]);
+        return view('admin/createTrip', compact('airlines', 'airlinesPluck'));
+    }
+
+    /**
+     * Store a newly created trip and its component.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    function storeTrip(Request $request)
+    {
+        // Validations
+        $rules = [
+            'name'          => 'required',
+            'date'          => 'required',
+            'end_date'      => 'required',
+            'about_trip'    => 'required',
+            'banner_image'  => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'base_cost'     => 'required',
+            'maximum_spots'     => 'required',
+            'adjustment_date'   => 'required',
+            'land_only_date'    => 'required'
+        ];
+
+        // Airline validation
+        foreach($request->get('airline') as $key => $val)
+        {
+            $rules["airline.{$key}.airline_name"]           = 'required';
+            $rules["airline.{$key}.airline_departure_date"] = 'required';
+            $rules["airline.{$key}.airline_departure_time"] = 'required';
+            $rules["airline.{$key}.airline_layovers"]       = 'required';
+            $rules["airline.{$key}.airline_baggage_allowance"] = 'required';
+            $rules["airline.{$key}.airline_our_cost"]       = 'required';
+            $rules["airline.{$key}.airline_cost"]           = 'required';
+            $rules["airline.{$key}.airline_due_date"]       = 'required';
+            $rules["airline.{$key}.airline_reserve_type"]   = 'required';
+            $rules["airline.{$key}.airline_reserve_amount"] = 'required';
+        }
+
+        // Included Activity validation
+        foreach($request->get('included_activity') as $key => $val)
+        {
+            $rules["included_activity.{$key}.activity_name"]            = 'required';
+            $rules["included_activity.{$key}.activity_detail"]          = 'required';
+            $rules["included_activity.{$key}.activity_cost"]            = 'required';
+            $rules["included_activity.{$key}.activity_our_cost"]        = 'required';
+            $rules["included_activity.{$key}.activity_due_date"]        = 'required';
+            $rules["included_activity.{$key}.activity_reserve_type"]    = 'required';
+            $rules["included_activity.{$key}.activity_reserve_amount"]  = 'required';
+
+            // Included Activity Hotels
+            foreach($request->get('included_activity')[$key]['activity_hotels'] as $key1 => $val1)
+            {
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_name"]           = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_type"]           = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_cost"]           = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_solo_cost"]      = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_our_cost"]       = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_our_solo_cost"]  = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_due_date"]       = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_type"]   = 'required';
+                $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_amount"] = 'required';
+            }
+
+            // Included Activity Airlines
+            foreach($request->get('included_activity')[$key]['activity_airlines'] as $key1 => $val1)
+            {
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_name"]           = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_departure_date"] = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_departure_time"] = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_layovers"]       = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_baggage_allowance"] = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_our_cost"]       = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_cost"]           = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_due_date"]       = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_type"]   = 'required';
+                $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_amount"] = 'required';
+            }
+        }
+
+        // Add-ons validation
+        foreach($request->get('addon') as $key => $val)
+        {
+            $rules["addon.{$key}.addons_name"]            = 'required';
+            $rules["addon.{$key}.addons_detail"]          = 'required';
+            $rules["addon.{$key}.addons_cost"]            = 'required';
+            $rules["addon.{$key}.addons_our_cost"]        = 'required';
+            $rules["addon.{$key}.addons_due_date"]        = 'required';
+            $rules["addon.{$key}.addons_reserve_type"]    = 'required';
+            $rules["addon.{$key}.addons_reserve_amount"]  = 'required';
+
+            // Included Activity Hotels
+            foreach($request->get('addon')[$key]['addons_hotels'] as $key1 => $val1)
+            {
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_name"]           = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_type"]           = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_cost"]           = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_solo_cost"]      = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_our_cost"]       = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_our_solo_cost"]  = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_due_date"]       = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_type"]   = 'required';
+                $rules["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_amount"] = 'required';
+            }
+
+            // Included Activity Airlines
+            foreach($request->get('addon')[$key]['addons_airlines'] as $key1 => $val1)
+            {
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_name"]           = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_departure_date"] = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_departure_time"] = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_layovers"]       = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_baggage_allowance"] = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_our_cost"]       = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_cost"]           = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_due_date"]       = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_reserve_type"]   = 'required';
+                $rules["addon.{$key}.addons_airlines.{$key1}.airline_reserve_amount"] = 'required';
+            }
+        }
+
+        // Hotel validation
+        foreach($request->get('hotels') as $key => $val)
+        {
+            $rules["hotels.{$key}.hotel_name"]           = 'required';
+            $rules["hotels.{$key}.hotel_type"]           = 'required';
+            $rules["hotels.{$key}.hotel_cost"]           = 'required';
+            $rules["hotels.{$key}.hotel_solo_cost"]      = 'required';
+            $rules["hotels.{$key}.hotel_our_cost"]       = 'required';
+            $rules["hotels.{$key}.hotel_our_solo_cost"]  = 'required';
+            $rules["hotels.{$key}.hotel_due_date"]       = 'required';
+            $rules["hotels.{$key}.hotel_reserve_type"]   = 'required';
+            $rules["hotels.{$key}.hotel_reserve_amount"] = 'required';
+        }
+
+        // To-do validation
+        foreach($request->get('to_do') as $key => $val)
+        {
+            $rules["to_do.{$key}.todo_name"] = 'required';
+        }
+
+        //echo '<pre>'; print_r($rules); exit;
+
+        $this->validate($request, $rules);
+        /*$validator  = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect('admin/createtrip')
+                        ->withErrors($validator)
+                        ->withInput();
+        }*/
+
+        // Create trip
+        $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
+
+        if( $request->hasFile('banner_image') )
+        {
+            $trip['banner_image'] = $this->imageUpload($request->file('banner_image'), 'trip', 'banner-img');
+        }
+
+        $id = Trip::create($trip)->id;
+        //$id  = 24;
+
+        // If trip created successfully, add other detail
+        if($id)
+        {
+            // Add Airline
+            $airline = $request->input('airline');
+
+            foreach($airline as $row)
+            {
+                $row['trip_id'] = $id;
+
+                TripAirline::create($row);
+            }
+
+            // Add Included Activity, Included Activity Holel, Included Activity Airline
+            $included_activity = $request->input('included_activity');
+
+            foreach($included_activity as $index => $row)
+            {
+                // Add Included Activity
+                $fileName = '';
+                if( $request->hasFile('included_activity.'.$index.'.activity_image') )
+                {
+                    $fileName = $this->imageUpload($request->file('included_activity.'.$index.'.activity_image'), 'trip', 'activity-img');
+                }
+
+                $activity_id = TripIncludedActivity::create(array(
+                    'trip_id'               => $id,
+                    'activity_name'         => $row['activity_name'],
+                    'activity_detail'       => $row['activity_detail'],
+                    'activity_cost'         => $row['activity_cost'],
+                    'activity_our_cost'     => $row['activity_our_cost'],
+                    'activity_due_date'     => $row['activity_due_date'],
+                    'activity_reserve_type' => $row['activity_reserve_type'],
+                    'activity_reserve_amount' => $row['activity_reserve_amount'],
+                    'activity_image'        => $fileName
+                ))->id;
+
+                // Add Included Hotel
+                foreach($row['activity_hotels'] as $row_hotel)
+                {
+                    TripIncludedActivityHotel::create(array(
+                        'trip_id'               => $id,
+                        'activity_id'           => $activity_id,
+                        'hotel_name'            => $row_hotel['hotel_name'],
+                        'hotel_type'            => $row_hotel['hotel_type'],
+                        'hotel_cost'            => $row_hotel['hotel_cost'],
+                        'hotel_solo_cost'       => $row_hotel['hotel_solo_cost'],
+                        'hotel_our_cost'        => $row_hotel['hotel_our_cost'],
+                        'hotel_our_solo_cost'   => $row_hotel['hotel_our_solo_cost'],
+                        'hotel_due_date'        => $row_hotel['hotel_due_date'],
+                        'hotel_reserve_type'    => $row_hotel['hotel_reserve_type'],
+                        'hotel_reserve_amount'  => $row_hotel['hotel_reserve_amount'],
+                    ));
+                }
+
+                // Add Included Airline
+                foreach($row['activity_airlines'] as $row_airline)
+                {
+                    TripIncludedActivityAirline::create(array(
+                        'trip_id'                   => $id,
+                        'activity_id'               => $activity_id,
+                        'airline_name'              => $row_airline['airline_name'],
+                        'airline_departure_date'    => $row_airline['airline_departure_date'],
+                        'airline_departure_time'    => $row_airline['airline_departure_time'],
+                        'airline_departure_location' => $row_airline['airline_departure_location'],
+                        'airline_layovers'          => $row_airline['airline_layovers'],
+                        'airline_baggage_allowance' => $row_airline['airline_baggage_allowance'],
+                        'airline_our_cost'          => $row_airline['airline_our_cost'],
+                        'airline_cost'              => $row_airline['airline_cost'],
+                        'airline_due_date'          => $row_airline['airline_due_date'],
+                        'airline_reserve_type'      => $row_airline['airline_reserve_type'],
+                        'airline_reserve_amount'    => $row_airline['airline_reserve_amount'],
+                    ));
+                }
+            }
+
+            // Add Addon, Addon Holel, Addon Airline
+            $addon = $request->input('addon');
+
+            foreach($addon as $index => $row)
+            {
+                // Add Addon
+                $fileName = '';
+                if( $request->hasFile('addon.'.$index.'.addons_image') )
+                {
+                    $fileName = $this->imageUpload($request->file('addon.'.$index.'.addons_image'), 'trip', 'addons-img');
+                }
+
+                $addon_id = TripAddon::create(array(
+                    'trip_id'               => $id,
+                    'addons_name'         => $row['addons_name'],
+                    'addons_detail'       => $row['addons_detail'],
+                    'addons_cost'         => $row['addons_cost'],
+                    'addons_our_cost'     => $row['addons_our_cost'],
+                    'addons_due_date'     => $row['addons_due_date'],
+                    'addons_reserve_type' => $row['addons_reserve_type'],
+                    'addons_reserve_amount' => $row['addons_reserve_amount'],
+                    'addons_image'        => $fileName
+                ))->id;
+
+                // Add Addon Hotel
+                foreach($row['addons_hotels'] as $row_hotel)
+                {
+                    TripAddonHotel::create(array(
+                        'trip_id'               => $id,
+                        'addon_id'              => $addon_id,
+                        'hotel_name'            => $row_hotel['hotel_name'],
+                        'hotel_type'            => $row_hotel['hotel_type'],
+                        'hotel_cost'            => $row_hotel['hotel_cost'],
+                        'hotel_solo_cost'       => $row_hotel['hotel_solo_cost'],
+                        'hotel_our_cost'        => $row_hotel['hotel_our_cost'],
+                        'hotel_our_solo_cost'   => $row_hotel['hotel_our_solo_cost'],
+                        'hotel_due_date'        => $row_hotel['hotel_due_date'],
+                        'hotel_reserve_type'    => $row_hotel['hotel_reserve_type'],
+                        'hotel_reserve_amount'  => $row_hotel['hotel_reserve_amount'],
+                    ));
+                }
+
+                // Add Addon Airline
+                foreach($row['addons_airlines'] as $row_airline)
+                {
+                    TripAddonAirline::create(array(
+                        'trip_id'                   => $id,
+                        'addon_id'                  => $addon_id,
+                        'airline_name'              => $row_airline['airline_name'],
+                        'airline_departure_date'    => $row_airline['airline_departure_date'],
+                        'airline_departure_time'    => $row_airline['airline_departure_time'],
+                        'airline_departure_location' => $row_airline['airline_departure_location'],
+                        'airline_layovers'          => $row_airline['airline_layovers'],
+                        'airline_baggage_allowance' => $row_airline['airline_baggage_allowance'],
+                        'airline_our_cost'          => $row_airline['airline_our_cost'],
+                        'airline_cost'              => $row_airline['airline_cost'],
+                        'airline_due_date'          => $row_airline['airline_due_date'],
+                        'airline_reserve_type'      => $row_airline['airline_reserve_type'],
+                        'airline_reserve_amount'    => $row_airline['airline_reserve_amount'],
+                    ));
+                }
+            }
+
+            // Add Hotel
+            $hotels = $request->input('hotels');
+
+            foreach($hotels as $row)
+            {
+                $row['trip_id'] = $id;
+
+                TripHotel::create($row);
+            }
+
+            // Add to-do list
+            $to_do = $request->input('to_do');
+
+            foreach($to_do as $row)
+            {
+                $row['trip_id'] = $id;
+
+                TripTodo::create($row);
+            }
+        }
+
+        return redirect('admin/listtrip');
+    }
+
+    public function deleteTrip($id)
+    {
+        // Check if trip exist
+        $trip = Trip::find($id);
+
+        if(!$trip)
+        {
+            return redirect('admin/listtrip');
+        }
+
+        // Delete the trip image and trip
+        if( !empty($trip->banner_image) )
+        {
+            $banner_image = public_path('/uploads/trip/'.$trip->banner_image);
+
+            echo $banner_image;
+
+            if(File::exists($banner_image))
+            {
+                //File::delete($banner_image)
+            }
+        }
+
+        Trip::destroy($id);
+
+        //
+        
+    }
+
+    /**
+     * Upload file and return the name of the uploaded file
+     *
+     * @param object $file
+     * @param object $directory
+     * @param object $startWith
+     * @return string $fileName
+     */
+    protected function imageUpload($file, $directory=null, $startWith)
+    {
+        // SET UPLOAD PATH
+        if($directory != NULL && $directory != '')
+        {
+            $destinationPath = base_path() . '/public/uploads/'.$directory.'/';
+        }
+        else
+        {
+            $destinationPath = base_path() . '/public/uploads/';
+        }
+
+        // GET THE FILE EXTENSION
+        $extension = $file->getClientOriginalExtension();
+
+        // RENAME THE UPLOAD WITH RANDOM NUMBER
+        $fileName =  $startWith.md5(time()) . '.' . $extension;
+
+        // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+        $file->move($destinationPath, $fileName);
+
+        return $fileName;
     }
 
     /**

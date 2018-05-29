@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191); //Solved by increasing StringLength
 
         // Share the trip list globally to be used on layout
-        $tripLists = Trip::where('end_date', '!=', NULL)->where('is_deleted', '!=', '1')->get();
+        $tripLists = Trip::where('end_date', '!=', NULL)->where('status', '=', '1')->get();
         View::share('tripLists', $tripLists);
     }
 
