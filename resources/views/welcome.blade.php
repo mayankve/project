@@ -1,6 +1,5 @@
 @extends('layouts.home')
 @section('title', 'AAT')
-
 @section('content')
 <div class="section section-header">
     <div class="parallax pattern-image">

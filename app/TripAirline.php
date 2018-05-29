@@ -23,4 +23,9 @@ class TripAirline extends Model
     	'airline_reserve_amount',
     	'status'
     ];
+    
+    public function trip()
+    {
+        return $this->hasMany('App\Trip','trip_id');
+    }
 }

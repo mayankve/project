@@ -1,6 +1,5 @@
 @extends('admin.layouts.dashboard')
-@section('title', 'Dashboard')
-
+@section('title', 'AAT:Create Trip')
 @section('content')
 
 <style type="text/css">
