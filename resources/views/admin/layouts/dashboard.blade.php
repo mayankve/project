@@ -26,7 +26,8 @@
         <script type="text/javascript" src="{{ URL::asset('js/jquery-3.1.0.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('js/ckeditor.js') }}"></script>
+        <!-- <script type="text/javascript" src="{{ URL::asset('js/ckeditor.js') }}"></script> -->
+        <script type="text/javascript" src="{{ URL::asset('plugins/ckeditor/ckeditor.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/modernizr.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery.waypoints.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/model_image.js') }}"></script>
@@ -306,6 +307,7 @@ vid.addEventListener('ended', function ()
     vidFade();
 });
 
+
 var el = document.getElementById('pauseButton');
 if (el) {
     pauseButton.addEventListener("click", function () {
@@ -320,6 +322,7 @@ if (el) {
     })
 }
         </script>
-        @yield('scripts')
+		@yield('scripts')
+
     </body>
 </html>

@@ -73,8 +73,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 	//  Create trip
 	Route::get('/createtrip','AdminController@createTrip');
+    Route::post('/store-trip','AdminController@storeTrip');
+
+    // Delete trip
+    Route::get('/deletetrip/{id}','AdminController@deleteTrip');
         
-       //  List trip
+    //  List trip
 	Route::get('/listtrip','AdminController@listTrip');
         
          // Trip Spots
@@ -83,14 +87,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
          // Upload Video
 	Route::get('/uploadvideo','AdminController@uploadVideo');
         
-        //view Trips for admin
-        Route::get('/tripview/{id}','HomeController@tripView');
-        
-        //Book Trip for users
-        Route::get('/book/{id}','HomeController@bookTrip');
-        
-        // Delelte Video
-	Route::get('/deletevideo/{id}','AdminController@deleteVideo');
+
+    //view Trips for admin
+    Route::get('/tripview/{id}','HomeController@tripView');
+
+    //Book Trip for users
+    Route::get('/book/{id}','HomeController@bookTrip');
+
 });
 
 /* Admin routes ends */

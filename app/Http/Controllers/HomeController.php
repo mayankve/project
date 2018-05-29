@@ -27,7 +27,8 @@ class HomeController extends Controller {
      */
     public function index() {
         // Get all the trips which are active and whose end date is not null and trip is not deleted
-        $trips = Trip::where('end_date', '!=', NULL)->where('is_deleted', '!=', '1')->paginate(6);
+        $trips = Trip::where('end_date', '!=', NULL)->where('status', '=', '1')->paginate(6);
+        
         return view('welcome', ['trips' => $trips]);
     }
 
