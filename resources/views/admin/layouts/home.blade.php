@@ -5,15 +5,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>@yield('title')</title>
-
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="route" content="{{ url('/') }}">
-
         <!-- favicon -->
         <link href="{{ url('images/logo.png') }}" rel="shortcut icon" type="image/vnd.microsoft.icon">
-
         <!-- Styles -->
         <link href="{{ URL::asset('css/jquery-ui.min.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/style.css') }}" media="screen" rel="stylesheet" type="text/css">
@@ -31,17 +27,14 @@
         <script type="text/javascript" src="{{ URL::asset('js/jquery.waypoints.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/model_image.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery.validate.min.js') }}"></script>
-
          <!-- Custom js for common functionality -->
         <script type="text/javascript" src="{{ URL::asset('js/custom/home.js') }}"></script>
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
-
         <!-- font  -->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet"> 
         <!-- font Awesome Cdn -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        
         <style>
         .error{
             color: red;

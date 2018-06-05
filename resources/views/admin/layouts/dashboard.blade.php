@@ -5,15 +5,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>@yield('title')</title>
-
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="route" content="{{ url('/') }}">
-
         <!-- favicon -->
         <link href="{{ url('images/logo.png') }}" rel="shortcut icon" type="image/vnd.microsoft.icon">
-
         <!-- Styles -->
         <link href="{{ URL::asset('css/jquery-ui.min.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/style.css') }}" media="screen" rel="stylesheet" type="text/css">
@@ -210,79 +206,79 @@
 
         <script>
 $(document).ready(function () {
-    $(".filter-button").click(function () {
-        var value = $(this).attr('data-filter');
-        if (value == "all")
-        {
-            $('.filter').show('1000');
-        } else
-        {
-            $(".filter").not('.' + value).hide('3000');
-            $('.filter').filter('.' + value).show('3000');
-        }
-    });
+$(".filter-button").click(function () {
+var value = $(this).attr('data-filter');
+if (value == "all")
+{
+    $('.filter').show('1000');
+} else
+{
+    $(".filter").not('.' + value).hide('3000');
+    $('.filter').filter('.' + value).show('3000');
+}
+});
 
-    if ($(".filter-button").removeClass("active")) {
-        $(this).removeClass("active");
+if ($(".filter-button").removeClass("active")) {
+$(this).removeClass("active");
+}
+$(this).addClass("active");
+
+$(".filter-button2").click(function () {
+var value = $(this).attr('data-filter');
+if (value == "all")
+{
+    $('.filter2').show('1000');
+} else
+{
+    $(".filter2").not('.' + value).hide('3000');
+    $('.filter2').filter('.' + value).show('3000');
+}
+});
+
+if ($(".filter-button2").removeClass("active2")) {
+$(this).removeClass("active2");
+}
+$(this).addClass("active2");
+
+$('#itemslider').carousel({interval: 3000});
+
+$('.carousel-showmanymoveone .item').each(function () {
+var itemToClone = $(this);
+
+for (var i = 1; i < 4; i++) {
+    itemToClone = itemToClone.next();
+
+    if (!itemToClone.length) {
+        itemToClone = $(this).siblings(':first');
     }
-    $(this).addClass("active");
 
-    $(".filter-button2").click(function () {
-        var value = $(this).attr('data-filter');
-        if (value == "all")
-        {
-            $('.filter2').show('1000');
-        } else
-        {
-            $(".filter2").not('.' + value).hide('3000');
-            $('.filter2').filter('.' + value).show('3000');
-        }
-    });
+    itemToClone.children(':first-child').clone()
+            .addClass("cloneditem-" + (i))
+            .appendTo($(this));
+}
+});
 
-    if ($(".filter-button2").removeClass("active2")) {
-        $(this).removeClass("active2");
-    }
-    $(this).addClass("active2");
-
-    $('#itemslider').carousel({interval: 3000});
-
-    $('.carousel-showmanymoveone .item').each(function () {
-        var itemToClone = $(this);
-
-        for (var i = 1; i < 4; i++) {
-            itemToClone = itemToClone.next();
-
-            if (!itemToClone.length) {
-                itemToClone = $(this).siblings(':first');
-            }
-
-            itemToClone.children(':first-child').clone()
-                    .addClass("cloneditem-" + (i))
-                    .appendTo($(this));
-        }
-    });
-
-    $(".dropdown-hov").hover(function () {
-        $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+$(".dropdown-hov").hover(function () {
+$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+$(this).toggleClass('open');
+$('b', this).toggleClass("caret caret-up");
+},
+    function () {
+        $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
         $(this).toggleClass('open');
         $('b', this).toggleClass("caret caret-up");
-    },
-            function () {
-                $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                $(this).toggleClass('open');
-                $('b', this).toggleClass("caret caret-up");
-            });
+    });
 });
 
 $("[rel='tooltip']").tooltip();
 
 $('.thumbnail').hover(
-        function () {
-            $(this).find('.caption').slideDown(250); //.fadeIn(250)
-        },
-        function () {
-            $(this).find('.caption').slideUp(250); //.fadeOut(205)
-        }
+function () {
+    $(this).find('.caption').slideDown(250); //.fadeIn(250)
+},
+function () {
+    $(this).find('.caption').slideUp(250); //.fadeOut(205)
+}
 );
 
 // video
@@ -290,40 +286,37 @@ var vid = document.getElementById("bgvid");
 var pauseButton = document.querySelector("#polina button");
 
 if (window.matchMedia('(prefers-reduced-motion)').matches) {
-    vid.removeAttribute("autoplay");
-    vid.pause();
-    pauseButton.innerHTML = "Paused";
+vid.removeAttribute("autoplay");
+vid.pause();
+pauseButton.innerHTML = "Paused";
 }
 
 function vidFade() {
-    vid.classList.add("stopfade");
+vid.classList.add("stopfade");
 }
 
 vid.addEventListener('ended', function ()
 {
-    // only functional if "loop" is removed 
-    vid.pause();
-    // to capture IE10
-    vidFade();
+// only functional if "loop" is removed 
+vid.pause();
+// to capture IE10
+vidFade();
 });
 
-	    var el = document.getElementById('pauseButton');
-	    if(el){
-	        pauseButton.addEventListener("click", function () {
-	           vid.classList.toggle("stopfade");
-	           if (vid.paused) {
-	               vid.play();
-	               pauseButton.innerHTML = "Pause";
-	           } else {
-	               vid.pause();
-	               pauseButton.innerHTML = "Paused";
-	           }
-	       })
-	    }
-	    </script>
-		
-		@yield('scripts')
-
+var el = document.getElementById('pauseButton');
+if (el) {
+pauseButton.addEventListener("click", function () {
+vid.classList.toggle("stopfade");
+if (vid.paused) {
+    vid.play();
+    pauseButton.innerHTML = "Pause";
+} else {
+    vid.pause();
+    pauseButton.innerHTML = "Paused";
+}
+});
+}
         </script>
+
     </body>
 </html>
