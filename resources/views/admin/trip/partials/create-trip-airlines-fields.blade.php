@@ -98,68 +98,68 @@
 @else
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_name]', 'Airline Name') !!}
-			{!! Form::select($name.'[0][airline_name]', $airlinesPluck, null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_name]', 'Airline Name') !!}
+			{!! Form::select($name.'['.$key.'][airline_name]', $airlinesPluck, null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_departure_location]', 'Departure Location') !!}
-			{!! Form::text($name.'[0][airline_departure_location]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_departure_location]', 'Departure Location') !!}
+			{!! Form::text($name.'['.$key.'][airline_departure_location]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_departure_date]', 'Departure Date') !!}
-			{!! Form::date($name.'[0][airline_departure_date]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_departure_date]', 'Departure Date') !!}
+			{!! Form::date($name.'['.$key.'][airline_departure_date]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_departure_time]', 'Departure Time') !!}
-			{!! Form::time($name.'[0][airline_departure_time]', null, ['class' => 'form-control time']) !!}
+			{!! Form::label($name.'['.$key.'][airline_departure_time]', 'Departure Time') !!}
+			{!! Form::time($name.'['.$key.'][airline_departure_time]', null, ['class' => 'form-control time']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_layovers]', 'Layovers (MM)') !!}
-			{!! Form::number($name.'[0][airline_layovers]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_layovers]', 'Layovers (MM)') !!}
+			{!! Form::number($name.'['.$key.'][airline_layovers]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_baggage_allowance]', 'Baggage Allowance (Kg)') !!}
-			{!! Form::number($name.'[0][airline_baggage_allowance]', null, ['class' => 'form-control', 'step' => '0.01']) !!}
+			{!! Form::label($name.'['.$key.'][airline_baggage_allowance]', 'Baggage Allowance (Kg)') !!}
+			{!! Form::number($name.'['.$key.'][airline_baggage_allowance]', null, ['class' => 'form-control', 'step' => '0.01']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_our_cost]', 'Our Cost') !!}
-			{!! Form::number($name.'[0][airline_our_cost]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_our_cost]', 'Our Cost') !!}
+			{!! Form::number($name.'['.$key.'][airline_our_cost]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_cost]', 'Cost') !!}
-			{!! Form::number($name.'[0][airline_cost]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_cost]', 'Cost') !!}
+			{!! Form::number($name.'['.$key.'][airline_cost]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_due_date]', 'Due Date') !!}
-			{!! Form::date($name.'[0][airline_due_date]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_due_date]', 'Due Date') !!}
+			{!! Form::date($name.'['.$key.'][airline_due_date]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_reserve_type]', 'Reserve Type') !!}
-			{!! Form::select($name.'[0][airline_reserve_type]', array(0 => 'Flat', 1 => 'Percentage'), null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_reserve_type]', 'Reserve Type') !!}
+			{!! Form::select($name.'['.$key.'][airline_reserve_type]', array(0 => 'Flat', 1 => 'Percentage'), null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">
 		<div class="form-group">
-			{!! Form::label($name.'[0][airline_reserve_amount]', 'Reserve Amount') !!}
-			{!! Form::number($name.'[0][airline_reserve_amount]', null, ['class' => 'form-control']) !!}
+			{!! Form::label($name.'['.$key.'][airline_reserve_amount]', 'Reserve Amount') !!}
+			{!! Form::number($name.'['.$key.'][airline_reserve_amount]', null, ['class' => 'form-control']) !!}
 		</div>
 	</div>
 @endif

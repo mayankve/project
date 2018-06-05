@@ -71,9 +71,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	// Dashboard page
 	Route::get('/dashboard','AdminController@userDashboard');
 
-	//  Create trip
+	// Create trip
 	Route::get('/createtrip','AdminController@createTrip');
     Route::post('/store-trip','AdminController@storeTrip');
+
+    // Edit trip
+    Route::get('/edittrip/{id}','AdminController@editTrip');
+    Route::patch('updatetrip/{id}', 'AdminController@updateTrip');
 
     // Delete trip
     Route::get('/deletetrip/{id}','AdminController@deleteTrip');
