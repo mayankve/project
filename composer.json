@@ -9,13 +9,8 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-<<<<<<< HEAD
         "laravelcollective/html": "^5.4.0",
         "santigarcor/laratrust": "5.0.*"
-=======
-        "santigarcor/laratrust": "5.0.*",
-		"laravelcollective/html": "~5.0"
->>>>>>> ba836d24997838524a67f69ff13e0a8e708bf7bb
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

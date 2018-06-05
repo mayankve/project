@@ -73,7 +73,32 @@ $(document).ready(function () {
             }
         }
     });
-
+   
+        //airline land_only 
+        //
+        // flightLandDivs();
+        $('.land_only').click(function () {
+            flightLandDivs();
+            var valuses = $('input[name=is_land_only]:checked').val()
+            var data = {is_land_only: valuses};
+            //saveData(data);
+        });
+        $('.flight_id').click(function () {
+            var valuses = $(this).val()
+            var data = {flight_id: valuses};
+         //  saveData(data);
+        });
+        function flightLandDivs() {
+            var valuses = $('input[name=is_land_only]:checked').val()
+            if (valuses == '0') {
+                $('.available-flights').show();
+                $('.land-only').hide();
+            } else {
+                $('.available-flights').hide();
+                $('.land-only').show();
+            }
+        }
+        
     // Check the user credentials for backend login
     $('#submitbutton').click(function () {
         // Check the validation
@@ -81,18 +106,18 @@ $(document).ready(function () {
         {
         // hold the button reference
         let $this = $(this);
-                let fname = $('#first_name').val();
-                let lname = $('#last_name').val();
-                let gender = $('#gender').val();
-                let dob = $('#dob').val();
-                let email = $('#email').val();
-                let passportAvailable = $("input[name='is_passport']:checked").val();
-                let passportExpDate = $('#passport_exp_date').val();
-                let issuingCountry = $('#issuing_country').val();
-                let countryOfBirth = $('#country_of_birth').val();
-                let passportPic = $('#passport_pic').prop('files')[0];
-                // Append these values in FormData
-                var formData = new FormData();
+        let fname = $('#first_name').val();
+        let lname = $('#last_name').val();
+        let gender = $('#gender').val();
+        let dob = $('#dob').val();
+        let email = $('#email').val();
+        let passportAvailable = $("input[name='is_passport']:checked").val();
+        let passportExpDate = $('#passport_exp_date').val();
+        let issuingCountry = $('#issuing_country').val();
+        let countryOfBirth = $('#country_of_birth').val();
+        let passportPic = $('#passport_pic').prop('files')[0];
+        // Append these values in FormData
+        var formData = new FormData();
         formData.append('fname', fname);
         formData.append('lname', lname);
         formData.append('gender', gender);
@@ -139,88 +164,21 @@ $(document).ready(function () {
             }
         });
         }
+
     });
 
 
     $('#frm_user_profile_info').submit(function (e) {
         e.preventDefault();
     });
-//	$('#frm_user_profile_info').validate({
-//		rules: {
-//			profile_pic: {
-//			required: true,
-//			},
-//			last_name: {
-//			required: true,
-//			},
-//			gender:{
-//			    required: true, 
-//			},
-//			 dob:{
-//			    required: true, 
-//			},
-//			 email:{
-//			    required: true, 
-//			    email:true,
-//			},
-//			is_passport: {
-//			required: true,
-//			},
-//			passport_pic:{
-//				required: true,
-//			},
-//			passport_exp_date:{
-//			     required: true,
-//			},
-//			issuing_country:{
-//			     required: true,
-//			},
-//			country_of_birth:{
-//			     required: true,
-//			}
-//		},
-//		messages: {
-//			email: {
-//			required: 'Please enter email',
-//			email: 'Please enter valid email'
-//			},
-//			first_name: {
-//			required: 'Please enter first name',
-//			},
-//			 last_name: {
-//			required: 'Please enter last name',
-//			},
-//			gender:{
-//			    required: 'Please select gender',
-//			},
-//			dob:{
-//			    required: 'Please select dob', 
-//			},
-//			is_passport:{
-//			    required: 'Please enter passport', 
-//			},
-//			passport_pic:{
-//				required: 'Please upload passport pic',
-//			},
-//			passport_exp_date:{
-//			    required: 'Please select passport expiry date',
-//			},
-//			issuing_country:{
-//			     required: 'Please select passport issuing country',
-//			},
-//			country_of_birth:{
-//			     required: 'Please select country of birth',
-//			}
-//		}
-//	});
 
     // Check the user credentials for backend login
     $('#submit_profile').click(function () {
         // Check the validation
-//		if( $('#frm_user_profile_info').valid() )
-//		{
+        //		if( $('#frm_user_profile_info').valid() )
+        //		{
         // hold the button reference
-        let $this = $(this);
+                let $this = $(this);
                 let profile_pic = $('#profile_pic').prop('files')[0];
                 let is_helth_mental = $("input[name='is_helth_mental']:checked").val();
                 let helth_mental_conditions = $('#helth_mental_conditions').val();
@@ -233,23 +191,22 @@ $(document).ready(function () {
                 let personality_previous_travel = $('#personality_previous_travel').val();
                 let personality_originally_from = $('#personality_originally_from').val();
                 let personality_school = $('#personality_school').val();
-                let
-        personality_about = $('#personality_about').val();
+                let personality_about = $('#personality_about').val();
                 // Append these values in FormData
                 var formData = new FormData();
-        formData.append('profile_pic', profile_pic);
-        formData.append('is_helth_mental', is_helth_mental);
-        formData.append('helth_mental_conditions', helth_mental_conditions);
-        formData.append('is_mental_conditions', is_mental_conditions);
-        formData.append('mental_conditions', mental_conditions);
-        formData.append('food_allergies', food_allergies);
-        formData.append('shirt_size', shirt_size);
-        formData.append('emergency_contact_name', emergency_contact_name);
-        formData.append('emergency_contact_phone', emergency_contact_phone);
-        formData.append('personality_previous_travel', personality_previous_travel);
-        formData.append('personality_originally_from', personality_originally_from);
-        formData.append('personality_school', personality_school);
-        formData.append('personality_about', personality_about);
+                formData.append('profile_pic', profile_pic);
+                formData.append('is_helth_mental', is_helth_mental);
+                formData.append('helth_mental_conditions', helth_mental_conditions);
+                formData.append('is_mental_conditions', is_mental_conditions);
+                formData.append('mental_conditions', mental_conditions);
+                formData.append('food_allergies', food_allergies);
+                formData.append('shirt_size', shirt_size);
+                formData.append('emergency_contact_name', emergency_contact_name);
+                formData.append('emergency_contact_phone', emergency_contact_phone);
+                formData.append('personality_previous_travel', personality_previous_travel);
+                formData.append('personality_originally_from', personality_originally_from);
+                formData.append('personality_school', personality_school);
+                formData.append('personality_about', personality_about);
 
         $.ajax({
             url: $('meta[name="route"]').attr('content') + '/updateuserprofileinfo',
@@ -613,3 +570,66 @@ $(document).ready(function () {
         $(this).closest('.addon_airlines').remove();
     });
 });
+
+
+    $(".filter-button").click(function () {
+        var value = $(this).attr('data-filter');
+        if (value == "all")
+        {
+            $('.filter').show('1000');
+        } else
+        {
+            $(".filter").not('.' + value).hide('3000');
+            $('.filter').filter('.' + value).show('3000');
+        }
+    });
+
+    if ($(".filter-button").removeClass("active")) {
+        $(this).removeClass("active");
+    }
+    $(this).addClass("active");
+
+    $(".filter-button2").click(function () {
+        var value = $(this).attr('data-filter');
+        if (value == "all")
+        {
+            $('.filter2').show('1000');
+        } else
+        {
+            $(".filter2").not('.' + value).hide('3000');
+            $('.filter2').filter('.' + value).show('3000');
+        }
+    });
+
+    if ($(".filter-button2").removeClass("active2")) {
+        $(this).removeClass("active2");
+    }
+    $(this).addClass("active2");
+
+    $('#itemslider').carousel({interval: 3000});
+
+    $('.carousel-showmanymoveone .item').each(function () {
+        var itemToClone = $(this);
+
+        for (var i = 1; i < 4; i++) {
+            itemToClone = itemToClone.next();
+            if (!itemToClone.length) {
+                itemToClone = $(this).siblings(':first');
+            }
+
+            itemToClone.children(':first-child').clone()
+                    .addClass("cloneditem-" + (i))
+                    .appendTo($(this));
+        }
+    });
+
+    $(".dropdown-hov").hover(function () {
+        $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+        $(this).toggleClass('open');
+        $('b', this).toggleClass("caret caret-up");
+    },
+    function () {
+        $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+        $(this).toggleClass('open');
+        $('b', this).toggleClass("caret caret-up");
+    });

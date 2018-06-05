@@ -639,16 +639,20 @@ class AdminController extends Controller {
         return $fileName;
     }
 
-    /**
+   
+   /**
      * Function to return trip list view
      * @param void
      * @return url
      */
     public function listTrip() {
+        //for Trips 
         $trips = Trip::all();
-        return view('admin/triplist', ['trips' => $trips]);
+        $userId = Auth::id();
+        //For Basic Info
+        $userData = User::where('id', '=', $userId)->first();
+        return view('admin/triplist', ['trips' => $trips, 'data' => $userData]);
     }
-
     /**
      * Function to return trip spot view
      * @param void
@@ -672,8 +676,6 @@ class AdminController extends Controller {
     public function deleteVideo(Request $request) {
         Trip::destroy($id);
         return back();
-        //DB::delete('delete from trips where id = ?', [$id]);
-       //return view('admin/triplist');
     }
 
 }

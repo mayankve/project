@@ -106,7 +106,6 @@
         </nav>
         <div class="wrapper">
             <div class="alert-message"></div>
-
             <div class="deshboard_body">
                 <!-- Sidebar -->
                 <div class="navbar-default sidebar">

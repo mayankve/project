@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserProfile extends Model
 {
 	
-	/**
+    /**
      * The table associated with the model.
      *
      * @var string

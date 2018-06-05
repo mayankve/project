@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -17,6 +18,8 @@ use App\Trip;
 use Validator;
 use App\UserProfile;
 use App\Country;
+use App\TripTraveler;
+use App\UserTrip;
 
 class HomeController extends Controller {
 
@@ -28,7 +31,7 @@ class HomeController extends Controller {
     public function index() {
         // Get all the trips which are active and whose end date is not null and trip is not deleted
         $trips = Trip::where('end_date', '!=', NULL)->where('status', '=', '1')->paginate(6);
-        
+
         return view('welcome', ['trips' => $trips]);
     }
 
@@ -101,11 +104,11 @@ class HomeController extends Controller {
                 $response['errMsg'] = $error;
             }
         } else {
-            if (Auth::attempt(['email' => $loginData['email'], 'password' => $loginData['password'], 'is_deleted' => '0'], $remember)) { // is_deleted: 0, means user is active
+            if (Auth::attempt(['email' => $loginData['email'], 'password' => $loginData['password'], 'status' => '1'], $remember)) {
+                // status: 1, means user is active
                 // Check the role of the logged-in user and redirect the user accordingly
                 $userId = Auth::id();
                 $user = User::find($userId);
-
                 // Rolewise redirection url
                 $redirectionUrl = url('/dashboard');
                 if ($user->hasRole(['admin'])) {
@@ -153,7 +156,6 @@ class HomeController extends Controller {
         $frmData = Input::get('frmData');
         // Parse the serialize form data to an array
         parse_str($frmData, $passswordData);
-
         $remember = false;
         if (isset($passswordData['remember'])) {
             $remember = true;
@@ -220,7 +222,7 @@ class HomeController extends Controller {
     public function userDashboard() {
         $userId = Auth::id();
         // Get all the trips which are active and whose end date is not null and trip is not deleted
-        $trips = Trip::where('end_date', '!=', NULL)->where('is_deleted', '!=', '1')->paginate(6);
+        $trips = Trip::where('end_date', '!=', NULL)->where('status', '!=', '1')->paginate(6);
         //For Basic Info
         $userData = User::where('id', '=', $userId)->first();
         //For Profile Info
@@ -464,7 +466,8 @@ class HomeController extends Controller {
      */
 
     public function bookTrip(Request $request) {
-        $trip_traveler = new \App\TripTraveler();
+        $trip_traveler = new TripTraveler();
+        $user_trip = new UserTrip();
         // Traveler validation
         foreach ($request->get('traveler') as $key => $val) {
             $rules["traveler.{$key}.first_name"] = 'required';
@@ -472,24 +475,34 @@ class HomeController extends Controller {
         }
         $this->validate($request, $rules);
         $trip_id = $request->get('trip_id');
-        $userId = Auth::id();
+        $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
+        $flag = 0;
         //Saving the Travelers info to database
         if (count($traveler_details) > 0) {
             foreach ($traveler_details as $key => $val) {
-                $trip_traveler->user_id = $userId;
+                $trip_traveler->user_id = $user_id;
                 $trip_traveler->trip_id = $trip_id;
                 $trip_traveler->email = $val['email'];
                 $trip_traveler->first_name = $val['first_name'];
                 $trip_traveler->last_name = $val['last_name'] ? $val['last_name'] : '';
                 $trip_traveler->gender = $val['gender'] ? $val['gender'] : '';
                 $trip_traveler->created_at = date('Y-m-d H:i:s');
-                $trip_traveler->save();
+                if ($trip_traveler->save()) {
+                    $flag = 1;
+                }
+            }
+            if ($flag) {
+                $user_trip->user_id = $user_id;
+                $user_trip->trip_id = $trip_id;
+                $user_trip->booking_date = date('Y-m-d');
+                $user_trip->save();
             }
         }
-        return redirect('/mytripdesign/'.$trip_id);
+        return redirect('/mytripdesign/' . $trip_id);
     }
-     /**
+
+    /**
      * Function to return book trip view
      * @param int id
      * @return url
@@ -499,28 +512,30 @@ class HomeController extends Controller {
         //Trip Travelers details
         $tripTravelers = DB::table('trip_traveler')
                 ->where('trip_id', '=', $id)
-                ->where('is_deleted', '=', '0')
+                ->where('user_id', '=', $userId)
+                ->where('status', '=', '1')
                 ->get();
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
                 ->join('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
                 ->select('trip_airline.*', 'airlines.*')
                 ->where('trip_airline.trip_id', '=', $id)
-                ->where('trip_airline.is_deleted', '=', '0')
+                ->where('trip_airline.status', '=', '1')
                 ->get();
-
+        //  dd(DB::getQueryLog());
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel_booking')
                 ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
                 ->select('trip_hotel_booking.*', 'trip_hotel.*')
                 ->where('trip_hotel_booking.trip_id', '=', $id)
-                ->where('trip_hotel_booking.is_deleted', '=', '0')
+                ->where('trip_hotel_booking.status', '=', '1')
+                ->where('trip_hotel_booking.user_id', '=', $userId)
                 ->get();
 
         //Trip Addon Details
         $tripAddons = DB::table('trip_addon')
                 ->where('trip_id', '=', $id)
-                ->where('is_deleted', '=', '0')
+                ->where('status', '=', '1')
                 ->get();
 
         //Trip Addon arrays
@@ -529,29 +544,29 @@ class HomeController extends Controller {
 
         foreach ($tripAddons AS $key => $value) {
             //Trip Addon Traveler Details
-           $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
+            $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
-                    ->where('is_deleted', '=', '0')
+                    ->where('status', '=', '1')
                     ->get();
 
             //Trip Addon Flight Details
-          $tripAddons['tripAddonFlights'] = DB::table('trip_addon_airline')
+            $tripAddons['tripAddonFlights'] = DB::table('trip_addon_airline')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
-                    ->where('is_deleted', '=', '0')
+                    ->where('status', '=', '1')
                     ->get();
             //Trip Addon Hotel Details
-           $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
+            $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
                     ->where('trip_id', '=', $id)
                     ->where('addon_id', '=', $value->id)
-                    ->where('is_deleted', '=', '0')
+                    ->where('status', '=', '1')
                     ->get();
         }
         //Trip Included Activities Data
         $tripIncludedActivities = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
-                ->where('is_deleted', '=', '0')
+                ->where('status', '=', '1')
                 ->get();
 
         //Include Activity arrays
@@ -562,37 +577,33 @@ class HomeController extends Controller {
             $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
                     ->where('trip_id', '=', $id)
                     ->where('activity_id', '=', $value->id)
-                    ->where('is_deleted', '=', '0')
+                    ->where('status', '=', '1')
                     ->get();
             //Included Activity Hotel Details
-        $tripIncludedActivities['includedActivityHotles'] = DB::table('trip_included_activity_hotel')
+            $tripIncludedActivities['includedActivityHotles'] = DB::table('trip_included_activity_hotel')
                     ->where('trip_id', '=', $id)
                     ->where('activity_id', '=', $value->id)
-                    ->where('is_deleted', '=', '0')
+                    ->where('status', '=', '1')
                     ->get();
         }
         //To Do Packing Details 
         $tripTodo = DB::table('user_trip_todo')
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
-                ->where('is_deleted', '=', '0')
+                ->where('status', '=', '1')
                 ->get();
-        
+
         //Data to send for design my trip view
-            $data = array(
+        $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
             'tripTravelers' => $tripTravelers,
             'tripAddons' => $tripAddons,
-//            'tripAddonAirlines' => $tripAddonFlights,
-//            'tripAddonHotels' => $tripAddonHotels,
-//            'tripAddonTravelers' => $tripAddonTravelers,
             'tripIncludedActivities' => $tripIncludedActivities,
-//            'tripIncludedHotels' => $includedActivityHotles,
-//            'tripIncludedflights' => $includedActivityFlights,
             'tripTodo' => $tripTodo
         );
-        // echo "<pre>"; print_r($data);die; 
+        //echo "<pre>"; print_r($data);die; 
         return view('tripdesign', ['tripdata' => $data]);
-    }  
+    }
+
 }
