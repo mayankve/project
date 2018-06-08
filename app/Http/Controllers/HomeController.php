@@ -602,7 +602,7 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripIncludedActivities,
             'tripTodo' => $tripTodo
         );
-        //echo "<pre>"; print_r($data);die; 
+//        echo "<pre>"; print_r($data);die; 
         return view('tripdesign', ['tripdata' => $data]);
     }
 

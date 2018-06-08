@@ -87,8 +87,12 @@
                                         <div class="col-sm-9">
                                             <div class="row">
                                                 <div class="col-sm-6 pr-3">
-                                                    <label><input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked="checked">Avaliable Flights</label>
-                                                    <label><input type="radio" name="is_land_only" class="land_only" value="1">Land only</label>
+                                                    <label>
+                                                        <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked="checked">Avaliable Flights
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="is_land_only" class="land_only" value="1">Land only
+                                                    </label>
                                                 </div>
                                                 <div class="col-sm-6">
                                                 </div>
