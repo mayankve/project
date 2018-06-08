@@ -114,11 +114,11 @@
                                 <a data-toggle="collapse" href="#manage_trips" class="tablinks "  data-parent="#accordion1" href="#my_trip"><i class=" fa fa-cog fa-spin margin-bottom"></i>Manage Trips</a>
                                 <ul id="manage_trips" class="collapse sub-menu">
                                     <li><a href="{{ url('admin/tripspot') }}" class="tablinks "> Trip spots</a></li>
-                                    <li><a href="#" class="tablinks "> Add on Traveler List</a></li>
-                                    <li><a href="#" class="tablinks "> Monthly Trip Projection</a></li>
-                                    <li><a href="#" class="tablinks "> Travelers Payment Status</a></li>
-                                    <li><a href="#" class="tablinks "> Trip Payment</a></li>
-                                    <li><a href="#" class="tablinks "> Hotel Roommates</a></li>
+                                    <li><a href="{{ url('admin/manage-trip/addon-travelers') }}" class="tablinks"> Add on Traveler List</a></li>
+                                    <li><a href="#" class="tablinks"> Monthly Trip Projection</a></li>
+                                    <li><a href="#" class="tablinks"> Travelers Payment Status</a></li>
+                                    <li><a href="#" class="tablinks"> Trip Payment</a></li>
+                                    <li><a href="#" class="tablinks"> Hotel Roommates</a></li>
                                 </ul>
                             </li>
                             <li><a href="{{ url('admin/createtrip') }}" class="tablinks " id="my_information"><i class=" fa fa-cog fa-spin margin-bottom"></i>Create New Trip</a></li>
@@ -318,5 +318,6 @@ if (vid.paused) {
 }
         </script>
 
+        @yield('scripts')
     </body>
 </html>

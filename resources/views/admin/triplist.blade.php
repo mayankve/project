@@ -29,7 +29,7 @@
             </div>
             <div class="col-sm-6 text-right">
                 <h3 class="userName">
-                    Welcome {{$data->name}}
+                    <!-- Welcome --> {{-- $data->name --}}
                 </h3>
             </div>
         </div>
@@ -53,7 +53,7 @@
                         <a href="#">{{$trip->name}} </a>
                         <a href="{{ url('/').'/admin/deletetrip/'.$trip->id }}" class="info confirmation"><span><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i></span></a>
 
-                        <a href="#" class="info"><span><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></span></a>
+                        <a href="{{ url('admin/edittrip/'.$trip->id) }}" class="info"><span><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></span></a>
 
                     </div>
 

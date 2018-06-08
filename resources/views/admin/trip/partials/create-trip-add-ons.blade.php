@@ -199,7 +199,7 @@
 						</div>
 					</div>
 					<div class="row">
-						@include('admin.trip.partials.create-trip-hotels-fields', array('name' => 'addon[0][addons_hotels]', 'old' => false))
+						@include('admin.trip.partials.create-trip-hotels-fields', array('name' => 'addon[0][addons_hotels]', 'old' => false, 'key' => 0))
 						<div class="col-md-12 remove-addon-hotels-div"></div>
 					</div>
 				</div>
@@ -215,7 +215,7 @@
 						</div>
 					</div>
 					<div class="row">
-						@include('admin.trip.partials.create-trip-airlines-fields', array('name' => 'addon[0][addons_airlines]', 'old' => false))
+						@include('admin.trip.partials.create-trip-airlines-fields', array('name' => 'addon[0][addons_airlines]', 'old' => false, 'key' => 0))
 						<div class="col-md-12 remove-addon-airlines-div"></div>
 					</div>
 				</div>

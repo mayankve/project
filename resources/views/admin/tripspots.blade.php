@@ -57,8 +57,8 @@
                     <tr>
                     <td>{{$trip->name}}</td>
                     <td>{{$trip->maximum_spots}}</td>
-                    <td>{{$trip->name}}</td>
-                    <td>{{$trip->name}}</td>
+                    <td>{{$trip->booked}}</td>
+                    <td>{{ ($trip->maximum_spots - $trip->booked) }}</td>
                     </tr>
               @endforeach
                 @endif   
