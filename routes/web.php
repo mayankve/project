@@ -87,6 +87,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         
          // Trip Spots
 	Route::get('/tripspot','AdminController@tripSpot');
+
+    // Manage Trip
+    Route::prefix('manage-trip')->group(function () {
+        // Trip Addon Travelers
+        Route::get('/addon-travelers','AdminController@tripAddonTravelers');
+
+        Route::get('/get-trip-addons/{trip_id}','AdminController@getTripAddons');
+    });
         
          // Upload Video
 	Route::get('/uploadvideo','AdminController@uploadVideo');

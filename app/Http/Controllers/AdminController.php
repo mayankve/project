@@ -853,7 +853,7 @@ class AdminController extends Controller {
         $this->updateTripIncludedActivity($id, $request);
 
         // 'UPDATE' ADD-ONS
-        //$this->updateTripAddon($id, $request);
+        $this->updateTripAddon($id, $request);
         
         // 'UPDATE' TRIP HOTEL
         $existingIds = TripHotel::where('trip_id', $id)->pluck('id')->toArray();
@@ -1597,9 +1597,43 @@ class AdminController extends Controller {
      * @return url
      */
     public function tripSpot() {
-        $trips = Trip::all();
+        $trips = Trip::select('trips.name', 'trips.maximum_spots', DB::raw('count(trip_traveler.user_id) as booked'))
+            ->leftJoin('trip_traveler', 'trip_traveler.trip_id', '=', 'trips.id')
+            ->where('trips.status', '=', '1')
+            ->groupBy('trips.id')
+            ->get();
         
         return view('admin/tripspots', ['trips' => $trips]);
+    }
+
+    /**
+     * Function to get trip addons and travellers belongs to that addon
+     * @param void
+     * @return url
+     */
+    function tripAddonTravelers()
+    {
+         $tripPluck = Trip::where(['status' => '1'])->pluck('name', 'id')->toArray();
+
+        return view('admin/tripAddonTravelers', ['tripPluck' => $tripPluck]);
+    }
+
+    /**
+     * Ajax function to get trip addons
+     * @param int  $trip_id
+     * @return Response
+     */
+    function getTripAddons($trip_id = null)
+    {
+        $tripAddon = array();
+
+        if( !is_null($trip_id) )
+        {
+            $tripAddon = TripAddon::where(['trip_id' => $trip_id])
+                ->get(['id', 'addons_name'])->toArray();
+        }
+
+        return response()->json(['tripAddon' => $tripAddon]);
     }
 
     /**

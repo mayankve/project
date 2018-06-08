@@ -524,12 +524,17 @@ class HomeController extends Controller {
                 ->get();
         //  dd(DB::getQueryLog());
         //Trip Hotels details
-        $tripHotels = DB::table('trip_hotel_booking')
+        /*$tripHotels = DB::table('trip_hotel_booking')
                 ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
                 ->select('trip_hotel_booking.*', 'trip_hotel.*')
                 ->where('trip_hotel_booking.trip_id', '=', $id)
                 ->where('trip_hotel_booking.status', '=', '1')
                 ->where('trip_hotel_booking.user_id', '=', $userId)
+                ->get();*/
+        $tripHotels = DB::table('trip_hotel')
+                ->select('trip_hotel.*')
+                ->where('trip_hotel.trip_id', '=', $id)
+                ->where('trip_hotel.status', '=', '1')
                 ->get();
 
         //Trip Addon Details
