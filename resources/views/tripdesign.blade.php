@@ -71,7 +71,7 @@
                 <!-- flight-land-------------------Start --------------------------------------->
                 <div role="tabpanel" class="tab-pane active" id="DesignTrip">
                     <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">-->
-                    {!! Form::open(['url' => '/designtrip', 'id' => 'trip-land-flight' , 'method'=>'post']) !!}
+                    {!! Form::open(['url' => '/designtrip', 'id' => 'trip-design' , 'method'=>'post']) !!}
                     <div class="panel panel-primary trip-design-flight">
                         <div class="panel-heading">
                             <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -123,8 +123,7 @@
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_traveler')
                     </div>
-                <div role="tabpanel" class="tab-pane" id="roommates">Roommates</div>
-                <div role="tabpanel" class="tab-pane" id="insurance">Insurance</div>
+                
             </div>
             <br>
         </div>

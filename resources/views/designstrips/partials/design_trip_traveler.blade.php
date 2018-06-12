@@ -52,23 +52,23 @@
                                 @endforeach
                                 @endif
                             </div>
-                        </div>
-                        <!--<div class="form-group pdrow-group">
-                            <div class="col-sm-12 text-right">
-                                <div class="update-btn">
-                                                            </div>
                             </div>
-                        </div>-->
-
-                        <!--<div class="form-group pdrow-group">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label></label>
+                                <!--<div class="form-group pdrow-group">
+                                    <div class="col-sm-12 text-right">
+                                        <div class="update-btn">
+                                                                    </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>-->
+                                </div>-->
+
+                                <!--<div class="form-group pdrow-group">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
                     </div>
                 </div>
             </div>
@@ -79,7 +79,6 @@
                 </div>
             </div>
         </div>
-
     </form>
 </div>
 <!-- traveler-------------------End ---------------------------------------------->
