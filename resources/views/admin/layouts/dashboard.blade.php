@@ -87,7 +87,7 @@
                                     <a class="user-img"><img src="/aat_zend/public/assets/profile_img/80d93e10f0653f507e7402dbb531a8a1.jpg" alt="tm-01" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>
                                     <ul class="dropdown-menu" style="display: none;">
                                         <li><a href="{{ url('/dashboard') }}">View profile</a></li>
-                                        <!--<li><a href="{{ url('/changepassword')}}">Change password</a></li>-->
+                                        <li><a href="{{ url('/changepassword')}}">Change password</a></li>
                                         <li><a href="{{ url('/logout') }}"> <i class="fa fa-lock" aria-hidden="true"></i> Logout </a></li>
                                     </ul>
                                 </li>

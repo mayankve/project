@@ -156,10 +156,6 @@ class HomeController extends Controller {
         $frmData = Input::get('frmData');
         // Parse the serialize form data to an array
         parse_str($frmData, $passswordData);
-        $remember = false;
-        if (isset($passswordData['remember'])) {
-            $remember = true;
-        }
 
         // Server Side Validation
         $response = array();
@@ -188,29 +184,48 @@ class HomeController extends Controller {
                 $response['errMsg'] = $error;
             }
         } else {
-            if (!(Hash::check($passswordData['current_password'], Auth::user()->password))) {
+            if( Hash::check($passswordData['current_password'], Auth::user()->password) )
+            {
+                if ( strcmp($passswordData['current_password'], $passswordData['new_password']) == 0 )
+                {
+                    //If new password is same as before
+                    $response['errCode'] = 1;
+                    $response['errMsg'] = 'New Password cannot be same as your current password. Please choose a different password.';
+                }
+                elseif( strcmp($passswordData['new_password'], $passswordData['repeat_new_password']) )
+                {
+                    //If new password and confirm password is not same
+                    $response['errCode'] = 1;
+                    $response['errMsg'] = 'Confirm password doesn\'t match with new password.';
+                }
+                else
+                {
+                    //Change Password
+                    $user = Auth::user();
+                    $user->password = Hash::make($passswordData['new_password']);
+                    if ($user->save()) {
+                        $response['errCode'] = 0;
+                        $response['errMsg'] = 'Password updated successfully';
+
+                        $user = User::find(Auth::id());
+                        $response['redirectionUrl'] = url('/dashboard');
+                        if ($user->hasRole(['admin'])) {
+                            $response['redirectionUrl'] = url('admin/dashboard');
+                        }
+                    } else {
+                        $response['errCode'] = 1;
+                        $response['errMsg'] = 'Password could not be updated';
+                    }
+                }
+            }
+            else
+            {
                 //If password is not matched
                 $response['errCode'] = 1;
                 $response['errMsg'] = 'Your current password does not matches with the password you provided. Please try again.';
-                //return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
-            }
-            if (strcmp($passswordData['current_password'], $passswordData['new_password']) == 0) {
-                //If new password is same as before
-                $response['errCode'] = 1;
-                $response['errMsg'] = 'New Password cannot be same as your current password. Please choose a different password.';
-            } else {
-                //Change Password
-                $user = Auth::user();
-                $user->password = Hash::make($passswordData['new_password']);
-                if ($user->save()) {
-                    $response['errCode'] = 0;
-                    $response['errMsg'] = 'Password updated successfully';
-                } else {
-                    $response['errCode'] = 1;
-                    $response['errMsg'] = 'Password could not be updated';
-                }
             }
         }
+
         return response()->json($response);
     }
 

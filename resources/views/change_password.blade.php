@@ -95,7 +95,8 @@
 				    	$this.button('reset');
 				    },
 				    success: function(response){
-                                        alert(response.redirectionUrl);
+						//alert(response.redirectionUrl);
+						//console.log(response);
 				    	if( response.errCode == 0 )
 				    	{
 				    		document.location.href = response.redirectionUrl
