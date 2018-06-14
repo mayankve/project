@@ -1,8 +1,6 @@
 @extends('layouts.dashboard')
 @section('title', 'Dashboard')
-
 @section('content')
-
 <style>
     /* Style the tab */
     div.tab {
@@ -122,7 +120,7 @@
                                         <label class="user-view inputlabl" style="font-weight: normal">{{ ( $data['gender'] == '1' ) ? 'Male' : 'Female' }}</label>
                                         <div class="user-edit">
                                             <select name="gender" id="gender" class="form-control">
-                                            	<option value="1" selected="">Male</option>
+                                                <option value="1" selected="">Male</option>
                                                 <option value="2">Female</option>
                                             </select>
                                         </div>
@@ -152,10 +150,10 @@
                                         <label class="user-view inputlabl" style="font-weight: normal">{{ $data['is_passport'] ? 'Yes':'No' }}</label>
                                         <div class="user-edit checkbtn">
                                             <label>
-                                            	<input type="radio" name="is_passport" class="is-passport" value="0" {{ ( $data['is_passport'] == '0' ) ? 'checked' : '' }}>No
+                                                <input type="radio" name="is_passport" class="is-passport" value="0" {{ ( $data['is_passport'] == '0' ) ? 'checked' : '' }}>No
                                             </label>
                                             <label>
-                                            	<input type="radio" name="is_passport" class="is-passport" value="1" {{ ( $data['is_passport'] == '1' ) ? 'checked' : '' }}>Yes
+                                                <input type="radio" name="is_passport" class="is-passport" value="1" {{ ( $data['is_passport'] == '1' ) ? 'checked' : '' }}>Yes
                                             </label>
                                         </div>
                                     </div>
@@ -184,26 +182,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
-                                   <label class="control-label col-sm-3 custom-lbl">Issuing Country</label>
+                                    <label class="control-label col-sm-3 custom-lbl">Issuing Country</label>
                                     <div class="col-sm-9">
-                                    <label class="user-view inputlabl" style="font-weight: normal">{{ $data['issuing_country'] != '' ? $data['issuing_country'] : 'NA' }}</label>
-                                    <div class="user-edit">
-                                        <select name="issuing_country" id="issuing_country" class="form-control">
-                                            <option value="">Select</option>
-                                        <?php
-                                         if (count($countries) > 0) {
-                                             foreach ($countries AS $country) {
-                                                 if ($user_country->issuing_country == $country->id) {
-                                                     ?>
-                                                     <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
-                                                 <?php } else {
-                                                     ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
-                                                 }
-                                             }
-                                         }
-                                         ?>
-                                    </select>
-                                    </div>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['issuing_country'] != '' ? $data['issuing_country'] : 'NA' }}</label>
+                                        <div class="user-edit">
+                                            <select name="issuing_country" id="issuing_country" class="form-control">
+                                                <option value="">Select</option>
+                                                <?php
+                                                if (count($countries) > 0) {
+                                                    foreach ($countries AS $country) {
+                                                        if ($user_country->issuing_country == $country->id) {
+                                                            ?>
+                                                            <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
+                                                        <?php } else {
+                                                            ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
@@ -212,8 +210,8 @@
                                         <label class="user-view inputlabl" style="font-weight: normal">{{ $data['country_of_Birth'] != '' ? $data['country_of_Birth'] : 'NA' }}</label>
                                         <div class="user-edit">
                                             <select name="country_of_birth" id="country_of_birth" class="form-control">
-                                            	<option value="">Select</option>
-                                               <?php
+                                                <option value="">Select</option>
+                                                <?php
                                                 if (count($countries) > 0) {
                                                     foreach ($countries AS $country) {
                                                         if ($user_country->country_of_Birth == $country->id) {
@@ -335,7 +333,28 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label custom-lbl">Food Allergies</label>
+                                    <div class="col-sm-9">
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['food_allergies'] }}</label>
+                                        <div class="profile-edit">
+                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="{{ $profile['food_allergies'] }}">            </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label custom-lbl">Shirt Size</label>
+                                    <div class="col-sm-9">
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['shirt_size'] }}</label>
+                                        <div class="profile-edit">
+                                            <input type="text" name="shirt_size" id="shirt_size" class="form-control" value="{{ $profile['shirt_size'] }}">            </div>
+                                    </div>
+                                </div>       
+                                <div class="form-group">
+                                    <div class="form-title">
+                                        <div class="col-md-12"><h3>Health information</h3>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Do you have any known health conditions</label>
                                     <div class="col-sm-9">
@@ -357,22 +376,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label custom-lbl">Food Allergies</label>
-                                    <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['food_allergies'] }}</label>
-                                        <div class="profile-edit">
-                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="{{ $profile['food_allergies'] }}">            </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label custom-lbl">Shirt Size</label>
-                                    <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['shirt_size'] }}</label>
-                                        <div class="profile-edit">
-                                            <input type="text" name="shirt_size" id="shirt_size" class="form-control" value="{{ $profile['shirt_size'] }}">            </div>
-                                    </div>
-                                </div>       
+
 
                                 <!--- Emergency contact information -->
                                 <div class="form-group">
@@ -523,16 +527,16 @@
         <!-- Server Response -->
 
     </div>
-    <script>
-        $('.tablinks').click(function () {
-            var id = $(this).attr('id');
-            $('.tablinks').removeClass('active')
-            $(this).addClass('active');
-            $('.tabcontent').hide();
-            var idc = '#' + id + '_container';
-            $(idc).show();
-        });
-        $("#my_information").trigger("click");
+<script>
+    $('.tablinks').click(function () {
+        var id = $(this).attr('id');
+        $('.tablinks').removeClass('active')
+        $(this).addClass('active');
+        $('.tabcontent').hide();
+        var idc = '#' + id + '_container';
+        $(idc).show();
+    });
+    $("#my_information").trigger("click");
 
 </script>
 </div>

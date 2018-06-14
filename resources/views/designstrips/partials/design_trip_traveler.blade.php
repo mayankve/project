@@ -26,6 +26,12 @@
                                         <div class="col-sm-2">
                                             <label>Gender</label>
                                         </div>
+                                        <div class="col-sm-2">
+                                            <label>City</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label>Profile Image</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -46,6 +52,12 @@
                                         <div class="col-sm-2">
                                             {{($triptraveler->gender == '1')?'Male':'Female'}}
                                         </div>
+                                        <div class="col-sm-2">
+                                           {{$triptraveler->city}}
+                                        </div>
+                                         <div class="col-sm-2">
+                                           <img src="{{ url('/') . '/profile_images/' .$triptraveler->passport_pic }}" alt="Profile image" class="img-responsive model_image" />
+                                        </div>
                                     </div>
                                 </div> 
                                 <?php $sr++; ?>
@@ -53,22 +65,6 @@
                                 @endif
                             </div>
                             </div>
-                                <!--<div class="form-group pdrow-group">
-                                    <div class="col-sm-12 text-right">
-                                        <div class="update-btn">
-                                                                    </div>
-                                    </div>
-                                </div>-->
-
-                                <!--<div class="form-group pdrow-group">
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                     </div>
                 </div>
             </div>

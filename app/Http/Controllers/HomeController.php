@@ -123,7 +123,6 @@ class HomeController extends Controller {
                 $response['errMsg'] = 'Invalid user credentials';
             }
         }
-
         return response()->json($response);
     }
 
@@ -184,22 +183,16 @@ class HomeController extends Controller {
                 $response['errMsg'] = $error;
             }
         } else {
-            if( Hash::check($passswordData['current_password'], Auth::user()->password) )
-            {
-                if ( strcmp($passswordData['current_password'], $passswordData['new_password']) == 0 )
-                {
+            if (Hash::check($passswordData['current_password'], Auth::user()->password)) {
+                if (strcmp($passswordData['current_password'], $passswordData['new_password']) == 0) {
                     //If new password is same as before
                     $response['errCode'] = 1;
                     $response['errMsg'] = 'New Password cannot be same as your current password. Please choose a different password.';
-                }
-                elseif( strcmp($passswordData['new_password'], $passswordData['repeat_new_password']) )
-                {
+                } elseif (strcmp($passswordData['new_password'], $passswordData['repeat_new_password'])) {
                     //If new password and confirm password is not same
                     $response['errCode'] = 1;
                     $response['errMsg'] = 'Confirm password doesn\'t match with new password.';
-                }
-                else
-                {
+                } else {
                     //Change Password
                     $user = Auth::user();
                     $user->password = Hash::make($passswordData['new_password']);
@@ -217,9 +210,7 @@ class HomeController extends Controller {
                         $response['errMsg'] = 'Password could not be updated';
                     }
                 }
-            }
-            else
-            {
+            } else {
                 //If password is not matched
                 $response['errCode'] = 1;
                 $response['errMsg'] = 'Your current password does not matches with the password you provided. Please try again.';
@@ -487,32 +478,42 @@ class HomeController extends Controller {
         foreach ($request->get('traveler') as $key => $val) {
             $rules["traveler.{$key}.first_name"] = 'required';
             $rules["traveler.{$key}.email"] = 'required|email';
+            $rules["traveler.{$key}.profile_image"] = 'required';
+            $rules["traveler.{$key}.city"] = 'required';
         }
         $this->validate($request, $rules);
         $trip_id = $request->get('trip_id');
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
         $flag = 0;
-        //Saving the Travelers info to database
         if (count($traveler_details) > 0) {
-            foreach ($traveler_details as $key => $val) {
-                $trip_traveler->user_id = $user_id;
-                $trip_traveler->trip_id = $trip_id;
-                $trip_traveler->email = $val['email'];
-                $trip_traveler->first_name = $val['first_name'];
-                $trip_traveler->last_name = $val['last_name'] ? $val['last_name'] : '';
-                $trip_traveler->gender = $val['gender'] ? $val['gender'] : '';
-                $trip_traveler->created_at = date('Y-m-d H:i:s');
-                if ($trip_traveler->save()) {
-                    $flag = 1;
-                }
-            }
-            if ($flag) {
-                $user_trip->user_id = $user_id;
-                $user_trip->trip_id = $trip_id;
-                $user_trip->booking_date = date('Y-m-d');
-                $user_trip->save();
-            }
+        foreach($traveler_details as $index => $row)
+           {
+               // Add Addon
+               $fileName = '';
+               if( $request->hasFile('traveler.'.$index.'.profile_image') )
+               {
+                   $fileName = $this->imageUpload($request->file('traveler.'.$index.'.profile_image'), 'traveler', 'profile-image');
+               }
+               $trip_traveler_id = TripTraveler::create(array(
+                   'user_id'               => $user_id,
+                   'trip_id'         => $row['$trip_id'],
+                   'email'       => $row['email'],
+                   'first_name'         => $row['first_name'],
+                   'last_name'     => $row['last_name'] ? $row['last_name'] : '',
+                   'gender'     => $row['gender'],
+                   'passport_pic' => $fileName,
+                   'city' => $row['city'],
+                   'created_at'        => date('Y-m-d H:i:s')
+               ))->id;
+               if(isset($trip_traveler_id)){
+                   $user_trip_id = UserTrip::create(array(
+                        'user_id'               => $user_id,
+                        'trip_id'         => $row['$trip_id'],
+                        'booking_date'         => date('Y-m-d')
+                   ))->id;
+               }
+           }
         }
         return redirect('/mytripdesign/' . $trip_id);
     }
@@ -537,15 +538,15 @@ class HomeController extends Controller {
                 ->where('trip_airline.trip_id', '=', $id)
                 ->where('trip_airline.status', '=', '1')
                 ->get();
-        //  dd(DB::getQueryLog());
+          //dd(DB::getQueryLog());
         //Trip Hotels details
-        /*$tripHotels = DB::table('trip_hotel_booking')
-                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
-                ->select('trip_hotel_booking.*', 'trip_hotel.*')
-                ->where('trip_hotel_booking.trip_id', '=', $id)
-                ->where('trip_hotel_booking.status', '=', '1')
-                ->where('trip_hotel_booking.user_id', '=', $userId)
-                ->get();*/
+        $tripHotels = DB::table('trip_hotel_booking')
+          ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
+          ->select('trip_hotel_booking.*', 'trip_hotel.*')
+          ->where('trip_hotel_booking.trip_id', '=', $id)
+          ->where('trip_hotel_booking.status', '=', '1')
+          ->where('trip_hotel_booking.user_id', '=', $userId)
+          ->get(); 
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
                 ->where('trip_hotel.trip_id', '=', $id)
@@ -569,7 +570,6 @@ class HomeController extends Controller {
                     ->where('addon_id', '=', $value->id)
                     ->where('status', '=', '1')
                     ->get();
-
             //Trip Addon Flight Details
             $tripAddons['tripAddonFlights'] = DB::table('trip_addon_airline')
                     ->where('trip_id', '=', $id)
@@ -612,7 +612,7 @@ class HomeController extends Controller {
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
                 ->get();
-
+        //   echo print_r($tripTravelers);die;
         //Data to send for design my trip view
         $data = array(
             'tripAirlines' => $tripAirlines,
@@ -622,8 +622,38 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripIncludedActivities,
             'tripTodo' => $tripTodo
         );
-//        echo "<pre>"; print_r($data);die; 
         return view('tripdesign', ['tripdata' => $data]);
+    }
+    /**
+     * Upload file and return the name of the uploaded file
+     *
+     * @param object $file
+     * @param object $directory
+     * @param object $startWith
+     * @return string $fileName
+     */
+    protected function imageUpload($file, $directory=null, $startWith)
+    {
+        // SET UPLOAD PATH
+        if($directory != NULL && $directory != '')
+        {
+            $destinationPath = base_path() . '/public/uploads/'.$directory.'/';
+        }
+        else
+        {
+            $destinationPath = base_path() . '/public/uploads/';
+        }
+
+        // GET THE FILE EXTENSION
+        $extension = $file->getClientOriginalExtension();
+
+        // RENAME THE UPLOAD WITH RANDOM NUMBER
+        $fileName =  $startWith.md5(time()) . '.' . $extension;
+
+        // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+        $file->move($destinationPath, $fileName);
+
+        return $fileName;
     }
 
 }
