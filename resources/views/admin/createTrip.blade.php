@@ -237,6 +237,10 @@
             </div>
         </div>
     </div>
+    <!-- Misc Expense -->
+    <div class="panel panel-default">
+         @include('admin.trip.partials.create-trip-misc-expense')
+    </div>
     <div class="row">
         <div class="col-md-12 text-right">
             {{ Form::submit('Submit', array('class' => 'btn btn-success')) }}

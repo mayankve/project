@@ -27,6 +27,7 @@ use App\TripAddonHotel;
 use App\TripAddonAirline;
 use App\TripHotel;
 use App\TripTodo;
+use App\TripMiscExpense;
 use Validator;
 
 class AdminController extends Controller {
@@ -250,7 +251,10 @@ class AdminController extends Controller {
     	$airlines = Airline::where(['status' => '1'])->get();
         $airlinesPluck = Airline::where(['status' => '1'])->pluck('name', 'id')->toArray();
 
-        return view('admin/createTrip', compact('airlines', 'airlinesPluck'));
+        // Default misc expense
+        $miscExpense = array('Collection Percentage', 'Shirts and Pamphlets', 'Photography');
+
+        return view('admin/createTrip', compact('airlines', 'airlinesPluck', 'miscExpense'));
     }
 
     /**
@@ -390,6 +394,17 @@ class AdminController extends Controller {
         foreach($request->get('to_do') as $key => $val)
         {
             $rules["to_do.{$key}.todo_name"] = 'required';
+        }
+
+        // Misc expense validation
+        foreach($request->get('misc_expense') as $key => $val)
+        {
+            // Validation upto 3 column 'default'
+            if($key <= 2)
+            {
+                $rules["misc_expense.{$key}.label"] = 'required';
+                $rules["misc_expense.{$key}.value"] = 'required';
+            }
         }
 
         //echo '<pre>'; print_r($rules); exit;
@@ -565,6 +580,19 @@ class AdminController extends Controller {
 
                 TripTodo::create($row);
             }
+
+            // Add Misc Expense
+            $misc_expense = $request->input('misc_expense');
+
+            foreach($misc_expense as $row)
+            {
+                if( !empty(trim($row['label'])) || !empty(trim($row['value'])) )
+                {
+                    $row['trip_id'] = $id;
+
+                    TripMiscExpense::create($row);
+                }
+            }
         }
 
         $request->session()->flash('success', 'Trip created successfully!');
@@ -620,23 +648,32 @@ class AdminController extends Controller {
         }
 
         // Get trip hotel
-        $tripHotel = TripHotel::where(['trip_id' => $id, 'status' => '1' ])->get();
+        $tripHotel = TripHotel::where(['trip_id' => $id, 'status' => '1'])->get();
 
         // Get trip todo
-        $tripTodo = TripTodo::where(['trip_id' => $id, 'status' => '1' ])->get();
+        $tripTodo = TripTodo::where(['trip_id' => $id, 'status' => '1'])->get();
+
+        // Get trip misc expense
+        $tripMiscExpense = TripMiscExpense::where(['trip_id' => $id])->get();
 
         // Combine all trip associates data into trip to fill it automatically into edit form
-        $trip['airline']    = $tripAirline;
+        $trip['airline']            = $tripAirline;
         $trip['included_activity']  = $tripIncludedActivity;
-        $trip['addon']      = $tripAddon;
-        $trip['hotels']     = $tripHotel;
-        $trip['to_do']      = $tripTodo;
+        $trip['addon']              = $tripAddon;
+        $trip['hotels']             = $tripHotel;
+        $trip['to_do']              = $tripTodo;
+        $trip['misc_expense']       = $tripMiscExpense;
+
+        //echo '<pre>'; print_r($trip['tripMiscExpense']); exit;
 
         // Get the airlines list
         $airlines = Airline::where(['status' => '1'])->get();
         $airlinesPluck = Airline::where(['status' => '1'])->pluck('name', 'id')->toArray();
 
-        return view('admin/editTrip', compact('airlines', 'airlinesPluck'))->with('trip', $trip);
+        // Default misc expense
+        $miscExpense = array('Collection Percentage', 'Shirts and Pamphlets', 'Photography');
+
+        return view('admin/editTrip', compact('airlines', 'airlinesPluck', 'miscExpense'))->with('trip', $trip);
     }
 
     /**
@@ -779,12 +816,23 @@ class AdminController extends Controller {
             $rules["to_do.{$key}.todo_name"] = 'required';
         }
 
+        // Misc expense validation
+        foreach($request->get('misc_expense') as $key => $val)
+        {
+            // Validation upto 3 column 'default'
+            if($key <= 2)
+            {
+                $rules["misc_expense.{$key}.label"] = 'required';
+                $rules["misc_expense.{$key}.value"] = 'required';
+            }
+        }
+
         //echo '<pre>'; print_r($rules); exit;
 
         $this->validate($request, $rules);
 
         // 'UPDATE' Get trip data and update it
-        $trip = Trip::findOrFail($id);
+        /*$trip = Trip::findOrFail($id);
 
         $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
 
@@ -916,6 +964,42 @@ class AdminController extends Controller {
         if( !empty($deleteRowByIds) )
         {
             TripTodo::destroy($deleteRowByIds);
+        }*/
+
+        // 'UPDATE' MISC EXPENSE
+        $existingIds = TripMiscExpense::where('trip_id', $id)->pluck('id')->toArray();
+        $updatingIds = array();
+
+        // Get post misc
+        $misc_expense = $request->input('misc_expense');
+        //echo '<pre>'; print_r($misc_expense); exit;
+
+        foreach($misc_expense as $row)
+        {
+            if( isset($row['misc_id']) && is_numeric($row['misc_id']) )
+            {
+                $updatingIds[] = $row['misc_id'];
+
+                // Update trip to_do
+                $findRow = TripMiscExpense::findOrFail($row['misc_id']);
+                $findRow->update($row);
+            }
+            else
+            {
+                if( !empty(trim($row['label'])) || !empty(trim($row['value'])) )
+                {
+                    $row['trip_id'] = $id;
+                    TripMiscExpense::create($row);
+                }
+            }
+        }
+
+        // Delete misc by ids
+        $deleteRowByIds = array_diff($existingIds, $updatingIds);
+        
+        if( !empty($deleteRowByIds) )
+        {
+            TripMiscExpense::destroy($deleteRowByIds);
         }
 
         //

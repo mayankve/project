@@ -236,6 +236,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- Misc Expense -->
+		<div class="panel panel-default">
+			@include('admin.trip.partials.update-trip-misc-expense')
+		</div>
 		<div class="row">
 			<div class="col-md-12 text-right">
 				{{ Form::submit('Update', array('class' => 'btn btn-success')) }}
