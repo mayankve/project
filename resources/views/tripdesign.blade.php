@@ -56,7 +56,6 @@
                                 </a>
                             </li>
                             <li role="presentation"><a href="#roommates" aria-controls="roommates" role="tab" data-toggle="tab">
-
                                     <span>Roommates/Referrals</span>
                                 </a>
                             </li>
@@ -110,7 +109,6 @@
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_hotels')
                     </div>
-                    <br>
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_addons')
                     </div>
@@ -220,7 +218,6 @@
     });
 
 /// Cart btn
-
     (function () {
         $("#cart").on("click", function () {
             $(".shopping-cart").fadeToggle("fast");

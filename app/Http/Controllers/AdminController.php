@@ -53,6 +53,7 @@ class AdminController extends Controller {
      * Function to update user basic information
      * @param void
      * @return url
+     * 
      */
     public function updateUserBasicInfo(Request $request) {
         $fname = $request->input('fname');
@@ -60,7 +61,6 @@ class AdminController extends Controller {
         $gender = $request->input('gender');
         $dob = $request->input('dob');
         $email = $request->input('email');
-
         $passportAvailable = $request->input('passportAvailable');
         $passportExpDate = $request->input('passportExpDate');
         $issuingCountry = $request->input('issuingCountry');
@@ -145,10 +145,10 @@ class AdminController extends Controller {
                         }
                     }
                 }
-            } else {         // Passport is not available
+            } else { 
+                // Passport is not available
                 // Get the logged-in user id
                 $userId = Auth::id();
-
                 $userDetails = array(
                     'email' => $email,
                     'first_name' => $fname,
@@ -157,7 +157,6 @@ class AdminController extends Controller {
                     'dob' => $dob,
                     'is_passport' => $passportAvailable,
                 );
-
                 if (User::where(['id' => $userId])->update($userDetails)) {
                     $response['errCode'] = 0;
                     $response['errMsg'] = 'Profile updated successfully';
@@ -167,7 +166,6 @@ class AdminController extends Controller {
                 }
             }
         }
-
         return response()->json($response);
     }
 

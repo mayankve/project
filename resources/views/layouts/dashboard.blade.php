@@ -69,6 +69,40 @@
                     <a class="navbar-brand" href="/aat/public/"><img src="{{ url('images/logo.png') }}" alt="logo"></a>
                 </div>
                     <div id="navbar" class="navbar-collapse collapse">
+                        <!--------Cart Begin------->
+                        <ul class="navbar-right cartbtn">
+                        <li><a href="#" id="cart"><span class="cart-icon-btn"><i class="fa fa-shopping-cart"></i> Cart </span><span class="badge mybadge">3</span></a></li>
+                       <div class="shopping-cart" style="display:none;">
+                         <div class="shopping-cart-header">
+                           <div class="cart_btn"><i class="fa fa-shopping-cart cart-icon"></i><span class="badge mybadge">3</span></div>
+                           <div class="shopping-cart-total">
+                             <span class="lighter-text">Total:</span>
+                             <span class="main-color-text">$2,229.97</span>
+                           </div>
+                         </div> <!--end shopping-cart-header -->
+
+                         <ul class="shopping-cart-items">
+                           <li class="clearfix">
+                             <div>Ghana, Togo, Benin &amp; Morocco 2017</div>
+                           </li>
+                           <li class="clearfix">
+                             <span class="item-title">Airlines</span>
+                             <span class="item-name">Alaska Airlines</span>
+                             <span class="item-price">$564</span>
+                             <span class="item-quantity">Quantity: 02</span>
+                           </li>
+                           <li class="clearfix">
+                             <span class="item-title">Hotel</span>
+                             <span class="item-name">Blue</span>
+                             <span class="item-price">$564</span>
+                             <span class="item-quantity">Person: 02. Solo: Yes</span>
+                           </li>
+                         </ul>
+
+                         <a href="#" class="button">Checkout</a>
+                       </div>
+                   </ul>
+                    <!--- Cart End------>
                     <!-- User profile -->
                     <!-- Navbar -->
                         <ul class="nav navbar-nav navbar-right">
@@ -156,7 +190,7 @@
 
 
 
-            <footer class="footer footer-color-black">
+<!--            <footer class="footer footer-color-black">
                 <div class="container">
                     <div class="col-md-2"> <div class="footer-logo"> <img src="{{ url('images/logo.png') }}" alt="logo"> </div> </div>
                     <div class="col-md-5"> 
@@ -219,7 +253,7 @@
                         <p><a href="#">Privacy Policy</a> | <a href="#">About Us</a> | <a href="#">FAQ</a> | <a href="#">Contact Support</a></p>
                     </div>
                 </div>
-            </footer>
+            </footer>-->
         </div>
 
         <script>

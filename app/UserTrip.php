@@ -12,6 +12,12 @@ class UserTrip extends Model
      *
      */
     protected $table = 'user_trip';
+      public $fillable = [
+        'user_id',
+    	'trip_id',
+    	'booking_date',
+    	'status'
+    ];
     
     public function user()
         {

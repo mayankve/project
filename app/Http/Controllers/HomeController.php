@@ -491,26 +491,26 @@ class HomeController extends Controller {
            {
                // Add Addon
                $fileName = '';
-               if( $request->hasFile('traveler.'.$index.'.profile_image') )
+               if( $request->hasFile('traveler['.$index.'][profile_image]') )
                {
-                   $fileName = $this->imageUpload($request->file('traveler.'.$index.'.profile_image'), 'traveler', 'profile-image');
+                    $fileName = $this->imageUpload($request->file('traveler['.$index.'][profile_image]'), 'traveler', 'profile-image');
                }
                $trip_traveler_id = TripTraveler::create(array(
                    'user_id'               => $user_id,
-                   'trip_id'         => $row['$trip_id'],
+                   'trip_id'         => $trip_id,
                    'email'       => $row['email'],
                    'first_name'         => $row['first_name'],
                    'last_name'     => $row['last_name'] ? $row['last_name'] : '',
                    'gender'     => $row['gender'],
-                   'passport_pic' => $fileName,
+                   'profile_pic' => $fileName,
                    'city' => $row['city'],
                    'created_at'        => date('Y-m-d H:i:s')
                ))->id;
                if(isset($trip_traveler_id)){
                    $user_trip_id = UserTrip::create(array(
-                        'user_id'               => $user_id,
-                        'trip_id'         => $row['$trip_id'],
-                        'booking_date'         => date('Y-m-d')
+                        'user_id'         => $user_id,
+                        'trip_id'         => $trip_id,
+                        'booking_date'    => date('Y-m-d')
                    ))->id;
                }
            }
@@ -538,7 +538,7 @@ class HomeController extends Controller {
                 ->where('trip_airline.trip_id', '=', $id)
                 ->where('trip_airline.status', '=', '1')
                 ->get();
-          //dd(DB::getQueryLog());
+        //dd(DB::getQueryLog());
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel_booking')
           ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
@@ -562,7 +562,6 @@ class HomeController extends Controller {
         //Trip Addon arrays
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
-
         foreach ($tripAddons AS $key => $value) {
             //Trip Addon Traveler Details
             $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
@@ -588,7 +587,7 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('status', '=', '1')
                 ->get();
-
+        
         //Include Activity arrays
         $includedActivityFlights = array();
         $includedActivityHotles = array();

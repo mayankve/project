@@ -56,7 +56,7 @@
                                            {{$triptraveler->city}}
                                         </div>
                                          <div class="col-sm-2">
-                                           <img src="{{ url('/') . '/profile_images/' .$triptraveler->passport_pic }}" alt="Profile image" class="img-responsive model_image" />
+                                           <img src="{{ url('/') . '/uploads/traveler_img/' .$triptraveler->passport_pic }}" alt="Profile image" class="img-responsive model_image" />
                                         </div>
                                     </div>
                                 </div> 
