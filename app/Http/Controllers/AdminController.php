@@ -1697,8 +1697,7 @@ class AdminController extends Controller {
      */
     function tripAddonTravelers()
     {
-         $tripPluck = Trip::where(['status' => '1'])->pluck('name', 'id')->toArray();
-
+        $tripPluck = Trip::where(['status' => '1'])->pluck('name', 'id')->toArray();
         return view('admin/tripAddonTravelers', ['tripPluck' => $tripPluck]);
     }
 
