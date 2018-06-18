@@ -23,7 +23,7 @@ Route::get('/about', 'HomeController@about');
 Route::get('/contact', 'HomeController@contact');
 
 // front-end login
-Route::get('/login', 'HomeController@clientLogin');
+Route::get('/login', 'HomeController@clientLogin')->name('login');
 
 // Front-end login
 Route::post('/userlogin', 'HomeController@userLogin');

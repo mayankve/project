@@ -398,6 +398,34 @@ $(document).ready(function () {
         $(this).closest('.todo_details').remove();
     });
 
+    // Add more other expenses
+    $('.add-expense-other').click(function() {
+        var template = $(this).closest('.misc-expense-other').clone();
+
+        // update template attr dynamically
+        var num = $('.misc-expense-default').length;
+        var numOther = $('.misc-expense-other').length;
+
+        $(template).find('.form-control').each(function() {
+            name = $(this).attr('name').replace('misc_expense['+num+']', 'misc_expense['+(num+numOther)+']');
+
+            $(this).prev('label').attr('for', name);
+            $(this).attr('id', name).attr('name', name);
+        });
+
+        // Reset the values
+        $(template).find('input').val('');
+
+        $(template).find('.action-expense-other').html('<button type="button" class="btn remove-expense-other"><i class="fa fa-minus" aria-hidden="true"></i></button>');
+
+        // Append it
+        $('.misc-expense-other:last').after( $(template) );
+    });
+
+    // Remove other expense
+    $(document).on('click', '.remove-expense-other', function () {
+        $(this).closest('.col-md-12').remove();
+    });
 
   	// Add Hotels for Include activities
     $(document).on('click', '.add_activities_hotel', function() {
