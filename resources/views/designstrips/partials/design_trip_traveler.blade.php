@@ -1,6 +1,8 @@
 <!-- traveler-------------------Start ------------------------------------------>
 <div role="tabpanel" class="tab-pane" id="traveler">
-    <form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">                <br>
+<!--{!! Form::open(['url' => '/book/', 'files' => true, 'id' => 'trip-land-flight' 'name'=> 'trip-land-flight']) !!}-->
+<!--   <form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight"> -->
+        <br>
         <div class="panel panel-primary traveler-list">
             <div class="panel-heading">
                 <h3 class="panel-title"><strong>Travelers list</strong></h3>
@@ -75,6 +77,7 @@
                 </div>
             </div>
         </div>
-    </form>
+     <!--{!! Form::close() !!}-->
+<!--    </form>-->
 </div>
 <!-- traveler-------------------End ---------------------------------------------->

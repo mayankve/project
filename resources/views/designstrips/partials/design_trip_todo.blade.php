@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
-<!--                                            <input type="checkbox" name="selected_todo[]" class="selected_todo" id="selected_todo" value="54">-->
+                                            <input type="checkbox" name="selected_todo[]" class="selected_todo" id="selected_todo" value="54">-->
                                             {{ Form::checkbox('selected_todo[]', 1, null, ['class' => 'selected_todo','id' => 'selected_todo' ]) }}
                                         </label>                                
                                     </div>

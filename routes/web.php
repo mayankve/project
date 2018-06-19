@@ -55,7 +55,7 @@ Route::get('tripview/{id}','HomeController@tripView');
 Route::get('book/{id}','HomeController@bookTripView');
 
 //Saving Trip for users
-Route::get('booktrip','HomeController@bookTrip');
+Route::post('booktrip','HomeController@bookTrip');
 
 //Design Trip for users
 Route::get('mytripdesign/{id}','HomeController@myTripDesign');

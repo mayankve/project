@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use File;
 use App\User;
 use App\Trip;
 use Validator;
@@ -487,33 +488,30 @@ class HomeController extends Controller {
         $traveler_details = $request->get('traveler');
         $flag = 0;
         if (count($traveler_details) > 0) {
-        foreach($traveler_details as $index => $row)
-           {
-               // Add Addon
-               $fileName = '';
-               if( $request->hasFile('traveler['.$index.'][profile_image]') )
-               {
-                    $fileName = $this->imageUpload($request->file('traveler['.$index.'][profile_image]'), 'traveler', 'profile-image');
-               }
-               $trip_traveler_id = TripTraveler::create(array(
-                   'user_id'               => $user_id,
-                   'trip_id'         => $trip_id,
-                   'email'       => $row['email'],
-                   'first_name'         => $row['first_name'],
-                   'last_name'     => $row['last_name'] ? $row['last_name'] : '',
-                   'gender'     => $row['gender'],
-                   'profile_pic' => $fileName,
-                   'city' => $row['city'],
-                   'created_at'        => date('Y-m-d H:i:s')
-               ))->id;
-               if(isset($trip_traveler_id)){
-                   $user_trip_id = UserTrip::create(array(
-                        'user_id'         => $user_id,
-                        'trip_id'         => $trip_id,
-                        'booking_date'    => date('Y-m-d')
-                   ))->id;
-               }
-           }
+            foreach ($traveler_details as $index => $row) {
+                $fileName = 'profile_image.jpg';
+                if ($request->hasFile('traveler' . $index . 'profile_image')) {
+                    $fileName = $this->imageUpload($request->file('traveler' . $index . 'profile_image'), 'traveler_img', 'profile-image');
+                }
+                $trip_traveler_id = TripTraveler::create(array(
+                            'user_id' => $user_id,
+                            'trip_id' => $trip_id,
+                            'email' => $row['email'],
+                            'first_name' => $row['first_name'],
+                            'last_name' => $row['last_name'] ? $row['last_name'] : '',
+                            'gender' => $row['gender'],
+                            'profile_pic' => $fileName,
+                            'city' => $row['city'],
+                            'created_at' => date('Y-m-d H:i:s')
+                        ))->id;
+                if (isset($trip_traveler_id)){
+                        $user_trip_id = UserTrip::create(array(
+                        'user_id' => $user_id,
+                        'trip_id' => $trip_id,
+                        'booking_date' => date('Y-m-d')
+                    ))->id;
+                }
+            }
         }
         return redirect('/mytripdesign/' . $trip_id);
     }
@@ -541,12 +539,12 @@ class HomeController extends Controller {
         //dd(DB::getQueryLog());
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel_booking')
-          ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
-          ->select('trip_hotel_booking.*', 'trip_hotel.*')
-          ->where('trip_hotel_booking.trip_id', '=', $id)
-          ->where('trip_hotel_booking.status', '=', '1')
-          ->where('trip_hotel_booking.user_id', '=', $userId)
-          ->get(); 
+                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
+                ->select('trip_hotel_booking.*', 'trip_hotel.*')
+                ->where('trip_hotel_booking.trip_id', '=', $id)
+                ->where('trip_hotel_booking.status', '=', '1')
+                ->where('trip_hotel_booking.user_id', '=', $userId)
+                ->get();
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
                 ->where('trip_hotel.trip_id', '=', $id)
@@ -587,7 +585,7 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('status', '=', '1')
                 ->get();
-        
+
         //Include Activity arrays
         $includedActivityFlights = array();
         $includedActivityHotles = array();
@@ -611,8 +609,8 @@ class HomeController extends Controller {
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
                 ->get();
-        //   echo print_r($tripTravelers);die;
         //Data to send for design my trip view
+        
         $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
@@ -623,6 +621,7 @@ class HomeController extends Controller {
         );
         return view('tripdesign', ['tripdata' => $data]);
     }
+
     /**
      * Upload file and return the name of the uploaded file
      *
@@ -631,15 +630,11 @@ class HomeController extends Controller {
      * @param object $startWith
      * @return string $fileName
      */
-    protected function imageUpload($file, $directory=null, $startWith)
-    {
+    protected function imageUpload($file, $directory = null, $startWith) {
         // SET UPLOAD PATH
-        if($directory != NULL && $directory != '')
-        {
-            $destinationPath = base_path() . '/public/uploads/'.$directory.'/';
-        }
-        else
-        {
+        if ($directory != NULL && $directory != '') {
+            $destinationPath = base_path() . '/public/uploads/' . $directory . '/';
+        } else {
             $destinationPath = base_path() . '/public/uploads/';
         }
 
@@ -647,7 +642,7 @@ class HomeController extends Controller {
         $extension = $file->getClientOriginalExtension();
 
         // RENAME THE UPLOAD WITH RANDOM NUMBER
-        $fileName =  $startWith.md5(time()) . '.' . $extension;
+        $fileName = $startWith . md5(time()) . '.' . $extension;
 
         // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
         $file->move($destinationPath, $fileName);

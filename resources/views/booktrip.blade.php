@@ -37,8 +37,7 @@
                     </div>
                 @endif
             <!--<form method="POST" name="traveler-details" action="/aat_zend/public/book/20" id="traveler-details">-->  
-         
-            {!! Form::open(['url' => 'booktrip', 'id' => 'form-book-trip' , 'method'=>'get']) !!}
+            {!! Form::open(['url' => '/booktrip', 'files' => true, 'id' => 'form-book-trip']) !!}
             <input name="trip_id" type="hidden" value="{{$tripdata->id}}">
             <div class="row-box">
                 <div class="form-title">
@@ -138,8 +137,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('traveler[0][profile_image]', 'Profile Image') !!}
-                                    {!! Form::file('traveler[0][profile_image]',null,['class' => 'form-control']); !!}
+                                    {!! Form::label('profile_image', 'Profile Image') !!}
+                                    {!! Form::file('profile_image',null,['class' => 'form-control']); !!}
                                 </div>
                             </div>
                         </div>

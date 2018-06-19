@@ -39,7 +39,7 @@
 
     <!-- @include('common.errors') -->
 
-    {!! Form::open(['url' => 'admin/store-trip', 'files' => true, 'id' => 'form-create-trip']) !!}
+    {!! Form::open(['url' => 'admin/store-trip', 'files' => true, 'id' => 'form-create-trip' 'method'=>'post']) !!}
     <!-- Create Trip Panel -->
     <div class="panel panel-default">
         <div class="panel-heading">Create Trip</div>
