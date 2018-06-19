@@ -52,55 +52,54 @@
                     </div>
                 </div>
                 @if(count(old('traveler')))
-                <?php // echo "<pre>"; print_r(old('traveler')); die;?>
-                @foreach (old('traveler') as $key => $value)
-                <div class="col-md-12 add_traveler">
-                    <div class="cust-input-group travelerDetails-row pt-4 pb-2">            
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][first_name]', 'First Name') !!}
-                                    {!! Form::text('traveler['.$key.'][first_name]', null, ['class' => 'form-control traveler_name']) !!}
+                    @foreach (old('traveler') as $key => $value)
+                    <div class="col-md-12 add_traveler">
+                        <div class="cust-input-group travelerDetails-row pt-4 pb-2">            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][first_name]', 'First Name') !!}
+                                        {!! Form::text('traveler['.$key.'][first_name]', null, ['class' => 'form-control traveler_name']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][last_name]', 'Last Name') !!}
+                                        {!! Form::text('traveler['.$key.'][last_name]', null, ['class' => 'form-control  traveler_name']) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][email]', 'Email') !!}
+                                        {!! Form::text('traveler['.$key.'][email]', null, ['class' => 'form-control traveler_name']) !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][last_name]', 'Last Name') !!}
-                                    {!! Form::text('traveler['.$key.'][last_name]', null, ['class' => 'form-control  traveler_name']) !!}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][gender]', 'Gender') !!}
+                                        {!! Form::select('traveler['.$key.'][gender]', ['1' => 'Male', '2' => 'Female'],null,['class' => 'form-control']); !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][city]', 'City') !!}
+                                        {!! Form::text('traveler['.$key.'][city]',null,['class' => 'form-control']); !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('traveler['.$key.'][profile_image]', 'Profile Image') !!}
+                                        {!! Form::file('traveler['.$key.'][profile_image]',null,['class' => 'form-control']); !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][email]', 'Email') !!}
-                                    {!! Form::text('traveler['.$key.'][email]', null, ['class' => 'form-control traveler_name']) !!}
-                                </div>
-                            </div>
+                            <!-- Remove detail container -->
+                            <div id="remove_trip_traveler"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][gender]', 'Gender') !!}
-                                    {!! Form::select('traveler['.$key.'][gender]', ['1' => 'Male', '2' => 'Female'],null,['class' => 'form-control']); !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][city]', 'City') !!}
-                                    {!! Form::text('traveler['.$key.'][city]',null,['class' => 'form-control']); !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler['.$key.'][profile_image]', 'Profile Image') !!}
-                                    {!! Form::file('traveler['.$key.'][profile_image]',null,['class' => 'form-control']); !!}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Remove detail container -->
-                        <div id="remove_trip_traveler"></div>
                     </div>
-                </div>
-                @endforeach
+                    @endforeach
                 @else
                 <div class="col-md-12 add_traveler">
                     <div class="cust-input-group travelerDetails-row pt-4 pb-2">            
@@ -137,8 +136,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('profile_image', 'Profile Image') !!}
-                                    {!! Form::file('profile_image',null,['class' => 'form-control']); !!}
+                                    {!! Form::label('traveler[0][profile_image]', 'Profile Image') !!}
+                                    {!! Form::file('traveler[0][profile_image]',null,['class' => 'form-control']); !!}
                                 </div>
                             </div>
                         </div>

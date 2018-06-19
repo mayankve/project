@@ -489,9 +489,9 @@ class HomeController extends Controller {
         $flag = 0;
         if (count($traveler_details) > 0) {
             foreach ($traveler_details as $index => $row) {
-                $fileName = 'profile_image.jpg';
-                if ($request->hasFile('traveler' . $index . 'profile_image')) {
-                    $fileName = $this->imageUpload($request->file('traveler' . $index . 'profile_image'), 'traveler_img', 'profile-image');
+                $fileName = '';
+                if ($request->hasFile('traveler.'.$index.'.profile_image')) {
+                    $fileName = $this->imageUpload($request->file('traveler.'.$index.'.profile_image'), 'traveler_img', 'profile-image');
                 }
                 $trip_traveler_id = TripTraveler::create(array(
                             'user_id' => $user_id,
