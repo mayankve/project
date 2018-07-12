@@ -32,11 +32,10 @@
                                         </div>
                                         <?php
                                         $sr = 1;
-                                        // echo "<pre>";print_r($tripdata);die;
+                                            // echo "<pre>";print_r($tripdata);die;
                                         ?>
                                         @if(count($tripdata['tripAirlines'])>0)
                                         @foreach( $tripdata['tripAirlines'] AS $airlines)
-
                                         <div class="form-group pdrow-group">
                                             <div class="col-sm-12">
                                                 <div class="row">
@@ -63,7 +62,6 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
-                                                            <!--<input type="radio" name="flight_id" class="flight_id" id="flight_id" value="{{ $airlines->airline_name }}">-->
                                                             {!! Form::radio('flight_id',$airlines->airline_name,['class' => 'form-control flight_id']) !!} 
                                                         </label>
                                                     </div>
@@ -73,7 +71,7 @@
                                         <?php $sr++; ?>
                                         @endforeach
                                         @endif
-                                    </div>
+                                        </div>
                                         <div class="land-only" style="display: none;">
                                         <div class="form-group">
                                             <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
@@ -82,7 +80,8 @@
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
                                                         <!--{!! Form::text('traveler[0][flight_name]', null, ['class' => 'form-control flight_name']) !!}-->
-                                                        <input type="text" name="flight_name" class="form-control" value="">                                </div>
+                                                        <input type="text" name="flight_name" class="form-control" value="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +90,8 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="flight_number" class="form-control" value="">                                </div>
+                                                        <input type="text" name="flight_number" class="form-control" value=""> 
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -101,7 +101,8 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="departure_date" class="form-control" value="">                                </div>
+                                                        <input type="text" name="departure_date" class="form-control" value=""> 
+                                                    </div>
 
                                                 </div>
                                             </div>

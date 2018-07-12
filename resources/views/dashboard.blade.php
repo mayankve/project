@@ -54,7 +54,6 @@
     }
 </style>
 
-<?php //echo "<pre>";print_r($userdata);die; ?>
 <div class="pageContainer">
     <div class="dashboardHeader">
         <div class="row">
@@ -74,15 +73,14 @@
             </div>
             <div class="col-sm-6 text-right">
                 <h3 class="userName">
-                    Welcome  {{$data['name']}}</h3>
+                    Welcome  <?php echo $data['user_data']['name'];?>
+                </h3>
             </div>
         </div>
     </div>
-
-
+    
     <div class="" id="pageWrapper">
         <div id="my_information_container" class="tabcontent">
-
             <!--          Basic Information-->
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -90,7 +88,7 @@
                     <div class="panel-tools">
                         <a href="#" class="basic_info"><i class="fa fa-pencil" aria-hidden="true" ></i></a>
                         <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
-                <!--<a href="#"><span class="basic_info"><i class="fa fa-edit" aria-hidden="true" ></i></span></a>
+                      <!--<a href="#"><span class="basic_info"><i class="fa fa-edit" aria-hidden="true" ></i></span></a>
                         <a href="#"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
                     </div>
 
@@ -103,13 +101,13 @@
                                     <div class="col-sm-9">
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <label class="user-view inputlabl" style="font-weight: normal">{{ ucwords( strtolower( $data['first_name'] ) ) . ' ' . ucwords( strtolower( $data['last_name'] ) ) }}</label>
+                                                <label class="user-view inputlabl" style="font-weight: normal">{{ ucwords( strtolower(  $data['user_data']['first_name'] ) ) . ' ' . ucwords( strtolower( $data['user_data']['last_name'] ) ) }}</label>
                                             </div>
                                             <div class="user-edit col-sm-6">
-                                                <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $data['first_name'] }}">
+                                                <input type="text" name="first_name" id="first_name" class="form-control" value="{{ $data['user_data']['first_name'] }}">
                                             </div>
                                             <div class="user-edit col-sm-6">
-                                                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $data['last_name'] }}">
+                                                <input type="text" name="last_name" id="last_name" class="form-control" value="{{$data['user_data']['last_name'] }}">
                                             </div>
                                         </div>
                                     </div>
@@ -117,7 +115,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 custom-lbl">Gender</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ ( $data['gender'] == '1' ) ? 'Male' : 'Female' }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ ( $data['user_data']['gender'] == '1' ) ? 'Male' : 'Female' }}</label>
                                         <div class="user-edit">
                                             <select name="gender" id="gender" class="form-control">
                                                 <option value="1" selected="">Male</option>
@@ -129,31 +127,31 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-3 custom-lbl">DOB</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ date('Y-m-d', strtotime($data['dob'])) }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ date('Y-m-d', strtotime($data['user_data']['dob'])) }}</label>
                                         <div class="user-edit">
-                                            <input type="text" name="dob" class="form-control" id="dob" value="{{ date('Y-m-d', strtotime($data['dob'])) }}">
+                                            <input type="text" name="dob" class="form-control" id="dob" value="{{ date('Y-m-d', strtotime($data['user_data']['dob'])) }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class=" control-label col-sm-3 custom-lbl">Email</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['email'] }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['user_data']['email'] }}</label>
                                         <div class="user-edit">
-                                            <input type="email" name="email" id="email" class="form-control" value="{{ $data['email'] }}">
+                                            <input type="email" name="email" id="email" class="form-control" value="{{ $data['user_data']['email'] }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group no-border">
                                     <label class="control-label col-sm-3 custom-lbl">Do You currently have a passport</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['is_passport'] ? 'Yes':'No' }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{$data['user_data']['is_passport'] ? 'Yes':'No' }}</label>
                                         <div class="user-edit checkbtn">
                                             <label>
-                                                <input type="radio" name="is_passport" class="is-passport" value="0" {{ ( $data['is_passport'] == '0' ) ? 'checked' : '' }}>No
+                                                <input type="radio" name="is_passport" class="is-passport"  value="{{ ($data['user_data']['is_passport'] == 0)  ? 1 : 0 }}">No
                                             </label>
                                             <label>
-                                                <input type="radio" name="is_passport" class="is-passport" value="1" {{ ( $data['is_passport'] == '1' ) ? 'checked' : '' }}>Yes
+                                                <input type="radio" name="is_passport" checked="checked" class="is-passport" value="{{ ($data['user_data']['is_passport'] == 1)  ? 1 : 0 }}" >Yes
                                             </label>
                                         </div>
                                     </div>
@@ -163,7 +161,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
                                         <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/passport_images/' . $data['passport_pic'] }}" alt="AAT" class="img-responsive model_image">
+                                            <img src="{{ url('/') . '/passport_images/' . $data['user_data']['passport_pic'] }}" alt="AAT" class="img-responsive model_image">
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic" id="passport_pic" class="form-control&#x20;image_upload" id="passport_pic">
@@ -171,31 +169,31 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group passport_data">
                                     <label class="control-label col-sm-3 custom-lbl">Passport Exp Date</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['passport_exp_date'] }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['user_data']['passport_exp_date'] }}</label>
                                         <div class="user-edit">
-                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="{{ $data['passport_exp_date'] }}">
+                                            <input type="date" name="passport_exp_date" class="form-control" id="passport_exp_date" value="{{  $data['user_data']['passport_exp_date'] }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group passport_data">
                                     <label class="control-label col-sm-3 custom-lbl">Issuing Country</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['issuing_country'] != '' ? $data['issuing_country'] : 'NA' }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['user_data']['issuing_country'] != '' ? $data['user_data']['issuing_country'] : 'NA' }}</label>
                                         <div class="user-edit">
                                             <select name="issuing_country" id="issuing_country" class="form-control">
                                                 <option value="">Select</option>
                                                 <?php
-                                                if (count($countries) > 0) {
-                                                    foreach ($countries AS $country) {
-                                                        if ($user_country->issuing_country == $country->id) {
+                                                if (count($data['countries']) > 0) {
+                                                    foreach ($data['countries'] AS $country) {
+                                                        if ($data['user_data']['issuing_country'] == $country->id) {
                                                             ?>
-                                                            <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
+                                                            <option selected="selected" value="{{ $country->id }}" >{{ $country->name }}</option>
                                                         <?php } else {
-                                                            ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
+                                                            ?>   <option value="{{ $country->id }}" >{{ $country->name }}</option>
+                                                        <?php
                                                         }
                                                     }
                                                 }
@@ -207,18 +205,19 @@
                                 <div class="form-group passport_data">
                                     <label class="control-label col-sm-3 custom-lbl">Country of Birth</label>
                                     <div class="col-sm-9">
-                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['country_of_Birth'] != '' ? $data['country_of_Birth'] : 'NA' }}</label>
+                                        <label class="user-view inputlabl" style="font-weight: normal">{{ $data['user_data']['country_of_Birth'] != '' ? $data['user_data']['country_of_Birth'] : 'NA' }}</label>
                                         <div class="user-edit">
                                             <select name="country_of_birth" id="country_of_birth" class="form-control">
                                                 <option value="">Select</option>
                                                 <?php
-                                                if (count($countries) > 0) {
-                                                    foreach ($countries AS $country) {
-                                                        if ($user_country->country_of_Birth == $country->id) {
+                                                if (count($data['countries']) > 0) {
+                                                    foreach ($data['countries'] AS $country) {
+                                                        if ($data['user_data']['country_of_Birth'] == $country->id) {
                                                             ?>
-                                                            <option selected="selected" value="{{ $country->id }}" >{{$country->name}}</option>
-                                                        <?php } else {
-                                                            ?>   <option  value="{{ $country->id }}" >{{$country->name}}</option><?php
+                                                            <option selected="selected" value="{{ $country->id }}" >{{ $country->name }}</option>
+                                                    <?php } else {
+                                                            ?>   <option  value="{{ $country->id }}" >{{ $country->name }}</option>
+                                                    <?php
                                                         }
                                                     }
                                                 }
@@ -237,7 +236,6 @@
                             </div>
                         </form>    
                     </div>
-
                 </div>
             </div>
 
@@ -269,7 +267,8 @@
                         dateFormat: 'yy-mm-dd',
                         minDate: 0
                     });
-                    var is_passport = "1";
+                    
+                    var is_passport = "<?php echo $data['user_data']['is_passport'];?>";
 
                     if (is_passport == '1') {
                         $('.passport_data').show();
@@ -280,6 +279,7 @@
 
                     $('.is-passport').click(function () {
                         var is_passport = $(this).val();
+       
                         if (is_passport == 1) {
                             $('.passport_data').show();
                         } else {
@@ -326,27 +326,29 @@
                                     <label class="col-sm-3 control-label custom-lbl">Profile Pic</label>
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/profile_images/' . $profile['profile_pic'] }}" alt="tm-01" class="img-responsive model_image" />
+                                            <img src="{{ url('/') . '/profile_images/' . $data['profile_data']['profile_pic'] }}" alt="tm-01" class="img-responsive model_image" />
                                         </label>
                                         <div class="profile-edit">
-                                            <input type="file" name="profile_pic" id="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">                <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
+                                            <input type="file" name="profile_pic" id="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">         
+                                            <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Food Allergies</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['food_allergies'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['food_allergies'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="{{ $profile['food_allergies'] }}">            </div>
+                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="{{  $data['profile_data']['food_allergies'] }}"> 
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Shirt Size</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['shirt_size'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['shirt_size'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="shirt_size" id="shirt_size" class="form-control" value="{{ $profile['shirt_size'] }}">            </div>
+                                            <input type="text" name="shirt_size" id="shirt_size" class="form-control" value="{{  $data['profile_data']['shirt_size'] }}">            </div>
                                     </div>
                                 </div>       
                                 <div class="form-group">
@@ -358,7 +360,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Do you have any known health conditions</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['helth_mental_conditions'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['helth_mental_conditions'] }}</label>
                                         <div class="profile-edit">
                                             <label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="0">No</label><label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="1" checked="checked">Yes</label>            </div>
                                         <div class="profile-edit">
@@ -368,16 +370,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Do you have any known mental conditions</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['is_mental_conditions'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['is_mental_conditions'] }}</label>
                                         <div class="profile-edit">
                                             <label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="0" checked="checked">No</label><label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="1">Yes</label>            </div>
                                         <div class="profile-edit">
-                                            <input type="text" id="mental_conditions" name="mental_conditions" class="form-control&#x20;mental_conditions" style="display&#x3A;&#x20;none" value="{{ $profile['mental_conditions'] }}">            </div>
+                                            <input type="text" id="mental_conditions" name="mental_conditions" class="form-control&#x20;mental_conditions" style="display&#x3A;&#x20;none" value="{{  $data['profile_data']['mental_conditions'] }}">            </div>
                                     </div>
                                 </div>
-
-
-
                                 <!--- Emergency contact information -->
                                 <div class="form-group">
                                     <div class="form-title">
@@ -389,17 +388,17 @@
                                     <label class="col-sm-3 control-label custom-lbl">Name</label>
 
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['emergency_contact_name'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['emergency_contact_name'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control" value="{{ $profile['emergency_contact_name'] }}">                </div>
+                                            <input type="text" name="emergency_contact_name" id="emergency_contact_name" class="form-control" value="{{ $data['profile_data']['emergency_contact_name'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Phone</label>	
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['emergency_contact_phone'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['emergency_contact_phone'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control" value="{{ $profile['emergency_contact_phone'] }}">                </div>
+                                            <input type="text" name="emergency_contact_phone" id="emergency_contact_phone" class="form-control" value="{{  $data['profile_data']['emergency_contact_phone'] }}">                </div>
                                     </div>
                                 </div>
                                 <!-- end  Emergency contact information -->  
@@ -414,33 +413,33 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">What are your previous travel experiences?</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_previous_travel'] }}	</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['personality_previous_travel'] }}	</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_previous_travel" id="personality_previous_travel" class="form-control" value="{{ $profile['personality_previous_travel'] }}">                </div>
+                                            <input type="text" name="personality_previous_travel" id="personality_previous_travel" class="form-control" value="{{ $data['profile_data']['personality_previous_travel'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Where are your originally from?</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_originally_from'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['personality_originally_from'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_originally_from" id="personality_originally_from" class="form-control" value="{{ $profile['personality_originally_from'] }}">                </div>
+                                            <input type="text" name="personality_originally_from" id="personality_originally_from" class="form-control" value="{{  $data['profile_data']['personality_originally_from'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Where did you go to school?</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_school'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['personality_school'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_school"  id="personality_school" class="form-control" value="{{ $profile['personality_school'] }}">                </div>
+                                            <input type="text" name="personality_school"  id="personality_school" class="form-control" value="{{  $data['profile_data']['personality_school'] }}">                </div>
                                     </div>
                                 </div>
                                 <div class="form-group no-border">
                                     <label class="col-sm-3 control-label custom-lbl">Is there anything else we should know about you?</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal">{{ $profile['personality_about'] }}</label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">{{  $data['profile_data']['personality_about'] }}</label>
                                         <div class="profile-edit">
-                                            <input type="text" name="personality_about" id="personality_about" class="form-control" value="{{ $profile['personality_about'] }}">                </div>
+                                            <input type="text" name="personality_about" id="personality_about" class="form-control" value="{{  $data['profile_data']['personality_about'] }}">                </div>
                                     </div>
                                 </div>
 
@@ -448,7 +447,8 @@
                                 <div class="form-group">
                                     <div class="col-sm-8 col-sm-offset-4">
                                         <div class="profile-edit update-btn">
-                                            <input type="submit" name="submit"   id="submit_profile" value="Update&#x20;Profile&#x20;Info">            </div>
+                                            <input type="submit" name="submit"   id="submit_profile" value="Update&#x20;Profile&#x20;Info"> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>

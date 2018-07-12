@@ -1,7 +1,36 @@
 /* Common js for all front-end related functionalities like register, login etc */
 
 $(document).ready(function () {
-
+    var path = window.location.href;
+    var url = path.substring(0, 36);
+    var flight_id = 0;
+    var trip_id = $('#trip_id').val();
+    $("[name=flight_id]").click(function () {
+        if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
+            flight_id = $(this).val();
+            $.ajax({
+                url: url +'/addToCart',
+                method: 'post',
+                data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
+                dataType: "json",
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+        }
+    });
+   
+    
+    $('#cart').click(function(){
+      
+//           if($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1)
+//               alert('good to go');
+//           else
+//               alert('please choose one from each group');
+       });
     $('#frm_user_basic_info').submit(function (e) {
         e.preventDefault();
     });
@@ -104,65 +133,65 @@ $(document).ready(function () {
         // Check the validation
         if ($('#frm_user_basic_info').valid())
         {
-        // hold the button reference
-        let $this = $(this);
-        let fname = $('#first_name').val();
-        let lname = $('#last_name').val();
-        let gender = $('#gender').val();
-        let dob = $('#dob').val();
-        let email = $('#email').val();
-        let passportAvailable = $("input[name='is_passport']:checked").val();
-        let passportExpDate = $('#passport_exp_date').val();
-        let issuingCountry = $('#issuing_country').val();
-        let countryOfBirth = $('#country_of_birth').val();
-        let passportPic = $('#passport_pic').prop('files')[0];
-        // Append these values in FormData
-        var formData = new FormData();
-        formData.append('fname', fname);
-        formData.append('lname', lname);
-        formData.append('gender', gender);
-        formData.append('dob', dob);
-        formData.append('email', email);
-        formData.append('passportAvailable', passportAvailable);
-        formData.append('passportExpDate', passportExpDate);
-        formData.append('issuingCountry', issuingCountry);
-        formData.append('countryOfBirth', countryOfBirth);
-        formData.append('passportPic', passportPic);
+            // hold the button reference
+            let $this = $(this);
+            let fname = $('#first_name').val();
+            let lname = $('#last_name').val();
+            let gender = $('#gender').val();
+            let dob = $('#dob').val();
+            let email = $('#email').val();
+            let passportAvailable = $("input[name='is_passport']:checked").val();
+            let passportExpDate = $('#passport_exp_date').val();
+            let issuingCountry = $('#issuing_country').val();
+            let countryOfBirth = $('#country_of_birth').val();
+            let passportPic = $('#passport_pic').prop('files')[0];
+            // Append these values in FormData
+            var formData = new FormData();
+            formData.append('fname', fname);
+            formData.append('lname', lname);
+            formData.append('gender', gender);
+            formData.append('dob', dob);
+            formData.append('email', email);
+            formData.append('passportAvailable', passportAvailable);
+            formData.append('passportExpDate', passportExpDate);
+            formData.append('issuingCountry', issuingCountry);
+            formData.append('countryOfBirth', countryOfBirth);
+            formData.append('passportPic', passportPic);
 
-        $.ajax({
-            url: $('meta[name="route"]').attr('content') + '/updateuserbasicinfo',
-            method: 'post',
-            data: formData,
-            contentType: false,
-            processData: false,
-            beforeSend: function () {
-                // Show the loading button
-                $this.button('loading');
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            complete: function ()
-            {
-                // Change the button to previous
-                $this.button('reset');
+            $.ajax({
+                url: $('meta[name="route"]').attr('content') + '/updateuserbasicinfo',
+                method: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    // Show the loading button
+                    $this.button('loading');
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                complete: function ()
+                {
+                    // Change the button to previous
+                    $this.button('reset');
 
-            },
-            success: function (response) {
-                if (response.errCode == 0)
-                {
-                    location.reload();
-                    $('#server_response').find('.modal-header').html('Success');
-                    $('#server_response').find('.modal-body').html(response.errMsg);
-                    $('#server_response').modal('show');
-                } else
-                {
-                    $('#server_response').find('.modal-header').html('Alert');
-                    $('#server_response').find('.modal-body').html(response.errMsg);
-                    $('#server_response').modal('show');
+                },
+                success: function (response) {
+                    if (response.errCode == 0)
+                    {
+                        location.reload();
+                        $('#server_response').find('.modal-header').html('Success');
+                        $('#server_response').find('.modal-body').html(response.errMsg);
+                        $('#server_response').modal('show');
+                    } else
+                    {
+                        $('#server_response').find('.modal-header').html('Alert');
+                        $('#server_response').find('.modal-body').html(response.errMsg);
+                        $('#server_response').modal('show');
+                    }
                 }
-            }
-        });
+            });
         }
 
     });
@@ -241,6 +270,8 @@ $(document).ready(function () {
                 }
             }
         });
+		
+		$(".panel panel-default .trip-hotel").addClass("tabpanel");
         //}
     });
 
@@ -661,3 +692,5 @@ $(document).ready(function () {
         $(this).toggleClass('open');
         $('b', this).toggleClass("caret caret-up");
     });
+	
+	

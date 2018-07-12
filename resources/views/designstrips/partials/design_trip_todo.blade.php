@@ -1,6 +1,5 @@
-<!-- todo-------------------Start ---------------------------------------------->
+<!--------------------------------------- todo Start ---------------------------------------------->
 <div role="tabpanel" class="tab-pane" id="todo">
-  
     <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">          
     <br>-->
     <div class="panel panel-primary">
@@ -18,11 +17,10 @@
                     <div class="trip-addons">
                         <div class="form-group">
                             <?php
-//                            $sr = 1;
-//                                echo "<pre>";
-//                                print_r($tripdata['tripTodo']);die;
+                                 $sr = 1;
+//                                 echo "<pre>";print_r($tripdata['tripTodo']);die;
                             ?>
-                            @if(count($tripdata['tripTodo']))
+                            @if(count($tripdata['tripTodo'])>0)
                             @foreach($tripdata['tripTodo'] AS $tripTodo)
                             <div class="col-sm-12">
                                 <div class="row">
@@ -34,8 +32,8 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
-                                            <input type="checkbox" name="selected_todo[]" class="selected_todo" id="selected_todo" value="54">-->
-                                            {{ Form::checkbox('selected_todo[]', 1, null, ['class' => 'selected_todo','id' => 'selected_todo' ]) }}
+                                            <!--<input type="checkbox" name="selected_todo[]" class="selected_todo" id="selected_todo" value="54">-->
+                                            {{ Form::checkbox('selected_todo[]',$tripTodo->id, null, ['class' => 'selected_todo','id' => 'selected_todo' ]) }}
                                         </label>                                
                                     </div>
                                 </div>
@@ -61,7 +59,6 @@
                             @endif     
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -73,6 +70,5 @@
             </div>
         </div>
     </div>
-     
 </div>
 <!-- todo-------------------End ------------------------------------------------>

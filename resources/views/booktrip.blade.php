@@ -82,18 +82,7 @@
                                         {!! Form::select('traveler['.$key.'][gender]', ['1' => 'Male', '2' => 'Female'],null,['class' => 'form-control']); !!}
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('traveler['.$key.'][city]', 'City') !!}
-                                        {!! Form::text('traveler['.$key.'][city]',null,['class' => 'form-control']); !!}
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('traveler['.$key.'][profile_image]', 'Profile Image') !!}
-                                        {!! Form::file('traveler['.$key.'][profile_image]',null,['class' => 'form-control']); !!}
-                                    </div>
-                                </div>
+                               
                             </div>
                             <!-- Remove detail container -->
                             <div id="remove_trip_traveler"></div>
@@ -126,18 +115,6 @@
                                 <div class="form-group">
                                     {!! Form::label('traveler[0][gender]', 'Gender') !!}
                                     {!! Form::select('traveler[0][gender]', ['1' => 'Male', '2' => 'Female'],null,['class' => 'form-control']); !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler[0][city]', 'City') !!}
-                                    {!! Form::text('traveler[0][city]', null, ['class' => 'form-control traveler_name']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('traveler[0][profile_image]', 'Profile Image') !!}
-                                    {!! Form::file('traveler[0][profile_image]',null,['class' => 'form-control']); !!}
                                 </div>
                             </div>
                         </div>

@@ -5,23 +5,18 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>@yield('title')</title>
-
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="route" content="{{ url('/') }}">
-
         <!-- favicon -->
         <link href="{{ url('images/logo.png') }}" rel="shortcut icon" type="image/vnd.microsoft.icon">
-
         <!-- Styles -->
         <link href="{{ URL::asset('css/jquery-ui.min.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/style.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/bootstrap.min.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/bootstrap-theme.min.css') }}" media="screen" rel="stylesheet" type="text/css">
-        <link href="{{ URL::asset('css/style.css') }}" media="screen" rel="stylesheet" type="text/css">
         <link href="{{ URL::asset('css/mode_image.css') }}" media="screen" rel="stylesheet" type="text/css">
-
+        <link href="{{ URL::asset('css/jquery.timepicker.css') }}" media="screen" rel="stylesheet" type="text/css">
         <!-- Scripts -->
         <script type="text/javascript" src="{{ URL::asset('js/jquery-3.1.0.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery-ui.min.js') }}"></script>
@@ -31,28 +26,21 @@
         <script type="text/javascript" src="{{ URL::asset('js/jquery.waypoints.min.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/model_image.js') }}"></script>
         <script type="text/javascript" src="{{ URL::asset('js/jquery.validate.min.js') }}"></script>
-
         <!-- Custom js for common functionality -->
         <script type="text/javascript" src="{{ URL::asset('js/custom/home.js') }}"></script>
-
         <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700' rel='stylesheet' type='text/css'>
-
         <!-- font  -->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet"> 
         <!-- font Awesome Cdn -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
         <style type="text/css">
             .error {
                 color: red;
             }
         </style>
-
     </head>
-
     <body>
-
         <div id="myModal" class="modal">
             <span class="close">&times;</span>
             <img class="modal-content" id="img01">
@@ -68,64 +56,84 @@
                     </button>
                     <a class="navbar-brand" href="/aat/public/"><img src="{{ url('images/logo.png') }}" alt="logo"></a>
                 </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <!--------Cart Begin------->
+                <div id="navbar" class="navbar-collapse collapse">
+                    <!--------Cart Begin------->
                         <ul class="navbar-right cartbtn">
-                        <li><a href="#" id="cart"><span class="cart-icon-btn"><i class="fa fa-shopping-cart"></i> Cart </span><span class="badge mybadge">3</span></a></li>
-                       <div class="shopping-cart" style="display:none;">
-                         <div class="shopping-cart-header">
-                           <div class="cart_btn"><i class="fa fa-shopping-cart cart-icon"></i><span class="badge mybadge">3</span></div>
-                           <div class="shopping-cart-total">
-                             <span class="lighter-text">Total:</span>
-                             <span class="main-color-text">$2,229.97</span>
-                           </div>
-                         </div> <!--end shopping-cart-header -->
+                        <li><a href="#" id="cart"><span class="cart-icon-btn">
+                        <i class="fa fa-shopping-cart"></i> Cart </span>
+                        <span class="badge mybadge">3</span></a></li>
+                        `<div class="shopping-cart" style="display:none;">
+                            <div class="shopping-cart-header">
+                                <div class="cart_btn"><i class="fa fa-shopping-cart cart-icon"></i><span class="badge mybadge">3</span></div>
+                                <div class="shopping-cart-total">
+                                    <span class="lighter-text">Total:</span>
+                                    <span class="main-color-text">$2,229.97</span>
+                                </div>
+                            </div> <!--end shopping-cart-header -->
 
-                         <ul class="shopping-cart-items">
-                           <li class="clearfix">
-                             <div>Ghana, Togo, Benin &amp; Morocco 2017</div>
-                           </li>
-                           <li class="clearfix">
-                             <span class="item-title">Airlines</span>
-                             <span class="item-name">Alaska Airlines</span>
-                             <span class="item-price">$564</span>
-                             <span class="item-quantity">Quantity: 02</span>
-                           </li>
-                           <li class="clearfix">
-                             <span class="item-title">Hotel</span>
-                             <span class="item-name">Blue</span>
-                             <span class="item-price">$564</span>
-                             <span class="item-quantity">Person: 02. Solo: Yes</span>
-                           </li>
-                         </ul>
-
-                         <a href="#" class="button">Checkout</a>
-                       </div>
-                   </ul>
+                            <ul class="shopping-cart-items">
+                                <li class="clearfix">
+                                    <div>Ghana, Togo, Benin &amp; Morocco 2017</div>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="item-title">Airlines</span>
+                                    <span class="item-name">Alaska Airlines</span>
+                                    <span class="item-price">$564</span>
+                                    <span class="item-quantity">Quantity: 02</span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="item-title">Hotel</span>
+                                    <span class="item-name">Blue</span>
+                                    <span class="item-price">$564</span>
+                                    <span class="item-quantity">Person: 02. Solo: Yes</span>
+                                </li>
+                                 <li class="clearfix">
+                                    <span class="item-title">Addons</span>
+                                    <span class="item-name">Addon Name</span>
+                                    <span class="item-price">$564</span>
+                                    <span class="item-quantity">Person: 02. Solo: Yes</span>
+                                </li>
+                                <li class="clearfix">
+                                    <span class="item-title">Included Activities</span>
+                                    <span class="item-name">Acitiviy name</span>
+                                    <span class="item-price">$564</span>
+                                    <span class="item-quantity">Person: 02. Solo: Yes</span>
+                                </li>
+                            </ul>
+                            <a href="#" class="button">Checkout</a>
+                        </div>
+                    </ul>
                     <!--- Cart End------>
                     <!-- User profile -->
                     <!-- Navbar -->
-                        <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class=""><a href="{{url('/about') }}">About </a></li>
                         <li class="dropdown dropdown-hov">
-                            <a href="javascript:void(0);">Trips <span class="caret"></span></a>
-                      
+                            <a href="{{url('/listtrip') }}">Trips <span class="caret"></span></a>
+                            <ul class="dropdown-menu" style="display: none;">
+                                @if(count($data['trips']) > 0))
+                                @foreach($data['trips'] AS $trip)
+                                <li><a href="{{url('tripview/'.$trip->trip_id)}}">{{$trip->name}}</a></li>
+                                @endforeach      
+                                @endif
+                            </ul>
                         </li>
                         <li><a href="#"> Testimony </a></li>
-                        
                         <li><a href="{{url('/contact') }}"> Contact</a></li>
                         <?php
-                      //  log(1);
+                        //  log(1);
                         $userId = Auth::id();
                         if (!isset($userId)) {
                             ?>
-                            <li><a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
-                        <?php } else {
+                        <li>
+                        <a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
+                        <?php } else{
                             ?> 
                             <li><a href="{{url('/dashboard') }}"> Dashboard</a></li>
                             <div class="user-profile">
                                 <li class="dropdown dropdown-hov">
-                                    <a class="user-img"><img src="/aat_zend/public/assets/profile_img/80d93e10f0653f507e7402dbb531a8a1.jpg" alt="tm-01" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>
+                                    <a class="user-img">
+                                    <img src="/aat_zend/public/assets/profile_img/80d93e10f0653f507e7402dbb531a8a1.jpg" alt="tm-01" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>
                                     <ul class="dropdown-menu" style="display: none;">
                                         <li><a href="{{ url('/dashboard') }}">View profile</a></li>
                                         <li><a href="{{ url('/changepassword') }}">Change password</a></li>
@@ -153,25 +161,29 @@
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
                                     <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level23"  class="tablinks collapsed" aria-expanded="false">f</a>
                                         <ul id="level23" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-                                            <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/7" class="tablinks ">Maneesh</a></li>
-                                            <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/6" class="tablinks ">Vaishnavesh</a></li>
+                                            <li class='travelers'><a href="#" class="tablinks ">Maneesh</a></li>
+                                            <li class='travelers'><a href="#" class="tablinks ">Vaishnavesh</a></li>
                                         </ul>
                                     </li>
-                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
+                                    <li> 
+                                        <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
                                         <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
                                             <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#my_trip"><i class="fa fa-plane" aria-hidden="true"></i>My Trips</a>
+                            <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#my_trip">
+                                    <i class="fa fa-plane" aria-hidden="true"></i>My Trips</a>
                                 <ul id="my_trip" class="collapse sub-menu">
-                                    <li><a href="/aat_backup/public/dashboard/my-trips/design/23" class="tablinks ">f</a></li>
-                                    <li><a href="/aat_backup/public/dashboard/my-trips/design/12" class="tablinks ">Ghana, Togo, Benin & Morocco 2017</a></li>
+                                    @if(count($data['user_trips']) > 0))
+                                    @foreach($data['user_trips'] AS $trip)
+                                    <li><a href="{{url('mytripdesign/'.$trip->trip_id)}}" class="tablinks ">{{$trip->name}}</a></li>
+                                    @endforeach      
+                                    @endif
                                 </ul>
                             </li>
-                            <li><a href="{{ url('listtrip') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
-                          
+                            <li><a href="{{ url('listtrip/') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
                         </ul>
                         <!-- Brand link-->
                         <div class="brandlink">
@@ -187,10 +199,7 @@
                 </div>
                 <!-- Page Content -->
             </div>
-
-
-
-<!--            <footer class="footer footer-color-black">
+            <footer class="footer footer-color-black">
                 <div class="container">
                     <div class="col-md-2"> <div class="footer-logo"> <img src="{{ url('images/logo.png') }}" alt="logo"> </div> </div>
                     <div class="col-md-5"> 
@@ -253,9 +262,8 @@
                         <p><a href="#">Privacy Policy</a> | <a href="#">About Us</a> | <a href="#">FAQ</a> | <a href="#">Contact Support</a></p>
                     </div>
                 </div>
-            </footer>-->
+            </footer>
         </div>
-
         <script>
 $(document).ready(function () {
     $(".filter-button").click(function () {

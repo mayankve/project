@@ -60,10 +60,20 @@ Route::post('booktrip','HomeController@bookTrip');
 //Design Trip for users
 Route::get('mytripdesign/{id}','HomeController@myTripDesign');
 
-
+//Cart for users
+ Route::get('cart','CartController@index');
 /* Front-end routes ends */
 
+//cart items for users
+ Route::post('addToCart','CartController@addToCart');
+ 
+ 
+ 
+/* User-end routes ends */
 
+ 
+ 
+ 
 /* Admin routes */
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {

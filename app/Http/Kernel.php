@@ -18,6 +18,13 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
+        'Illuminate\Cookie\Middleware\EncryptCookies',
+        'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
+        'Illuminate\Session\Middleware\StartSession',
+        'Illuminate\View\Middleware\ShareErrorsFromSession',
+        'App\Http\Middleware\VerifyCsrfToken',
+        //'App\Http\Middleware\Authenticate',// add this line according to your namespace
     ];
 
     /**

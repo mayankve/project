@@ -1,7 +1,27 @@
-
 @extends('layouts.dashboard')
 @section('title', 'AAT:Design your trip')
 @section('content')
+
+<style>
+    #is_solo .notActive{
+        color: black;
+        background-color: #e4b068;
+    }
+    .btn-primary,
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary:visited,
+    .btn-primary:focus {
+        background-color: #e4b068;
+        border-color: #8064A2;
+    }
+
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #e4b068 !important;
+        background-image:-webkit-linear-gradient(top,white 0,white 100%);
+    }
+</style>
+
 <div class="pageContainer">
     <div class="dashboardHeader">
         <div class="row">
@@ -33,6 +53,7 @@
 
     <input type="hidden" id="ajax_url" name="ajax_url" value="/dashboard/my-trips/ajax/12">
     <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">
+    
     <div class="row text-right">
         <h4><a href="#">Checkout this trip</a></h4>
     </div>
@@ -56,7 +77,6 @@
                                 </a>
                             </li>
                             <li role="presentation"><a href="#roommates" aria-controls="roommates" role="tab" data-toggle="tab">
-
                                     <span>Roommates/Referrals</span>
                                 </a>
                             </li>
@@ -70,6 +90,7 @@
                 <div role="tabpanel" class="tab-pane active" id="DesignTrip">
                     <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">-->
                     {!! Form::open(['url' => '/designtrip', 'id' => 'trip-design' , 'method'=>'post']) !!}
+                    <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
                     <div class="panel panel-primary trip-design-flight">
                         <div class="panel-heading">
                             <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -105,26 +126,38 @@
                             </div>
                         </div>
                     </div>
-                    <br> 
+                    <br>
                     <!-- Hotel Panel -->
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_hotels')
                     </div>
                     <br>
+                     <!-- Addons Panel -->
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_addons')
                     </div>
+                    <br>
+                    <!-- Included Activities Panel -->
                     <div class="panel panel-default">
-                        @include('designstrips.partials.design_trip_todo')
+                      @include('designstrips.partials.design_trip_included_activity')
                     </div>
+                    <br>
+                    <!-- Trip Todo Panel -->
                     <div class="panel panel-default">
-                        @include('designstrips.partials.design_trip_traveler')
+                    <!--include('designstrips.partials.design_trip_todo')-->
+                    </div> 
+                    <br>
+                     <!-- Trip Travelers Panel -->
+                    <div class="panel panel-default">
+<!--                        include('designstrips.partials.design_trip_traveler')-->
                     </div>
                 </div>
-                <br>
             </div>
         </div>
+        
+       
     </div>
+   
     {!! Form::close() !!}         
 </div>  
 <script>
