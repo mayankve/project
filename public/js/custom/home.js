@@ -1,36 +1,6 @@
 /* Common js for all front-end related functionalities like register, login etc */
 
 $(document).ready(function () {
-    var path = window.location.href;
-    var url = path.substring(0, 36);
-    var flight_id = 0;
-    var trip_id = $('#trip_id').val();
-    $("[name=flight_id]").click(function () {
-        if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
-            flight_id = $(this).val();
-            $.ajax({
-                url: url +'/addToCart',
-                method: 'post',
-                data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
-                dataType: "json",
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (result) {
-                    console.log(result);
-                }
-            });
-        }
-    });
-   
-    
-    $('#cart').click(function(){
-      
-//           if($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1)
-//               alert('good to go');
-//           else
-//               alert('please choose one from each group');
-       });
     $('#frm_user_basic_info').submit(function (e) {
         e.preventDefault();
     });
@@ -628,6 +598,31 @@ $(document).ready(function () {
     $(document).on('click', '.remove_addon_airlines', function(){
         $(this).closest('.addon_airlines').remove();
     });
+    
+    
+    //Add to Cart Functionality
+    var path = window.location.href;
+    var url = path.substring(0, 36);
+    var flight_id = 0;
+    var trip_id = $('#trip_id').val();
+    $("[name=flight_id]").click(function () {
+        if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
+            flight_id = $(this).val();
+            $.ajax({
+                url: url +'/addToCart',
+                method: 'post',
+                data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
+                dataType: "json",
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+        }
+    });
+   
 });
 
 
@@ -669,7 +664,6 @@ $(document).ready(function () {
 
     $('.carousel-showmanymoveone .item').each(function () {
         var itemToClone = $(this);
-
         for (var i = 1; i < 4; i++) {
             itemToClone = itemToClone.next();
             if (!itemToClone.length) {
@@ -692,5 +686,3 @@ $(document).ready(function () {
         $(this).toggleClass('open');
         $('b', this).toggleClass("caret caret-up");
     });
-	
-	

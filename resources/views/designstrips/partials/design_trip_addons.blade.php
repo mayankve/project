@@ -286,7 +286,7 @@
                                 <h3 class="panel-title"><strong>Hotels</strong></h3>
                                 <div class="panel-tools">
                                     <label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$400</label>
-                                    <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
+                                    <a href="#" class="updown addon"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
                                 </div>
                             </div>
                             <div class="panel-body">
