@@ -311,7 +311,5 @@ if (el) {
                 </div>
             </div>
         </div>
-        <!-- Server Response -->
-
-    </body>
+     </body>
 </html>

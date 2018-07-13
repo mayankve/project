@@ -142,6 +142,38 @@
                         </div>
                         <ul class="nav tablist-menu" id="accordion1">
                             <li><a class="tablinks" href="{{ url('admin/dashboard') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
+							
+							
+							
+							<!-- <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
+                                <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
+								
+												
+                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level1"  class="tablinks collapsed" aria-expanded="false">fdgsfdgfds</a>
+                                        <ul id="level1" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+										
+											
+                                            <li class='travelers'><a href="" class="tablinks ">dfgfd</a></li>
+                                            
+                                        </ul>
+                                    </li>
+								
+                                  <!--  <li> 
+                                        <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
+                                        <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+                                            <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
+                                        </ul>
+                                    </li>-->
+									
+									
+                               <!-- </ul>
+                            </li>-->
+							
+							
+							
+							
+							
+							
                             <li><a href="{{ url('admin/listtrip') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
                             <li>
                                 <a data-toggle="collapse" href="#manage_trips" class="tablinks "  data-parent="#accordion1" href="#my_trip"><i class=" fa fa-cog fa-spin margin-bottom"></i>Manage Trips</a>

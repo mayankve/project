@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -270,7 +271,7 @@ class HomeController extends Controller {
 
     public function userDashboard() {
         $data = $this->dashboardElements();
-        // echo "<pre>"; print_r($data);die;
+        //echo "<pre>"; print_r($data);die;
         return view('dashboard', ['data' => $data]);
        // return view('dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country, 'trips' => $trips]);
     }
@@ -714,5 +715,50 @@ class HomeController extends Controller {
 
         return $fileName;
     }
+	
+	
+	
+	// here by me traveler infomation //
+	
+	public function travelerprofile($id,Request $request)
+	{
+		
+		if(isset($_POST['submit']))
+		{
+			$data['first_name']=!empty($request->input('first_name'))?$request->input('first_name'):'';
+			$data['last_name']=!empty($request->input('last_name'))?$request->input('last_name'):'';
+			$data['gender']=!empty($request->input('gender'))?$request->input('gender'):'';
+			$data['dob']=!empty($request->input('dob'))?$request->input('dob'):'';
+			$data['email']=!empty($request->input('email'))?$request->input('email'):'';
+			$data['is_passport']=!empty($request->input('is_passport'))?$request->input('is_passport'):'';
+			$data['passport_exp_date']=!empty($request->input('passport_exp_date'))?$request->input('passport_exp_date'):'';
+			$passportPic = $request->input('passport_pic');
+			//echo $passportPic;die;
+			 if (isset($passportPic) && count($passportPic) > 0) {
+                    $destinationPath = storage_path() . '/uploads/passport_images/';
+						$data['passport_pic']=$passportPic;	
+										
+							//print_r($data);die;
+                             if (TripTraveler::where(['id' => $id])->update($data)) {
+                                    $response['errCode'] = 0;
+                                    $response['errMsg'] = 'Profile updated successfully';
+                                } else {
+                                    $response['errCode'] = 4;
+                                    $response['errMsg'] = 'Some issue in profile update';
+                                }
+					
+                    
+                }
+			// $check = DB::table('trip_traveler')
+						// ->where('id', $id)
+						// ->update($data);
+			 return redirect('traveler_profile/'.$id);
+					
+		}		 
+		$travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
+		$data = $this->dashboardElements();			
+		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
+	}
+	
 
 }
