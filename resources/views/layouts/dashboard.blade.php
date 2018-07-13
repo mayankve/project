@@ -157,26 +157,41 @@
                         </div> 
                         <ul class="nav tablist-menu" id="accordion1">
                             <li><a href="{{ url('/dashboard') }}" class="tablinks  active" id="my_information"><i class="fa fa-info-circle" aria-hidden="true"></i>My Information</a></li>
+							
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
-                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level23"  class="tablinks collapsed" aria-expanded="false">f</a>
-                                        <ul id="level23" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-                                            <li class='travelers'><a href="#" class="tablinks ">Maneesh</a></li>
-                                            <li class='travelers'><a href="#" class="tablinks ">Vaishnavesh</a></li>
+								
+										@if(count($data['user_trips'])>0)
+										@foreach($data['user_trips'] as $trip)			
+                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
+                                        <ul id="level<?php echo $trip->id;?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+										<?php  
+											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.' Group By user_id');
+											
+											foreach($results as $item):
+											//$user= DB::select('select * from users where id = '.$item->user_id.'');
+											?>
+											
+                                            <li class='travelers'><a href="{{url('traveler_profile/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
+                                            <?php endforeach;?>
                                         </ul>
                                     </li>
-                                    <li> 
+									@endforeach
+									@endif
+                                  <!--  <li> 
                                         <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
                                         <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
                                             <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
                                         </ul>
-                                    </li>
+                                    </li>-->
+									
+									
                                 </ul>
                             </li>
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#my_trip">
                                     <i class="fa fa-plane" aria-hidden="true"></i>My Trips</a>
                                 <ul id="my_trip" class="collapse sub-menu">
-                                    @if(count($data['user_trips']) > 0))
+                                    @if(count($data['user_trips']) > 0)
                                     @foreach($data['user_trips'] AS $trip)
                                     <li><a href="{{url('mytripdesign/'.$trip->trip_id)}}" class="tablinks ">{{$trip->name}}</a></li>
                                     @endforeach      

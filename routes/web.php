@@ -161,3 +161,11 @@ Route::get('/addRole', 'ACLController@addRole');
 Route::get('/assignRole', 'ACLController@assignRole');
 /* ACL routes ends */
 
+
+
+
+// here is route by mukesh//
+Route::match(['get','post'],'traveler_profile/{id}','HomeController@travelerprofile');
+
+
+//
