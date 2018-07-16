@@ -149,6 +149,7 @@
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
 								<?php 
 								 $userTrips = DB::select('select * from trips  join user_trip on user_trip.trip_id=trips.id where user_trip.status="1"');
+								
 							 if(count($userTrips)>0){
 								foreach($userTrips as $trip){	
 								?>
@@ -163,7 +164,7 @@
 											//$user= DB::select('select * from users where id = '.$item->user_id.'');
 											?>
 											
-                                            <li class='travelers'><a href="{{url('view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
+                                            <li class='travelers'><a href="{{url('admin/view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
                                             <?php endforeach;?>
                                             
                                         </ul>

@@ -66,8 +66,10 @@ Route::get('mytripdesign/{id}','HomeController@myTripDesign');
 
 //cart items for users
  Route::post('addToCart','CartController@addToCart');
- 
- 
+  
+// traveler profile in user dashboard
+Route::match(['get','post'],'view-traveler/{id}','HomeController@travelerProfile');
+
  
 /* User-end routes ends */
 
@@ -115,8 +117,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     //Book Trip for users
     Route::get('/book/{id}','HomeController@bookTrip');
-
+	
+// traveler profile in admin dashboard	
+Route::match(['get','post'],'view-traveler/{id}','AdminController@adminTravelerProfile');
 });
+
+
 
 /* Admin routes ends */
 
@@ -164,8 +170,3 @@ Route::get('/assignRole', 'ACLController@assignRole');
 
 
 
-// here is route by mukesh//
-Route::match(['get','post'],'view-traveler/{id}','HomeController@travelerprofile');
-
-
-//
