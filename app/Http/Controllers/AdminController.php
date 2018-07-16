@@ -46,9 +46,8 @@ class AdminController extends Controller {
         $user_country = User::where('id', '=', $userId)->first();
         //For Profile Info
         $profileData = $user = DB::table('user_profile')->where('user_id', '$userId')->first();
-		$data1= $this->dashboardElements();
-		//echo '<pre>';print_r($data1);die;
-        return view('admin/dashboard', ['data' => $userData,'data1'=>$data1, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
+		
+	     return view('admin/dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
     }
 
     /**
@@ -1733,43 +1732,6 @@ class AdminController extends Controller {
         return back();
     }
 	
-	
-	
-	 public function dashboardElements() {
-        $userId = Auth::id();
-        // Get all the trips for User which are active and whose end date is not null and trip is not deleted
-        $trips = Trip::where('end_date', '!=', NULL)->where('status', '!=', '1')->paginate(6);
 
-        $userTrips = DB::table('user_trip')
-                ->join('trips', 'user_trip.trip_id', '=', 'trips.id')
-                ->select('trips.*', 'user_trip.*')
-                ->where('user_trip.user_id', '=', $userId)
-                ->where('user_trip.status', '=', '1')
-                ->get();
-
-        //For Basic Info
-        $userData = User::where('id', '=', $userId)
-                ->where('status', '=', '1')
-                ->first();
-
-        //For Profile Info
-        $countries = Country::all();
-
-        $userCountry = User ::where('id', '=', $userId)
-                ->where('status', '=', '1')
-                ->first();
-
-        $profileData = UserProfile::where('user_id', '=', $userId)->where('status', '=', '1')->first();
-        
-        $data = array(
-            'user_trips' =>$userTrips,
-            'user_data' => $userData,
-            'countries' => $countries,
-            'user_country' => $userCountry,
-            'profile_data' => $profileData,
-            'trips'        => $trips
-        );
-        return $data;
-    }
 
 }

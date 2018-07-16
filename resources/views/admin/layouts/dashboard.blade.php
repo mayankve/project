@@ -145,19 +145,30 @@
 							
 							
 							
-							<!-- <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
+							<li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
-								
+								<?php 
+								 $userTrips = DB::select('select * from trips  join user_trip on user_trip.trip_id=trips.id where user_trip.status="1"');
+							 if(count($userTrips)>0){
+								foreach($userTrips as $trip){	
+								?>
 												
-                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level1"  class="tablinks collapsed" aria-expanded="false">fdgsfdgfds</a>
-                                        <ul id="level1" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
+                                        <ul id="level<?php echo $trip->id;?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
 										
+											<?php  
+											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.' Group By user_id');
 											
-                                            <li class='travelers'><a href="" class="tablinks ">dfgfd</a></li>
+											foreach($results as $item):
+											//$user= DB::select('select * from users where id = '.$item->user_id.'');
+											?>
+											
+                                            <li class='travelers'><a href="{{url('view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
+                                            <?php endforeach;?>
                                             
                                         </ul>
                                     </li>
-								
+								 <?php } } ?>
                                   <!--  <li> 
                                         <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
                                         <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
@@ -166,8 +177,8 @@
                                     </li>-->
 									
 									
-                               <!-- </ul>
-                            </li>-->
+                                </ul>
+                            </li>
 							
 							
 							

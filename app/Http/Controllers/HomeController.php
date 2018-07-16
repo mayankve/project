@@ -20,7 +20,7 @@ use App\UserProfile;
 use App\Country;
 use App\TripTraveler;
 use App\UserTrip;
-
+use App\TripTravelerProfile;
 class HomeController extends Controller {
 
     /**
@@ -722,7 +722,7 @@ class HomeController extends Controller {
 	
 	public function travelerprofile($id,Request $request)
 	{
-		
+		$userId = Auth::id();
 		if(isset($_POST['submit']))
 		{
 			$data['first_name']=!empty($request->input('first_name'))?$request->input('first_name'):'';
@@ -732,32 +732,107 @@ class HomeController extends Controller {
 			$data['email']=!empty($request->input('email'))?$request->input('email'):'';
 			$data['is_passport']=!empty($request->input('is_passport'))?$request->input('is_passport'):'';
 			$data['passport_exp_date']=!empty($request->input('passport_exp_date'))?$request->input('passport_exp_date'):'';
-			$passportPic = $request->input('passport_pic');
+			$passportPic = $request->file('passport_pic');
+			
 			//echo $passportPic;die;
 			 if (isset($passportPic) && count($passportPic) > 0) {
-                    $destinationPath = storage_path() . '/uploads/passport_images/';
-						$data['passport_pic']=$passportPic;	
-										
-							//print_r($data);die;
-                             if (TripTraveler::where(['id' => $id])->update($data)) {
+                   $destinationPath = storage_path() . '/uploads/passport_images/';						
+				 if ($passportPic->isValid()) { 
+                        $fileExt = $passportPic->getClientOriginalExtension();
+                        $fileType = $passportPic->getMimeType();
+                        $fileSize = $passportPic->getSize();
+                        if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
+                            // Rename the file
+                            $fileNewName = str_random(10) . '.' . $fileExt;
+
+                            if ($passportPic->move($destinationPath, $fileNewName)) {
+                                $data['passport_pic']=$fileNewName;
+                                if (TripTraveler::where(['id' => $id])->update($data)) {
                                     $response['errCode'] = 0;
                                     $response['errMsg'] = 'Profile updated successfully';
                                 } else {
                                     $response['errCode'] = 4;
                                     $response['errMsg'] = 'Some issue in profile update';
                                 }
-					
-                    
-                }
-			// $check = DB::table('trip_traveler')
-						// ->where('id', $id)
-						// ->update($data);
-			 return redirect('traveler_profile/'.$id);
-					
-		}		 
+                            } else {
+                                $response['errCode'] = 2;
+                                $response['errMsg'] = 'Some issue in uploading the file';
+                            }
+                        } else {
+                            $response['errCode'] = 3;
+                            $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
+                        }
+                    }
+                }			
+			 return redirect('traveler_profile/'.$id);					
+		}
+		
+		//personal infomation//
+			if(isset($_POST['personalinfor']))
+			{
+				$personaldata['food_allergies']=!empty($request->input('food_allergies'))?$request->input('food_allergies'):'';
+				$personaldata['shirt_size']=!empty($request->input('shirt_size'))?$request->input('shirt_size'):'';
+				$personaldata['is_helth_mental']=!empty($request->input('shirt_size'))?$request->input('is_helth_mental'):'';
+				$personaldata['helth_mental_conditions']=!empty($request->input('helth_mental_conditions'))?$request->input('helth_mental_conditions'):'';
+				$personaldata['is_mental_conditions']=!empty($request->input('is_mental_conditions'))?$request->input('is_mental_conditions'):'';
+				$personaldata['mental_conditions']=!empty($request->input('mental_conditions'))?$request->input('mental_conditions'):'';
+				$personaldata['emergency_contact_name']=!empty($request->input('emergency_contact_name'))?$request->input('emergency_contact_name'):'';
+				$personaldata['emergency_contact_phone']=!empty($request->input('emergency_contact_phone'))?$request->input('emergency_contact_phone'):'';
+				$personaldata['personality_previous_travel']=!empty($request->input('personality_previous_travel'))?$request->input('personality_previous_travel'):'';
+				$personaldata['personality_originally_from']=!empty($request->input('personality_originally_from'))?$request->input('personality_originally_from'):'';
+				$personaldata['personality_school']=!empty($request->input('personality_school'))?$request->input('personality_school'):'';
+				$personaldata['personality_about']=!empty($request->input('personality_about'))?$request->input('personality_about'):'';
+				$profiletPic = !empty($request->file('profile_pic'))?$request->file('profile_pic'):'';
+				
+			$checkdataexist= DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
+					$destinationPath = storage_path() . '/uploads/passport_images/';						
+					 if (!empty($profiletPic) && $profiletPic->isValid()) { 
+							$fileExt = $profiletPic->getClientOriginalExtension();
+							$fileType = $profiletPic->getMimeType();
+							$fileSize = $profiletPic->getSize();
+							if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
+								// Rename the file
+								$fileNewName = str_random(10) . '.' . $fileExt;
+								
+								if ($profiletPic->move($destinationPath, $fileNewName)) {
+									
+									$personaldata['profile_pic']=$fileNewName;									
+								} else {
+									$response['errCode'] = 2;
+									$response['errMsg'] = 'Some issue in uploading the file';
+								}
+							} else {
+								$response['errCode'] = 3;
+								$response['errMsg'] = 'Only image file with size less than 3MB is allowed';
+							}
+						}else{
+							$personaldata['profile_pic']='';
+						}									
+				if (count($checkdataexist)>0) {
+					//echo 'sdfdf';die;
+					TripTravelerProfile::where(['traveler_id' => $id])->update($personaldata);
+				} else {
+					$personaldata['traveler_id']=$id;
+					DB::table('trip_traveler_profile')->insert($personaldata);
+				}	
+							
+				return redirect('traveler_profile/'.$id);					
+				
+			}		
+		
+		//end here//
+			
 		$travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
-		$data = $this->dashboardElements();			
-		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
+		$data = $this->dashboardElements();
+
+		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();	
+		if($userId==1)
+		{
+			
+			return view('admin/traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
+		}else{
+			return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
+		}
 	}
 	
 

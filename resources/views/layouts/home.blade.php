@@ -293,7 +293,7 @@ if (el) {
         }
     })
 }
-        </script>
+  </script>
 
         <!-- Server Response -->
         <div class="modal fade" id="server_response" tabindex="-1" role="dialog" data-backdrop="false" aria-hidden="true" style="display: none;">
