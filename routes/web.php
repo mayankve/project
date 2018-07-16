@@ -165,7 +165,7 @@ Route::get('/assignRole', 'ACLController@assignRole');
 
 
 // here is route by mukesh//
-Route::match(['get','post'],'traveler_profile/{id}','HomeController@travelerprofile');
+Route::match(['get','post'],'view-traveler/{id}','HomeController@travelerprofile');
 
 
 //

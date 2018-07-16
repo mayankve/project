@@ -172,7 +172,7 @@
 											//$user= DB::select('select * from users where id = '.$item->user_id.'');
 											?>
 											
-                                            <li class='travelers'><a href="{{url('traveler_profile/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
+                                            <li class='travelers'><a href="{{url('view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
                                             <?php endforeach;?>
                                         </ul>
                                     </li>
