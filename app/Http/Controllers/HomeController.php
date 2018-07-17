@@ -52,7 +52,7 @@ class HomeController extends Controller {
                 ->where('user_trip.user_id', '=', $userId)
                 ->where('user_trip.status', '=', '1')
                 ->get();
-
+		
         //For Basic Info
         $userData = User::where('id', '=', $userId)
                 ->where('status', '=', '1')
@@ -725,9 +725,8 @@ class HomeController extends Controller {
 	
 	// here by me traveler infomation //
 	
-	public function travelerprofile($id,Request $request)
+	public function travelerProfile($id,Request $request)
 	{
-		$userId = Auth::id();
 		if(isset($_POST['submit']))
 		{
 			$data['first_name']=!empty($request->input('first_name'))?$request->input('first_name'):'';
@@ -741,7 +740,7 @@ class HomeController extends Controller {
 			
 			//echo $passportPic;die;
 			 if (isset($passportPic) && count($passportPic) > 0) {
-                   $destinationPath = storage_path() . '/uploads/passport_images/';						
+                        $destinationPath = storage_path() . '/uploads/passport_images/';						
 				 if ($passportPic->isValid()) { 
                         $fileExt = $passportPic->getClientOriginalExtension();
                         $fileType = $passportPic->getMimeType();
@@ -825,19 +824,12 @@ class HomeController extends Controller {
 				
 			}		
 		
-		//end here//
-			
+		// End here//
 		$travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
 		$data = $this->dashboardElements();
 
-		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();	
-		if($userId==1)
-		{
-
-			return view('admin/traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
-		}else{
-			return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
-		}
+		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		
+		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
 	}
 	
 
