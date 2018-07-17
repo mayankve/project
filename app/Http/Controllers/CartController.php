@@ -25,7 +25,7 @@ class CartController extends Controller
     }
     
     /**
-     * Function to add the Trip items to the cart
+     * Function to add the flighs of Trip to the cart
      * @param $request
      * @return \Illuminate\Http\Response
      */
@@ -50,28 +50,24 @@ class CartController extends Controller
                ->get();
             array_push($cart,$airlineInfo);
                 break;
-            
-        //Hotel details to be added into cart
+          //Hotel details to be added into cart
             case 'hotels':
                 $hotelInfo = array();
                 $hotelInfo = DB::table('trip_hotel')
                  ->where('trip_hotel.trip_id', '=', $tripId)
                  ->where('trip_hotel.status', '=', '1')
                  ->get();
-                
             array_push($cart,$hotelInfo);
                 break;
-            
         //Addon details to be added into cart
             case 'addon':
                 $addonInfo = array();  
                  $airlineInfo = DB::table('trip_addon')
                  ->where('trip_addon.trip_id', '=', $tripId)
                  ->where('trip_addon.status', '=', '1')
-                 ->get();
-                 
+                 ->get();   
             array_push($cart,$addonInfo);
-                break;
+                break; 
             
         //Addon Traveler cost to be added into cart
             case 'addon-traveler':
@@ -80,11 +76,14 @@ class CartController extends Controller
                 break;
             
         //Addon Hotel cost to be added into cart
-             case 'addon-hotel':
-                $addonHotelCost = array();  
-            array_push($cart,$addonHotelCost);
-                break;
-            
+        case 'addon-hotel':
+        $addonHotel = array();  
+        $addonHotelCost = DB::table('trip_addon_hotel')
+        ->where('trip_id', '=', $tripId)
+        ->where('status', '=', '1')
+        ->get(); 
+        array_push($cart,$addonHotel);
+            break;
         //Addon flight cost to be added into cart
         case 'addon-flight':
            $addonFlightCost= array();  
@@ -104,7 +103,7 @@ class CartController extends Controller
            break;
         }
         
-      echo"<pre>";var_dump($cart);die;
+     echo"<pre>";var_dump($cart);die;
     }
 
 }

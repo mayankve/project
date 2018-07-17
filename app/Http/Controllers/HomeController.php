@@ -642,6 +642,7 @@ class HomeController extends Controller {
         //Trip Included Activities Data
         $tripIncludedActivities = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
+                ->where('activity_due_date', '=', $id)
                 ->where('status', '=', '1')
                 ->get();
         
@@ -653,19 +654,21 @@ class HomeController extends Controller {
         foreach ($tripIncludedActivities AS $key => $value) {
             //Included Activity Flight Details
             $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
+                    ->where('airline_departure_date', '>', date('Y-m-d'))
                     ->where('trip_id', '=', $id)
                     ->where('activity_id', '=', $value->id)
                     ->where('status', '=', '1')
                     ->get();
+            
             //Included Activity Hotel Details
             $tripIncludedActivities['includedActivityHotles'] = DB::table('trip_included_activity_hotel')
                     ->where('trip_id', '=', $id)
+                    ->where('hotel_due_date', '>', date('Y-m-d'))
                     ->where('activity_id', '=', $value->id)
                     ->where('status', '=', '1')
                     ->get();
         }
-        
-//         echo "<pre>";print_r($tripIncludedActivities);die;
+       
         //To Do Packing Details
         $tripTodo = DB::table('user_trip_todo')
                 ->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
@@ -673,8 +676,10 @@ class HomeController extends Controller {
                 ->where('user_trip_todo.user_id', '=', $userId)
                 ->where('user_trip_todo.status', '=', '1')
                 ->get();
+        
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
+        
         $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
@@ -828,7 +833,7 @@ class HomeController extends Controller {
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();	
 		if($userId==1)
 		{
-			
+
 			return view('admin/traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
 		}else{
 			return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);

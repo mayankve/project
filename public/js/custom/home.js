@@ -601,6 +601,7 @@ $(document).ready(function () {
     
     
     //Add to Cart Functionality
+    
     var path = window.location.href;
     var url = path.substring(0, 36);
     var flight_id = 0;
