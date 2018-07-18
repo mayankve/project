@@ -559,7 +559,6 @@ class HomeController extends Controller {
      * @return url
      */
     public function myTripDesign($id) {
-       
         $userId = Auth::id();
         //Trip Travelers details
         $tripTravelers = DB::table('trip_traveler')
@@ -570,22 +569,24 @@ class HomeController extends Controller {
         
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
-                ->join('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+                ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
                 ->select('trip_airline.*', 'airlines.*')
                 ->where('trip_airline.trip_id', '=', $id)
                 ->where('trip_airline.airline_departure_date', '>=', date('Y-m-d'))
                 ->where('trip_airline.airline_departure_time', '<=', date('H:i:s'))
                 ->where('trip_airline.status', '=', '1')
                 ->get();
-      
-        //Trip Hotels details
-//        $tripHotels = DB::table('trip_hotel_booking')
+        
+            // echo "<pre>";print_r($tripAirlines);die;
+            //Trip Hotels details
+//               $tripHotels = DB::table('trip_hotel_booking')
 //                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
 //                ->select('trip_hotel_booking.*', 'trip_hotel.*')
 //                ->where('trip_hotel_booking.trip_id', '=', $id)
 //                ->where('trip_hotel_booking.status', '=', '1')
 //                ->where('trip_hotel_booking.user_id', '=', $userId)
 //                ->get();
+        
         
          //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
@@ -721,10 +722,7 @@ class HomeController extends Controller {
         return $fileName;
     }
 	
-	
-	
-	// here by me traveler infomation //
-	
+
 	public function travelerProfile($id,Request $request)
 	{
 		if(isset($_POST['submit']))
@@ -788,7 +786,7 @@ class HomeController extends Controller {
 				$personaldata['personality_about']=!empty($request->input('personality_about'))?$request->input('personality_about'):'';
 				$profiletPic = !empty($request->file('profile_pic'))?$request->file('profile_pic'):'';
 				
-			$checkdataexist= DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
+                                $checkdataexist= DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
 					$destinationPath = storage_path() . '/uploads/passport_images/';						
 					 if (!empty($profiletPic) && $profiletPic->isValid()) { 
 							$fileExt = $profiletPic->getClientOriginalExtension();
@@ -825,7 +823,8 @@ class HomeController extends Controller {
 			}		
 		
 		// End here//
-		$travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
+		
+                $travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
 		$data = $this->dashboardElements();
 
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		

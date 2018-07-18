@@ -610,7 +610,7 @@ $(document).ready(function () {
         if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
             flight_id = $(this).val();
             $.ajax({
-                url: url +'/addToCart',
+                url: url +'/addFlightToCart',
                 method: 'post',
                 data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
                 dataType: "json",
