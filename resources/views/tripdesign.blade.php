@@ -34,28 +34,26 @@
                         <a class="desh-title" href="#">Dashboard</a>
                     </li>
                     <li class="active">
-                        <a>
-                            Design your Trip    </a>
+                        <a>  Design your Trip    </a>
                     </li>
                 </ol>
             </div>
             <div class="col-sm-6 text-right">
-                <h3 class="userName">
-                    Welcome{{ Auth::user()->name }}</h3>
+                <h3 class="userName">Welcome  {{ Auth::user()->name }}</h3>
             </div>
         </div>
     </div>
-    <svg class="hidden">
+<!--    <svg class="hidden">
     <defs>
     <path id="tabshape" d="M80,60C34,53.5,64.417,0,0,0v60H80z"></path>
     </defs>
-    </svg>
+    </svg>-->
 
-    <input type="hidden" id="ajax_url" name="ajax_url" value="/dashboard/my-trips/ajax/12">
-    <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">
-    
+<!--    <input type="hidden" id="ajax_url" name="ajax_url" value="/dashboard/my-trips/ajax/12">
+    <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">-->
+
     <div class="row text-right">
-        <h4><a href="#">Checkout this trip</a></h4>
+        <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>
     </div>
     <div class="" id="pageWrapper">
         <div id="" class="customtab">
@@ -88,8 +86,6 @@
             <div class="tab-content">
                 <!-- flight-land-------------------Start --------------------------------------->
                 <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-                    <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">-->
-                    {!! Form::open(['url' => '/designtrip', 'id' => 'trip-design' , 'method'=>'post']) !!}
                     <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
                     <div class="panel panel-primary trip-design-flight">
                         <div class="panel-heading">
@@ -122,6 +118,7 @@
                                     <div class="panel panel-default">
                                         @include('designstrips.partials.design_trip_airlines')
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -132,33 +129,31 @@
                         @include('designstrips.partials.design_trip_hotels')
                     </div>
                     <br>
-                     <!-- Addons Panel -->
+                    <!-- Addons Panel -->
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_addons')
                     </div>
                     <br>
                     <!-- Included Activities Panel -->
                     <div class="panel panel-default">
-                      @include('designstrips.partials.design_trip_included_activity')
+                        @include('designstrips.partials.design_trip_included_activity')
                     </div>
-                    <br>
+                </div>
+                <div role="tabpanel">
                     <!-- Trip Todo Panel -->
                     <div class="panel panel-default">
-                    <!--include('designstrips.partials.design_trip_todo')-->
+                        <!--include('designstrips.partials.design_trip_todo')-->
                     </div> 
-                    <br>
+                </div>
+                <div role="tabpanel">
                      <!-- Trip Travelers Panel -->
                     <div class="panel panel-default">
-<!--                        include('designstrips.partials.design_trip_traveler')-->
-                    </div>
+                        <!--include('designstrips.partials.design_trip_traveler')-->
+                    </div> 
                 </div>
             </div>
         </div>
-        
-       
     </div>
-   
-    {!! Form::close() !!}         
 </div>  
 <script>
     $(document).on('click', '.panel-heading span.clickable', function (e) {

@@ -64,8 +64,8 @@ Route::get('mytripdesign/{id}','HomeController@myTripDesign');
  Route::get('cart','CartController@index');
 /* Front-end routes ends */
 
-//cart items for users
- Route::post('addToCart','CartController@addToCart');
+//Airlines to be added to Cart
+ Route::post('addFlightToCart','CartController@addFlightToCart');
   
 // traveler profile in user dashboard
 Route::match(['get','post'],'view-traveler/{id}','HomeController@travelerProfile');
