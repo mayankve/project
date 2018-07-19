@@ -717,8 +717,10 @@ class HomeController extends Controller {
     }
 	
 	
-	
-	// here by me traveler infomation //
+	 /* Function to update traveler information
+     * @param int Request
+     * @return url
+     */
 	
 	public function travelerProfile($id,Request $request)
 	{
@@ -733,8 +735,7 @@ class HomeController extends Controller {
 			$data['passport_exp_date']=!empty($request->input('passport_exp_date'))?$request->input('passport_exp_date'):'';
 			$passportPic = $request->file('passport_pic');
 			
-			//echo $passportPic;die;
-			 if (isset($passportPic) && count($passportPic) > 0) {
+			 if (!empty($passportPic) && count($passportPic) > 0) {
                    $destinationPath = storage_path() . '/uploads/passport_images/';						
 				 if ($passportPic->isValid()) { 
                         $fileExt = $passportPic->getClientOriginalExtension();
@@ -745,14 +746,8 @@ class HomeController extends Controller {
                             $fileNewName = str_random(10) . '.' . $fileExt;
 
                             if ($passportPic->move($destinationPath, $fileNewName)) {
-                                $data['passport_pic']=$fileNewName;
-                                if (TripTraveler::where(['id' => $id])->update($data)) {
-                                    $response['errCode'] = 0;
-                                    $response['errMsg'] = 'Profile updated successfully';
-                                } else {
-                                    $response['errCode'] = 4;
-                                    $response['errMsg'] = 'Some issue in profile update';
-                                }
+                                $data['passport_pic']=$fileNewName;			
+								
                             } else {
                                 $response['errCode'] = 2;
                                 $response['errMsg'] = 'Some issue in uploading the file';
@@ -762,8 +757,11 @@ class HomeController extends Controller {
                             $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
                         }
                     }
-                }			
-			 return redirect('traveler_profile/'.$id);					
+                }else{
+					$data['passport_pic']=$request->input('oldimage');
+				}
+			TripTraveler::where(['id' => $id])->update($data);			
+			return redirect('view-traveler/'.$id);					
 		}
 		
 		//personal infomation//
@@ -784,7 +782,7 @@ class HomeController extends Controller {
 				$profiletPic = !empty($request->file('profile_pic'))?$request->file('profile_pic'):'';
 				
 			$checkdataexist= DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
-					$destinationPath = storage_path() . '/uploads/passport_images/';						
+					$destinationPath = storage_path() . '/uploads/profile_images/';						
 					 if (!empty($profiletPic) && $profiletPic->isValid()) { 
 							$fileExt = $profiletPic->getClientOriginalExtension();
 							$fileType = $profiletPic->getMimeType();
@@ -805,17 +803,19 @@ class HomeController extends Controller {
 								$response['errMsg'] = 'Only image file with size less than 3MB is allowed';
 							}
 						}else{
-							$personaldata['profile_pic']='';
+							$personaldata['profile_pic']=$request->input('oldimage');
 						}									
 				if (count($checkdataexist)>0) {
 					//echo 'sdfdf';die;
-					TripTravelerProfile::where(['traveler_id' => $id])->update($personaldata);
+				DB::table('trip_traveler_profile')->where('traveler_id', $id)
+								->update($personaldata);	
+					
 				} else {
 					$personaldata['traveler_id']=$id;
 					DB::table('trip_traveler_profile')->insert($personaldata);
 				}	
 							
-				return redirect('traveler_profile/'.$id);					
+				return redirect('view-traveler/'.$id);					
 				
 			}		
 		

@@ -35,6 +35,7 @@
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet"> 
         <!-- font Awesome Cdn -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		
         <style>
         .error{
             color: red;

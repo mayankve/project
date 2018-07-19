@@ -29,7 +29,10 @@ use App\TripHotel;
 use App\TripTodo;
 use App\TripTravelerProfile;
 use App\TripMiscExpense;
+use App\TripTraveler;
 use Validator;
+use Mail;
+
 
 class AdminController extends Controller {
 
@@ -1717,7 +1720,26 @@ class AdminController extends Controller {
 
         return response()->json(['tripAddon' => $tripAddon]);
     }
-
+	
+	   /**
+     * Ajax function to get trip addonstraveler
+     * @param int  $trip_id
+     * @return Response
+     */
+	function getTripTraveler($trip_id,$add_on_id)
+	{
+		
+		$tripAddontraveler = array();
+		if( !is_null($trip_id) )
+        {
+			
+            $tripAddontraveler = DB::select('SELECT * FROM `trip_traveler`as triptr join trip_addon_traveler as addon on triptr.`id`= addon.traveler_id where addon.addon_id='.$add_on_id.' and triptr.`created_at` >= CURDATE()');
+			
+        }
+		return response()->json(['tripAddontraveler' => $tripAddontraveler]);
+		
+	}
+	
     /**
      * Function to return upload video view
      * @param void
@@ -1733,6 +1755,11 @@ class AdminController extends Controller {
         return back();
     }
 	
+	
+	 /* Function to update traveler information
+     * @param int Request
+     * @return url
+     */
 	
 	public function adminTravelerProfile($id,Request $request)
 	{
@@ -1757,16 +1784,8 @@ class AdminController extends Controller {
                         if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
                             // Rename the file
                             $fileNewName = str_random(10) . '.' . $fileExt;
-
                             if ($passportPic->move($destinationPath, $fileNewName)) {
-                                $data['passport_pic']=$fileNewName;
-                                if (TripTraveler::where(['id' => $id])->update($data)) {
-                                    $response['errCode'] = 0;
-                                    $response['errMsg'] = 'Profile updated successfully';
-                                } else {
-                                    $response['errCode'] = 4;
-                                    $response['errMsg'] = 'Some issue in profile update';
-                                }
+                                $data['passport_pic']=$fileNewName;                               
                             } else {
                                 $response['errCode'] = 2;
                                 $response['errMsg'] = 'Some issue in uploading the file';
@@ -1776,8 +1795,11 @@ class AdminController extends Controller {
                             $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
                         }
                     }
-                }			
-			 return redirect('admin/view-traveler/'.$id);					
+                }else{
+					$data['passport_pic']=$request->input('oldimage');
+				}
+			TripTraveler::where(['id' => $id])->update($data);
+			return redirect('admin/view-traveler/'.$id);					
 		}
 		
 		//personal infomation//
@@ -1798,7 +1820,7 @@ class AdminController extends Controller {
 				$profiletPic = !empty($request->file('profile_pic'))?$request->file('profile_pic'):'';
 				
 			$checkdataexist= DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
-					$destinationPath = storage_path() . '/uploads/passport_images/';						
+					$destinationPath = storage_path() . '/uploads/profile_images/';						
 					 if (!empty($profiletPic) && $profiletPic->isValid()) { 
 							$fileExt = $profiletPic->getClientOriginalExtension();
 							$fileType = $profiletPic->getMimeType();
@@ -1819,11 +1841,12 @@ class AdminController extends Controller {
 								$response['errMsg'] = 'Only image file with size less than 3MB is allowed';
 							}
 						}else{
-							$personaldata['profile_pic']='';
+							$personaldata['profile_pic']=$request->input('oldimage');
 						}									
 				if (count($checkdataexist)>0) {
 					//echo 'sdfdf';die;
-					TripTravelerProfile::where(['traveler_id' => $id])->update($personaldata);
+					DB::table('trip_traveler_profile')->where('traveler_id', $id)
+								->update($personaldata);
 				} else {
 					$personaldata['traveler_id']=$id;
 					DB::table('trip_traveler_profile')->insert($personaldata);
@@ -1832,12 +1855,49 @@ class AdminController extends Controller {
 				return redirect('admin/view-traveler/'.$id);					
 				
 			}		
-		
-		//end here//
-			
+		//end here//			
 		$travelerprofile=DB::table('trip_traveler')->where('id', $id)->first(); 
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		
 		return view('admin/traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
+		
+	}
+	
+	/* Function to check monthlyTripProjection information
+     * @return url
+     */
+	
+	
+	public function monthlyTripProjection()
+	{
+		
+		$monthlytrip= DB::select('SELECT * FROM `user_trip` as utip join trips as tr on utip.`trip_id`=tr.id where utip.status="1" GROUP by utip.trip_id');
+		//echo '<pre>';print_r($monthlytrip);die;
+		return view('admin/monthlytripprojection',['monthlytrip'=>$monthlytrip]);
+	}
+	
+	/* Function to check monthlypaymentdate information
+     * @return url
+     */
+	
+	public function setMonthlyPaymentDate($date,$trip_id)
+	{
+		$data['monthly_payment_date']=$date;
+		DB::table('user_trip')->where('trip_id', $trip_id)
+								->update($data);
+		$travelerbytrip= DB::select('select * from trip_traveler where trip_id='.$trip_id.'');
+		
+		$monthlytrip= DB::select('SELECT * FROM `user_trip` as utip join trips as tr on utip.`trip_id`=tr.id where utip.status="1" and tr.id='.$trip_id.' GROUP by utip.trip_id');
+		
+
+		if(count($travelerbytrip)>0){
+			foreach($travelerbytrip as $travelerprofile){
+			//echo '<pre>';print_r($travelerprofile->email);die;				
+				Mail::send('admin.emails.payment_date', ['monthlytrip' => $monthlytrip], function($message) use($travelerprofile){
+					$message->to($travelerprofile->email, $travelerprofile->first_name)->subject('Welcome!');
+				});
+			}
+		}								
+		echo 'data update';die;							
 		
 	}
 

@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" id="nodata">
                     <h2>Traveler Detail</h2>
                     <table class="table table-bordered">
                         <thead>
@@ -109,17 +109,28 @@
         });
 
         // Get traveller detail by trip/addon dynamically
-        /*$(document).on('change', '#addon_id', function() {
+        $(document).on('change', '#addon_id', function() {
+					
             $.ajax({
                 method: 'GET',
                 url: './get-trip-travellers-by/'+$('#trip_id').val()+'/'+$('#addon_id').val(),
                 dataType: 'json',
                 success: function(response) {
-                    // Create addons string and then put
-                    
+                    // Create addons string and then put                    
+					
+					if (response.tripAddontraveler.length > 1) {
+						
+						$.each(response.tripAddontraveler, function(key, option) {
+						// console.log(option);						
+						});
+					}else{
+						$('#nodata').html('<div class="col-md-12" >No data found...</div>')
+					
+					}
+					
                 }
             });
-        });*/
+        });
     });
 </script>
 @endsection

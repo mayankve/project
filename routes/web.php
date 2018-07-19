@@ -106,6 +106,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         Route::get('/addon-travelers','AdminController@tripAddonTravelers');
 
         Route::get('/get-trip-addons/{trip_id}','AdminController@getTripAddons');
+		//get Trip travelers
+		Route::get('get-trip-travellers-by/{trip_id}/{addon_id}','AdminController@getTripTraveler');
+		
+		Route::get('/monthly-trip-projection','AdminController@monthlyTripProjection');
+		
+		Route::get('/setmonthlypaymentdate/{date}/{trip_id}','AdminController@setMonthlyPaymentDate');
     });
         
          // Upload Video

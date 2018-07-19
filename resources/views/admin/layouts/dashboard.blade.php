@@ -192,7 +192,7 @@
                                 <ul id="manage_trips" class="collapse sub-menu">
                                     <li><a href="{{ url('admin/tripspot') }}" class="tablinks "> Trip spots</a></li>
                                     <li><a href="{{ url('admin/manage-trip/addon-travelers') }}" class="tablinks"> Add on Traveler List</a></li>
-                                    <li><a href="#" class="tablinks"> Monthly Trip Projection</a></li>
+                                    <li><a href="{{url('admin/manage-trip/monthly-trip-projection')}}" class="tablinks"> Monthly Trip Projection</a></li>
                                     <li><a href="#" class="tablinks"> Travelers Payment Status</a></li>
                                     <li><a href="#" class="tablinks"> Trip Payment</a></li>
                                     <li><a href="#" class="tablinks"> Hotel Roommates</a></li>
@@ -281,7 +281,7 @@
             </footer>
         </div>
 
-        <script>
+  <script>
 $(document).ready(function () {
 $(".filter-button").click(function () {
 var value = $(this).attr('data-filter');

@@ -119,8 +119,8 @@
                                         <label class="user-view inputlabl" style="font-weight: normal">{{ ( $travelerprofile->gender == '1' ) ? 'Male' : 'Female' }}</label>
                                         <div class="user-edit">
                                             <select name="gender" id="gender" class="form-control">
-                                                <option value="1" selected="">Male</option>
-                                                <option value="2">Female</option>
+                                                <option value="1"<?php echo ($travelerprofile->gender=='1')?'selected':'';?>>Male</option>
+                                                <option value="2" <?php echo ($travelerprofile->gender=='2')?'selected':'';?>>Female</option>
                                             </select>
                                         </div>
                                     </div>
@@ -167,6 +167,7 @@
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic"  class="form-control&#x20;image_upload" id="passport_pic">
                                             <img id="passport_pic_img" class="img-responsive model_image"  style="max-width: 80px; max-height: 80px;" />
+											<input type="hidden" name="oldimage" value="<?php echo(!empty($travelerprofile->passport_pic))?$travelerprofile->passport_pic:'';?>">
                                         </div>
                                     </div>
                                 </div>
@@ -224,6 +225,7 @@
                                         <div class="profile-edit">
                                             <input type="file" name="profile_pic" class="form-control&#x20;image_upload" >         
                                             <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
+											<input type="hidden" name="oldimage" value="<?php echo(!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->profile_pic:'';?>">
                                         </div>
                                     </div>
                                 </div>
@@ -253,9 +255,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Do you have any known health conditions</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal"><?php echo(!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->helth_mental_conditions:'';?></label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal"><?php echo(!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->helth_mental_conditions:'';?>
+										</label>
+										
                                         <div class="profile-edit">
-                                            <label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="0">No</label><label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="1" checked="checked">Yes</label>            </div>
+                                            <label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="0"<?php if(!empty($data['traveler_profiledata'])){ if($data['traveler_profiledata']->is_helth_mental==0){ echo 'checked'; } } ?>>No</label><label><input type="radio" name="is_helth_mental" class="is_helth_conditions" value="1"  <?php if(!empty($data['traveler_profiledata'])){ if($data['traveler_profiledata']->is_helth_mental==1){ echo 'checked'; } } ?>>Yes</label>            </div>
                                         <div class="profile-edit">
                                             <input type="text" id="helth_mental_conditions" name="helth_mental_conditions" class="form-control&#x20;helth_conditions" style="" value="<?php echo(!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->helth_mental_conditions:'';?>">            </div>
                                     </div>
@@ -263,9 +267,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Do you have any known mental conditions</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl" style="font-weight: normal"><?php echo(!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->is_mental_conditions:'';?></label>
+                                        <label class="profile-view inputlabl" style="font-weight: normal">
+										<?php if(!empty($data['traveler_profiledata'])){ if($data['traveler_profiledata']->is_mental_conditions==1){ echo 'yes'; }else{ echo  'No' ; } } ?>
+										
+										</label>
                                         <div class="profile-edit">
-                                            <label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="0" checked="checked">No</label><label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="1">Yes</label>            </div>
+                                            <label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="0" <?php if(!empty($data['traveler_profiledata'])){ if($data['traveler_profiledata']->is_mental_conditions==0){ echo 'checked'; } } ?>>No</label><label><input type="radio" name="is_mental_conditions" class="is_mental_conditions" value="1" <?php if(!empty($data['traveler_profiledata'])){ if($data['traveler_profiledata']->is_mental_conditions==1){ echo 'checked'; } } ?>>Yes</label>            </div>
                                         <div class="profile-edit">
                                             <input type="text" id="mental_conditions" name="mental_conditions" class="form-control&#x20;mental_conditions" style="display&#x3A;&#x20;none" value="<?php echo (!empty($data['traveler_profiledata']))?$data['traveler_profiledata']->mental_conditions:'';?>">            </div>
                                     </div>
