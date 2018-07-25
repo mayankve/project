@@ -36,7 +36,7 @@
                                         ?>
                                         @if(count($tripdata['tripAirlines'])>0)
                                         @foreach( $tripdata['tripAirlines'] AS $airlines)
-                                        <div class="form-group pdrow-group">
+                                        <div class="form-group pdrow-group parent">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-1">
@@ -62,7 +62,8 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
-                                                            {!! Form::radio('flight_id',$airlines->id,['class' => 'form-control flight_id']) !!} 
+                                                            <!--{!! Form::radio('flight_id',$airlines->id,['class' => 'form-control flight_id']) !!} -->
+															<input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id" >
                                                         </label>
                                                     </div>
                                                 </div>
@@ -72,7 +73,7 @@
                                         @endforeach
                                         @endif
                                         </div>
-                                        <div class="land-only" style="display: none;">
+                                      <div class="land-only" style="display: none;">
                                         <div class="form-group">
                                             <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
                                             <!--{!! Form::label('airline[0][flight_name]', 'Flight Name','control-label col-sm-3 custom-lbl') !!}-->
@@ -80,7 +81,7 @@
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
                                                         <!--{!! Form::text('traveler[0][flight_name]', null, ['class' => 'form-control flight_name']) !!}-->
-                                                        <input type="text" name="flight_name" class="form-control" value="">
+                                                        <input type="text" name="flight_name" class="form-control" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,7 +91,7 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="flight_number" class="form-control" value=""> 
+                                                        <input type="text" name="flight_number" class="form-control" > 
                                                     </div>
 
                                                 </div>
@@ -101,7 +102,7 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="departure_date" class="form-control" value=""> 
+                                                        <input type="text" name="departure_date" class="form-control" > 
                                                     </div>
 
                                                 </div>
@@ -112,7 +113,7 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="departure_time" class="form-control" value=""> 
+                                                        <input type="text" name="departure_time" class="form-control" > 
                                                     </div>
                                                 </div>
                                             </div>

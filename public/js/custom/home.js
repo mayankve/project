@@ -602,27 +602,27 @@ $(document).ready(function () {
     
     //Add to Cart Functionality
     
-    var path = window.location.href;
-    var url = path.substring(0, 36);
-    var flight_id = 0;
-    var trip_id = $('#trip_id').val();
-    $("[name=flight_id]").click(function () {
-        if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
-            flight_id = $(this).val();
-            $.ajax({
-                url: url +'/addFlightToCart',
-                method: 'post',
-                data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
-                dataType: "json",
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (result) {
-                    console.log(result);
-                }
-            });
-        }
-    });
+    // var path = window.location.href;
+    // var url = path.substring(0, 36);
+    // var flight_id = 0;
+    // var trip_id = $('#trip_id').val();
+    // $("[name=flight_id]").click(function () {
+        // if ($('.available-flights :radio[name=flight_id]:checked, .available-flights :radio[name=flight_id]:checked').length == 1) {
+            // flight_id = $(this).val();
+            // $.ajax({
+                // url: url +'/addFlightToCart',
+                // method: 'post',
+                // data: {'trip_id': trip_id, flight_id: flight_id, 'item_type': 'airlines'},
+                // dataType: "json",
+                // headers: {
+                // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // },
+                // success: function (result) {
+                    // console.log(result);
+                // }
+            // });
+        // }
+    // });
    
 });
 

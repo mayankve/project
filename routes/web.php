@@ -60,8 +60,12 @@ Route::post('booktrip','HomeController@bookTrip');
 //Design Trip for users
 Route::get('mytripdesign/{id}','HomeController@myTripDesign');
 
-//Cart for users
- Route::get('cart','CartController@index');
+// set Cart for users
+ Route::post('setcartvalue','CartController@index');
+/* Front-end routes ends */
+
+// Cart for users
+ Route::match(['get','post'],'cart','CartController@addtocart');
 /* Front-end routes ends */
 
 //Airlines to be added to Cart

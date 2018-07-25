@@ -33,7 +33,7 @@
         <div class="form-horizontal">
             <div class="trip-addons">
                 <div class="form-group">
-                    <div class="col-sm-12">
+                   
                         <?php
                         $id = 0;
                         ?>
@@ -43,7 +43,9 @@
                          <?php 
                             $id++;       
                          ?>
-                        <div class="row number-group-row">
+						<div class="col-sm-12">
+                        <div class="row number-group-row parent">
+						<div class="addon">
                             <div class="col-sm-1">
                                 {{$id}}        
                             </div>
@@ -59,7 +61,9 @@
                             <div class="col-sm-2">
                                 <label>
                                     <!--<input type="checkbox" name="selected_addons[]" class="selected_addons" id="selected_addons" value="{{ $addOn->id }}">-->
-                                    {{ Form::checkbox('selected_addons[]',$addOn->id, null, ['class' => 'selected_addons' , 'id' => 'selected_addons'])}}
+                                  <!--  {{ Form::checkbox('selected_addons[]',$addOn->id, null, ['class' => 'selected_addons' , 'id' => 'selected_addons'])}}-->
+									<input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn->id}}" class="selected_addons" id="selected_addons">
+									<input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}">
                                 </label>  
                             </div>
                         </div>
@@ -98,7 +102,7 @@
                                                     ?>
                                                     @if(count($tripdata['tripTravelers']))
                                                     @foreach($tripdata['tripTravelers'] AS $triptraveler)
-                                                    <div class="col-sm-12">
+                                                    <div class="col-sm-12 travler">
                                                         <div class="row">
                                                             <div class="col-sm-1">
                                                                 {{ $sr }}              
@@ -115,7 +119,8 @@
                                                             <div class="col-sm-2">
                                                             <label>
                                                                  <!--<input type="checkbox" name="selected_addon_travelers[]" class="selected_addon_traveler" id="selected_addon_traveler" value="{{ $triptraveler->id }}">-->
-                                                                 {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}
+                                                                <!-- {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}-->
+																<input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler">
                                                             </label>  
                                                          </div>
                                                         </div>
@@ -130,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row addon_flight">
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -147,8 +152,8 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-sm-6 pr-3">
-                                                            <label><input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked="checked">Avaliable Flights</label>
-                                                            <label><input type="radio" name="is_land_only" class="land_only" value="1">Land only</label>
+                                                            <label><input type="checkbox" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights</label>
+                                                            <label><input type="checkbox" name="is_land_only" class="land_only" value="1">Land only</label>
                                                         </div>
                                                         <div class="col-sm-6">
 
@@ -194,7 +199,7 @@
                                                 @if(count($tripdata['tripAddons']['tripAddonFlights'])>0)
                                                 @foreach( $tripdata['tripAddons']['tripAddonFlights'] AS $airlines)
 
-                                                <div class="form-group pdrow-group">
+                                                <div class="form-group pdrow-group flightparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-1">
@@ -220,7 +225,10 @@
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <label>
-                                                                    {!! Form::radio('addon_flight',$airlines->name,['class' => 'form-control addon_flight']) !!} 
+                                                                   <!-- {!! Form::radio('addon_flight_name{{$airlines->id}}',$airlines->name,['class' => 'form-control addon_flight_name']) !!}-->
+																	<input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$airlines->id}}">
+	
+																<input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}">	
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -279,8 +287,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                    
+                    <div class="row addon_hotel">
                         <div class="panel panel-primary trip-design-hotel">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><strong>Hotels</strong></h3>
@@ -343,10 +351,11 @@
                                             </div>
                                               <?php
                                                 $sr = 1;
+												//echo '<pre>';print_r($tripdata['tripAddons']['tripAddonHotels']);die;
                                                 ?>
                                                 @if(count($tripdata['tripAddons']['tripAddonHotels'])>0)
                                                 @foreach( $tripdata['tripAddons']['tripAddonHotels'] AS $hotels)
-                                                <div class="form-group pdrow-group">
+                                                <div class="form-group pdrow-group hotleparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-1">
@@ -379,7 +388,9 @@
                                                              </div>
                                                             <div class="col-sm-1">
                                                                 <label>
-                                                                    {!! Form::radio('selected_addon_hotel',$hotels->hotel_name,['class' => 'form-control selected_addon_hotel']) !!} 
+                                                                   <!-- {!! Form::radio('selected_addon_hotel',$hotels->hotel_name,['class' => 'form-control selected_addon_hotel']) !!}-->
+																	<input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$hotels->id}}">	
+															<input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}">			
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -400,6 +411,7 @@
                                 </div>
                             </div>
                         </div>
+						</div>
                         </div>
                         @endforeach
                         <?php $sr++; ?>
@@ -410,7 +422,7 @@
             </div>
         </div>
     </div>
-
+</div>
 <!-----------------------Add-on  end ----------------------------------------->
 <script>
 $('document').ready(function () {

@@ -55,6 +55,7 @@
     <div class="row text-right">
         <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>
     </div>
+	<form method="post" action="{{url('setcartvalue')}}">
     <div class="" id="pageWrapper">
         <div id="" class="customtab">
             <!-- Nav tabs -->
@@ -103,7 +104,7 @@
                                             <div class="row">
                                                 <div class="col-sm-6 pr-3">
                                                     <label>
-                                                        <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked="checked">Avaliable Flights
+                                                        <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights
                                                     </label>
                                                     <label>
                                                         <input type="radio" name="is_land_only" class="land_only" value="1">Land only
@@ -139,6 +140,18 @@
                         @include('designstrips.partials.design_trip_included_activity')
                     </div>
                 </div>
+					 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']);?>"> 
+					<input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
+					<input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
+					<input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
+					<input type="hidden" class="final_add_amount" name="final_add_amount" value="">
+					<div class="row">
+					<div class="col-sm-12">
+					<input type="submit" name="button" id="cartbutton" value="save">
+					</div>
+					</div>
+				</form>
                 <div role="tabpanel">
                     <!-- Trip Todo Panel -->
                     <div class="panel panel-default">
@@ -154,7 +167,204 @@
             </div>
         </div>
     </div>
-</div>  
+
+
+	
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+	
+	//hide hotel and flight of addon//
+	$(".addon_flight").hide();
+	$(".addon_hotel").hide();
+	// here end//
+	// var addon_id=[];
+	// var traveler_id=[];
+	var final_price=0;
+	var add_on_price=0;
+	var add_flight_price=0;
+	var add_hotle_price=0;
+	
+	if($('input[name="selected_hotel"]:checked').val()!='')
+	{
+		var travlercont=$('.traveler_count').val();
+		//alert(travlercont);
+		var reserveramount= $('input[name="selected_hotel"]:checked').parents('.parent').find('.reserver_amount').val();		
+		$('.total_hotel_cost').html("$" +reserveramount*travlercont);
+	}
+
+	
+			// $('input[name="flight_id"]').click(function(){
+					//alert($( "input[type=radio][name=flight_id]:checked" ).val());
+					// $('.trip_flight_id').val($( "input[type=radio][name=flight_id]:checked" ).val());	
+			// });
+			// $('input[name="selected_hotel"]').click(function(){
+				// var travlercont=$('.traveler_count').val();
+				// var reserveramount= $(this).parents('.parent').find('.reserver_amount').val();
+				//alert(reserveramount);
+				// $('.trip_hotel_amount').val(reserveramount*travlercont);
+				// $('.trip_hotle_id').val($( "input[type=radio][name=selected_hotel]:checked" ).val());
+				// $('.total_hotel_cost').html(reserveramount*travlercont);
+			// });
+			
+
+	$('.selected_addons').click(function(){
+		 add_on_price=0;
+			//alert('Please select flight and hotels for addon');			
+			$(this).parents('.parent').find('.addon_flight').toggle();
+			$(this).parents('.parent').find('.addon_hotel').toggle();	
+			
+			//var flightchecked=	$(this).parents('.parent').find('.addon_flight_name').attr('checked', true);
+				 $(".addon input[type=checkbox]:checked").each(function() {
+						
+							//addon_id.push($(this).parents('.parent').find('.selected_addons').val());										
+						
+						var add_on = $(this).parents('.parent').find('.add_on_cost').val();						
+						if(add_on!=undefined){
+							//alert(add_on);
+							add_on_price=parseInt(add_on_price)+parseInt(add_on);
+						}
+						
+						// code add here//
+						addfinalvalue();
+						//end here//
+						
+					});				
+				
+		});		
+		 $('.addon_flight_name').click(function(){			 
+				add_flight_price=0;
+				 $(".parent input[type=radio]:checked").each(function() {
+						var value = $(this).parents('.flightparent').find('.add_on_cost_flight').val(); //$(this).val();
+						
+						if(value!=undefined){
+							//alert(value+"sfdsdfds");
+							add_flight_price=parseInt(add_flight_price)+parseInt(value);
+						}
+					addfinalvalue();	
+					});	
+		 });				
+		$('.selected_addon_hotel').click(function(){
+				add_hotle_price=0;
+				
+				 $(".parent input[type=radio]:checked").each(function() {
+						var hotel_price = $(this).parents('.hotleparent').find('.add_on_cost_hotel').val(); //$(this).val();
+						
+						if(hotel_price!=undefined){
+							//alert(hotel_price);
+							add_hotle_price=parseInt(add_hotle_price)+parseInt(hotel_price);
+						}
+					addfinalvalue();	
+					});
+		});	
+		
+function addfinalvalue(){	
+	final_price=parseInt(add_on_price)+parseInt(add_flight_price)+parseInt(add_hotle_price);
+	$('.total_addon_cost').html("$"+final_price);
+	$('.final_add_amount').val(final_price);	
+}
+
+// form submit here//
+
+$('#cartbutton').click(function(){
+	var ckbox= $('#selected_addons');
+	//alert($( "input[type=checkbox][name=is_land_only]:checked" ).val());
+	if($( "input[type=radio][name=is_land_only]:checked" ).val()==0)
+	{		
+		if($( "input[type=radio][name=flight_id]:checked" ).val()==undefined)
+		{
+			alert('Please select Flights');
+			return false;
+		}		
+	}if($( "input[type=radio][name=is_land_only]:checked" ).val()==1)
+	{		
+		if($( "input[type=text][name=flight_name]" ).val()=='')
+		{
+			alert('Please Enter Flight Name');
+			return false;
+		}
+		if($( "input[type=text][name=flight_number]" ).val()=='')
+		{
+			alert('Please Enter Flight Number');
+			return false;
+		}
+		if($( "input[type=text][name=departure_date]" ).val()=='')
+		{
+			alert('Please Enter Departure Date');
+			return false;
+		}
+		if($( "input[type=text][name=departure_time]" ).val()=='')
+		{
+			alert('Please Enter Departure Time');
+			return false;
+		}
+		
+	}
+	
+	// if(ckbox.is(':checked'))
+	// {
+		// if($('.selected_addon_traveler').prop('checked')==false)
+		// {
+			// alert('Please Select Traveler..');
+			// return false;
+		// }
+		
+		
+	// }
+	
+		
+	
+});
+
+
+		
+			
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 <script>
     $(document).on('click', '.panel-heading span.clickable', function (e) {
         var $this = $(this);

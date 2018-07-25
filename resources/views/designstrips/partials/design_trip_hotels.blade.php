@@ -3,7 +3,7 @@
     <div class="panel-heading">
         <h3 class="panel-title"><strong>Hotels</strong></h3>
         <div class="panel-tools">
-            <label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$90</label>
+            <label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$00</label>
             <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
              <!--<a href="#"><span class="basic_info"><i class="fa fa-edit" aria-hidden="true" ></i></span></a>
             <a href="#"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
@@ -68,7 +68,7 @@
                     ?>
                     @if(count($tripdata['tripHotels'])>0)
                     @foreach( $tripdata['tripHotels'] AS $hotels)
-                    <div class="form-group pdrow-group">
+                    <div class="form-group pdrow-group parent">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-1"> {{$sr}} </div>
@@ -95,15 +95,18 @@
                                 <div class="col-sm-1 text">
                                     <label>
                                         <!--<input type="radio" name="selected_hotel" class="selected_hotel" id="selected_hotel" value="{{$hotels->id}}">-->
-                                        {!! Form::radio('selected_hotel',$hotels->id,['class' => 'form-control selected_hotel']) !!} 
+                                        <!--{!! Form::radio('selected_hotel',$hotels->id,['class' => 'form-control selected_hotel']) !!} -->
+									<input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}" checked>
+										<input type="hidden" name="reserver_amount" class="reserver_amount" value="{{$hotels->hotel_reserve_amount}}">
                                     </label> 
                                 </div>
                             </div>
                             <?php $sr++; ?>
-                            @endforeach
-                            @endif
+                           
                         </div>
                     </div>
+					 @endforeach
+                            @endif
                 </div>
             </div>
         </div>

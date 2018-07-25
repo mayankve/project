@@ -124,7 +124,7 @@
                 </div>
                 @endif
                 <div class="col-md-6 cust-input-group sendbtn regbtn mt-0 mb-3">
-                    <label class="lable_cost">Total Base Cost: $564</label>
+                    <label class="lable_cost">Total Base Cost: ${{$tripdata->base_cost}}</label>
                     <input type="submit" name="submit" id="submitbutton" value="Book and Pay">
                 </div>
                 <div class="col-md-12">
@@ -135,5 +135,25 @@
         </div>
     </div>
 </div>
+
+<script>
+var value =1;
+var price='<?php echo $tripdata->base_cost;?> ';
+$('.add_more_traveler').click(function(){
+	
+		value=value+1;
+		$('.lable_cost').html("$"+price * value);
+});
+
+
+$('#remove_trip_traveler').click(function(){
+	alert();
+		// value=value-1;
+		// alert(value);
+		// $('.lable_cost').html("$"+price * value);
+});
+
+
+</script>
 
 @endsection

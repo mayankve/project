@@ -601,7 +601,7 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-      
+       //echo '<pre>';print_r($tripAddons);die;
         //Trip Addon arrays
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
@@ -680,7 +680,7 @@ class HomeController extends Controller {
         
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
-        
+      
         $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
@@ -689,6 +689,7 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripIncludedActivities,
             'tripTodo' => $tripTodo
         );
+	//echo '<pre>';print_r($data);die;	
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
     
