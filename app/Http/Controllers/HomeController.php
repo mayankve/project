@@ -601,7 +601,7 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-       //echo '<pre>';print_r($tripAddons);die;
+      // echo '<pre>';print_r($tripAddons);die;
         //Trip Addon arrays
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
@@ -643,7 +643,7 @@ class HomeController extends Controller {
         //Trip Included Activities Data
         $tripIncludedActivities = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
-                ->where('activity_due_date', '=', $id)
+                //->where('activity_due_date', '=', $id)
                 ->where('status', '=', '1')
                 ->get();
         
@@ -671,11 +671,11 @@ class HomeController extends Controller {
         }
        
         //To Do Packing Details
-        $tripTodo = DB::table('user_trip_todo')
-                ->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
-                ->where('user_trip_todo.trip_id', '=', $id)
-                ->where('user_trip_todo.user_id', '=', $userId)
-                ->where('user_trip_todo.status', '=', '1')
+        $tripTodo = DB::table('trip_todo')
+                //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
+                ->where('trip_todo.trip_id', '=', $id)
+               // ->where('trip_todo.user_id', '=', $userId)
+                ->where('trip_todo.status', '=', '1')
                 ->get();
         
         //Data to send for design my trip view

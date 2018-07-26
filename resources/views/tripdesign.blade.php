@@ -155,13 +155,13 @@
                 <div role="tabpanel">
                     <!-- Trip Todo Panel -->
                     <div class="panel panel-default">
-                        <!--include('designstrips.partials.design_trip_todo')-->
+                        @include('designstrips.partials.design_trip_todo')
                     </div> 
                 </div>
                 <div role="tabpanel">
                      <!-- Trip Travelers Panel -->
                     <div class="panel panel-default">
-                        <!--include('designstrips.partials.design_trip_traveler')-->
+                        @include('designstrips.partials.design_trip_traveler')
                     </div> 
                 </div>
             </div>
