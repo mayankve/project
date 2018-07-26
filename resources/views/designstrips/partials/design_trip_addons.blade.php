@@ -20,6 +20,7 @@
 </style>
 
 <!---------------------Addon Main------------------------------------>
+
 <div class="panel panel-primary addon-main">
     <div class="panel-heading">
         <h3 class="panel-title"><strong>Add Ons</strong></h3>
@@ -36,6 +37,8 @@
                    
                         <?php
                         $id = 0;
+                         //   echo count($tripdata['tripAddons'])."Availbale Addons";
+                        //die;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
                         @foreach( $tripdata['tripAddons'] AS $addOns)
@@ -43,14 +46,14 @@
                          <?php 
                             $id++;       
                          ?>
-						<div class="col-sm-12">
+                        <div class="col-sm-12">
                         <div class="row number-group-row parent">
-						<div class="addon">
+                        <div class="addon">
                             <div class="col-sm-1">
                                 {{$id}}        
                             </div>
                             <div class="col-sm-3">
-                                {{ isset($addOn->addons_name) ? $addOn->addons_name: "N/A" }}
+                                {{ isset($addOn->addons_name) ? $addOn->addons_name: 'N/A' }}
                             </div>
                             <div class="col-sm-3">
                                 {{ isset($addOn->addons_detail) ? $addOn->addons_detail : 'N/A' }}
@@ -61,9 +64,9 @@
                             <div class="col-sm-2">
                                 <label>
                                     <!--<input type="checkbox" name="selected_addons[]" class="selected_addons" id="selected_addons" value="{{ $addOn->id }}">-->
-                                  <!--  {{ Form::checkbox('selected_addons[]',$addOn->id, null, ['class' => 'selected_addons' , 'id' => 'selected_addons'])}}-->
-									<input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn->id}}" class="selected_addons" id="selected_addons">
-									<input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}">
+                                      <!--  {{ Form::checkbox('selected_addons[]',$addOn->id, null, ['class' => 'selected_addons' , 'id' => 'selected_addons'])}}-->
+                                        <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn->id}}" class="selected_addons" id="selected_addons">
+                                        <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}">
                                 </label>  
                             </div>
                         </div>
@@ -198,7 +201,6 @@
                                                 ?>
                                                 @if(count($tripdata['tripAddons']['tripAddonFlights'])>0)
                                                 @foreach( $tripdata['tripAddons']['tripAddonFlights'] AS $airlines)
-
                                                 <div class="form-group pdrow-group flightparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
@@ -226,9 +228,7 @@
                                                             <div class="col-sm-1">
                                                                 <label>
                                                                    <!-- {!! Form::radio('addon_flight_name{{$airlines->id}}',$airlines->name,['class' => 'form-control addon_flight_name']) !!}-->
-																	<input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$airlines->id}}">
-	
-																<input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}">	
+                                                                   <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$airlines->id}}">							<input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}">	
                                                                 </label>
                                                             </div>
                                                         </div>

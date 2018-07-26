@@ -578,6 +578,7 @@ class HomeController extends Controller {
                 ->get();
         
             // echo "<pre>";print_r($tripAirlines);die;
+           
             //Trip Hotels details
 //               $tripHotels = DB::table('trip_hotel_booking')
 //                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
@@ -589,6 +590,7 @@ class HomeController extends Controller {
         
         
          //Trip Hotels details
+        
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
                 ->where('trip_hotel.trip_id', '=', $id)
@@ -596,13 +598,16 @@ class HomeController extends Controller {
                 ->get();
 
         //Trip Addon Details
+        
         $tripAddons['addons'] = DB::table('trip_addon')
                 ->where('trip_id', '=', $id)
+                ->where('addons_due_date', '>', date('Y-m-d'))
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-       //echo '<pre>';print_r($tripAddons);die;
-        //Trip Addon arrays
+       
+        //Trip Addon arrays 
+        
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
         foreach ($tripAddons AS $key => $value) {
@@ -643,7 +648,7 @@ class HomeController extends Controller {
         //Trip Included Activities Data
         $tripIncludedActivities = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
-                ->where('activity_due_date', '=', $id)
+                ->where('activity_due_date', '>', date('Y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
         
@@ -733,7 +738,6 @@ class HomeController extends Controller {
 
 	public function travelerProfile($id,Request $request)
 	{
-
 		if(isset($_POST['submit']))
 		{
 			$data['first_name']=!empty($request->input('first_name'))?$request->input('first_name'):'';

@@ -250,7 +250,6 @@ class CartController extends Controller
         $userId = Auth::id();
         // Get all the trips for User which are active and whose end date is not null and trip is not deleted
         $trips = Trip::where('end_date', '!=', NULL)->where('status', '!=', '1')->paginate(6);
-
         $userTrips = DB::table('user_trip')
                 ->join('trips', 'user_trip.trip_id', '=', 'trips.id')
                 ->select('trips.*', 'user_trip.*')
