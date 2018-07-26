@@ -647,13 +647,14 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->get();
         
-//         echo  "<pre>"; print_r($tripAddons);die; 
+    //   echo  "<pre>"; print_r($tripIncludedActivities);die; 
         //Include Activity arrays
         $includedActivityFlights = array();
         $includedActivityHotles = array();
         
         foreach ($tripIncludedActivities AS $key => $value) {
             //Included Activity Flight Details
+			
             $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
                     ->where('airline_departure_date', '>', date('Y-m-d'))
                     ->where('trip_id', '=', $id)
@@ -689,7 +690,7 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripIncludedActivities,
             'tripTodo' => $tripTodo
         );
-	//echo '<pre>';print_r($data);die;	
+	//echo '<pre>';print_r($tripIncludedActivities);die;	
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
     

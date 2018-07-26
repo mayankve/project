@@ -140,18 +140,7 @@
                         @include('designstrips.partials.design_trip_included_activity')
                     </div>
                 </div>
-					 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']);?>"> 
-					<input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
-					<input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
-					<input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
-					<input type="hidden" class="final_add_amount" name="final_add_amount" value="">
-					<div class="row">
-					<div class="col-sm-12">
-					<input type="submit" name="button" id="cartbutton" value="save">
-					</div>
-					</div>
-				</form>
+					 
                 <div role="tabpanel">
                     <!-- Trip Todo Panel -->
                     <div class="panel panel-default">
@@ -168,7 +157,18 @@
         </div>
     </div>
 
-
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']);?>"> 
+					<input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
+					<input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
+					<input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
+					<input type="hidden" class="final_add_amount" name="final_add_amount" value="">
+					<div class="row">
+					<div class="col-sm-12">
+					<input type="submit" name="button" id="cartbutton" value="Add To Cart">
+					</div>
+					</div>
+				</form>
 	
 </div>
 
@@ -187,12 +187,13 @@ $(document).ready(function(){
 	var add_on_price=0;
 	var add_flight_price=0;
 	var add_hotle_price=0;
-	
+	//alert($('input[name="selected_hotel"]:checked').val());
 	if($('input[name="selected_hotel"]:checked').val()!='')
 	{
 		var travlercont=$('.traveler_count').val();
 		//alert(travlercont);
-		var reserveramount= $('input[name="selected_hotel"]:checked').parents('.parent').find('.reserver_amount').val();		
+		var reserveramount= $('input[name="selected_hotel"]:checked').parents('.parent').find('.reserver_amount').val();
+		//alert(reserveramount);		
 		$('.total_hotel_cost').html("$" +reserveramount*travlercont);
 	}
 
@@ -267,6 +268,22 @@ function addfinalvalue(){
 	$('.final_add_amount').val(final_price);	
 }
 
+
+	//include activity/
+	//land-only_activity
+		$('.is_land_only_activity_flight').click(function(){
+					
+				if($(this).val()==1)
+				{
+					$('.land-only_activity').show();
+				}else{
+					$('.land-only_activity').hide();
+				}
+		});
+	
+	//end here//
+
+
 // form submit here//
 
 $('#cartbutton').click(function(){
@@ -303,6 +320,50 @@ $('#cartbutton').click(function(){
 		}
 		
 	}
+	//include activity//
+	if($( "input[type=radio][name=is_land_only_activity_flight]:checked" ).val()==0)
+	{		
+		if($( "input[type=radio][name=included_activity_flight]:checked" ).val()==undefined)
+		{
+			alert('Please select activity flights');
+			return false;
+		}		
+	}
+	
+	if($( "input[type=radio][name=included_activity_hotel]:checked" ).val()==undefined)
+		{
+			alert('Please select activity hotel');
+			return false;
+		}	
+	
+	
+	if($( "input[type=radio][name=is_land_only_activity_flight]:checked" ).val()==1)
+	{		
+		if($( "input[type=text][name=activity_flight_name]" ).val()=='')
+		{
+			alert('Please Enter Flight Name');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_flight_number]" ).val()=='')
+		{
+			alert('Please Enter Flight Number');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_departure_date]" ).val()=='')
+		{
+			alert('Please Enter Departure Date');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_departure_time]" ).val()=='')
+		{
+			alert('Please Enter Departure Time');
+			return false;
+		}
+		
+	}
+	// end here//
+	
+	
 	
 	// if(ckbox.is(':checked'))
 	// {

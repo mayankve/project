@@ -4,8 +4,8 @@
     <div class="panel-heading">
         <h3 class="panel-title"><strong>included Activities</strong></h3>
         <div class="panel-tools">
-            <label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
-            <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
+            <!--<label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
+            <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
         </div>
     </div>
     <div class="panel-body">
@@ -15,7 +15,7 @@
                     <div class="form-group">
 					 <?php
                             $id = 0;
-							//echo '<pre>';print_r($tripdata['tripIncludedActivities']);die;
+							// echo '<pre>';print_r($tripdata['tripIncludedActivities']);die;
                             ?>   
                             @if(count($tripdata['tripIncludedActivities'])>0)
                            
@@ -71,8 +71,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="col-sm-6 pr-3">
-                                                                <label><input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked="checked">Avaliable Flights</label>
-                                                                <label><input type="radio" name="is_land_only" class="land_only" value="1">Land only</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight" id="is_land_only_activity_flight" class="is_land_only_activity_flight" value="0" checked>Avaliable Flights</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight" class="is_land_only_activity_flight" value="1">Land only</label>
                                                             </div>
                                                             <div class="col-sm-6">
 
@@ -145,7 +145,7 @@
                                                                 <div class="col-sm-1">
                                                                 <label>
                                                                    <!-- { !!Form::radio('included_activity_flight', $airlines->name ,['class' => 'form-control included_activity_flight']) !!} -->
-																   <input type="radio" name="included_activity_flight" value="{{$airlines->airline_name}}" class="included_activity_flight">
+																   <input type="radio" name="included_activity_flight" value="{{$airlines->id}}" class="included_activity_flight">
                                                                 </label>
                                                                 </div>
                                                             </div>
@@ -154,15 +154,15 @@
                                                     @endforeach
                                                     @endif
                                                 </div>
-                                                <div class="land-only" style="display: none;">
+                                                <div class="land-only_activity" style="display: none;">
                                                     <div class="form-group">
-                                                        <!--<label class="control-label col-sm-3 custom-lbl">Flight Name</label>-->
-                                                        {!! Form::label('airline[0][flight_name]', 'Flight Name','control-label col-sm-3 custom-lbl') !!}
+                                                        <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
+                                                      
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    {!! Form::text('traveler[0][flight_name]', null, ['class' => 'form-control flight_name']) !!}
-                                                                    <!--<input type="text" name="flight_name" class="form-control" value="">-->                              
+                                                                    {!! Form::text('activity_flight_name', null, ['class' => 'form-control flight_name']) !!}
+                                                                                           
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -173,7 +173,7 @@
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
                                                                     <!--<input type="text" name="flight_number" class="form-control" value="">-->
-                                                                    {!! Form::text('traveler[0][flight_number]', null, ['class' => 'form-control flight_number']) !!}
+                                                                    {!! Form::text('activity_flight_flight_number', null, ['class' => 'form-control flight_number']) !!}
                                                                 </div>
 
                                                             </div>
@@ -185,7 +185,7 @@
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
                                                                     <!--<input type="text" name="departure_date" class="form-control" value="">--> 
-                                                                    {!! Form::text('traveler[0][departure_date]', null, ['class' => 'form-control departure_date']) !!}
+                                                                    {!! Form::text('activity_flight_departure_date', null, ['class' => 'form-control departure_date']) !!}
                                                                 </div>
 
                                                             </div>
@@ -196,8 +196,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="departure_time" class="form-control" value=""> 
-                                                                     {!! Form::text('traveler[0][departure_time]', null, ['class' => 'form-control departure_time']) !!}
+                                                                     {!! Form::text('activity_flight_departure_time', null, ['class' => 'form-control departure_time']) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -214,8 +213,8 @@
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Hotels</strong></h3>
                                     <div class="panel-tools">
-                                        <label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$400</label>
-                                        <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
+                                        <!--<label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$400</label>
+                                        <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
 
                                     </div>
                                 </div>
@@ -308,7 +307,7 @@
 																
 																<div class="col-sm-1">
                                                                 <label>
-																<input type="radio" name="included_activity_hotel" value="{{$hotels->hotel_name}}" class="included_activity_hotel">
+																<input type="radio" name="included_activity_hotel" value="{{$hotels->id}}" class="included_activity_hotel">
                                                                  <!--   { !!Form::radio('included_activity_hotel', $hotels->hotel_name ,['class' => 'form-control included_activity_hotel']) !!} -->
                                                                 </label>
                                                                 </div>
