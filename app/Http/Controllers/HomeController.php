@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -576,8 +575,6 @@ class HomeController extends Controller {
                 ->where('trip_airline.airline_departure_time', '<=', date('H:i:s'))
                 ->where('trip_airline.status', '=', '1')
                 ->get();
-        
-            // echo "<pre>";print_r($tripAirlines);die;
            
             //Trip Hotels details
 //               $tripHotels = DB::table('trip_hotel_booking')
@@ -590,7 +587,6 @@ class HomeController extends Controller {
         
         
          //Trip Hotels details
-        
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
                 ->where('trip_hotel.trip_id', '=', $id)
@@ -598,16 +594,14 @@ class HomeController extends Controller {
                 ->get();
 
         //Trip Addon Details
-        
         $tripAddons['addons'] = DB::table('trip_addon')
                 ->where('trip_id', '=', $id)
                 ->where('addons_due_date', '>', date('Y-m-d'))
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-       
-        //Trip Addon arrays 
         
+        //Trip Addon arrays
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
         foreach ($tripAddons AS $key => $value) {
@@ -634,8 +628,6 @@ class HomeController extends Controller {
                 ->where('trip_addon_airline.addon_id', '=', $value1->id)
                 ->where('trip_addon_airline.status', '=', '1')
                 ->get();
-        
-        //echo "<pre>";print_r($tripAddons['tripAddonFlights']);die;
 
         //Trip Addon Hotel Details
         $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
@@ -652,7 +644,6 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->get();
         
-//         echo  "<pre>"; print_r($tripAddons);die; 
         //Include Activity arrays
         $includedActivityFlights = array();
         $includedActivityHotles = array();
@@ -676,11 +667,11 @@ class HomeController extends Controller {
         }
        
         //To Do Packing Details
-        $tripTodo = DB::table('user_trip_todo')
-                ->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
-                ->where('user_trip_todo.trip_id', '=', $id)
-                ->where('user_trip_todo.user_id', '=', $userId)
-                ->where('user_trip_todo.status', '=', '1')
+        $tripTodo = DB::table('trip_todo')
+                //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
+                ->where('trip_todo.trip_id', '=', $id)
+               // ->where('trip_todo.user_id', '=', $userId)
+                ->where('trip_todo.status', '=', '1')
                 ->get();
         
         //Data to send for design my trip view
@@ -698,7 +689,6 @@ class HomeController extends Controller {
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
     
- 
 
     /**
      * Upload file and return the name of the uploaded file
@@ -751,7 +741,7 @@ class HomeController extends Controller {
 			
 			//echo $passportPic;die;
 			 if (isset($passportPic) && count($passportPic) > 0) {
-                   $destinationPath = storage_path() . '/uploads/passport_images/';						
+                        $destinationPath = storage_path() . '/uploads/passport_images/';						
 				 if ($passportPic->isValid()) { 
                         $fileExt = $passportPic->getClientOriginalExtension();
                         $fileType = $passportPic->getMimeType();

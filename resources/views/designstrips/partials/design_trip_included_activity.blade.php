@@ -13,17 +13,19 @@
             <div class="form-horizontal">
                 <div class="trip-addons">
                     <div class="form-group">
-                        <div class="col-sm-12">
-                            <?php
+					 <?php
                             $id = 0;
+							//echo '<pre>';print_r($tripdata['tripIncludedActivities']);die;
                             ?>   
                             @if(count($tripdata['tripIncludedActivities'])>0)
-                            @foreach( $tripdata['tripIncludedActivities'] AS $includedActivities)
-                            @foreach ( $includedActivities AS $includedActivity)
+                           
+                            @foreach ( $tripdata['tripIncludedActivities'] AS $includedActivity)
                             <?php
                             // var_dump($includedActivities);die;
                             $id++;
                             ?>
+                        <div class="col-sm-12">
+                           
                             <div class="row number-group-row">
                                 <div class="col-sm-1">
                                     {{$id}}     
@@ -41,7 +43,7 @@
                                 <!------ Radio button here--------------->
                             </div>
                           
-                            <div class="row">
+                          <!--  <div class="row">
                                 <div class="panel panel-primary traveler-list">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Travelers list</strong></h3>
@@ -51,7 +53,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row">
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
@@ -111,16 +113,19 @@
                                                     </div>
                                                     <?php
                                                      $sr = 1;
+													 //echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityFlights']);die;
                                                     ?> 
-                                                    @if(empty($tripdata['tripAddons']['tripAddonFlights']))
-                                                    @foreach( $tripdata['tripAddons']['tripAddonFlights'] AS $airlines)												<div class="form-group pdrow-group">
+                                                    @if(!empty($tripdata['tripIncludedActivities']['includedActivityFlights']))
+                                                    @foreach( $tripdata['tripIncludedActivities']['includedActivityFlights'] AS $airlines)
+													
+													<div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
                                                                 <div class="col-sm-1">
                                                                     {{$sr}}
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    {{ isset($airlines->name) ? $airlines->name : 'N/A' }}
+                                                                    {{ isset($airlines->airline_name) ? $airlines->airline_name : 'N/A' }}
                                                                 </div>
                                                                 <div class="col-sm-2">
                                                                     {{ isset($airlines->airline_departure_location) ? $airlines->airline_departure_location : 'N/A' }}
@@ -139,7 +144,8 @@
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                 <label>
-                                                                    { !!Form::radio('included_activity_flight', $airlines->name ,['class' => 'form-control included_activity_flight']) !!} 
+                                                                   <!-- { !!Form::radio('included_activity_flight', $airlines->name ,['class' => 'form-control included_activity_flight']) !!} -->
+																   <input type="radio" name="included_activity_flight" value="{{$airlines->airline_name}}" class="included_activity_flight">
                                                                 </label>
                                                                 </div>
                                                             </div>
@@ -247,16 +253,14 @@
                                                             <div class="col-sm-2">
                                                                 <b>Due Date</b>
                                                             </div>
-                                                            <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                            <div class="col-sm-1">
                                                                 <b>Reserve Amount</b>
                                                             </div>
                                                             <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                 <b>Cost</b>
                                                             </div>
 
-                                                            <div class="col-sm-1 hotel_solo_cost">
-                                                                <b>Reserve Amount</b>
-                                                            </div>
+                                                           
                                                             <div class="col-sm-1 hotel_solo_cost">
                                                                 <b>Solo Cost</b>
                                                             </div>
@@ -271,40 +275,44 @@
                                                 <div class="form-group pdrow-group">
                                                  <?php
                                                      $sr = 1;
+													// echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityHotles']);die;
                                                     ?> 
-                                                    @if(empty($tripdata['tripAddons']['tripAddonHotels']))
-                                                    @foreach( $tripdata['tripAddons']['tripAddonHotels'] AS $hotels)												<div class="form-group pdrow-group">
+                                                    @if(!empty($tripdata['tripIncludedActivities']['includedActivityHotles']))
+                                                    @foreach( $tripdata['tripIncludedActivities']['includedActivityHotles'] AS $hotels)
+												<div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
-                                                                <div class="col-sm-1">
+															<div class="col-sm-1">
                                                                     {{$sr}}
                                                                 </div>
-                                                                <div class="col-sm-3">
+																
+																<div class="col-sm-3">
                                                                     {{ isset($hotels->hotel_name) ? $hotels->hotel_name : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-2">
-                                                                    {{ isset($hotels->hotel_type) ? $$hotels->hotel_type : 'N/A' }}
+																<div class="col-sm-2">
+                                                                    {{ isset($hotels->hotel_type) ? $hotels->hotel_type : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-2">
+																 <div class="col-sm-2">
                                                                     {{ isset($hotels->hotel_due_date) ? $hotels->hotel_due_date : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-1">
+																 <div class="col-sm-1">
                                                                     {{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-1">
+																
+																 <div class="col-sm-1">
                                                                     {{ isset($hotels->hotel_cost) ? $hotels->hotel_cost : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-1">
-                                                                    {{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}
-                                                                </div>
-                                                                <div class="col-sm-1">
+																 <div class="col-sm-1">
                                                                     {{ isset($hotels->hotel_solo_cost) ? $hotels->hotel_solo_cost : 'N/A' }}
                                                                 </div>
-                                                                <div class="col-sm-1">
+																
+																<div class="col-sm-1">
                                                                 <label>
-                                                                    { !!Form::radio('included_activity_hotel', $hotels->hotel_name ,['class' => 'form-control included_activity_hotel']) !!} 
+																<input type="radio" name="included_activity_hotel" value="{{$hotels->hotel_name}}" class="included_activity_hotel">
+                                                                 <!--   { !!Form::radio('included_activity_hotel', $hotels->hotel_name ,['class' => 'form-control included_activity_hotel']) !!} -->
                                                                 </label>
                                                                 </div>
+																
                                                             </div>
                                                         </div>
                                                     <?php $sr++; ?>
@@ -323,12 +331,13 @@
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                        <?php $sr++; ?>
-                        @endforeach
-                        @endif
+                     
+                        
                     </div>
                 </div>
+				<?php $sr++; ?>
+                        @endforeach
+                        @endif
             </div>
         </div>
     </div>

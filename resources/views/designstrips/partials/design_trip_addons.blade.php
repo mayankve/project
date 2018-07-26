@@ -18,9 +18,7 @@
             background-image:-webkit-linear-gradient(top,white 0,white 100%);
         }
 </style>
-
 <!---------------------Addon Main------------------------------------>
-
 <div class="panel panel-primary addon-main">
     <div class="panel-heading">
         <h3 class="panel-title"><strong>Add Ons</strong></h3>
@@ -34,10 +32,9 @@
         <div class="form-horizontal">
             <div class="trip-addons">
                 <div class="form-group">
-                   
                         <?php
                         $id = 0;
-                         //   echo count($tripdata['tripAddons'])."Availbale Addons";
+                         // echo count($tripdata['tripAddons'])."Availbale Addons";
                         //die;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
@@ -59,7 +56,7 @@
                                 {{ isset($addOn->addons_detail) ? $addOn->addons_detail : 'N/A' }}
                             </div>
                             <div class="col-sm-3">
-                                <label>$ {{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                <label>${{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                             </div>
                             <div class="col-sm-2">
                                 <label>
@@ -122,8 +119,7 @@
                                                             <div class="col-sm-2">
                                                             <label>
                                                                  <!--<input type="checkbox" name="selected_addon_travelers[]" class="selected_addon_traveler" id="selected_addon_traveler" value="{{ $triptraveler->id }}">-->
-                                                                <!-- {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}-->
-																<input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler">
+                                                                 <!-- {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}-->								<input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler">
                                                             </label>  
                                                          </div>
                                                         </div>
@@ -155,8 +151,8 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-sm-6 pr-3">
-                                                            <label><input type="checkbox" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights</label>
-                                                            <label><input type="checkbox" name="is_land_only" class="land_only" value="1">Land only</label>
+                                                            <label><input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights</label>
+                                                            <label><input type="radio" name="is_land_only" class="land_only" value="1">Land only</label>
                                                         </div>
                                                         <div class="col-sm-6">
 
@@ -287,7 +283,6 @@
                                 </div>
                             </div>
                         </div>
-                    
                     <div class="row addon_hotel">
                         <div class="panel panel-primary trip-design-hotel">
                             <div class="panel-heading">
@@ -351,7 +346,6 @@
                                             </div>
                                               <?php
                                                 $sr = 1;
-												//echo '<pre>';print_r($tripdata['tripAddons']['tripAddonHotels']);die;
                                                 ?>
                                                 @if(count($tripdata['tripAddons']['tripAddonHotels'])>0)
                                                 @foreach( $tripdata['tripAddons']['tripAddonHotels'] AS $hotels)
@@ -388,9 +382,7 @@
                                                              </div>
                                                             <div class="col-sm-1">
                                                                 <label>
-                                                                   <!-- {!! Form::radio('selected_addon_hotel',$hotels->hotel_name,['class' => 'form-control selected_addon_hotel']) !!}-->
-																	<input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$hotels->id}}">	
-															<input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}">			
+                                                                   <!-- {!! Form::radio('selected_addon_hotel',$hotels->hotel_name,['class' => 'form-control selected_addon_hotel']) !!}-->								<input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$hotels->id}}">								<input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}">			
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -410,8 +402,8 @@
                                     </div>
                                 </div>
                             </div>
+                          </div>
                         </div>
-						</div>
                         </div>
                         @endforeach
                         <?php $sr++; ?>
@@ -444,6 +436,7 @@ $('document').ready(function () {
         $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
         hotelCost(sel);
     });
+    
     $('.selected_hotel').click(function () {
         var data = {hotel_id: $(this).val()};
         //   saveData(data);
