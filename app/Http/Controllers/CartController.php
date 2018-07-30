@@ -20,7 +20,7 @@ use App\UserProfile;
 class CartController extends Controller
 {
      /**
-     * Function to return cart view
+     * Function to return cart index
      * @param void
      * @return \Illuminate\Http\Response
      */
@@ -32,12 +32,19 @@ class CartController extends Controller
 		
     }
 	
+	 /**
+     * Function to return cart view
+     * @param void
+     * @return \Illuminate\Http\Response
+     */
+	 
 	public function addtocart()
 	{
 		session_start();				
-		//echo '<pre>';$_SESSION['card_item'];die;
+		
 		$userId = Auth::id();
 		$trip=!empty($_SESSION['card_item']['trip_id'])?$_SESSION['card_item']['trip_id']:'';
+		$flight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
 		$trip_flight_id=!empty($_SESSION['card_item']['flight_id'])?$_SESSION['card_item']['flight_id']:'';
 		$trip_hotel_id=!empty($_SESSION['card_item']['selected_hotel'])?$_SESSION['card_item']['selected_hotel']:'';
 		$selected_add_on_id=!empty($_SESSION['card_item']['selected_addons'])?$_SESSION['card_item']['selected_addons']:'';
@@ -46,6 +53,7 @@ class CartController extends Controller
 		$selected_addon_hotel=!empty($_SESSION['card_item']['selected_addon_hotel'])?$_SESSION['card_item']['selected_addon_hotel']:'';
 		$trip_hotel_amount=!empty($_SESSION['card_item']['trip_hotel_amount'])?$_SESSION['card_item']['trip_hotel_amount']:'';
 		$finaladd_on_amount=!empty($_SESSION['card_item']['final_add_amount'])?$_SESSION['card_item']['final_add_amount']:'';
+		
 		
 		//trip travelere info //
 		
@@ -67,7 +75,7 @@ class CartController extends Controller
                 ->get();
 		// end here//		
 		
-		
+		//echo count($data['tripAirlines']);die;
 		
 		//Trip Hotels details
         $data['tripHotels'] = DB::table('trip_hotel')
@@ -80,6 +88,25 @@ class CartController extends Controller
 		// end here //
 		
 		
+		// here packing to do //
+		$selecttodo=!empty($_SESSION['card_item']['selected_todo'])?$_SESSION['card_item']['selected_todo']:'';
+		foreach($selecttodo as $key=>$tripTodo)
+		{			
+			$data['to_do_packing'][$key]=DB::table('trip_todo')										
+										->where('trip_todo.trip_id', '=', $_SESSION['card_item']['trip_id'])
+									   ->where('trip_todo.id', '=', $tripTodo)
+										->where('trip_todo.status', '=', '1')
+										->get();
+		}
+		
+		
+		// end here//
+		
+		
+		
+		// add_on functionality//
+		
+		$addondetail=array();
 		$final=array();
 		if(!empty($selected_add_on_id) && !empty($selected_addon_flight) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
 			foreach(array($selected_add_on_id,$selected_addon_flight,$selected_addon_hotel,$selected_addon_travelers) as $arr){
@@ -90,73 +117,116 @@ class CartController extends Controller
 		}else{			
 			$final='';
 		}
-		
-		
 		//echo '<pre>';print_r($final);die;
-		/*$addondetail=array();
-		$addonflight=array();
-		$addonhotel=array();
-		$addtravelere=array();
-		// add on info now/
+		foreach($final as $key=>$value)
+		{
+			$addondetail['add_on_detail'][$key]=DB::select('select * from trip_addon where trip_id='.$trip.' and status="1" and id='.$value[0].'');
+			$addondetail['flight_data'][$key]= DB::table('trip_addon_airline')
+																->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+																->where('trip_addon_airline.trip_id', '=', $trip)
+																->where('trip_addon_airline.addon_id', '=', $value[0])
+																->where('trip_addon_airline.status', '=', '1')
+																->where('airlines.id', '=', $value[1])
+																->get();
+			$addondetail['hote_data'][$key]=DB::table('trip_addon_hotel')
+															->where('trip_id', '=', $trip)
+															->where('id', '=', $value[2])
+															->where('status', '=', '1')
+															->get();													
+				foreach($value[3] as $travelerkey=>$traveler){
+						$addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.'');
+				}				
+		}		
+			//echo'<pre>';print_r($addondetail);die;
+		$test = array();
+		for($i = 0; $i < count($addondetail['add_on_detail']); $i++){
+			
+			$test[$i]['add_on_detail'] = $addondetail['add_on_detail'][$i+1][0];
+			$test[$i]['flight_data'] = $addondetail['flight_data'][$i+1][0];
+			$test[$i]['hote_data'] = $addondetail['hote_data'][$i+1][0];
+			foreach($addondetail['travler_info'][$i+1] as $key1=>$value1)
+			{			
+				$test[$i]['travler_info'][$key1] = $value1;
+			}
+		}		
 		
-			/*foreach($selected_add_on_id as $key =>$value)
-			{
+		
+		// end here//
+print_r($data);die;
+		
+		
+		
+		// trip activity//
+		$activity=array();
+			 $activity['tripIncludedActivities'] = DB::table('trip_included_activity')
+                ->where('trip_id', '=', $trip)
+                ->where('activity_due_date', '>', date('y-m-d'))
+                ->where('status', '=', '1')
+                ->get();
+			$activityflight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
+			$activityhotel=!empty($_SESSION['card_item']['included_activity_hotel'])?$_SESSION['card_item']['included_activity_hotel']:'0';
+				if(!empty($activity['tripIncludedActivities']))
+				{
+					foreach($activity['tripIncludedActivities'] as $key=>$value)
+					{
+						
+						$activity['activity_flight'][$key]=DB::table('trip_included_activity_airline')
+																	->where('airline_departure_date', '>', date('Y-m-d'))
+																	->where('trip_id', '=', $value->trip_id)
+																	->where('activity_id', '=', $value->id)
+																	->whereIn('id', $flight)
+																	->where('status', '=', '1')
+																	->get();
+						$activity['activity_hotel'][$key]=	DB::table('trip_included_activity_hotel')
+																			->where('trip_id', '=', $value->trip_id)
+																			->where('hotel_due_date', '>', date('Y-m-d'))
+																			->where('activity_id', '=', $value->id)
+																			->whereIn('id', $activityhotel)
+																			->where('status', '=', '1')
+																			->get();									
+						
+					}
+				}else{
+					$tripIncludedActivities='';
+				}
+		///echo '<pre>';print_r($activity);die;	
+		$testactivity=array();
+		for($i = 0; $i < count($activity['tripIncludedActivities']); $i++){
+			$testactivity[$i]['tripIncludedActivities'] = $activity['tripIncludedActivities'][$i];
+			$testactivity[$i]['activity_flight'] = $activity['activity_flight'][$i][0];
+			$testactivity[$i]['activity_hotel'] = $activity['activity_hotel'][$i][0];
+						
+		}
+		
+		//end here//
+		//echo '<pre>';print_r($data);die;	
+		
 				
-				$addons=DB::select('select * from trip_addon where trip_id='.$trip.' and status="1" and id='.$value.'');
-				 array_push($addondetail,$addons);
-			}
-			
-			//echo '<pre>';print_r($addondetail);die;
-		
-
-			foreach($selected_addon_flight as $keyflight=>$valueflight)
-				{
-					$flight_data= DB::table('trip_addon_airline')
-								->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-								->where('trip_addon_airline.trip_id', '=', $trip)
-								->where('trip_addon_airline.addon_id', '=', $value)
-								->where('trip_addon_airline.status', '=', '1')
-								->where('airlines.id', '=', $valueflight)
-								->get();
-						array_push($addonflight,$flight_data);					
-				}
-			//	echo '<pre>';print_r($addonflight);die;			
-			
-			
-			foreach($selected_addon_hotel as $keyhotel=>$valuehotel)
-				{
-						$hote_data=DB::table('trip_addon_hotel')
-									->where('trip_id', '=', $trip)
-									->where('id', '=', $valuehotel)
-									->where('status', '=', '1')
-									->get();
-						array_push($addonhotel,$hote_data);					
-				}
-			//	echo '<pre>';print_r($addonhotel);die;
-		
-			
-			foreach($selected_addon_travelers as $keytravelere =>$valuetravelere)
-			{
-				foreach($valuetravelere as $keytravelere1=>$valuetravelere1)
-				{
-					$travelere=  DB::table('trip_traveler')
-								->where('trip_id', '=', $trip)
-								->where('id', '=', $valuetravelere1)
-								->where('status', '=', '1')
-								->get();
-					array_push($addtravelere,$travelere);				
-					
-				}
-			}
-			
-		// end here //*/
-		//echo '<pre>';print_r($addtravelere);die;
-		
+				
+				
 		$dashboardData = $this->dashboardElements();		
 		
-        return view('cart',['data'=>$dashboardData,'tripdata'=>$data,'final'=>$final,'trip_id'=>$trip,'finaladd_on_amount'=>$finaladd_on_amount]);
+        return view('cart',['data'=>$dashboardData,'tripdata'=>$data,'final'=>$test,'trip_id'=>$trip,'finaladd_on_amount'=>$finaladd_on_amount,'tripIncludedActivities'=>$testactivity]);
 	}
     
+	
+	
+    /**
+     * Function to remove item from cart
+     * @return \Illuminate\Http\Response
+     */
+	
+	
+	public function removecart()
+	{
+		session_start();
+		unset($_SESSION['card_item']);
+		return redirect('cart');
+		
+	}	
+	
+	
+	
     /**
      * Function to add the flighs of Trip to the cart
      * @param $request

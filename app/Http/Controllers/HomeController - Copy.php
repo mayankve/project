@@ -693,6 +693,7 @@ class HomeController extends Controller {
 	//echo '<pre>';print_r($tripIncludedActivities);die;	
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
+    
  
 
     /**

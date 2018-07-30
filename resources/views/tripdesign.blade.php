@@ -53,7 +53,7 @@
     <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">-->
 
     <div class="row text-right">
-        <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>
+      <!--  <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
     </div>
 	<form method="post" action="{{url('setcartvalue')}}">
     <div class="" id="pageWrapper">
@@ -147,16 +147,13 @@
                         @include('designstrips.partials.design_trip_todo')
                     </div> 
                 </div>
+				
                 <div role="tabpanel">
                      <!-- Trip Travelers Panel -->
                     <div class="panel panel-default">
                         @include('designstrips.partials.design_trip_traveler')
                     </div> 
                 </div>
-            </div>
-        </div>
-    </div>
-
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']);?>"> 
 					<input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
@@ -166,10 +163,14 @@
 					<div class="row">
 					<div class="col-sm-12">
 					<input type="submit" name="button" id="cartbutton" value="Add To Cart">
-					</div>
-					</div>
+							</div>
+							</div>
 				</form>
-	
+				
+            </div>
+        </div>
+				
+    </div>
 </div>
 
 
@@ -280,6 +281,15 @@ function addfinalvalue(){
 					$('.land-only_activity').hide();
 				}
 		});
+		
+		$('.add_on_land-only').click(function(){
+			if($(this).val()==1)
+				{
+					$('.add_on_land-onlydetail').show();
+				}else{
+					$('.add_on_land-onlydetail').hide();
+				}
+		});
 	
 	//end here//
 
@@ -323,14 +333,15 @@ $('#cartbutton').click(function(){
 	//include activity//
 	if($( "input[type=radio][name=is_land_only_activity_flight]:checked" ).val()==0)
 	{		
-		if($( "input[type=radio][name=included_activity_flight]:checked" ).val()==undefined)
+	
+		if($( ".included_activity_flight:checked" ).val()==undefined)
 		{
 			alert('Please select activity flights');
 			return false;
 		}		
 	}
 	
-	if($( "input[type=radio][name=included_activity_hotel]:checked" ).val()==undefined)
+	if($( ".included_activity_hotel:checked" ).val()==undefined)
 		{
 			alert('Please select activity hotel');
 			return false;
@@ -361,6 +372,12 @@ $('#cartbutton').click(function(){
 		}
 		
 	}
+	
+	if($( ".selected_todo:checked" ).val()==undefined)
+		{
+			alert('Please select Packing List');
+			return false;
+		}	
 	// end here//
 	
 	
@@ -386,42 +403,6 @@ $('#cartbutton').click(function(){
 });
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

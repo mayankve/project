@@ -68,6 +68,11 @@ Route::get('mytripdesign/{id}','HomeController@myTripDesign');
  Route::match(['get','post'],'cart','CartController@addtocart');
 /* Front-end routes ends */
 
+// cart remove 
+Route::match(['get','post'],'cartremove','CartController@removecart');
+
+
+
 //Airlines to be added to Cart
  Route::post('addFlightToCart','CartController@addFlightToCart');
   
