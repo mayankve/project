@@ -35,14 +35,13 @@
                 <div class="form-group">
                    
                         <?php
-                        $id = 0;
+                        $id = 1;
+						//echo '<pre>';print_r($tripdata['tripAddons']);die;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
-                        @foreach( $tripdata['tripAddons'] AS $addOns)
-                        @foreach ( $addOns AS $addOn)
-                         <?php 
-                            $id++;       
-                         ?>
+                       
+                        @foreach ( $tripdata['tripAddons'] AS $addOn)
+                       
 						<div class="col-sm-12">
                         <div class="row number-group-row parent">
 						<div class="addon">
@@ -50,20 +49,19 @@
                                 {{$id}}        
                             </div>
                             <div class="col-sm-3">
-                                {{ isset($addOn->addons_name) ? $addOn->addons_name: "N/A" }}
+                                {{ isset($addOn['tripAddons_check']->addons_name) ? $addOn['tripAddons_check']->addons_name: "N/A" }}
                             </div>
                             <div class="col-sm-3">
-                                {{ isset($addOn->addons_detail) ? $addOn->addons_detail : 'N/A' }}
+                                {{ isset($addOn['tripAddons_check']->addons_detail) ? $addOn['tripAddons_check']->addons_detail : 'N/A' }}
                             </div>
                             <div class="col-sm-3">
-                                <label>$ {{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                <label>$ {{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                             </div>
                             <div class="col-sm-2">
                                 <label>
-                                    <!--<input type="checkbox" name="selected_addons[]" class="selected_addons" id="selected_addons" value="{{ $addOn->id }}">-->
-                                  <!--  {{ Form::checkbox('selected_addons[]',$addOn->id, null, ['class' => 'selected_addons' , 'id' => 'selected_addons'])}}-->
-									<input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn->id}}" class="selected_addons" id="selected_addons">
-									<input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn->addons_cost) ? $addOn->addons_cost : 'N/A' }}">
+                                   
+									<input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}" class="selected_addons" id="selected_addons">
+									<input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
                                 </label>  
                             </div>
                         </div>
@@ -98,7 +96,13 @@
                                                 <div class="form-group pdrow-group">
                                                     <?php
                                                     $sr = 1;
-                                                    //echo "<pre>";print_r($tripdata['tripTravelers']);die;
+													// $tripAddonTravelers = DB::table('trip_addon_traveler')
+															//	->where('trip_id', '=', $addOn->trip_id)
+																//->where('addon_id', '=', $addOn->id)
+																//->where('status', '=', '1')
+																//->get();
+         
+                                                    //echo "<pre>";print_r($tripAddonTravelers);die;
                                                     ?>
                                                     @if(count($tripdata['tripTravelers']))
                                                     @foreach($tripdata['tripTravelers'] AS $triptraveler)
@@ -152,8 +156,8 @@
                                                 <div class="col-sm-9">
                                                     <div class="row">
                                                         <div class="col-sm-6 pr-3">
-                                                            <label><input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights</label>
-                                                            <label><input type="radio" name="is_land_only" class="land_only" value="1">Land only</label>
+                                                            <label><input type="radio" name="add_on_land-only" id="add_on_land-only" class="add_on_land-only" value="0" checked>Avaliable Flights</label>
+                                                            <label><input type="radio" name="add_on_land-only" class="add_on_land-only" value="1">Land only</label>
                                                         </div>
                                                         <div class="col-sm-6">
 
@@ -193,12 +197,18 @@
                                                     </div>
                                                 </div>
                                                 <?php
-                                                $sr = 1;
+                                                 $sr = 1;
+												 //echo count($addOn['tripAddonFlights']);die;
+												 // $tripAddonFlights = DB::table('trip_addon_airline')
+														// ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+														// ->where('trip_addon_airline.trip_id', '=', $addOn->trip_id)
+														// ->where('trip_addon_airline.addon_id', '=', $addOn->id)
+														// ->where('trip_addon_airline.status', '=', '1')
+														// ->get();
                                                     //echo "<pre>";print_r($tripdata['tripAddons']['tripAddonFlights']);die;
                                                 ?>
-                                                @if(count($tripdata['tripAddons']['tripAddonFlights'])>0)
-                                                @foreach( $tripdata['tripAddons']['tripAddonFlights'] AS $airlines)
-
+                                                @if(count($addOn['tripAddonFlights'])>0)
+                                              @foreach($addOn['tripAddonFlights'] as $tripflight)
                                                 <div class="form-group pdrow-group flightparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
@@ -206,47 +216,47 @@
                                                                 {{$sr}}
                                                             </div>
                                                             <div class="col-sm-3">
-                                                                {{$airlines->name}}
+                                                                {{$tripflight->name}}
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                {{$airlines->airline_departure_location}}
+                                                                {{$tripflight->airline_departure_location}}
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                {{$airlines->airline_departure_date}}
+                                                                {{$tripflight->airline_departure_date}}
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                {{$airlines->airline_departure_time}}
+                                                                {{$tripflight->airline_departure_time}}
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                {{$airlines->airline_reserve_amount}}
+                                                                {{$tripflight->airline_reserve_amount}}
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                {{$airlines->airline_cost}}
+                                                                {{$tripflight->airline_cost}}
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <label>
-                                                                   <!-- {!! Form::radio('addon_flight_name{{$airlines->id}}',$airlines->name,['class' => 'form-control addon_flight_name']) !!}-->
-																	<input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$airlines->id}}">
+                                                                  
+																	<input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}">
 	
-																<input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}">	
+																<input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($tripflight->airline_reserve_amount) ? $tripflight->airline_reserve_amount : 'N/A' }}">	
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <?php $sr++; ?>
-                                                @endforeach
+                                                </div> 
+											<?php $sr++; ?>												
+												@endforeach
                                                 @endif
                                             </div>
-                                            <div class="land-only" style="display: none;">
+                                            <div class="add_on_land-onlydetail" style="display: none;">
                                                 <div class="form-group">
                                                     <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
-                                                    <!--{!! Form::label('airline[0][flight_name]', 'Flight Name','control-label col-sm-3 custom-lbl') !!}-->
+                                                   
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <!--{!! Form::text('traveler[0][flight_name]', null, ['class' => 'form-control flight_name']) !!}-->
-                                                                <input type="text" name="flight_name" class="form-control" value="">                                </div>
+                                                                
+                                                                <input type="text" name="add_on_flight_name" class="form-control" value="">                                </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +265,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <input type="text" name="flight_number" class="form-control" value="">                                </div>
+                                                                <input type="text" name="add_on_flight_number" class="form-control" value="">                                </div>
 
                                                         </div>
                                                     </div>
@@ -265,7 +275,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <input type="text" name="departure_date" class="form-control" value="">                                </div>
+                                                                <input type="text" name="add_on_departure_date" class="form-control" value="">                                </div>
 
                                                         </div>
                                                     </div>
@@ -276,7 +286,8 @@
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
                                                                 <!--<input type="text" name="departure_time" class="form-control" value="">--> 
-                                                                 {{ Form::text('departure_time' , null, ['class' => 'form-control']) }}
+                                                                <!-- {{ Form::text('add_on_departure_time' , null, ['class' => 'form-control']) }}-->
+																 <input type="text" name="add_on_departure_time" class="form-control" value=""> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -319,7 +330,7 @@
                                             <div class="form-group pdrow-group">
                                                 <div class="col-sm-12">
                                                     <div class="row">
-                                                        <div class="col-sm-1">
+                                                         <div class="col-sm-1">
                                                             <b>SN</b>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -350,54 +361,71 @@
                                                 </div>
                                             </div>
                                               <?php
-                                                $sr = 1;
+                                                 $sr = 1;
+												 // $tripAddonHotels= DB::table('trip_addon_hotel')
+														// ->where('trip_id', '=', $addOn->trip_id)
+														// ->where('addon_id', '=', $addOn->id)
+														// ->where('status', '=', '1')
+														// ->get();
 												//echo '<pre>';print_r($tripdata['tripAddons']['tripAddonHotels']);die;
                                                 ?>
-                                                @if(count($tripdata['tripAddons']['tripAddonHotels'])>0)
-                                                @foreach( $tripdata['tripAddons']['tripAddonHotels'] AS $hotels)
+                                                @if(count($addOn['tripAddonHotels'])>0)
+                                               @foreach($addOn['tripAddonHotels'] as $triphotel)
                                                 <div class="form-group pdrow-group hotleparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-1">
-                                                                {{$sr}}
-                                                            </div>
+                                                                    {{$sr}}
+                                                                </div>
+																
                                                             <div class="col-sm-3">
-                                                                {{$hotels->hotel_name}}
+
+																<?php echo (!empty($triphotel->hotel_name))?$triphotel->hotel_name:'';?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                {{$hotels->hotel_type}}
+															<?php echo (!empty($triphotel->hotel_type))?$triphotel->hotel_type:'';?>
+                                                             
                                                             </div>
-                                                            <div class="col-sm-2">
-                                                                {{$hotels->hotel_due_date ? $hotels->hotel_due_date :'N/A' }}
+															
+															<div class="col-sm-2">
+															<?php echo (!empty($triphotel->hotel_due_date))?$triphotel->hotel_due_date:'';?>
+                                                                
                                                             </div>
-                                                            <div class="col-sm-1 hotel_cost" style="display: none;">
+															
+															<div class="col-sm-1 hotel_cost" style="display: none;">
                                                                 <label>$</label>
                                                                 <label class="cost">
-                                                                 {{$hotels->hotel_reserve_amount}}
+																<?php echo (!empty($triphotel->hotel_reserve_amount))?$triphotel->hotel_reserve_amount:'';?>
+                                                                
                                                                 </label>
                                                              </div>
                                                             <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                 <label>$</label> 
-                                                                <label class="cost">{{$hotels->hotel_cost}}</label>
+                                                                <label class="cost">
+																	<?php echo (!empty($triphotel->hotel_cost))?$triphotel->hotel_cost:'';?></label>
                                                             </div>
-                                                            <div class="col-sm-1">
-                                                               {{$hotels->hotel_reserve_amount}}
+															
+															<div class="col-sm-1">
+															<?php echo (!empty($triphotel->hotel_reserve_amount))?$triphotel->hotel_reserve_amount:'';?>
+                                                              
                                                             </div>
                                                              <div class="col-sm-1 hotel_solo_cost">
-                                                              {{$hotels->hotel_solo_cost}}
+															 <?php echo (!empty($triphotel->hotel_solo_cost))?$triphotel->hotel_solo_cost:'';?>
+                                                              
                                                              </div>
+                                                           
                                                             <div class="col-sm-1">
                                                                 <label>
-                                                                   <!-- {!! Form::radio('selected_addon_hotel',$hotels->hotel_name,['class' => 'form-control selected_addon_hotel']) !!}-->
-																	<input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$hotels->id}}">	
-															<input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($hotels->hotel_reserve_amount) ? $hotels->hotel_reserve_amount : 'N/A' }}">			
+                                                                  
+																	<input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}">	
+															<input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">			
                                                                 </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php $sr++; ?>
-                                                @endforeach
+												<?php $sr++; ?>
+                                               @endforeach                                                
                                                 @endif
                                             </div>
                                         </div>
@@ -413,8 +441,8 @@
                         </div>
 						</div>
                         </div>
-                        @endforeach
-                        <?php $sr++; ?>
+                       
+                        <?php $id++; ?>
                         @endforeach
                         @endif
                     </div>

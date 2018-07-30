@@ -596,16 +596,71 @@ class HomeController extends Controller {
                 ->get();
 
         //Trip Addon Details
-        $tripAddons['addons'] = DB::table('trip_addon')
+		$tripaddonarray = array();
+        $addon['tripAddons_check'] = DB::table('trip_addon')
                 ->where('trip_id', '=', $id)
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-      // echo '<pre>';print_r($tripAddons);die;
+			
+		if(!empty($addon['tripAddons_check']))
+		{
+			foreach($addon['tripAddons_check'] as $addonkey=> $addonitem)
+			{
+				
+				 $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
+											->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+											->where('trip_addon_airline.trip_id', '=', $id)
+											->where('trip_addon_airline.addon_id', '=', $addonitem->id)
+											->where('trip_addon_airline.status', '=', '1')
+											->get();
+			//echo '<pre>';print_r($addondetail['flight_data']);													
+			   $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
+											->where('trip_id', '=', $id)
+											->where('addon_id', '=', $addonitem->id)
+											->where('status', '=', '1')
+											->get();	
+				
+			}
+			
+			//echo '<pre>';	print_r($addon);die;
+			
+			for($i=0;$i<count($addon['tripAddons_check']);$i++)
+				{
+					$tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
+					
+					foreach($addon['tripAddonFlights'][$i] as $key1=>$value1)
+						{			
+							
+							$tripaddonarray[$i]['tripAddonFlights'][$key1] = $value1;
+						}
+						
+						foreach($addon['tripAddonHotels'][$i] as $key2=>$value2)
+						{			
+							
+							$tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
+						}
+					
+					//$tripaddonarray[$i]['tripAddonFlights'] = !empty($addon['tripAddonFlights'][$i][0])?$addon['tripAddonFlights'][$i][0]:'';
+					//$tripaddonarray[$i]['tripAddonHotels'] = !empty($addon['tripAddonHotels'][$i][0])?$addon['tripAddonHotels'][$i][0]:'';
+				}
+			//echo '<pre>';print_r($tripaddonarray);die;
+		}
+		
+		
+		
+		
+				
+				
+				
+				
+				
+				
+       //echo '<pre>';print_r($tripAddons);die;
         //Trip Addon arrays
-        $tripAddonTravelers = array();
-        $tripAddonFlights = array();
-        foreach ($tripAddons AS $key => $value) {
+       // $tripAddonTravelers = array();
+        //$tripAddonFlights = array();
+       /* foreach ($tripAddons AS $key => $value) {
         foreach($value AS $key1=>$value1){
         //Trip Addon Traveler Details
 //        $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
@@ -639,20 +694,69 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->get();
         }
-    }
+    }*/
+	
+	
+
         //Trip Included Activities Data
-        $tripIncludedActivities = DB::table('trip_included_activity')
+		
+		$tripactivityarray = array();
+		
+        $activity['tripIncludedActivities_check'] = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
-                //->where('activity_due_date', '=', $id)
+                ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
-        
-    //   echo  "<pre>"; print_r($tripIncludedActivities);die; 
+		if(!empty($activity['tripIncludedActivities_check']))
+		{			
+				foreach($activity['tripIncludedActivities_check'] as $activitykey=>$activityvalue)
+				{
+					$activity['includedActivityFlights'][$activitykey] = DB::table('trip_included_activity_airline')
+											->where('airline_departure_date', '>', date('Y-m-d'))
+											->where('trip_id', '=', $id)
+											->where('activity_id', '=', $activityvalue->id)
+											->where('status', '=', '1')
+											->get();
+					  $activity['includedActivityHotles'][$activitykey] = DB::table('trip_included_activity_hotel')
+														->where('trip_id', '=', $id)
+														->where('hotel_due_date', '>', date('Y-m-d'))
+														->where('activity_id', '=', $activityvalue->id)
+														->where('status', '=', '1')
+														->get();						
+					
+				}
+				//echo  "<pre>"; print_r($activity);die; 
+				
+			for($i=0;$i<count($activity['tripIncludedActivities_check']);$i++)
+				{
+					$tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
+					foreach($activity['includedActivityFlights'][$i] as $activityflightkey1=>$activityfilghtvalue1)
+						{			
+							
+							$tripactivityarray[$i]['includedActivityFlights'][$activityflightkey1] = $activityfilghtvalue1;
+						}
+						
+						foreach($activity['includedActivityHotles'][$i] as $activityhotelkey2=>$activityhotelvalue2)
+						{			
+							//echo $activityhotelkey2;die;
+							$tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
+						}
+					//$tripactivityarray[$i]['includedActivityFlights'] = !empty($activity['includedActivityFlights'][$i][0])?$activity['includedActivityFlights'][$i][0]:'';
+					//$tripactivityarray[$i]['includedActivityHotles'] = !empty($activity['includedActivityHotles'][$i])?$activity['includedActivityHotles'][$i]:'';
+				}	
+				
+		}
+     //echo  "<pre>"; print_r($tripactivityarray);die; 
+	 
+	 
+	 
+	 
+	 
         //Include Activity arrays
-        $includedActivityFlights = array();
-        $includedActivityHotles = array();
+       // $includedActivityFlights = array();
+       // $includedActivityHotles = array();
         
-        foreach ($tripIncludedActivities AS $key => $value) {
+        /*foreach ($tripIncludedActivities AS $key => $value) {
             //Included Activity Flight Details
 			
             $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
@@ -669,7 +773,7 @@ class HomeController extends Controller {
                     ->where('activity_id', '=', $value->id)
                     ->where('status', '=', '1')
                     ->get();
-        }
+        }*/
        
         //To Do Packing Details
         $tripTodo = DB::table('trip_todo')
@@ -686,13 +790,14 @@ class HomeController extends Controller {
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
             'tripTravelers' => $tripTravelers,
-            'tripAddons' => $tripAddons,
-            'tripIncludedActivities' => $tripIncludedActivities,
+            'tripAddons' => $tripaddonarray,
+            'tripIncludedActivities' => $tripactivityarray,
             'tripTodo' => $tripTodo
         );
-	//echo '<pre>';print_r($tripIncludedActivities);die;	
+	//echo '<pre>';print_r($tripTravelers);die;	
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
+    
  
 
     /**

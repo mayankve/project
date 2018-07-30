@@ -114,51 +114,57 @@ class CartController extends Controller
 						 $final[$key][] = $value;
 					}				
 			}
+			
+			
 		}else{			
 			$final='';
 		}
 		//echo '<pre>';print_r($final);die;
-		foreach($final as $key=>$value)
-		{
-			$addondetail['add_on_detail'][$key]=DB::select('select * from trip_addon where trip_id='.$trip.' and status="1" and id='.$value[0].'');
-			$addondetail['flight_data'][$key]= DB::table('trip_addon_airline')
-																->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-																->where('trip_addon_airline.trip_id', '=', $trip)
-																->where('trip_addon_airline.addon_id', '=', $value[0])
-																->where('trip_addon_airline.status', '=', '1')
-																->where('airlines.id', '=', $value[1])
-																->get();
-			$addondetail['hote_data'][$key]=DB::table('trip_addon_hotel')
-															->where('trip_id', '=', $trip)
-															->where('id', '=', $value[2])
-															->where('status', '=', '1')
-															->get();													
-				foreach($value[3] as $travelerkey=>$traveler){
-						$addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.'');
-				}				
-		}		
+		
+		if(!empty($final)){
+				foreach($final as $key=>$value)
+				{
+					$addondetail['add_on_detail'][$key]=DB::select('select * from trip_addon where trip_id='.$trip.' and status="1" and id='.$value[0].'');
+					$addondetail['flight_data'][$key]= DB::table('trip_addon_airline')
+																		->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+																		->where('trip_addon_airline.trip_id', '=', $trip)
+																		->where('trip_addon_airline.addon_id', '=', $value[0])
+																		->where('trip_addon_airline.status', '=', '1')
+																		->where('airlines.id', '=', $value[1])
+																		->get();
+					//echo '<pre>';print_r($addondetail['flight_data']);													
+					$addondetail['hote_data'][$key]=DB::table('trip_addon_hotel')
+																	->where('trip_id', '=', $trip)
+																	->where('id', '=', $value[2])
+																	->where('status', '=', '1')
+																	->get();													
+						foreach($value[3] as $travelerkey=>$traveler){
+								$addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.'');
+						}				
+				}		
 			//echo'<pre>';print_r($addondetail);die;
-		$test = array();
-		for($i = 0; $i < count($addondetail['add_on_detail']); $i++){
-			
-			$test[$i]['add_on_detail'] = $addondetail['add_on_detail'][$i+1][0];
-			$test[$i]['flight_data'] = $addondetail['flight_data'][$i+1][0];
-			$test[$i]['hote_data'] = $addondetail['hote_data'][$i+1][0];
-			foreach($addondetail['travler_info'][$i+1] as $key1=>$value1)
-			{			
-				$test[$i]['travler_info'][$key1] = $value1;
-			}
+				$test = array();
+				for($i = 0; $i < count($addondetail['add_on_detail']); $i++){
+					
+					$test[$i]['add_on_detail'] = (!empty($addondetail['add_on_detail'][$i+1][0]))?$addondetail['add_on_detail'][$i+1][0]:'';
+					$test[$i]['flight_data'] = (!empty($addondetail['flight_data'][$i+1][0]))?$addondetail['flight_data'][$i+1][0]:'';
+					$test[$i]['hote_data'] = (!empty($addondetail['hote_data'][$i+1][0]))?$addondetail['hote_data'][$i+1][0]:'';
+					foreach($addondetail['travler_info'][$i+1] as $key1=>$value1)
+					{			
+						$test[$i]['travler_info'][$key1] = $value1;
+					}
+				}
+		}else{
+			$test='';
 		}		
-		
-		
 		// end here//
-print_r($data);die;
-		
+		//echo'<pre>';print_r($test);die;
 		
 		
 		// trip activity//
 		$activity=array();
-			 $activity['tripIncludedActivities'] = DB::table('trip_included_activity')
+			$testactivity=array();
+			$activity['tripIncludedActivities'] = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $trip)
                 ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
@@ -186,17 +192,20 @@ print_r($data);die;
 																			->get();									
 						
 					}
+					
+					for($i = 0; $i < count($activity['tripIncludedActivities']); $i++){
+								$testactivity[$i]['tripIncludedActivities'] = $activity['tripIncludedActivities'][$i];
+								$testactivity[$i]['activity_flight'] = (!empty($activity['activity_flight'][$i][0]))?$activity['activity_flight'][$i][0]:'';
+								$testactivity[$i]['activity_hotel'] = (!empty($activity['activity_hotel'][$i][0]))?$activity['activity_hotel'][$i][0]:'';
+						
+						}
+					
 				}else{
-					$tripIncludedActivities='';
+					$testactivity='';
 				}
 		///echo '<pre>';print_r($activity);die;	
-		$testactivity=array();
-		for($i = 0; $i < count($activity['tripIncludedActivities']); $i++){
-			$testactivity[$i]['tripIncludedActivities'] = $activity['tripIncludedActivities'][$i];
-			$testactivity[$i]['activity_flight'] = $activity['activity_flight'][$i][0];
-			$testactivity[$i]['activity_hotel'] = $activity['activity_hotel'][$i][0];
-						
-		}
+	
+		
 		
 		//end here//
 		//echo '<pre>';print_r($data);die;	
