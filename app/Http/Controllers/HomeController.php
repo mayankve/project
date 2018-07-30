@@ -21,13 +21,14 @@ use App\TripTraveler;
 use App\UserTrip;
 use App\TripTravelerProfile;
 class HomeController extends Controller {
-
+    
     /**
      * Function to return home view
      * @param void
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        
         // Get all the trips which are active and whose end date is not null and trip is not deleted
         $trips = Trip::where('end_date', '!=', NULL)->where('status', '=', '1')->paginate(6);
 
@@ -529,23 +530,23 @@ class HomeController extends Controller {
 //                if ($request->hasFile('traveler.'.$index.'.profile_image')) {
 //                    $fileName = $this->imageUpload($request->file('traveler.'.$index.'.profile_image'), 'traveler_img', 'profile-image');
 //                }
-                $trip_traveler_id = TripTraveler::create(array(
-                            'user_id' => $user_id,
-                            'trip_id' => $trip_id,
-                            'email' => $row['email'],
-                            'first_name' => $row['first_name'],
-                            'last_name' => $row['last_name'] ? $row['last_name'] : '',
-                            'gender' => $row['gender'],
-//                            'profile_pic' => $fileName,
-//                            'city' => $row['city'],
-                            'created_at' => date('Y-m-d H:i:s')
-                        ))->id;
-                if (isset($trip_traveler_id)){
-                        $user_trip_id = UserTrip::create(array(
+            $trip_traveler_id = TripTraveler::create(array(
                         'user_id' => $user_id,
                         'trip_id' => $trip_id,
-                        'booking_date' => date('Y-m-d')
+                        'email' => $row['email'],
+                        'first_name' => $row['first_name'],
+                        'last_name' => $row['last_name'] ? $row['last_name'] : '',
+                        'gender' => $row['gender'],
+//                            'profile_pic' => $fileName,
+//                            'city' => $row['city'],
+                        'created_at' => date('Y-m-d H:i:s')
                     ))->id;
+            if (isset($trip_traveler_id)){
+                    $user_trip_id = UserTrip::create(array(
+                    'user_id' => $user_id,
+                    'trip_id' => $trip_id,
+                    'booking_date' => date('Y-m-d')
+                ))->id;
                 }
             }
         }
@@ -575,7 +576,7 @@ class HomeController extends Controller {
                 ->where('trip_airline.airline_departure_time', '<=', date('H:i:s'))
                 ->where('trip_airline.status', '=', '1')
                 ->get();
-           
+        
             //Trip Hotels details
 //               $tripHotels = DB::table('trip_hotel_booking')
 //                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
@@ -584,8 +585,7 @@ class HomeController extends Controller {
 //                ->where('trip_hotel_booking.status', '=', '1')
 //                ->where('trip_hotel_booking.user_id', '=', $userId)
 //                ->get();
-        
-        
+
          //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
@@ -600,10 +600,11 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-        
+       
         //Trip Addon arrays
         $tripAddonTravelers = array();
         $tripAddonFlights = array();
+        
         foreach ($tripAddons AS $key => $value) {
         foreach($value AS $key1=>$value1){
         //Trip Addon Traveler Details
@@ -628,7 +629,7 @@ class HomeController extends Controller {
                 ->where('trip_addon_airline.addon_id', '=', $value1->id)
                 ->where('trip_addon_airline.status', '=', '1')
                 ->get();
-
+        
         //Trip Addon Hotel Details
         $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
                 ->where('trip_id', '=', $id)
@@ -637,10 +638,11 @@ class HomeController extends Controller {
                 ->get();
         }
     }
+//        echo "<pre>"; print_r($tripAddons);die;
         //Trip Included Activities Data
         $tripIncludedActivities = DB::table('trip_included_activity')
                 ->where('trip_id', '=', $id)
-                ->where('activity_due_date', '>', date('Y-m-d'))
+                ->where('activity_due_date', '>=', date('Y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
         
@@ -650,6 +652,7 @@ class HomeController extends Controller {
         
         foreach ($tripIncludedActivities AS $key => $value) {
             //Included Activity Flight Details
+			
             $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
                     ->where('airline_departure_date', '>', date('Y-m-d'))
                     ->where('trip_id', '=', $id)
@@ -685,10 +688,11 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripIncludedActivities,
             'tripTodo' => $tripTodo
         );
-	//echo '<pre>';print_r($data);die;	
+	
         return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
     }
     
+ 
 
     /**
      * Upload file and return the name of the uploaded file
@@ -719,8 +723,7 @@ class HomeController extends Controller {
     }
 	
 
-	
-	 /* Function to update traveler information
+     /* Function to update traveler information
      * @param int Request
      * @return url
      */
@@ -728,6 +731,7 @@ class HomeController extends Controller {
 
 	public function travelerProfile($id,Request $request)
 	{
+
 		if(isset($_POST['submit']))
 		{
 			$data['first_name']=!empty($request->input('first_name'))?$request->input('first_name'):'';
@@ -741,7 +745,7 @@ class HomeController extends Controller {
 			
 			//echo $passportPic;die;
 			 if (isset($passportPic) && count($passportPic) > 0) {
-                        $destinationPath = storage_path() . '/uploads/passport_images/';						
+                   $destinationPath = storage_path() . '/uploads/passport_images/';						
 				 if ($passportPic->isValid()) { 
                         $fileExt = $passportPic->getClientOriginalExtension();
                         $fileType = $passportPic->getMimeType();

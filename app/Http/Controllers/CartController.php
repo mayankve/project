@@ -59,7 +59,7 @@ class CartController extends Controller
 		
 		// trip flight info//
 		
-		  $data['tripAirlines'] = DB::table('trip_airline')
+                $data['tripAirlines'] = DB::table('trip_airline')
                 ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
                 ->select('trip_airline.*', 'airlines.*')
                 ->where('trip_airline.trip_id', '=', $trip)
@@ -70,7 +70,7 @@ class CartController extends Controller
 		
 		
 		//Trip Hotels details
-        $data['tripHotels'] = DB::table('trip_hotel')
+                $data['tripHotels'] = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
                 ->where('trip_hotel.trip_id', '=', $trip)
 				 ->where('trip_hotel.id', '=', $trip_hotel_id)
@@ -166,7 +166,6 @@ class CartController extends Controller
 		
 	
     public function addFlightToCart(Request $request) {
-        
         $itemType = $request->input('item_type');
         $tripId = $request->input('trip_id');
         $flightId = $request->input('flight_id');
