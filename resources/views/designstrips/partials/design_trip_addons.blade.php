@@ -96,7 +96,17 @@
                                                 <div class="form-group pdrow-group">
                                                     <?php
                                                     $sr = 1;
+<<<<<<< HEAD
 													
+=======
+													// $tripAddonTravelers = DB::table('trip_addon_traveler')
+															//	->where('trip_id', '=', $addOn->trip_id)
+																//->where('addon_id', '=', $addOn->id)
+																//->where('status', '=', '1')
+																//->get();
+         
+                                                    //echo "<pre>";print_r($tripAddonTravelers);die;
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                     ?>
                                                     @if(count($tripdata['tripTravelers']))
                                                     @foreach($tripdata['tripTravelers'] AS $triptraveler)
@@ -192,9 +202,20 @@
                                                 </div>
                                                 <?php
                                                  $sr = 1;
+<<<<<<< HEAD
 												
 												if(array_key_exists("tripAddonFlights",$addOn))
 												{													
+=======
+												 //echo count($addOn['tripAddonFlights']);die;
+												 // $tripAddonFlights = DB::table('trip_addon_airline')
+														// ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+														// ->where('trip_addon_airline.trip_id', '=', $addOn->trip_id)
+														// ->where('trip_addon_airline.addon_id', '=', $addOn->id)
+														// ->where('trip_addon_airline.status', '=', '1')
+														// ->get();
+                                                    //echo "<pre>";print_r($tripdata['tripAddons']['tripAddonFlights']);die;
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                 ?>
                                                 @if(count($addOn['tripAddonFlights'])>0)
                                               @foreach($addOn['tripAddonFlights'] as $tripflight)
@@ -246,7 +267,11 @@
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
                                                                 
+<<<<<<< HEAD
                                                                 <input type="text" name="add_on_flight_name[{{$id}}]" class="form-control" value="">                                </div>
+=======
+                                                                <input type="text" name="add_on_flight_name" class="form-control" value="">                                </div>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +280,11 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
+<<<<<<< HEAD
                                                                 <input type="text" name="add_on_flight_number[{{$id}}]" class="form-control" value="">                                </div>
+=======
+                                                                <input type="text" name="add_on_flight_number" class="form-control" value="">                                </div>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 
                                                         </div>
                                                     </div>
@@ -265,7 +294,11 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
+<<<<<<< HEAD
                                                                 <input type="text" name="add_on_departure_date[{{$id}}]" class="form-control" value="">                                </div>
+=======
+                                                                <input type="text" name="add_on_departure_date" class="form-control" value="">                                </div>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 
                                                         </div>
                                                     </div>
@@ -277,7 +310,11 @@
                                                             <div class="user-edit col-sm-6">
                                                                 <!--<input type="text" name="departure_time" class="form-control" value="">--> 
                                                                 <!-- {{ Form::text('add_on_departure_time' , null, ['class' => 'form-control']) }}-->
+<<<<<<< HEAD
                  <input type="text" name="add_on_departure_time[{{$id}}]" class="form-control" value=""> 
+=======
+																 <input type="text" name="add_on_departure_time" class="form-control" value=""> 
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                             </div>
                                                         </div>
                                                     </div>
@@ -353,9 +390,18 @@
                                             </div>
                                               <?php
                                                  $sr = 1;
+<<<<<<< HEAD
 												
 												if(array_key_exists("tripAddonHotels",$addOn))
 												{
+=======
+												 // $tripAddonHotels= DB::table('trip_addon_hotel')
+														// ->where('trip_id', '=', $addOn->trip_id)
+														// ->where('addon_id', '=', $addOn->id)
+														// ->where('status', '=', '1')
+														// ->get();
+												//echo '<pre>';print_r($tripdata['tripAddons']['tripAddonHotels']);die;
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                 ?>
                                                 @if(count($addOn['tripAddonHotels'])>0)
                                                @foreach($addOn['tripAddonHotels'] as $triphotel)

@@ -37,7 +37,11 @@ $tavelerearray=array();
     </div>
 	
 	<?php if(isset($_SESSION['card_item']) && !empty($_SESSION['card_item'])){?>
+<<<<<<< HEAD
 	<form method="post" action="{{url('checkout')}}">
+=======
+
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
     <div class="" id="pageWrapper">
         <div id="" class="customtab">
             <!-- Nav tabs -->
@@ -92,7 +96,11 @@ $tavelerearray=array();
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
 																
+=======
+                                                                          
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                         <div class="form-group pdrow-group parent">
                                             <div class="col-sm-12">
                                                 <div class="row">
@@ -254,11 +262,17 @@ $tavelerearray=array();
                                                 <div class="form-group pdrow-group">
                                                     <?php
 												$i=1;
+<<<<<<< HEAD
 												
 												$travlerid=array();
 												 if(count($tripdata['tripTravelers'])>0){
 													 foreach($tripdata['tripTravelers'] as $traveler){
 													array_push($travlerid,$traveler->id);
+=======
+												 if(count($tripdata['tripTravelers'])>0){
+													 foreach($tripdata['tripTravelers'] as $traveler){
+												 
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 												?> 
                                                     <div class="col-sm-12 travler">
                                                         <div class="row">
@@ -306,9 +320,14 @@ $tavelerearray=array();
                    
                        <?php
 						$i=1;
+<<<<<<< HEAD
 						
 						foreach($final as $key=>$value){
 							
+=======
+					//echo '<pre>';print_r($final);die;
+						foreach($final as $key=>$value){
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 								//echo $value['add_on_detail']->addons_name;die;
 						  //$addons=DB::select('select * from trip_addon where trip_id='.$trip_id.' and status="1" and id='.$value[0].'');
 						 ?> 
@@ -362,7 +381,10 @@ $tavelerearray=array();
 												$j=1;
 												if(!empty($value['travler_info'])){
 												foreach($value['travler_info'] as $travelerkey=>$traveler){
+<<<<<<< HEAD
 													array_push($tavelerearray,$travelerkey);
+=======
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 													//$travelere=DB::select('select * from trip_traveler where trip_id='.$trip_id.' and status="1" and id='.$traveler.'');?>
                                                 <div class="form-group pdrow-group">
                                                    
@@ -579,6 +601,10 @@ $tavelerearray=array();
 					
                 </div>
 				
+<<<<<<< HEAD
+=======
+				
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
             </div>
         </div>
     </div>
@@ -602,6 +628,7 @@ $tavelerearray=array();
                 <div class="trip-addons">
                     <div class="form-group">
 					 <?php
+<<<<<<< HEAD
                             $id = 1;	
 								$activityamount=0;	
 								$activityflightamount=0;
@@ -611,6 +638,15 @@ $tavelerearray=array();
                            
                             @foreach ( $tripIncludedActivities AS $includedActivity)
 								<?php $activityamount = $activityamount+$includedActivity['tripIncludedActivities']->activity_cost;?>
+=======
+                            $id = 1;
+						// echo '<pre>';print_r($tripIncludedActivities);die;
+                            ?>   
+                            @if(count($tripIncludedActivities)>0)
+                           
+                            @foreach ( $tripIncludedActivities AS $includedActivity)
+                            
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                         <div class="col-sm-12">
                            
                             <div class="row number-group-row">
@@ -629,14 +665,35 @@ $tavelerearray=array();
                                 </div>
                                 <!------ Radio button here--------------->
                             </div>
+<<<<<<< HEAD
                           <input type="hidden" name="includedactivity_id[{{$id}}]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
                         
+=======
+                          
+                          <!--  <div class="row">
+                                <div class="panel panel-primary traveler-list">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><strong>Travelers list</strong></h3>
+                                        <div class="panel-tools">
+                                            <a href="#" class="updown"><span class="clickable">
+                                                    <i class="glyphicon glyphicon-chevron-up"></i></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                             <div class="row">
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
                                         <div class="panel-tools">
+<<<<<<< HEAD
                                          
+=======
+                                           <!-- <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span></a>-->
+                                             <!--<a href="#"><span class="basic_info"><i class="fa fa-edit" aria-hidden="true" ></i></span></a>
+                                            <a href="#"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                         </div>
                                     </div>
                                     <div class="panel-body">
@@ -676,9 +733,26 @@ $tavelerearray=array();
                                                             </div>
                                                         </div>
                                                     </div>
+<<<<<<< HEAD
                                                     
                                                     @if(!empty($includedActivity['activity_flight']))
                                                   <?php $activityflightamount = $activityflightamount+$includedActivity['activity_flight']->airline_reserve_amount;?>
+=======
+                                                    <?php
+                                                     // $sr = 1;
+													 // $flight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
+													 // $includedActivityFlights = DB::table('trip_included_activity_airline')
+																// ->where('airline_departure_date', '>', date('Y-m-d'))
+																// ->where('trip_id', '=', $includedActivity->trip_id)
+																// ->where('activity_id', '=', $includedActivity->id)
+																// ->where('id', '=', $flight)
+																// ->where('status', '=', '1')
+																// ->get();
+													 //echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityFlights']);die;
+                                                    ?> 
+                                                    @if(!empty($includedActivity['activity_flight']))
+                                                  
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 													
 													<div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
@@ -704,7 +778,11 @@ $tavelerearray=array();
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                 <label>
+<<<<<<< HEAD
                                                                   <input type="hidden" name="includedactivity_flight_id[{{$id}}]" value="<?php echo $includedActivity['activity_flight']->id; ?>">
+=======
+                                                                   <!-- { !!Form::radio('included_activity_flight', $airlines->name ,['class' => 'form-control included_activity_flight']) !!} -->
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 																  
                                                                 </label>
                                                                 </div>
@@ -724,7 +802,12 @@ $tavelerearray=array();
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Hotels</strong></h3>
                                     <div class="panel-tools">
+<<<<<<< HEAD
                                         
+=======
+                                        <!--<label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$400</label>
+                                        <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 
                                     </div>
                                 </div>
@@ -773,6 +856,7 @@ $tavelerearray=array();
                                                 </div>
 
                                                 <div class="form-group pdrow-group">
+<<<<<<< HEAD
                                                   
                                                     @if(!empty($includedActivity['activity_hotel']))
                                                  <?php $activityhotelamount = $activityhotelamount+$includedActivity['activity_hotel']->hotel_reserve_amount;?>
@@ -780,6 +864,27 @@ $tavelerearray=array();
                                                         <div class="col-sm-12">
                                                             <div class="row">
 																
+=======
+                                                  <?php
+                                                     // $sr = 1;
+													 // $includedActivityHotles = DB::table('trip_included_activity_hotel')
+																		// ->where('trip_id', '=', $includedActivity->trip_id)
+																		// ->where('hotel_due_date', '>', date('Y-m-d'))
+																		// ->where('activity_id', '=', $includedActivity->id)
+																		// ->where('id', '=', $_SESSION['card_item']['included_activity_hotel'])
+																		// ->where('status', '=', '1')
+																		// ->get();
+														//echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityHotles']);die;
+                                                     ?> 
+                                                    @if(!empty($includedActivity['activity_hotel']))
+                                                
+												<div class="form-group pdrow-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+																<div class="col-sm-1">
+                                                                   
+                                                                </div>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 																
 																<div class="col-sm-3">
                                                                     {{ isset($includedActivity['activity_hotel']->hotel_name) ? $includedActivity['activity_hotel']->hotel_name : 'N/A' }}
@@ -802,7 +907,11 @@ $tavelerearray=array();
                                                                 </div>
 															
                                                                 </div>
+<<<<<<< HEAD
 																  <input type="hidden" name="includedactivity_hotel_id[{{$id}}]" value="<?php echo $includedActivity['activity_hotel']->id; ?>">
+=======
+																
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                             </div>
                                                         </div>                                                 
                                                    
@@ -849,7 +958,11 @@ $tavelerearray=array();
 //                                 echo "<pre>";print_r($tripdata['tripTodo']);die;
 								 if(count($tripdata['to_do_packing'])>0){
 								 
+<<<<<<< HEAD
                             foreach($tripdata['to_do_packing'] AS $triptokey=>$tripTodo){							
+=======
+                            foreach($tripdata['to_do_packing'] AS $tripTodo){							
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 										
                             ?>
                            
@@ -861,7 +974,11 @@ $tavelerearray=array();
                                     <div class="col-sm-9">
                                         {{$tripTodo[0]->todo_name}}  
                                     </div>
+<<<<<<< HEAD
                                     <input type="hidden" name="packing_list[{{$triptokey}}]" value="{{$tripTodo[0]->id}}">
+=======
+                                    
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                 </div>
                             </div>
 								 <?php $sr++; } }?>
@@ -873,6 +990,7 @@ $tavelerearray=array();
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 <?php
 $addontravelerarryacount= count($tavelerearray);
 $trip_flight_amount= (count($tripdata['tripAirlines'])>0)? $tripdata['tripAirlines'][0]->airline_reserve_amount:'0';
@@ -910,11 +1028,18 @@ $final_trip_amount= $trip_only_amount + $tripandaddonamount + $includedactivity;
 					   <label style="color: black">Total Cost: </label>
 					   <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount;?></label>
               </div>
+=======
+
+    <div class="form-group">
+        <div class="col-sm-12 text-right">
+            <div class="update-btn">
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
             </div>
         </div>
     </div>
 </div>
 </div>
+<<<<<<< HEAD
 </div>
 </div>
 
@@ -933,6 +1058,42 @@ $final_trip_amount= $trip_only_amount + $tripandaddonamount + $includedactivity;
 	
 </form>	
 	<?php }else{
+=======
+
+
+
+</div>
+
+<!-- end here -->
+			
+
+
+
+
+<!--packing -->
+
+<!--------------------------------------- todo Start ---------------------------------------------->
+
+<!-- todo-------------------End ------------------------------------------------>
+<!-- end here-->
+
+
+
+
+</div>
+
+		<div>
+	<button type="submit"  name="checkout">Checkout</button>
+	</div>
+	
+		<div>
+	<a href="{{url('cartremove')}}">Delete</a>
+	</div>
+
+	
+     </div>
+	</div><?php }else{
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 		?>
 		<h1>CART IS EMPTY</h1>
 		

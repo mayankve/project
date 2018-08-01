@@ -58,6 +58,7 @@ class CartController extends Controller
 		$add_on_departure_date= !empty($_SESSION['card_item']['add_on_departure_date'])?$_SESSION['card_item']['add_on_departure_date']:'';
 		$add_on_departure_time= !empty($_SESSION['card_item']['add_on_departure_time'])?$_SESSION['card_item']['add_on_departure_time']:'';
 		
+		
 		//trip travelere info //
 		
 		$data['tripTravelers'] = DB::table('trip_traveler')
@@ -100,7 +101,13 @@ class CartController extends Controller
 									   ->where('trip_todo.id', '=', $tripTodo)
 										->where('trip_todo.status', '=', '1')
 										->get();
+<<<<<<< HEAD
 		}		
+=======
+		}
+		
+		
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 		// end here//
 		
 		
@@ -114,7 +121,13 @@ class CartController extends Controller
 					foreach($arr as $key=>$value){					
 						 $final[$key][] = $value;
 					}				
+<<<<<<< HEAD
 			}	
+=======
+			}
+			
+			
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 		}else{			
 			$final='';
 		}
@@ -131,7 +144,11 @@ class CartController extends Controller
 																		->where('trip_addon_airline.status', '=', '1')
 																		->where('airlines.id', '=', $value[1])
 																		->get();
+<<<<<<< HEAD
 																		
+=======
+					//echo '<pre>';print_r($addondetail['flight_data']);													
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 					$addondetail['hote_data'][$key]=DB::table('trip_addon_hotel')
 																	->where('trip_id', '=', $trip)
 																	->where('id', '=', $value[2])
@@ -141,7 +158,11 @@ class CartController extends Controller
 								$addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.'');
 						}				
 				}		
+<<<<<<< HEAD
 			
+=======
+			//echo'<pre>';print_r($addondetail);die;
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 				$test = array();
 				for($i = 0; $i < count($addondetail['add_on_detail']); $i++){
 					
@@ -155,7 +176,13 @@ class CartController extends Controller
 				}
 		}else{
 			$test='';
+<<<<<<< HEAD
 		}	
+=======
+		}		
+		// end here//
+		//echo'<pre>';print_r($test);die;
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 		
 		
 		// trip activity//
@@ -168,9 +195,14 @@ class CartController extends Controller
                 ->get();
 			$activityflight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
 			$activityhotel=!empty($_SESSION['card_item']['included_activity_hotel'])?$_SESSION['card_item']['included_activity_hotel']:'0';
+<<<<<<< HEAD
 				if(!empty($activity['tripIncludedActivities']) && !empty($activityhotel))
 				{
 					//echo 'dfadfd';die;
+=======
+				if(!empty($activity['tripIncludedActivities']))
+				{
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 					foreach($activity['tripIncludedActivities'] as $key=>$value)
 					{
 						
@@ -190,6 +222,7 @@ class CartController extends Controller
 																			->get();									
 						
 					}
+<<<<<<< HEAD
 					
 					
 					for($i = 0; $i < count($activity['tripIncludedActivities']); $i++){
@@ -203,6 +236,28 @@ class CartController extends Controller
 					
 					$testactivity='';
 				}			
+=======
+					
+					for($i = 0; $i < count($activity['tripIncludedActivities']); $i++){
+								$testactivity[$i]['tripIncludedActivities'] = $activity['tripIncludedActivities'][$i];
+								$testactivity[$i]['activity_flight'] = (!empty($activity['activity_flight'][$i][0]))?$activity['activity_flight'][$i][0]:'';
+								$testactivity[$i]['activity_hotel'] = (!empty($activity['activity_hotel'][$i][0]))?$activity['activity_hotel'][$i][0]:'';
+						
+						}
+					
+				}else{
+					$testactivity='';
+				}
+		///echo '<pre>';print_r($activity);die;	
+	
+		
+		
+		//end here//
+		//echo '<pre>';print_r($data);die;	
+		
+				
+				
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 				
 		$dashboardData = $this->dashboardElements();		
 		

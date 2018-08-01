@@ -60,6 +60,7 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <form method="post" action="{{url('setcartvalue')}}">
         <div class="">
             <div class="row">
@@ -70,6 +71,45 @@
                             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Design Your Trip</a></li>
                             <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Todo/Packing List</a></li>
                             <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Travelers</a></li>
+=======
+<!--    <svg class="hidden">
+    <defs>
+    <path id="tabshape" d="M80,60C34,53.5,64.417,0,0,0v60H80z"></path>
+    </defs>
+    </svg>-->
+
+<!--    <input type="hidden" id="ajax_url" name="ajax_url" value="/dashboard/my-trips/ajax/12">
+    <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">-->
+
+    <div class="row text-right">
+      <!--  <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
+    </div>
+	<form method="post" action="{{url('setcartvalue')}}">
+    <div class="" id="pageWrapper">
+        <div id="" class="customtab">
+            <!-- Nav tabs -->
+            <section>
+                <div class="tabs tabs-style-shape">
+                    <nav>
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="active"><a href="#DesignTrip" aria-controls="DesignTrip" role="tab" data-toggle="tab">
+                                    <span>Design Your Trip</span>
+                                </a>
+                            </li>
+                            <li role="presentation"><a href="#todo" aria-controls="todo" role="tab" data-toggle="tab">
+                                    <span>Todo/Packing List</span>
+                                </a>
+                            </li>
+                            <li role="presentation"><a href="#traveler" aria-controls="traveler" role="tab" data-toggle="tab">
+                                    <span>Travelers</span>
+                                </a>
+                            </li>
+                            <li role="presentation"><a href="#roommates" aria-controls="roommates" role="tab" data-toggle="tab">
+                                    <span>Roommates/Referrals</span>
+                                </a>
+                            </li>
+
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabs">
@@ -162,12 +202,182 @@
                                 </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                 </div>
             </div>
         </div>
     </form>
+=======
+                    <br>
+                    <!-- Hotel Panel -->
+                    <div class="panel panel-default">
+                        @include('designstrips.partials.design_trip_hotels')
+                    </div>
+                    <br>
+                    <!-- Addons Panel -->
+                    <div class="panel panel-default">
+                        @include('designstrips.partials.design_trip_addons')
+                    </div>
+                    <br>
+                    <!-- Included Activities Panel -->
+                    <div class="panel panel-default">
+                        @include('designstrips.partials.design_trip_included_activity')
+                    </div>
+                </div>
+					 
+                <div role="tabpanel">
+                    <!-- Trip Todo Panel -->
+                    <div class="panel panel-default">
+                        @include('designstrips.partials.design_trip_todo')
+                    </div> 
+                </div>
+				
+                <div role="tabpanel">
+                     <!-- Trip Travelers Panel -->
+                    <div class="panel panel-default">
+                        @include('designstrips.partials.design_trip_traveler')
+                    </div> 
+                </div>
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']);?>"> 
+					<input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
+					<input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
+					<input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
+					<input type="hidden" class="final_add_amount" name="final_add_amount" value="">
+					<div class="row">
+					<div class="col-sm-12">
+					<input type="submit" name="button" id="cartbutton" value="Add To Cart">
+							</div>
+							</div>
+				</form>
+				
+            </div>
+        </div>
+				
+    </div>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 </div>
 <script>
+<<<<<<< HEAD
+=======
+$(document).ready(function(){
+	
+	//hide hotel and flight of addon//
+	$(".addon_flight").hide();
+	$(".addon_hotel").hide();
+	// here end//
+	// var addon_id=[];
+	// var traveler_id=[];
+	var final_price=0;
+	var add_on_price=0;
+	var add_flight_price=0;
+	var add_hotle_price=0;
+	//alert($('input[name="selected_hotel"]:checked').val());
+	if($('input[name="selected_hotel"]:checked').val()!='')
+	{
+		var travlercont=$('.traveler_count').val();
+		//alert(travlercont);
+		var reserveramount= $('input[name="selected_hotel"]:checked').parents('.parent').find('.reserver_amount').val();
+		//alert(reserveramount);		
+		$('.total_hotel_cost').html("$" +reserveramount*travlercont);
+	}
+
+	
+			// $('input[name="flight_id"]').click(function(){
+					//alert($( "input[type=radio][name=flight_id]:checked" ).val());
+					// $('.trip_flight_id').val($( "input[type=radio][name=flight_id]:checked" ).val());	
+			// });
+			// $('input[name="selected_hotel"]').click(function(){
+				// var travlercont=$('.traveler_count').val();
+				// var reserveramount= $(this).parents('.parent').find('.reserver_amount').val();
+				//alert(reserveramount);
+				// $('.trip_hotel_amount').val(reserveramount*travlercont);
+				// $('.trip_hotle_id').val($( "input[type=radio][name=selected_hotel]:checked" ).val());
+				// $('.total_hotel_cost').html(reserveramount*travlercont);
+			// });
+			
+
+	$('.selected_addons').click(function(){
+		 add_on_price=0;
+			//alert('Please select flight and hotels for addon');			
+			$(this).parents('.parent').find('.addon_flight').toggle();
+			$(this).parents('.parent').find('.addon_hotel').toggle();	
+			
+			//var flightchecked=	$(this).parents('.parent').find('.addon_flight_name').attr('checked', true);
+				 $(".addon input[type=checkbox]:checked").each(function() {
+						
+							//addon_id.push($(this).parents('.parent').find('.selected_addons').val());										
+						
+						var add_on = $(this).parents('.parent').find('.add_on_cost').val();						
+						if(add_on!=undefined){
+							//alert(add_on);
+							add_on_price=parseInt(add_on_price)+parseInt(add_on);
+						}
+						
+						// code add here//
+						addfinalvalue();
+						//end here//
+						
+					});				
+				
+		});		
+		 $('.addon_flight_name').click(function(){			 
+				add_flight_price=0;
+				 $(".parent input[type=radio]:checked").each(function() {
+						var value = $(this).parents('.flightparent').find('.add_on_cost_flight').val(); //$(this).val();
+						
+						if(value!=undefined){
+							//alert(value+"sfdsdfds");
+							add_flight_price=parseInt(add_flight_price)+parseInt(value);
+						}
+					addfinalvalue();	
+					});	
+		 });				
+		$('.selected_addon_hotel').click(function(){
+				add_hotle_price=0;
+				
+				 $(".parent input[type=radio]:checked").each(function() {
+						var hotel_price = $(this).parents('.hotleparent').find('.add_on_cost_hotel').val(); //$(this).val();
+						
+						if(hotel_price!=undefined){
+							//alert(hotel_price);
+							add_hotle_price=parseInt(add_hotle_price)+parseInt(hotel_price);
+						}
+					addfinalvalue();	
+					});
+		});	
+		
+function addfinalvalue(){	
+	final_price=parseInt(add_on_price)+parseInt(add_flight_price)+parseInt(add_hotle_price);
+	$('.total_addon_cost').html("$"+final_price);
+	$('.final_add_amount').val(final_price);	
+}
+
+
+	//include activity/
+	//land-only_activity
+		$('.is_land_only_activity_flight').click(function(){
+					
+				if($(this).val()==1)
+				{
+					$('.land-only_activity').show();
+				}else{
+					$('.land-only_activity').hide();
+				}
+		});
+		
+		$('.add_on_land-only').click(function(){
+			if($(this).val()==1)
+				{
+					$('.add_on_land-onlydetail').show();
+				}else{
+					$('.add_on_land-onlydetail').hide();
+				}
+		});
+	
+	//end here//
+
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 
     $(document).ready(function () {
         //hide hotel and flight of addon//
@@ -192,6 +402,114 @@
             $('.total_hotel_cost').html("$" + reserveramount * travlercont);
         }
 
+<<<<<<< HEAD
+=======
+$('#cartbutton').click(function(){
+	var ckbox= $('#selected_addons');
+	//alert($( "input[type=checkbox][name=is_land_only]:checked" ).val());
+	if($( "input[type=radio][name=is_land_only]:checked" ).val()==0)
+	{		
+		if($( "input[type=radio][name=flight_id]:checked" ).val()==undefined)
+		{
+			alert('Please select Flights');
+			return false;
+		}		
+	}if($( "input[type=radio][name=is_land_only]:checked" ).val()==1)
+	{		
+		if($( "input[type=text][name=flight_name]" ).val()=='')
+		{
+			alert('Please Enter Flight Name');
+			return false;
+		}
+		if($( "input[type=text][name=flight_number]" ).val()=='')
+		{
+			alert('Please Enter Flight Number');
+			return false;
+		}
+		if($( "input[type=text][name=departure_date]" ).val()=='')
+		{
+			alert('Please Enter Departure Date');
+			return false;
+		}
+		if($( "input[type=text][name=departure_time]" ).val()=='')
+		{
+			alert('Please Enter Departure Time');
+			return false;
+		}
+		
+	}
+	//include activity//
+	if($( "input[type=radio][name=is_land_only_activity_flight]:checked" ).val()==0)
+	{		
+	
+		if($( ".included_activity_flight:checked" ).val()==undefined)
+		{
+			alert('Please select activity flights');
+			return false;
+		}		
+	}
+	
+	if($( ".included_activity_hotel:checked" ).val()==undefined)
+		{
+			alert('Please select activity hotel');
+			return false;
+		}	
+	
+	
+	if($( "input[type=radio][name=is_land_only_activity_flight]:checked" ).val()==1)
+	{		
+		if($( "input[type=text][name=activity_flight_name]" ).val()=='')
+		{
+			alert('Please Enter Flight Name');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_flight_number]" ).val()=='')
+		{
+			alert('Please Enter Flight Number');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_departure_date]" ).val()=='')
+		{
+			alert('Please Enter Departure Date');
+			return false;
+		}
+		if($( "input[type=text][name=activity_flight_departure_time]" ).val()=='')
+		{
+			alert('Please Enter Departure Time');
+			return false;
+		}
+		
+	}
+	
+	if($( ".selected_todo:checked" ).val()==undefined)
+		{
+			alert('Please select Packing List');
+			return false;
+		}	
+	// end here//
+	
+	
+	
+	// if(ckbox.is(':checked'))
+	// {
+		// if($('.selected_addon_traveler').prop('checked')==false)
+		// {
+			// alert('Please Select Traveler..');
+			// return false;
+		// }
+		
+		
+	// }
+	
+		
+	
+});
+
+
+		
+			
+});
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 
         // $('input[name="flight_id"]').click(function(){
         //alert($( "input[type=radio][name=flight_id]:checked" ).val());
@@ -213,6 +531,7 @@
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
 
+<<<<<<< HEAD
             //var flightchecked=	$(this).parents('.parent').find('.addon_flight_name').attr('checked', true);
             $(".addon input[type=checkbox]:checked").each(function () {
 
@@ -401,6 +720,9 @@
 
 
 
+=======
+ 
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
 <script>
     $(document).on('click', '.panel-heading span.clickable', function (e) {
         var $this = $(this);

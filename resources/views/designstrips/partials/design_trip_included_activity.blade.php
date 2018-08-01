@@ -13,6 +13,7 @@
             <div class="form-horizontal">
                 <div class="trip-addons">
                     <div class="form-group">
+<<<<<<< HEAD
                         <?php
                         $id = 1;
                         //echo '<pre>';print_r($tripdata['tripIncludedActivities']);die;
@@ -23,6 +24,19 @@
                         <?php
                         // var_dump($includedActivities);die;
                         ?>
+=======
+					 <?php
+                            $id = 1;
+					//echo '<pre>';print_r($tripdata['tripIncludedActivities']);die;
+                            ?>   
+                            @if(count($tripdata['tripIncludedActivities'])>0)
+                           
+                            @foreach ( $tripdata['tripIncludedActivities'] AS $includedActivity)
+                            <?php
+                            // var_dump($includedActivities);die;
+                           
+                            ?>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                         <div class="col-sm-12">
 
                             <div class="row number-group-row">
@@ -111,6 +125,7 @@
                                                         </div>
                                                     </div>
                                                     <?php
+<<<<<<< HEAD
                                                     $sr = 1;
                                                     if (array_key_exists("includedActivityFlights", $includedActivity)) {
                                                         ?> 
@@ -149,6 +164,52 @@
 
                                                                         </label>
                                                                     </div>
+=======
+                                                     $sr = 1;
+													// echo '<pre>';print_r($includedActivity['includedActivityFlights']);die;
+													 // $includedActivityFlights = DB::table('trip_included_activity_airline')
+																// ->where('airline_departure_date', '>', date('Y-m-d'))
+																// ->where('trip_id', '=', $includedActivity->trip_id)
+																// ->where('activity_id', '=', $includedActivity->id)
+																// ->where('status', '=', '1')
+																// ->get();
+													 //echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityFlights']);die;
+                                                    ?> 
+                                                    @if(!empty($includedActivity['includedActivityFlights']))
+                                                    @foreach( $includedActivity['includedActivityFlights'] AS $airlines)
+													
+													<div class="form-group pdrow-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-1">
+                                                                    {{$sr}}
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    {{ isset($airlines->airline_name) ? $airlines->airline_name : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    {{ isset($airlines->airline_departure_location) ? $airlines->airline_departure_location : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    {{ isset($airlines->airline_departure_date) ? $airlines->airline_departure_date : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    {{ isset($airlines->airline_departure_time) ? $airlines->airline_departure_time : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    {{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    {{ isset($airlines->airline_cost) ? $airlines->airline_cost : 'N/A' }}
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                <label>
+                                                                  
+																  <!-- here-->
+																  <input type="radio" name="included_activity_flight[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$airlines->id}}" class="included_activity_flight">
+																  
+                                                                </label>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -241,6 +302,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+<<<<<<< HEAD
                                                     <div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -337,6 +399,109 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                                             <div class="update-btn">
                                                             </div>
                                                         </div>
+=======
+                                                </div>
+                                                <div class="form-group pdrow-group">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <b>SN</b>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <b>Hotel Name</b>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <b>Type</b>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <b>Due Date</b>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <b>Reserve Amount</b>
+                                                            </div>
+                                                            <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                <b>Cost</b>
+                                                            </div>
+
+                                                           
+                                                            <div class="col-sm-1 hotel_solo_cost">
+                                                                <b>Solo Cost</b>
+                                                            </div>
+
+                                                            <div class="col-sm-1 text">
+                                                                <b>Book</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group pdrow-group">
+                                                 <?php
+                                                     $sr = 1;
+													// echo '<pre>';print_r($includedActivity['includedActivityHotles']);
+													 // $includedActivityHotles = DB::table('trip_included_activity_hotel')
+																		// ->where('trip_id', '=', $includedActivity->trip_id)
+																		// ->where('hotel_due_date', '>', date('Y-m-d'))
+																		// ->where('activity_id', '=', $includedActivity->id)
+																		// ->where('status', '=', '1')
+																		// ->get();
+														// echo '<pre>';print_r($tripdata['tripIncludedActivities']['includedActivityHotles']);die;
+                                                    ?> 
+                                                    @if(!empty($includedActivity['includedActivityHotles']))
+                                                    @foreach( $includedActivity['includedActivityHotles'] AS $hotels)
+														<div class="form-group pdrow-group">
+																<div class="col-sm-12">
+																	<div class="row">
+																	<div class="col-sm-1">
+																			{{$sr}}
+																		</div>
+																		
+		 
+																	<div class="col-sm-3">
+																		   <?php echo (!empty($hotels->hotel_name))?$hotels->hotel_name:'';?>
+																		</div>
+																<div class="col-sm-2">
+																<?php echo (!empty($hotels->hotel_type))?$hotels->hotel_type:'';?>
+                                                                    
+                                                                </div>
+																 <div class="col-sm-2">
+																 <?php echo (!empty($hotels->hotel_due_date))?$hotels->hotel_due_date:'';?>
+                                                                    
+                                                                </div>
+																 <div class="col-sm-1">
+																 <?php echo (!empty($hotels->hotel_reserve_amount))?$hotels->hotel_reserve_amount:'';?>
+                                                                  
+                                                                </div>
+																
+																 <div class="col-sm-1">
+																  <?php echo (!empty($hotels->hotel_cost))?$hotels->hotel_cost:'';?>
+                                                                 
+                                                                </div>
+																 <div class="col-sm-1">
+																   <?php echo (!empty($hotels->hotel_solo_cost))?$hotels->hotel_solo_cost:'';?>
+                                                                    
+                                                                </div>
+																		
+																		<div class="col-sm-1">
+																		<label>
+																		
+																			<input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}" class="included_activity_hotel">
+																		
+																		</label>
+																		</div>
+																		
+																	</div>
+																</div>
+															
+														</div>
+												<?php $sr++; ?>
+                                                    @endforeach
+                                                    @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12 text-right">
+                                                    <div class="update-btn">
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                                                     </div>
                                                 </div>
                                             </div>
@@ -345,7 +510,15 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                 </div>                
                             </div>
                         </div>
+<<<<<<< HEAD
 <?php $id++; ?>
+=======
+                     
+                        
+                    </div>
+                </div>
+				<?php $id++; ?>
+>>>>>>> d1edb19d6cac9d07ea4ce1a99ef35b82f587f2fa
                         @endforeach
                         @endif
                     </div>
