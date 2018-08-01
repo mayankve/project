@@ -276,7 +276,7 @@
             }
         });
 
-        /*  $('.add_on_land-only').click(function () {
+          $('.add_on_land-only').click(function () {
          if ($(this).val() == 1)
          {
          $('.add_on_land-onlydetail').show();
@@ -284,7 +284,7 @@
          $('.add_on_land-onlydetail').hide();
          }
          });
-         */
+         
         //end here//
 
 
@@ -463,6 +463,9 @@
                     if ($(this).data('title') == 'Y') {
                         costLabel = 'solo_cost';
                     }
+                    else{
+                        costLabel = 'solo_cost';
+                    }
                 }
             });
             var cost = $this.closest(".row").find("." + costLabel).text();
@@ -502,7 +505,4 @@
             ();
 
 </script>
-
-
-
 @endsection
