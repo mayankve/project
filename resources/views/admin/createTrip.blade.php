@@ -1,6 +1,5 @@
 @extends('admin.layouts.dashboard')
 @section('title', 'Dashboard')
-
 @section('content')
 
 <style type="text/css">
@@ -37,7 +36,7 @@
         </div>
     </div>
 
-    <!-- @include('common.errors') -->
+     <!-- @include('common.errors')--> 
 
     {!! Form::open(['url' => 'admin/store-trip', 'files' => true, 'id' => 'form-create-trip', 'method'=>'post']) !!}
     <!-- Create Trip Panel -->

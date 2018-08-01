@@ -20,26 +20,9 @@
         background-color: #e4b068 !important;
         background-image:-webkit-linear-gradient(top,white 0,white 100%);
     }
-
-    /* Style the Tabs */
-    .basic_info_view .panel-default {
-	border: transparent;
-	box-shadow: 0 0px 0px rgba(181,181,181,.3) !important;
-    }
-    .updown {
-	float: right;
-    }
-    .deshboard_body .trip_detail_01 .tab {
-        padding-bottom: 0px;
-    }
-    @media screen and (max-width:1400px){
-        .deshboard_body .trip_detail_01 .tab {
-            padding-bottom: 0px;
-        }
-    }
 </style>
 
-<div class="pageContainer trip_detail_01">
+<div class="pageContainer">
     <div class="dashboardHeader">
         <div class="row">
             <div class="col-sm-6 text-left">
@@ -51,7 +34,7 @@
                         <a class="desh-title" href="#">Dashboard</a>
                     </li>
                     <li class="active">
-                        <a>  Design your Trip   </a>
+                        <a>  Design your Trip    </a>
                     </li>
                 </ol>
             </div>
@@ -60,116 +43,141 @@
             </div>
         </div>
     </div>
-    <form method="post" action="{{url('setcartvalue')}}">
-        <div class="">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="tab" role="tabpanel">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Design Your Trip</a></li>
-                            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Todo/Packing List</a></li>
-                            <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Travelers</a></li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content tabs">
-                            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                <!--<h3>Design Your Trip</h3>-->
-                                <p>
-                                    <!-------------Design Your Trip Section-------------------------------->
-                                    <!-- flight-land-------------------Start --------------------------------------->
-                                    <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
-                                    <div class="panel panel-primary trip-design-flight">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
-                                            <div class="">
-                                                <a href="#" class="updown">
-                                                    <span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="basic_info_view">   
-                                                <div class="form-horizontal">
-                                                    <div class="form-group pdrow-group">
-                                                        <div class="col-sm-9">
-                                                            <div class="row">
-                                                                <div class="col-sm-6 pr-3">
-                                                                    <label>
-                                                                        <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights
-                                                                    </label>
-                                                                    <label>
-                                                                        <input type="radio" name="is_land_only" class="land_only" value="1">Land only
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Airline Panel -->
-                                                    <div class="panel panel-default">
-                                                        @include('designstrips.partials.design_trip_airlines')
-                                                    </div>
+<!--    <svg class="hidden">
+    <defs>
+    <path id="tabshape" d="M80,60C34,53.5,64.417,0,0,0v60H80z"></path>
+    </defs>
+    </svg>-->
 
+<!--    <input type="hidden" id="ajax_url" name="ajax_url" value="/dashboard/my-trips/ajax/12">
+    <input type="hidden" id="ajax_todo_url" name="ajax_todo_url" value="/dashboard/my-trips/ajax-todo/12">-->
+
+    <div class="row text-right">
+        <!--  <h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
+    </div>
+    <form method="post" action="{{url('setcartvalue')}}">
+        <div class="" id="pageWrapper">
+            <div id="" class="customtab">
+                <!-- Nav tabs -->
+                <section>
+                    <div class="tabs tabs-style-shape">
+                        <nav>
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="active"><a href="#DesignTrip" aria-controls="DesignTrip" role="tab" data-toggle="tab">
+                                        <span>Design Your Trip</span>
+                                    </a>
+                                </li>
+                                <li role="presentation"><a href="#todo" aria-controls="todo" role="tab" data-toggle="tab">
+                                        <span>Todo/Packing List</span>
+                                    </a>
+                                </li>
+                                <li role="presentation"><a href="#traveler" aria-controls="traveler" role="tab" data-toggle="tab">
+                                        <span>Travelers</span>
+                                    </a>
+                                </li>
+<!--                                <li role="presentation"><a href="#roommates" aria-controls="roommates" role="tab" data-toggle="tab">
+                                        <span>Roommates/Referrals</span>
+                                    </a>
+                                </li>-->
+
+                            </ul>
+                        </nav>
+                    </div><!-- /tabs -->
+                </section>
+                <div class="tab-content">
+                    <!-- flight-land-------------------Start --------------------------------------->
+                    <div role="tabpanel" class="tab-pane active" id="DesignTrip">
+                        <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
+                        <div class="panel panel-primary trip-design-flight">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
+                                <div class="panel-tools">
+                                    <a href="#" class="updown">
+                                        <span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span></a>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="basic_info_view">   
+                                    <div class="form-horizontal">
+                                        <div class="form-group pdrow-group">
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-sm-6 pr-3">
+                                                        <label>
+                                                            <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="is_land_only" class="land_only" value="1">Land only
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <!-- Hotel Panel -->
-                                    <div class="panel panel-default">
-                                        @include('designstrips.partials.design_trip_hotels')
-                                    </div>
-                                    <br>
-                                    <!-- Addons Panel -->
-                                    <div class="panel panel-default">
-                                        @include('designstrips.partials.design_trip_addons')
-                                    </div>
-                                    <br>
-                                    <!-- Included Activities Panel -->
-                                    <div class="panel panel-default">
-                                        @include('designstrips.partials.design_trip_included_activity')
-                                    </div>
-                              
-                                <!-----------------------Design  your Trip ends----------------------------------------->
-                                </p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="Section2">
-                                <!--<h3>Todo/Packing List</h3>-->
-                            <p>
-                                <!-- Trip Todo Panel -->
-                                @include('designstrips.partials.design_trip_todo')
-                            </p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="Section3">
-                                <!--<h3>Travelers</h3>-->
-                                <p>
-                                  <!-- Trip Travelers Panel -->
-                                    @include('designstrips.partials.design_trip_traveler')
-                                </p>
-                            </div>
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']); ?>"> 
-                                <input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
-                                <input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
-                                <input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
-                                <input type="hidden" class="final_add_amount" name="final_add_amount" value="">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <input type="submit" name="button" id="cartbutton" value="Go to cart">
+                                        <!-- Airline Panel -->
+                                        <div class="panel panel-default">
+                                            @include('designstrips.partials.design_trip_airlines')
+                                        </div>
+
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Hotel Panel -->
+                        <div class="panel panel-default">
+                            @include('designstrips.partials.design_trip_hotels')
+                        </div>
+                        <br>
+                        <!-- Addons Panel -->
+                        <div class="panel panel-default">
+                            @include('designstrips.partials.design_trip_addons')
+                        </div>
+                        <br>
+                        <!-- Included Activities Panel -->
+                        <div class="panel panel-default">
+                            @include('designstrips.partials.design_trip_included_activity')
                         </div>
                     </div>
+
+                    <div role="tabpanel">
+                        <!-- Trip Todo Panel -->
+                        <div class="panel panel-default">
+                            @include('designstrips.partials.design_trip_todo')
+                        </div> 
+                    </div>
+
+                    <div role="tabpanel">
+                        <!-- Trip Travelers Panel -->
+                        <div class="panel panel-default">
+                            @include('designstrips.partials.design_trip_traveler')
+                        </div> 
+                    </div>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']); ?>"> 
+                    <input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
+                    <input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
+                    <input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
+                    <input type="hidden" class="final_add_amount" name="final_add_amount" value="">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="submit" name="button" id="cartbutton" value="Go to cart">
+                        </div>
+                    </div>
+                    </form>
+
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-<script>
 
+        </div>
+</div>
+
+
+
+<script>
     $(document).ready(function () {
+
         //hide hotel and flight of addon//
         $(".addon_flight").hide();
         $(".addon_hotel").hide();
@@ -180,9 +188,7 @@
         var add_on_price = 0;
         var add_flight_price = 0;
         var add_hotle_price = 0;
-
         //alert($('input[name="selected_hotel"]:checked').val());
-
         if ($('input[name="selected_hotel"]:checked').val() != '')
         {
             var travlercont = $('.traveler_count').val();
@@ -276,15 +282,15 @@
             }
         });
 
-        /*  $('.add_on_land-only').click(function () {
-         if ($(this).val() == 1)
-         {
-         $('.add_on_land-onlydetail').show();
-         } else {
-         $('.add_on_land-onlydetail').hide();
-         }
-         });
-         */
+        $('.add_on_land-only').click(function () {
+            if ($(this).val() == 1)
+            {
+                $('.add_on_land-onlydetail').show();
+            } else {
+                $('.add_on_land-onlydetail').hide();
+            }
+        });
+
         //end here//
 
 
@@ -429,13 +435,14 @@
         $('#is_solo a').on('click', function () {
             $('.selected_hotel').prop('checked', false);
             $('.total_hotel_cost').text('$' + '0')
+
             var sel = $(this).data('title');
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
+
             $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
             $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
             hotelCost(sel);
-           console.log(hotelCost(sel));
         });
         $('.selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
@@ -502,7 +509,4 @@
             ();
 
 </script>
-
-
-
 @endsection

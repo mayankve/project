@@ -48,7 +48,7 @@
                 @if(count($trips)>0)
                 @foreach($trips AS $trip)
                 <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
-                    <img src="{{ url('/') . '/trip_banner/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
+                    <img src="{{ url('/') . '/uploads/trip/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
                     <div class="text-overlay">
                         <a href="#">{{$trip->name}} </a>
                         <a href="{{ url('/').'/admin/deletetrip/'.$trip->id }}" class="info confirmation"><span><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i></span></a>
@@ -60,9 +60,7 @@
                     <div class="mask">
                         <h2>{{$trip->name}}</h2>
                         <p>{{$trip->about_trip}}</p>
-<!--                         <a href="{{url('book').'/'.$trip->id}}" class="info">Book</a>-->
-
-
+                         <!--<a href="{{url('book').'/'.$trip->id}}" class="info">Book</a>-->
                     </div>
                 </div>
                 @endforeach

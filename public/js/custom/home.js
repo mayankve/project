@@ -567,6 +567,7 @@ $(document).ready(function () {
     // Remove traveler details template
     $(document).on('click', '.remove_trip_traveler', function () {
         $(this).closest('.add_traveler').remove();
+        
     });
 
     // Add Airlines for Addon Upgrades activities

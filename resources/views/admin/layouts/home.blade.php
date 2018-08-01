@@ -65,13 +65,9 @@
               <ul class="nav navbar-nav navbar-right">
                   <li class=""><a href="{{url('/about') }}">About </a></li>
                     <li class="dropdown dropdown-hov">
-                            <a href="/aat_zend/public/trip-list">Trips <span class="caret"></span></a>
+                            <a href="{{url('/listtrip')}}">Trips <span class="caret"></span></a>
                             <ul class="dropdown-menu" style="display: none;">
-                                <li><a href="#">fddd</a></li>
-                                <li><a href="#">f</a></li>
-                                <li><a href="#">f</a></li>
-                                <li><a href="#">f</a></li>
-                                <li><a href="#">f</a></li>
+                              <li><a href="#">Australia New Zealand 2018</a></li>
                             </ul>
                     </li>
                   <li><a href="#"> Testimony </a></li>

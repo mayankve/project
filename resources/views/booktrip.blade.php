@@ -137,7 +137,7 @@
 </div>
 
 <script>
-var value =1;
+var value = 1;
 var price='<?php echo $tripdata->base_cost;?> ';
 $('.add_more_traveler').click(function(){
 	
@@ -147,10 +147,10 @@ $('.add_more_traveler').click(function(){
 
 
 $('#remove_trip_traveler').click(function(){
-	alert();
-		// value=value-1;
-		// alert(value);
-		// $('.lable_cost').html("$"+price * value);
+	alert("clicked");
+        value=value-1;
+        alert(value);
+        $('.lable_cost').html("$"+price * value);
 });
 
 

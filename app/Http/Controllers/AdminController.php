@@ -33,7 +33,6 @@ use App\TripTraveler;
 use Validator;
 use Mail;
 
-
 class AdminController extends Controller {
 
     /**
@@ -659,7 +658,9 @@ class AdminController extends Controller {
 
         // Get trip misc expense
         $tripMiscExpense = TripMiscExpense::where(['trip_id' => $id])->get();
-
+        
+      //  echo '<pre>'; print_r($tripMiscExpense); exit;
+        
         // Combine all trip associates data into trip to fill it automatically into edit form
         $trip['airline']            = $tripAirline;
         $trip['included_activity']  = $tripIncludedActivity;
@@ -668,7 +669,7 @@ class AdminController extends Controller {
         $trip['to_do']              = $tripTodo;
         $trip['misc_expense']       = $tripMiscExpense;
 
-        //echo '<pre>'; print_r($trip['tripMiscExpense']); exit;
+       
 
         // Get the airlines list
         $airlines = Airline::where(['status' => '1'])->get();
@@ -836,7 +837,7 @@ class AdminController extends Controller {
         $this->validate($request, $rules);
 
         // 'UPDATE' Get trip data and update it
-        /*$trip = Trip::findOrFail($id);
+        $trip = Trip::findOrFail($id);
 
         $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
 
@@ -856,11 +857,14 @@ class AdminController extends Controller {
             $dataTrip['requirement_shots_cost'] = NULL;
             $dataTrip['requirement_shots_timeframe'] = NULL;
         }
-
+        
+        
+        
         // Upload trip image
         if ($request->hasFile('banner_image'))
         {
             $dataTrip['banner_image'] = $this->imageUpload($request->file('banner_image'), 'trip', 'banner-img');
+           
         }
 
         $trip->update($dataTrip);
@@ -968,7 +972,7 @@ class AdminController extends Controller {
         if( !empty($deleteRowByIds) )
         {
             TripTodo::destroy($deleteRowByIds);
-        }*/
+        }
 
         // 'UPDATE' MISC EXPENSE
         $existingIds = TripMiscExpense::where('trip_id', $id)->pluck('id')->toArray();
@@ -1640,7 +1644,7 @@ class AdminController extends Controller {
      * @return string $fileName
      */
     protected function imageUpload($file, $directory=null, $startWith)
-    {
+    { 
         // SET UPLOAD PATH
         if($directory != NULL && $directory != '')
         {
@@ -1750,13 +1754,13 @@ class AdminController extends Controller {
         return view('admin/uploadvideo');
     }
 
-    public function deleteVideo(Request $request) {
-        Trip::destroy($id);
-        return back();
-    }
+//    public function deleteVideo(Request $request) {
+//        Trip::destroy($id);
+//        return back();
+//    }
+//	
 	
-	
-	 /* Function to update traveler information
+    /* Function to update traveler information
      * @param int Request
      * @return url
      */
@@ -1862,9 +1866,9 @@ class AdminController extends Controller {
 		
 	}
 	
-	/* Function to check monthlyTripProjection information
-     * @return url
-     */
+	/* Function to display monthlyTripProjection information
+        * @return url
+        */
 	
 	
 	public function monthlyTripProjection()
@@ -1875,10 +1879,9 @@ class AdminController extends Controller {
 		return view('admin/monthlytripprojection',['monthlytrip'=>$monthlytrip]);
 	}
 	
-	/* Function to check monthlypaymentdate information
+    /* Function to set monthlypaymentdate
      * @return url
      */
-	
 	public function setMonthlyPaymentDate($date,$trip_id)
 	{
 		$data['monthly_payment_date']=$date;
@@ -1901,5 +1904,23 @@ class AdminController extends Controller {
 		
 	}
 
-
+        /**
+         * Function to load User 0
+         * @param void
+         * @return array
+         */
+        public function checkValidationBlade(){
+            return view('check_validation');
+        }
+        
+        public function checkValidation(Request $request) {
+            
+            foreach ($request->get('traveler') as $key => $val) {
+            $rules["traveler.{$key}.first_name"] = 'required';
+            $rules["traveler.{$key}.email"] = 'required|email';
+//            $rules["traveler.{$key}.profile_image"] = 'required';
+//            $rules["traveler.{$key}.city"] = 'required';
+            }
+            echo  $this->validate($request, $rules);die;
+        }
 }

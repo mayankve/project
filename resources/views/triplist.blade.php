@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.home')
 @section('title', 'Trips')
 @section('content')
 
@@ -10,45 +10,31 @@
     }
 </style>
 
-<div class="pageContainer">
-    <div class="dashboardHeader">
+ <div style=" margin-top: 100px; min-height: 400px">
+
+    <div class="section section-we-are-2">
         <div class="row">
-            <div class="col-sm-6 text-left">
-                <div class="sidebar_toggle">
-                    <i class="fa fa-chevron-right" data-unicode="f00a"></i>
-                </div>
-                <ol class="breadcrumb">
-                    <li>
-                        <a class="desh-title" href="#">Dashboard</a>
-                    </li>
-                    <li class="active">
-                        <a>
-                            Trip Listing    </a>
-                    </li>
-                </ol>
-            </div>
-            <div class="col-sm-6 text-right">
-                <h3 class="userName">
-                    Welcome {{$data->name}}
-                </h3>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix">
-        <div class="panel panel-primary" style="border-bottom:none;">
-            <div class="panel-heading">
-                <h3 class="panel-title">List Trip</h3>
-                <div class="panel-tools">
+           <div class="text-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 text-right col-md-offset-4 trip-type active" id="trip-type">
+                        Where We Are Going
+                    </div>
+                    <div class="col-md-2 trip-type" id="trip-type">
+                        Where We've Been
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-11">
+        </div>
+   
+    <div class="container trip-container">
             <div class="row no-gutter">
                 <br/>
                 @if(count($trips)>0)
                 @foreach($trips AS $trip)
                 <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
-                    <img src="{{ url('/') . '/trip_banner/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
+                    <img src="{{ url('/') . '/uploads/trip/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
                     <div class="text-overlay">
                         <a href="{{url('tripview').'/'.$trip->id}}">{{$trip->name}} </a> 
                     </div>
@@ -62,6 +48,38 @@
                 @endif
             </div>
         </div>
+         <div class="container trip-container" style="display: none;">
+
+            <div class="row no-gutter">
+                <br/>
+                
+                
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
+                        <div><h4>Ghana, Togo, Benin & Morocco 2017</h4></div>
+                        <video width="400"  controls>
+                            <source src="/assets/passed_trip_videos/0ce814a3dfbd684ea9a3a6a8656b91f8.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                        <div><p>This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.</p></div>
+                    </div>
+                    
+
+                
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
+                        <div><h4>Australia New Zealand 2018</h4></div>
+                        <video width="400"  controls>
+                            <source src="/assets/passed_trip_videos/0ce814a3dfbd684ea9a3a6a8656b91f8.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video.
+                        </video>
+                        <div><p>This trip video.</p></div>
+                    </div>
+                    
+
+                                
+                
+
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
         $('.confirmation').on('click', function () {
@@ -69,5 +87,5 @@
         });
     </script>
 </div>
-
+</div>
 @endsection

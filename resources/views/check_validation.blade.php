@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.home')
 @section('title', 'AAT:Design your trip')
 @section('content')
 
@@ -22,25 +22,83 @@
     }
 
     /* Style the Tabs */
-    .basic_info_view .panel-default {
-	border: transparent;
-	box-shadow: 0 0px 0px rgba(181,181,181,.3) !important;
+    a:hover,a:focus{
+        text-decoration: none;
+        outline: none;
     }
-    .updown {
-	float: right;
+    .tab .nav-tabs{
+        border: none;
+        border-bottom: 2px solid #079fc9;
+        margin: 0;
     }
-    .deshboard_body .trip_detail_01 .tab {
-        padding-bottom: 0px;
+    .tab .nav-tabs li a{
+        padding: 10px 20px;
+        margin: 0 10px -1px 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: #293241;
+        text-transform: uppercase;
+        border: 2px solid #e6e5e1;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        z-index: 1;
+        position: relative;
+        transition: all 0.3s ease 0s;
     }
-    @media screen and (max-width:1400px){
-        .deshboard_body .trip_detail_01 .tab {
-            padding-bottom: 0px;
+    .tab .nav-tabs li a:hover,
+    .tab .nav-tabs li.active a{
+        background: #fff;
+        color: #079fc9;
+        border: 2px solid #079fc9;
+        border-bottom-color: transparent;
+    }
+    .tab .nav-tabs li a:before{
+        content: "";
+        display: block;
+        height: 2px;
+        background: #fff;
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        transform: scaleX(0);
+        transition: all 0.3s ease-in-out 0s;
+    }
+    .tab .nav-tabs li.active a:before,
+    .tab .nav-tabs li a:hover:before{ transform: scaleX(1); }
+    .tab .tab-content{
+        padding: 10px;
+        font-size: 17px;
+        color: #6f6f6f;
+        line-height: 30px;
+        letter-spacing: 1px;
+        position: relative;
+    }
+    @media only screen and (max-width: 479px){
+        .tab .nav-tabs{ border: none; }
+        .tab .nav-tabs li{
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .tab .nav-tabs li a{
+            margin: 0;
+            border-bottom: 2px solid transparent;
+        }
+        .tab .nav-tabs li a:before{
+            content: "";
+            width: 100%;
+            height: 2px;
+            background: #079fc9;
+            position: absolute;
+            bottom: -2px;
+            left: 0;
         }
     }
 </style>
 
-<div class="pageContainer trip_detail_01">
-    <div class="dashboardHeader">
+<div class="pageContainer">
+    <div class="dashboardHeader" style="margin-top: 150px;">
         <div class="row">
             <div class="col-sm-6 text-left">
                 <div class="sidebar_toggle">
@@ -61,20 +119,20 @@
         </div>
     </div>
     <form method="post" action="{{url('setcartvalue')}}">
-        <div class="">
+        <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="tab" role="tabpanel">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Design Your Trip</a></li>
-                            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Todo/Packing List</a></li>
-                            <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Travelers</a></li>
+                            <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Section 1</a></li>
+                            <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Section 2</a></li>
+                            <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Section 3</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content tabs">
                             <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                <!--<h3>Design Your Trip</h3>-->
+                                <h3>Design Your Trip</h3>
                                 <p>
                                     <!-------------Design Your Trip Section-------------------------------->
                                     <!-- flight-land-------------------Start --------------------------------------->
@@ -82,10 +140,9 @@
                                     <div class="panel panel-primary trip-design-flight">
                                         <div class="panel-heading">
                                             <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
-                                            <div class="">
+                                            <div class="panel-tools">
                                                 <a href="#" class="updown">
-                                                    <span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span>
-                                                </a>
+                                                    <span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span></a>
                                             </div>
                                         </div>
                                         <div class="panel-body">
@@ -136,14 +193,14 @@
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section2">
-                                <!--<h3>Todo/Packing List</h3>-->
+                                <h3>Todo/Packing List</h3>
                             <p>
                                 <!-- Trip Todo Panel -->
                                 @include('designstrips.partials.design_trip_todo')
                             </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section3">
-                                <!--<h3>Travelers</h3>-->
+                                <h3>Travelers</h3>
                                 <p>
                                   <!-- Trip Travelers Panel -->
                                     @include('designstrips.partials.design_trip_traveler')
@@ -429,13 +486,14 @@
         $('#is_solo a').on('click', function () {
             $('.selected_hotel').prop('checked', false);
             $('.total_hotel_cost').text('$' + '0')
+
             var sel = $(this).data('title');
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
+
             $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
             $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
             hotelCost(sel);
-           console.log(hotelCost(sel));
         });
         $('.selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
@@ -502,7 +560,4 @@
             ();
 
 </script>
-
-
-
 @endsection

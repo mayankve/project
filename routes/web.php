@@ -68,6 +68,11 @@ Route::get('mytripdesign/{id}','HomeController@myTripDesign');
  Route::match(['get','post'],'cart','CartController@addtocart');
 /* Front-end routes ends */
 
+// cart remove 
+Route::match(['get','post'],'cartremove','CartController@removecart');
+
+
+
 //Airlines to be added to Cart
  Route::post('addFlightToCart','CartController@addFlightToCart');
   
@@ -130,6 +135,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	
 // traveler profile in admin dashboard	
 Route::match(['get','post'],'view-traveler/{id}','AdminController@adminTravelerProfile');
+
+// demo route
+Route::match(['get','post'],'/check-validation-blade','AdminController@checkValidationBlade');
+
+Route::match(['get','post'],'check-validation/','AdminController@checkValidation');
+
+
+//checkout
+Route::match(['get','post'],'checkout','CartController@processtocheckout');
+
+
+
 });
 
 
