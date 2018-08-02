@@ -854,7 +854,7 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 
 	<div>
 			<button type="submit"  name="checkout">Pay Now</button>
-			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Trip</a>
+			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Cart</a>
 	</div>
 	
 	

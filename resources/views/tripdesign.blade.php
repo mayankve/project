@@ -449,6 +449,8 @@
                 if ($(this).hasClass('active')) {
                     if ($(this).data('title') == 'Y') {
                         costLabel = 'solo_cost';
+                    } else {
+                        costLabel = 'solo_cost';
                     }
                 }
             });
