@@ -63,7 +63,7 @@
                                                     <div class="col-sm-1">
                                                         <label>
                                                             <!--{!! Form::radio('flight_id',$airlines->id,['class' => 'form-control flight_id']) !!} -->
-															<input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id" >
+															<input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -102,7 +102,7 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="departure_date" class="form-control" > 
+                                                        <input type="text" name="departure_date" id="flightdeparture" class="form-control" > 
                                                     </div>
 
                                                 </div>

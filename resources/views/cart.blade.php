@@ -237,11 +237,13 @@ $tavelerearray=array();
                    
                        <?php
 						$i=1;
-						
+						$addonfinal_price=0;
 						foreach($final as $key=>$value){
-							
-								//echo $value['add_on_detail']->addons_name;die;
-						  //$addons=DB::select('select * from trip_addon where trip_id='.$trip_id.' and status="1" and id='.$value[0].'');
+							$addonprice=$value['add_on_detail']->addons_cost;
+							$addonflight_price=(is_array($value['flight_data']))?'':$value['flight_data']->airline_reserve_amount;
+							$addonhote_price=$value['hote_data']->hotel_reserve_amount;
+							$addontravler= count($value['travler_info']);
+							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
 						 ?> 
 					<div class="col-sm-12">
                         <div class="row number-group-row parent">
@@ -374,36 +376,30 @@ $tavelerearray=array();
                                                     </div>
                                                 </div>
 													<?php 
-														// $flight_data= DB::table('trip_addon_airline')
-																// ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-																// ->where('trip_addon_airline.trip_id', '=', $trip_id)
-																// ->where('trip_addon_airline.addon_id', '=', $value[0])
-																// ->where('trip_addon_airline.status', '=', '1')
-																// ->where('airlines.id', '=', $value[1])
-																// ->get(); ?>
+													 ?>
 
                                                 <div class="form-group pdrow-group flightparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
                                                             <div class="col-sm-2">
-                                                               <?php echo (!empty($value['flight_data']))?$value['flight_data']->name:'';?>
+                                                               <?php echo (is_array ($value['flight_data']))?$value['flight_data'][0]:$value['flight_data']->name;?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                 <?php echo (!empty($value['flight_data']))?$value['flight_data']->airline_departure_location:'';?>
+                                                                 <?php echo (is_array($value['flight_data']))?$value['flight_data'][1]:$value['flight_data']->airline_departure_location;?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                              <?php echo (!empty($value['flight_data']))?$value['flight_data']->airline_departure_date:'';?>
+                                                              <?php echo (is_array($value['flight_data']))?$value['flight_data'][2]:$value['flight_data']->airline_departure_date;?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <?php echo (!empty($value['flight_data']))?$value['flight_data']->airline_departure_time:'';?>
+                                                                <?php echo (is_array($value['flight_data']))?$value['flight_data'][3]:$value['flight_data']->airline_departure_time;?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <?php echo (!empty($value['flight_data']))?$value['flight_data']->airline_reserve_amount:'';?>
+                                                                <?php echo (is_array($value['flight_data']))?'':$value['flight_data']->airline_reserve_amount;?>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                 <?php echo (!empty($value['flight_data']))?$value['flight_data']->airline_cost:'';?>
+                                                                 <?php echo (is_array($value['flight_data']))?'':$value['flight_data']->airline_cost;?>
                                                             </div>
-                                                           <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (!empty($value['flight_data']))?$value['flight_data']->id:'';?>">
+                                                           <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data']))?'':$value['flight_data']->id;?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -463,11 +459,7 @@ $tavelerearray=array();
                                                 </div>
                                             </div>
                                            <?php 
-											  // $hote_data=DB::table('trip_addon_hotel')
-															// ->where('trip_id', '=', $trip_id)
-															// ->where('id', '=', $value[2])
-															// ->where('status', '=', '1')
-															// ->get(); ?>
+											 ?>
                                                 <div class="form-group pdrow-group hotleparent">
                                                     <div class="col-sm-12">
                                                         <div class="row">
@@ -614,34 +606,43 @@ $tavelerearray=array();
                                                     </div>
                                                     
                                                     @if(!empty($includedActivity['activity_flight']))
-                                                  <?php $activityflightamount = $activityflightamount+$includedActivity['activity_flight']->airline_reserve_amount;?>
+                                                  <?php 
+												$reserve_amount= (is_array ($includedActivity['activity_flight']))?'': $includedActivity['activity_flight']->airline_reserve_amount;
+											  $activityflightamount = $activityflightamount+ $reserve_amount;?>
 													
 													<div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
                                                                
+															  
                                                                 <div class="col-sm-3">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_name) ? $includedActivity['activity_flight']->airline_name : 'N/A' }}
+																 <?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][0]:$includedActivity['activity_flight']->airline_name;?>
+                                                              
                                                                 </div>
                                                                 <div class="col-sm-2">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_departure_location) ? $includedActivity['activity_flight']->airline_departure_location : 'N/A' }}
+																 <?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][1]:$includedActivity['activity_flight']->airline_departure_location;?>
+                                                                    
                                                                 </div>
                                                                 <div class="col-sm-2">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_departure_date) ? $includedActivity['activity_flight']->airline_departure_date : 'N/A' }}
+																<?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][2]:$includedActivity['activity_flight']->airline_departure_date;?>
+                                                                 
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_departure_time) ? $includedActivity['activity_flight']->airline_departure_time : 'N/A' }}
+																<?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][3]:$includedActivity['activity_flight']->airline_departure_time;?>
+                                                                   
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_reserve_amount) ? $includedActivity['activity_flight']->airline_reserve_amount : 'N/A' }}
+																	<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->airline_reserve_amount;?>
+                                                               
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_flight']->airline_cost) ? $includedActivity['activity_flight']->airline_cost : 'N/A' }}
+																<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->airline_cost;?>
+                                                                  
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                 <label>
-                                                                  <input type="hidden" name="includedactivity_flight_id[{{$id}}]" value="<?php echo $includedActivity['activity_flight']->id; ?>">
-																  
+                                              <input type="hidden" name="includedactivity_flight_id[{{$id}}]" value="<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->id;?>" >
+																 
                                                                 </label>
                                                                 </div>
                                                             </div>
@@ -817,15 +818,12 @@ $trip_traveler=  (count($tripdata['tripTravelers'])>0)? count($tripdata['tripTra
 // trip amount add//
 $trip_only_amount= 	($trip_flight_amount + $trip_hotel_amount) * $trip_traveler	;
 // end here//
-// addon amount add//
-$tripandaddonamount= $finaladd_on_amount*$addontravelerarryacount;
-// end here//
 
 // includeactivity amount add//
-//echo $activityhotelamount;die;
+
  $includedactivity= ($activityamount+$activityflightamount+$activityhotelamount) * $trip_traveler;
 // end here//
-$final_trip_amount= $trip_only_amount + $tripandaddonamount + $includedactivity;
+$final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 ?>
     <div class="form-group">
         <div class="col-sm-12 text-right">
@@ -838,7 +836,7 @@ $final_trip_amount= $trip_only_amount + $tripandaddonamount + $includedactivity;
 					   
 					   
 						<label style="color: black">Add on Cost: </label>
-					   <label class="total_addon_cost" style="color: black">$<?php echo $tripandaddonamount;?></label></br>
+					   <label class="total_addon_cost" style="color: black">$<?php echo $addonfinal_price;?></label></br>
 					   
 					   <label style="color: black">Included Activity Cost: </label>
 					   <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity;?></label></br>
@@ -856,7 +854,9 @@ $final_trip_amount= $trip_only_amount + $tripandaddonamount + $includedactivity;
 
 	<div>
 			<button type="submit"  name="checkout">Pay Now</button>
+			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Trip</a>
 	</div>
+	
 	
 		<!--<div>
 	<a href="{{url('cartremove')}}">Delete</a>

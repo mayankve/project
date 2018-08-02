@@ -58,55 +58,8 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <!--------Cart Begin------->
-                       <?php
-					   if(!empty($_SESSION['card_item'])){?><ul class="navbar-right cartbtn">
-                        <li><a href="#" id="cart"><span class="cart-icon-btn">
-                        <i class="fa fa-shopping-cart"></i> Cart </span>
-                        <span class="badge mybadge">1</span></a></li>
-                        `<div class="shopping-cart" style="display:none;">
-                            <div class="shopping-cart-header">
-                                <div class="cart_btn"><i class="fa fa-shopping-cart cart-icon"></i><span class="badge mybadge">1</span></div>
-                                <div class="shopping-cart-total">
-                                    <!--<span class="lighter-text">Total:</span>
-                                    <span class="main-color-text">$2,229.97</span>-->
-                                </div>
-                            </div> <!--end shopping-cart-header -->
-
-                            <ul class="shopping-cart-items">
-                                <li class="clearfix">
-                                    <div>Ghana, Togo, Benin &amp; Morocco 2017</div>
-                                </li>
-                                <li class="clearfix">
-                                    <span class="item-title">Airlines</span>
-                                    <span class="item-name"><?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->name:$_SESSION['card_item']['flight_name'];?></span>
-                                    <span class="item-price">$<?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_reserve_amount:'';?></span>
-                                    <!--<span class="item-quantity">Quantity: 02</span>-->
-                                </li>
-                                <li class="clearfix">
-                                    <span class="item-title">Hotel</span>
-                                    <span class="item-name"> <?php echo $tripdata['tripHotels'][0]->hotel_name;?></span>
-                                    <span class="item-price">$<?php echo $tripdata['tripHotels'][0]->hotel_reserve_amount;?></span>
-                                    <!--<span class="item-quantity">Person: 02. Solo: Yes</span>-->
-                                </li>
-                                 <!--<li class="clearfix">
-                                    <span class="item-title">Addons</span>
-                                    <span class="item-name">Addon Name</span>
-                                    <span class="item-price">$564</span>
-                                    <span class="item-quantity">Person: 02. Solo: Yes</span>
-                                </li>
-                                <li class="clearfix">
-                                    <span class="item-title">Included Activities</span>
-                                    <span class="item-name">Acitiviy name</span>
-                                    <span class="item-price">$564</span>
-                                    <span class="item-quantity">Person: 02. Solo: Yes</span>
-                                </li>-->
-                            </ul>
-                            <a href="#" class="button">Checkout</a>
-                        </div>
-					   </ul><?php }?>
-                    <!--- Cart End------>
-                    <!-- User profile -->
-                    <!-- Navbar -->
+                    
+                    
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><a href="{{url('/about') }}">About </a></li>
                         <li class="dropdown dropdown-hov">

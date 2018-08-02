@@ -4,7 +4,7 @@
     <div class="panel-heading">
         <h3 class="panel-title"><strong>included Activities</strong></h3>
         <div class="panel-tools">
-            <!--<label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>-->
+            <label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
             <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
         </div>
     </div>
@@ -53,7 +53,7 @@
                                       </div>
                                   </div>
                               </div>-->
-                            <div class="row">
+                            <div class="row includeactivity">
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -70,8 +70,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="col-sm-6 pr-3">
-                                                                <label><input type="radio" name="is_land_only_activity_flight" id="is_land_only_activity_flight" class="is_land_only_activity_flight" value="0" checked>Avaliable Flights</label>
-                                                                <label><input type="radio" name="is_land_only_activity_flight" class="is_land_only_activity_flight" value="1">Land only</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" id="is_land_only_activity_flight" class="is_land_only_activity_flight" value="0" checked>Avaliable Flights</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" class="is_land_only_activity_flight" value="1">Land only</label>
                                                             </div>
                                                             <div class="col-sm-6">
 
@@ -79,7 +79,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="addon-available-flights">
+                                                <div class="activity-available-flights">
                                                     <div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -152,11 +152,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-    <?php $sr++; ?>
+													<?php $sr++; ?>
                                                         @endforeach
                                                         @endif
-<?php } ?>
-
+													<?php } ?>
+													</div>
 
                                                 <div class="land-only_activity" style="display: none;">
                                                     <div class="form-group">
@@ -165,7 +165,8 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    {!! Form::text('activity_flight_name', null, ['class' => 'form-control flight_name']) !!}
+																     <input type="text" name="activity_flight_name[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_name" value="">
+                                                                 
                                                                                            
                                                                 </div>
                                                             </div>
@@ -176,8 +177,8 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <!--<input type="text" name="flight_number" class="form-control" value="">-->
-                                                                    {!! Form::text('activity_flight_flight_number', null, ['class' => 'form-control flight_number']) !!}
+                                                                  <input type="text" name="activity_flight_flight_number[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_number" value="">
+                                                                  
                                                                 </div>
 
                                                             </div>
@@ -188,8 +189,8 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <!--<input type="text" name="departure_date" class="form-control" value="">--> 
-                                                                    {!! Form::text('activity_flight_departure_date', null, ['class' => 'form-control departure_date']) !!}
+                                                                    <input type="text" name="activity_flight_departure_date[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_date" value="">
+                                                                  
                                                                 </div>
 
                                                             </div>
@@ -200,13 +201,14 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                     {!! Form::text('activity_flight_departure_time', null, ['class' => 'form-control departure_time']) !!}
+																 <input type="text" name="activity_flight_departure_time[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_time" value="">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -233,7 +235,7 @@
                                                                     <label>Upgrade solo room </label>
                                                                 </div>
                                                                 <div class="col-sm-3 text-right">
-                                                                    <div id="is_solo" class="btn-group" hot="1">
+                                                                    <div id="activity_hotel_is_solo" class="btn-group" hot="1">
                                                                         <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
                                                                         <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
                                                                     </div>
@@ -276,10 +278,10 @@
                                                     </div>
 
                                                     <div class="form-group pdrow-group">
-<?php
-$sr = 1;
-if (array_key_exists("includedActivityHotles", $includedActivity)) {
-    ?> 
+														<?php
+														$sr = 1;
+														if (array_key_exists("includedActivityHotles", $includedActivity)) {
+															?> 
                                                             @if(!empty($includedActivity['includedActivityHotles']))
                                                             @foreach( $includedActivity['includedActivityHotles'] AS $hotels)
                                                             <div class="form-group pdrow-group">
@@ -291,27 +293,27 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
 
 
                                                                         <div class="col-sm-3">
-    <?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
+															<?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
                                                                         </div>
                                                                         <div class="col-sm-2">
                                                                             <?php echo (!empty($hotels->hotel_type)) ? $hotels->hotel_type : ''; ?>
 
                                                                         </div>
                                                                         <div class="col-sm-2">
-    <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
+														<?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
 
                                                                         </div>
                                                                         <div class="col-sm-1">
-    <?php echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : ''; ?>
+														<?php echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : ''; ?>
 
                                                                         </div>
 
                                                                         <div class="col-sm-1">
-    <?php echo (!empty($hotels->hotel_cost)) ? $hotels->hotel_cost : ''; ?>
+														<?php echo (!empty($hotels->hotel_cost)) ? $hotels->hotel_cost : ''; ?>
 
                                                                         </div>
                                                                         <div class="col-sm-1">
-    <?php echo (!empty($hotels->hotel_solo_cost)) ? $hotels->hotel_solo_cost : ''; ?>
+														<?php echo (!empty($hotels->hotel_solo_cost)) ? $hotels->hotel_solo_cost : ''; ?>
 
                                                                         </div>
 
