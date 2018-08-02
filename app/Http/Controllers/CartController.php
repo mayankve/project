@@ -26,8 +26,9 @@ class CartController extends Controller
      */
     public function index() {
 		session_start();
-		//echo'<pre>';print_r($_POST);die;
+		
 		$_SESSION['card_item']=$_POST;
+		//echo'<pre>';print_r($_SESSION['card_item']);die;
 		return redirect('cart');
 		
     }
@@ -156,7 +157,7 @@ class CartController extends Controller
 		}else{
 			$test='';
 		}	
-		
+		//echo '<pre>';print_r($test);die;
 		
 		// trip activity//
 		$activity=array();
@@ -202,7 +203,8 @@ class CartController extends Controller
 				}else{
 					
 					$testactivity='';
-				}			
+				}
+				//print_r($testactivity)
 				
 		$dashboardData = $this->dashboardElements();		
 		

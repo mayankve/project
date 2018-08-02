@@ -218,78 +218,9 @@ $tavelerearray=array();
                         </div>
                     </div>                  
                 </div>
-				
-				
-			<!-- end here -->	
-			
-			<!-- trip travelere information-->
-			
-						<div class="row">
-                            <div class="panel panel-primary traveler-list">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Trip Travelers list</strong></h3>
-                                    <div class="panel-tools">
-                                        <a href="#" class="updown"></a>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="basic_info_view">   
-                                        <div class="form-horizontal">
-                                            <div class="trip-addons">
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <label>SN.</label>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <label>Name</label>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <label>Gender</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group pdrow-group">
-                                                    <?php
-												$i=1;
-												
-												$travlerid=array();
-												 if(count($tripdata['tripTravelers'])>0){
-													 foreach($tripdata['tripTravelers'] as $traveler){
-													array_push($travlerid,$traveler->id);
-												?> 
-                                                    <div class="col-sm-12 travler">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                              <?php echo $i;?>           
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <?php echo $traveler->first_name;?>   
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                               <?php echo ($traveler->gender==1)?'Male':'Female';?> 
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div> 
-											  
-										 <?php $i++; } } ?>
-										 <input type="hidden" name="trip_traveler_id" value="<?php echo json_encode($travlerid);?>"> 
-                                       </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-						<!-- trip travelere information end here .-->
-						
-						
 						
 				<!-- trip hotel here -->
-				<?php if(!empty($final)){?>
+<?php if(!empty($final)){?>
 <div class="panel panel-primary addon-main">
     <div class="panel-heading">
         <h3 class="panel-title"><strong>Add Ons</strong></h3>
@@ -332,7 +263,9 @@ $tavelerearray=array();
                             <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo $value['add_on_detail']->id;?>">                  
                         </div>
                         <div class="row">
-                            <div class="panel panel-primary traveler-list">
+                            
+							
+							<div class="panel panel-primary traveler-list">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Travelers list</strong></h3>
                                     <div class="panel-tools">                                   
@@ -389,6 +322,9 @@ $tavelerearray=array();
                                 </div>
                             </div>
                         </div>
+
+						
+						
                         <div class="row addon_flight">
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
@@ -833,7 +769,7 @@ $tavelerearray=array();
 	<div role="tabpanel" class="tab-pane" id="todo">
     <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">          
     <br>-->
-    <div class="panel panel-primary">
+    <!--<div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title"><strong>Do/Packing listsfsdf</strong></h3>
             <div class="panel-tools">               
@@ -845,26 +781,26 @@ $tavelerearray=array();
                     <div class="trip-addons">
                         <div class="form-group">
                             <?php
-                                 $sr = 1;
+                               //  $sr = 1;
 //                                 echo "<pre>";print_r($tripdata['tripTodo']);die;
-								 if(count($tripdata['to_do_packing'])>0){
+								 //if(count($tripdata['to_do_packing'])>0){
 								 
-                            foreach($tripdata['to_do_packing'] AS $triptokey=>$tripTodo){							
+                            ///foreach($tripdata['to_do_packing'] AS $triptokey=>$tripTodo){							
 										
                             ?>
                            
                             <div class="col-sm-12">
                                 <div class="row">
                                     <div class="col-sm-1">
-                                        {{$sr}}   
+                                        
                                     </div>
                                     <div class="col-sm-9">
-                                        {{$tripTodo[0]->todo_name}}  
+                                        
                                     </div>
-                                    <input type="hidden" name="packing_list[{{$triptokey}}]" value="{{$tripTodo[0]->id}}">
+                                   
                                 </div>
                             </div>
-								 <?php $sr++; } }?>
+								 <?php // $sr++; } }?>
                             
                                
                         </div>
@@ -872,7 +808,7 @@ $tavelerearray=array();
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 <?php
 $addontravelerarryacount= count($tavelerearray);
 $trip_flight_amount= (count($tripdata['tripAirlines'])>0)? $tripdata['tripAirlines'][0]->airline_reserve_amount:'0';

@@ -71,6 +71,8 @@ Route::get('mytripdesign/{id}','HomeController@myTripDesign');
 // cart remove 
 Route::match(['get','post'],'cartremove','CartController@removecart');
 
+//checkout
+Route::match(['get','post'],'checkout','CartController@processtocheckout');
 
 
 //Airlines to be added to Cart
@@ -142,8 +144,6 @@ Route::match(['get','post'],'/check-validation-blade','AdminController@checkVali
 Route::match(['get','post'],'check-validation/','AdminController@checkValidation');
 
 
-//checkout
-Route::match(['get','post'],'checkout','CartController@processtocheckout');
 
 
 

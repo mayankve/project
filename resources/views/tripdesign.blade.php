@@ -275,8 +275,7 @@
                 $('.land-only_activity').hide();
             }
         });
-
-        /*  $('.add_on_land-only').click(function () {
+		$('.add_on_land-only').click(function () {
          if ($(this).val() == 1)
          {
          $('.add_on_land-onlydetail').show();
@@ -284,7 +283,7 @@
          $('.add_on_land-onlydetail').hide();
          }
          });
-         */
+         
         //end here//
 
 
@@ -376,21 +375,6 @@
                 return false;
             }
             // end here//
-
-
-
-            // if(ckbox.is(':checked'))
-            // {
-            // if($('.selected_addon_traveler').prop('checked')==false)
-            // {
-            // alert('Please Select Traveler..');
-            // return false;
-            // }
-
-
-            // }
-
-
 
         });
 
