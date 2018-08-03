@@ -236,13 +236,13 @@ $tavelerearray=array();
                 <div class="form-group">
                    
                        <?php
-					   
+					  // echo '<pre>';print_r($final);die;
 						$i=1;
 						$addonfinal_price=0;
 						foreach($final as $key=>$value){
 							$addonprice=$value['add_on_detail']->addons_cost;
-							$addonflight_price=(is_array($value['flight_data']))?'':$value['flight_data']->airline_reserve_amount;
-							$addonhote_price=$value['hote_data']->hotel_reserve_amount;
+							$addonflight_price=(is_array($value['flight_data']))?'':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'';
+							$addonhote_price=!empty($value['hote_data'])?$value['hote_data']->hotel_reserve_amount:'';
 							$addontravler= count($value['travler_info']);
 							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
 						 ?> 

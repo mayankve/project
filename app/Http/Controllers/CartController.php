@@ -214,8 +214,19 @@ class CartController extends Controller
 			foreach($is_land_only_activity as $is_land_only_activitykey=>$activityflightvalue)
 			{
 				
-				if($activityflightvalue==1)
-				{
+				if($activityflightvalue==0)
+				{					
+					if(!empty($activityflight)){
+							
+						foreach($activityflight as $activityflightkey=>$activityflightvalue1)
+						{
+							
+							$activityflightarray[$activityflightkey] = $activityflightvalue1;
+						}
+					}
+					
+				}else{
+					
 					foreach(array($activity_flight_name,$activity_flight_number,$activity_flight_date,$activity_flight_time) as $activityarry1)
 					{
 						
@@ -226,13 +237,6 @@ class CartController extends Controller
 								}else{
 									$activityflightarray[$activityarry1key]['manualflightactivity'][] = $activityarry1value;
 								}						 
-						}
-					}
-				}else{
-					if(!empty($activityflight)){
-						foreach($activityflight as $activityflightkey=>$activityflightvalue1)
-						{
-							$activityflightarray[$activityflightkey] = $activityflightvalue1;
 						}
 					}
 				}
