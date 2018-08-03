@@ -189,7 +189,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="activity_flight_departure_date[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_date" value="">
+                                                                    <input type="text" name="activity_flight_departure_date[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_date flightdeparture" value="">
                                                                   
                                                                 </div>
 

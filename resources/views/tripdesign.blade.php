@@ -193,31 +193,14 @@
         }
 
 
-        // $('input[name="flight_id"]').click(function(){
-        //alert($( "input[type=radio][name=flight_id]:checked" ).val());
-        // $('.trip_flight_id').val($( "input[type=radio][name=flight_id]:checked" ).val());	
-        // });
-        // $('input[name="selected_hotel"]').click(function(){
-        // var travlercont=$('.traveler_count').val();
-        // var reserveramount= $(this).parents('.parent').find('.reserver_amount').val();
-        //alert(reserveramount);
-        // $('.trip_hotel_amount').val(reserveramount*travlercont);
-        // $('.trip_hotle_id').val($( "input[type=radio][name=selected_hotel]:checked" ).val());
-        // $('.total_hotel_cost').html(reserveramount*travlercont);
-        // });
-
-
         $('.selected_addons').click(function () {
             add_on_price = 0;
-            //alert('Please select flight and hotels for addon');			
+           		
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
 
-            //var flightchecked=	$(this).parents('.parent').find('.addon_flight_name').attr('checked', true);
-            $(".addon input[type=checkbox]:checked").each(function () {
-
-                //addon_id.push($(this).parents('.parent').find('.selected_addons').val());										
-
+               $(".addon input[type=checkbox]:checked").each(function () {
+				   
                 var add_on = $(this).parents('.parent').find('.add_on_cost').val();
                 if (add_on != undefined) {
                     //alert(add_on);
@@ -284,6 +267,7 @@
 			
 			$(this).parents('.addon_flight').find('.add_on_land-onlydetail').show();
 			$(this).parents('.addon_flight').find('.addon-available-flights').hide();
+
          } else {
 			 $(this).parents('.addon_flight').find('.add_on_land-onlydetail').hide();
 			$(this).parents('.addon_flight').find('.addon-available-flights').show();
@@ -382,6 +366,13 @@
 
     });
 
+
+   $('.flightdeparture').datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'yy-mm-dd'
+                    });	
+					
 	
 </script>
 
