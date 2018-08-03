@@ -51,7 +51,7 @@
             <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
 		        <img src="{{ url('trip_banner/140b4f357977d4bc54ec15721cf0afe6.jpg') }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
 		        <div class="text-overlay">
-		            <a href="{{ url('/trip/' . $trip->id) }}">{{ ucwords( strtolower( $trip->name ) ) }} <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
+		            <a href="{{ url('/tripview/' . $trip->id) }}">{{ ucwords( strtolower( $trip->name ) ) }} <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
 		        </div>
 		        <div class="mask">
 		            <h2>f</h2>

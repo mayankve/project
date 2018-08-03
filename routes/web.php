@@ -38,6 +38,8 @@ Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
 //List Trips for users
 Route::get('listtrip', 'HomeController@listTrip');
 
+Route::get('tripview/{id}','HomeController@tripView');
+
 /* * ************ User end routes start************************* */
 
 Route::group(['middleware' => ['auth']], function() {
@@ -54,7 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('listtrip','HomeController@listTrip');
 
 //view Trips for users
-Route::get('tripview/{id}','HomeController@tripView');
+// Route::get('tripview/{id}','HomeController@tripView');
 
 //Book Trip for users
 Route::get('book/{id}','HomeController@bookTripView');
