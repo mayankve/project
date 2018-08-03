@@ -246,7 +246,8 @@
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
                                                                 
-                                                                <input type="text" name="add_on_flight_name[{{$id}}]" class="form-control" value="">                                </div>
+                                                                <input type="text" name="add_on_flight_name[{{$id}}]" class="form-control" value="">                             
+																</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -255,7 +256,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <input type="text" name="add_on_flight_number[{{$id}}]" class="form-control" value="">                                </div>
+                                                                <input type="text" name="add_on_flight_number[{{$id}}]" class="form-control" value="">                               
+																</div>
 
                                                         </div>
                                                     </div>
@@ -265,7 +267,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <input type="text" name="add_on_departure_date[{{$id}}]" class="form-control" value="">                                </div>
+                                                                <input type="text" name="add_on_departure_date[{{$id}}]" id="flightdeparture" class="form-control" value="">                             
+																</div>
 
                                                         </div>
                                                     </div>
@@ -310,7 +313,7 @@
                                                             <label>Upgrade solo room </label>
                                                         </div>
                                                         <div class="col-sm-3 text-right">
-                                                            <div id="addon_hotel_is_solo" class="btn-group" hot="1">
+                                                            <div id="addon_hotel_is_solo{{$id}}" class="btn-group" hot="1">
                                                                 <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
                                                                 <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
                                                             </div>
