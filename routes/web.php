@@ -35,15 +35,20 @@ Route::get('/logout', 'HomeController@logout');
 Route::get('/changepassword', 'HomeController@changePassword');
 // Front end Change Password
 Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
+//List Trips for users
+Route::get('listtrip', 'HomeController@listTrip');
 
-//User Dashboard
-Route::get('/dashboard','HomeController@userDashboard');
+/* * ************ User end routes start************************* */
+
+Route::group(['middleware' => ['auth']], function() {
+    //User Dashboard
+    Route::get('/dashboard', 'HomeController@userDashboard');
 
 // To update user basic information
-Route::post('/updateuserbasicinfo', 'HomeController@updateUserBasicInfo');
+    Route::post('/updateuserbasicinfo', 'HomeController@updateUserBasicInfo');
 
 // To update user basic information
-Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
+    Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 
 //List Trips for users
 Route::get('listtrip','HomeController@listTrip');
@@ -79,7 +84,8 @@ Route::match(['get','post'],'checkout','CartController@processtocheckout');
  Route::post('addFlightToCart','CartController@addFlightToCart');
   
 // traveler profile in user dashboard
-Route::match(['get','post'],'view-traveler/{id}','HomeController@travelerProfile');
+    Route::match(['get', 'post'], 'view-traveler/{id}', 'HomeController@travelerProfile');
+});
 
  
 /* User-end routes ends */
