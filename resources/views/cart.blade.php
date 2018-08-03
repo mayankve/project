@@ -1,4 +1,3 @@
-
 @extends('layouts.dashboard')
 @section('title', 'Cart')
 @section('content')
@@ -6,7 +5,7 @@
 <?php
 
 $tavelerearray=array();
-
+$addonfinal_price=0;
 //echo $trip_only_amount;											
 ?>
 
@@ -238,10 +237,10 @@ $tavelerearray=array();
                        <?php
 					  // echo '<pre>';print_r($final);die;
 						$i=1;
-						$addonfinal_price=0;
+						
 						foreach($final as $key=>$value){
 							$addonprice=$value['add_on_detail']->addons_cost;
-							$addonflight_price=(is_array($value['flight_data']))?'':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'';
+							$addonflight_price=(is_array($value['flight_data']))?'0':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'0';
 							$addonhote_price=!empty($value['hote_data'])?$value['hote_data']->hotel_reserve_amount:'';
 							$addontravler= count($value['travler_info']);
 							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
@@ -608,7 +607,7 @@ $tavelerearray=array();
                                                     
                                                     @if(!empty($includedActivity['activity_flight']))
                                                   <?php 
-												$reserve_amount= (is_array ($includedActivity['activity_flight']))?'': $includedActivity['activity_flight']->airline_reserve_amount;
+												$reserve_amount= (is_array ($includedActivity['activity_flight']))?'0': !empty($includedActivity['activity_flight'])?$includedActivity['activity_flight']->airline_reserve_amount:'0';
 											  $activityflightamount = $activityflightamount+ $reserve_amount;?>
 													
 													<div class="form-group pdrow-group">

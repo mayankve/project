@@ -368,8 +368,7 @@ class CartController extends Controller
 	
 	public function processtocheckout(Request $request)
 	{	
-		session_start();
-			
+		session_start();			
 		
 		$userId = Auth::id();
 		$trip=!empty($_POST['trip_id'])?$_POST['trip_id']:'';
