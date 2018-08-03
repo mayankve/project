@@ -328,7 +328,7 @@ class HomeController extends Controller {
         } else {
             if ($passportAvailable == '1') {  // Passport available
                 if (isset($passportPic) && count($passportPic) > 0) {
-                    $destinationPath = storage_path() . '/uploads/passport_images/';
+                    $destinationPath = storage_path() . '/passport_img/';
 
                     if ($passportPic->isValid()) {  // If the file is valid or not
                         $fileExt = $passportPic->getClientOriginalExtension();
@@ -421,7 +421,7 @@ class HomeController extends Controller {
         // Server Side Validation
 
         $response = array();
-        $destinationPath = storage_path() . '/uploads/profile_images/';
+        $destinationPath = storage_path() . '/profile_img/';						
         if ($profile_pic->isValid()) {  // If the file is valid or not
             $fileExt = $profile_pic->getClientOriginalExtension();
             $fileType = $profile_pic->getMimeType();
@@ -864,7 +864,7 @@ public function bookTrip(Request $request) {
 			
 			//echo $passportPic;die;
 			 if (isset($passportPic) && count($passportPic) > 0) {
-                   $destinationPath = storage_path() . '/uploads/passport_images/';						
+                   $destinationPath = storage_path() . '/passport_img/';						
 				 if ($passportPic->isValid()) { 
                         $fileExt = $passportPic->getClientOriginalExtension();
                         $fileType = $passportPic->getMimeType();

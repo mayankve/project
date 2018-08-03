@@ -164,9 +164,9 @@ Route::match(['get','post'],'check-validation/','AdminController@checkValidation
 /* Images routes */
 
 // To fetch the profile images from storage and return it
-Route::get('/profile_images/{filename}', function ($filename)
+Route::get('/profile_img/{filename}', function ($filename)
 {
-    $path = storage_path() . '/uploads/profile_images' . '/' . $filename;
+    $path = storage_path() . '/profile_img' . '/' . $filename;
 
     if(!File::exists($path)) abort(404);
 
@@ -181,9 +181,9 @@ Route::get('/profile_images/{filename}', function ($filename)
 
 
 // To fetch the profile images from storage and return it
-Route::get('/passport_images/{filename}', function ($filename)
+Route::get('/passport_img/{filename}', function ($filename)
 {
-    $path = storage_path() . '/uploads/passport_images' . '/' . $filename;
+    $path = storage_path() . '/passport_img' . '/' . $filename;
 
     if(!File::exists($path)) abort(404);
 

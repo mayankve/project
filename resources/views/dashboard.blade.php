@@ -161,7 +161,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
                                         <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/passport_images/' . $data['user_data']['passport_pic'] }}" alt="AAT" class="img-responsive model_image">
+                                            <img src="{{ url('/') . '/passport_img/' . $data['user_data']['passport_pic'] }}" alt="AAT" class="img-responsive model_image">
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic" id="passport_pic" class="form-control&#x20;image_upload" id="passport_pic">
@@ -326,7 +326,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Profile Pic</label>
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/profile_images/' . $data['profile_data']['profile_pic'] }}" alt="tm-01" class="img-responsive model_image" />
+                                            <img src="{{ url('/') . '/profile_img/'.'/'. $data['profile_data']['profile_pic'] }}" alt="tm-01" class="img-responsive model_image" />
                                         </label>
                                         <div class="profile-edit">
                                             <input type="file" name="profile_pic" id="profile_pic" class="form-control&#x20;image_upload" id="profile_pic">         
