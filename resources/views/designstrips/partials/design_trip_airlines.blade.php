@@ -102,7 +102,7 @@
                                             <div class="col-sm-9">
                                                 <div class="row">
                                                     <div class="user-edit col-sm-6">
-                                                        <input type="text" name="departure_date" id="flightdeparture" class="form-control" > 
+                                                        <input type="text" name="departure_date"  class="form-control flightdeparture" > 
                                                     </div>
 
                                                 </div>

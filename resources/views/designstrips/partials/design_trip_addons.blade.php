@@ -267,7 +267,7 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="user-edit col-sm-6">
-                                                                <input type="text" name="add_on_departure_date[{{$id}}]" id="flightdeparture" class="form-control" value="">                             
+                                                                <input type="text" name="add_on_departure_date[{{$id}}]"  class="form-control flightdeparture" value="">                             
 																</div>
 
                                                         </div>
