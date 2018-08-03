@@ -116,7 +116,7 @@
                             <li><a href="{{url('admin/dashboard') }}"> Dashboard</a></li>
                             <div class="user-profile">
                                 <li class="dropdown dropdown-hov">
-                                    <a class="user-img"><img src="/aat_zend/public/assets/profile_img/80d93e10f0653f507e7402dbb531a8a1.jpg" alt="tm-01" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>
+                                    <img src="{{ url('/profile_img')}}/x5hOeYd6UZ.png" alt="profile pic" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;">
                                     <ul class="dropdown-menu" style="display: none;">
                                         <li><a href="{{ url('/dashboard') }}">View profile</a></li>
                                         <li><a href="{{ url('/changepassword')}}">Change password</a></li>
