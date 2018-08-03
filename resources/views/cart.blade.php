@@ -236,6 +236,7 @@ $tavelerearray=array();
                 <div class="form-group">
                    
                        <?php
+					   
 						$i=1;
 						$addonfinal_price=0;
 						foreach($final as $key=>$value){
@@ -767,49 +768,7 @@ $tavelerearray=array();
             </div>
         </div>
     </div>
-	<div role="tabpanel" class="tab-pane" id="todo">
-    <!--<form method="POST" name="trip-land-flight" action="/book/" id="trip-land-flight">          
-    <br>-->
-    <!--<div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title"><strong>Do/Packing listsfsdf</strong></h3>
-            <div class="panel-tools">               
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="basic_info_view">   
-                <div class="form-horizontal">
-                    <div class="trip-addons">
-                        <div class="form-group">
-                            <?php
-                               //  $sr = 1;
-//                                 echo "<pre>";print_r($tripdata['tripTodo']);die;
-								 //if(count($tripdata['to_do_packing'])>0){
-								 
-                            ///foreach($tripdata['to_do_packing'] AS $triptokey=>$tripTodo){							
-										
-                            ?>
-                           
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        
-                                    </div>
-                                    <div class="col-sm-9">
-                                        
-                                    </div>
-                                   
-                                </div>
-                            </div>
-								 <?php // $sr++; } }?>
-                            
-                               
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
+	
 <?php
 $addontravelerarryacount= count($tavelerearray);
 $trip_flight_amount= (count($tripdata['tripAirlines'])>0)? $tripdata['tripAirlines'][0]->airline_reserve_amount:'0';
@@ -853,7 +812,11 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 </div>
 
 	<div>
+	<?php
+		if(!empty($tripIncludedActivities)){
+	?>
 			<button type="submit"  name="checkout">Pay Now</button>
+		<?php } ?>
 			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Cart</a>
 	</div>
 	

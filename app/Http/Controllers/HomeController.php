@@ -612,6 +612,7 @@ public function bookTrip(Request $request) {
                 ->orderBy('created_at')
                 ->get();
 			
+		
 		if(!empty($addon['tripAddons_check']))
 		{
 			foreach($addon['tripAddons_check'] as $addonkey=> $addonitem)
