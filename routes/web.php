@@ -1,20 +1,20 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+  |--------------------------------------------------------------------------
+  | Web Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register web routes for your application. These
+  | routes are loaded by the RouteServiceProvider within a group which
+  | contains the "web" middleware group. Now create something great!
+  |
+ */
 
 /* Front-end routes */
 
 // home page
-Route::get('/','HomeController@index');
+Route::get('/', 'HomeController@index');
 
 // about us page
 Route::get('/about', 'HomeController@about');
@@ -38,7 +38,7 @@ Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
 //List Trips for users
 Route::get('listtrip', 'HomeController@listTrip');
 
-Route::get('tripview/{id}','HomeController@tripView');
+Route::get('tripview/{id}', 'HomeController@tripView');
 
 /* * ************ User end routes start************************* */
 
@@ -53,108 +53,105 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 
 //List Trips for users
-Route::get('listtrip','HomeController@listTrip');
+    Route::get('listtrip', 'HomeController@listTrip');
 
 //view Trips for users
 // Route::get('tripview/{id}','HomeController@tripView');
-
 //Book Trip for users
-Route::get('book/{id}','HomeController@bookTripView');
+    Route::get('book/{id}', 'HomeController@bookTripView');
 
 //Saving Trip for users
-Route::post('booktrip','HomeController@bookTrip');
+    Route::post('booktrip', 'HomeController@bookTrip');
 
 //Design Trip for users
-Route::get('mytripdesign/{id}','HomeController@myTripDesign');
+    Route::get('mytripdesign/{id}', 'HomeController@myTripDesign');
 
 // set Cart for users
- Route::post('setcartvalue','CartController@index');
-/* Front-end routes ends */
+    Route::post('setcartvalue', 'CartController@index');
+    /* Front-end routes ends */
 
 // Cart for users
- Route::match(['get','post'],'cart','CartController@addtocart');
-/* Front-end routes ends */
+    Route::match(['get', 'post'], 'cart', 'CartController@addtocart');
+    /* Front-end routes ends */
 
 // cart remove 
-Route::match(['get','post'],'cartremove','CartController@removecart');
+    Route::match(['get', 'post'], 'cartremove', 'CartController@removecart');
 
 //checkout
-Route::match(['get','post'],'checkout','CartController@processtocheckout');
+    Route::match(['get', 'post'], 'checkout', 'CartController@processtocheckout');
 
 
 //Airlines to be added to Cart
- Route::post('addFlightToCart','CartController@addFlightToCart');
-  
+    Route::post('addFlightToCart', 'CartController@addFlightToCart');
+
 // traveler profile in user dashboard
     Route::match(['get', 'post'], 'view-traveler/{id}', 'HomeController@travelerProfile');
+    
+    // EMI  calculation blade
+    Route::get('view-emi-calculator', 'HomeController@emiCalculator');
 });
 
- 
+
 /* User-end routes ends */
 
- 
- 
- 
+
+
+
 /* Admin routes */
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-	
-	// Dashboard page
-	Route::get('/dashboard','AdminController@userDashboard');
 
-	// Create trip
-	Route::get('/createtrip','AdminController@createTrip');
-    Route::post('/store-trip','AdminController@storeTrip');
+    // Dashboard page
+    Route::get('/dashboard', 'AdminController@userDashboard');
+
+    // Create trip
+    Route::get('/createtrip', 'AdminController@createTrip');
+    Route::post('/store-trip', 'AdminController@storeTrip');
 
     // Edit trip
-    Route::get('/edittrip/{id}','AdminController@editTrip');
+    Route::get('/edittrip/{id}', 'AdminController@editTrip');
     Route::patch('updatetrip/{id}', 'AdminController@updateTrip');
 
     // Delete trip
-    Route::get('/deletetrip/{id}','AdminController@deleteTrip');
-        
+    Route::get('/deletetrip/{id}', 'AdminController@deleteTrip');
+
     //  List trip
-	Route::get('/listtrip','AdminController@listTrip');
-        
-         // Trip Spots
-	Route::get('/tripspot','AdminController@tripSpot');
+    Route::get('/listtrip', 'AdminController@listTrip');
+
+    // Trip Spots
+    Route::get('/tripspot', 'AdminController@tripSpot');
 
     // Manage Trip
     Route::prefix('manage-trip')->group(function () {
         // Trip Addon Travelers
-        Route::get('/addon-travelers','AdminController@tripAddonTravelers');
+        Route::get('/addon-travelers', 'AdminController@tripAddonTravelers');
 
-        Route::get('/get-trip-addons/{trip_id}','AdminController@getTripAddons');
-		//get Trip travelers
-		Route::get('get-trip-travellers-by/{trip_id}/{addon_id}','AdminController@getTripTraveler');
-		
-		Route::get('/monthly-trip-projection','AdminController@monthlyTripProjection');
-		
-		Route::get('/setmonthlypaymentdate/{date}/{trip_id}','AdminController@setMonthlyPaymentDate');
+        Route::get('/get-trip-addons/{trip_id}', 'AdminController@getTripAddons');
+        //get Trip travelers
+        Route::get('get-trip-travellers-by/{trip_id}/{addon_id}', 'AdminController@getTripTraveler');
+
+        Route::get('/monthly-trip-projection', 'AdminController@monthlyTripProjection');
+
+        Route::get('/setmonthlypaymentdate/{date}/{trip_id}', 'AdminController@setMonthlyPaymentDate');
     });
-        
-         // Upload Video
-	Route::get('/uploadvideo','AdminController@uploadVideo');
-        
+
+    // Upload Video
+    Route::get('/uploadvideo', 'AdminController@uploadVideo');
+
 
     //view Trips for admin
-    Route::get('/tripview/{id}','HomeController@tripView');
+    Route::get('/tripview/{id}', 'HomeController@tripView');
 
     //Book Trip for users
-    Route::get('/book/{id}','HomeController@bookTrip');
-	
+    Route::get('/book/{id}', 'HomeController@bookTrip');
+
 // traveler profile in admin dashboard	
-Route::match(['get','post'],'view-traveler/{id}','AdminController@adminTravelerProfile');
+    Route::match(['get', 'post'], 'view-traveler/{id}', 'AdminController@adminTravelerProfile');
 
 // demo route
-Route::match(['get','post'],'/check-validation-blade','AdminController@checkValidationBlade');
+    Route::get('/check-validation', 'AdminController@checkValidationBlade');
 
-Route::match(['get','post'],'check-validation/','AdminController@checkValidation');
-
-
-
-
-
+    Route::post('check-validation/', 'AdminController@checkValidation');
 });
 
 
@@ -164,11 +161,11 @@ Route::match(['get','post'],'check-validation/','AdminController@checkValidation
 /* Images routes */
 
 // To fetch the profile images from storage and return it
-Route::get('/profile_img/{filename}', function ($filename)
-{
+Route::get('/profile_img/{filename}', function ($filename) {
     $path = storage_path() . '/profile_img' . '/' . $filename;
 
-    if(!File::exists($path)) abort(404);
+    if (!File::exists($path))
+        abort(404);
 
     $file = File::get($path);
     $type = File::mimeType($path);
@@ -181,12 +178,11 @@ Route::get('/profile_img/{filename}', function ($filename)
 
 
 // To fetch the profile images from storage and return it
-Route::get('/passport_img/{filename}', function ($filename)
-{
+Route::get('/passport_img/{filename}', function ($filename) {
     $path = storage_path() . '/passport_img' . '/' . $filename;
 
-    if(!File::exists($path)) abort(404);
-
+    if (!File::exists($path))
+        abort(404);
     $file = File::get($path);
     $type = File::mimeType($path);
     $response = Response::make($file, 200);

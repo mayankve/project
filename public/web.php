@@ -1,40 +1,39 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+  |--------------------------------------------------------------------------
+  | Web Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register web routes for your application. These
+  | routes are loaded by the RouteServiceProvider within a group which
+  | contains the "web" middleware group. Now create something great!
+  |
+ */
 
 /*
-Route::get('/', function () {
-    return view('welcome');
-});
+  Route::get('/', function () {
+  return view('welcome');
+  });
 
-Auth::routes();
+  Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-*/
+  Route::get('/home', 'HomeController@index')->name('home');
+ */
 
 // Route::get('/', 'MoversController@index');
-
 ////////// Home Pages Routes //////////
 
 /*
-	1 Page:
-	uDistro For People Who Moving (I am moving)
+  1 Page:
+  uDistro For People Who Moving (I am moving)
 
-	2 Page:
-	uDistro For Realtors and Property Managers (I help others move)
+  2 Page:
+  uDistro For Realtors and Property Managers (I help others move)
 
-	3 Page:
-	uDistro For local business (I am business)
-*/
+  3 Page:
+  uDistro For local business (I am business)
+ */
 
 // To test laratrust permission module
 // Route::get('/laratrust', 'ACLController@checkRolePermission');
@@ -118,10 +117,8 @@ Route::get('/rating/{companyId?}/{moverId?}/{responseId?}/{transactionId?}', 'Co
 Route::post('/saverating', 'CompanyController@saveRating');
 
 ////////// Home Pages Routes //////////
-
 // To test email template view
 // Route::get('/email', 'EmailController@renderEmailTemplate');
-
 // Forgot password view (for all types of users)
 Route::get('/forgotpassword', 'HomeController@forgotPassword');
 
@@ -139,551 +136,545 @@ Route::post('/email', 'EmailController@sendEmail');
 
 // Administrator openly access routes
 Route::group(['prefix' => 'administrator'], function() {
-	
-	// Admin index page
-	Route::get('/', 'AdminController@index');
 
-	// Admin login function
-	Route::post('/login', 'AdminController@login');
+    // Admin index page
+    Route::get('/', 'AdminController@index');
 
-	// Forgot Password function
-	Route::get('/forgotpassword', 'AdminController@getForgotPassword');
+    // Admin login function
+    Route::post('/login', 'AdminController@login');
 
-	Route::post('/forgotpassword', 'AdminController@forgotPassword');
+    // Forgot Password function
+    Route::get('/forgotpassword', 'AdminController@getForgotPassword');
 
+    Route::post('/forgotpassword', 'AdminController@forgotPassword');
 });
 
 // Administrator protected routes
 Route::group(['prefix' => 'administrator', 'middleware' => 'auth'], function() {
 
-	// Logout
-	Route::get('/logout', 'HomeController@logout');
-	
-	// Admin dashboard
-	Route::get('/dashboard', 'AdminController@dashboard');
+    // Logout
+    Route::get('/logout', 'HomeController@logout');
 
-	// To return the navigation category view
-	Route::get('/navigationcategory', 'AdminController@navigationCategory');
+    // Admin dashboard
+    Route::get('/dashboard', 'AdminController@dashboard');
 
-	// To save the navigation category
-	Route::post('/savenavigationcategory', 'AdminController@saveNavigationCategory');
+    // To return the navigation category view
+    Route::get('/navigationcategory', 'AdminController@navigationCategory');
 
-	// To show the navigation category list in datatable
-	Route::get('/fetchnavigationcategories', 'AdminController@fetchNavigationCategories');
+    // To save the navigation category
+    Route::post('/savenavigationcategory', 'AdminController@saveNavigationCategory');
 
-	// To get the details for the selected navigation category
-	Route::get('/getnavigationcategorydetails', 'AdminController@getNavigationCategoryDetails');
+    // To show the navigation category list in datatable
+    Route::get('/fetchnavigationcategories', 'AdminController@fetchNavigationCategories');
 
-	// To return the navigation view
-	Route::get('/navigation', 'AdminController@navigation');
+    // To get the details for the selected navigation category
+    Route::get('/getnavigationcategorydetails', 'AdminController@getNavigationCategoryDetails');
 
-	// To save the navigation details
-	Route::post('/savenavigation', 'AdminController@saveNavigation');
+    // To return the navigation view
+    Route::get('/navigation', 'AdminController@navigation');
 
-	// To show the navigation list in datatable
-	Route::get('/fetchnavigation', 'AdminController@fetchNavigation');
+    // To save the navigation details
+    Route::post('/savenavigation', 'AdminController@saveNavigation');
 
-	// To get the details for the selected navigation
-	Route::get('/getnavigationdetails', 'AdminController@getNavigationDetails');
+    // To show the navigation list in datatable
+    Route::get('/fetchnavigation', 'AdminController@fetchNavigation');
 
-	// To update the navigation details
-	Route::post('/updatenavigation', 'AdminController@updateNavigation');
+    // To get the details for the selected navigation
+    Route::get('/getnavigationdetails', 'AdminController@getNavigationDetails');
 
-	// To return the page details
-	Route::get('/pages', 'AdminController@pages');
+    // To update the navigation details
+    Route::post('/updatenavigation', 'AdminController@updateNavigation');
 
-	// To save the page content
-	Route::post('/savepage', 'AdminController@savePage');
+    // To return the page details
+    Route::get('/pages', 'AdminController@pages');
 
-	// To show the page list in datatable
-	Route::get('/fetchpages', 'AdminController@fetchPages');
+    // To save the page content
+    Route::post('/savepage', 'AdminController@savePage');
 
-	// To get the details for the selected page
-	Route::get('/getpagedetails', 'AdminController@getPageDetails');
+    // To show the page list in datatable
+    Route::get('/fetchpages', 'AdminController@fetchPages');
 
-	// To return the provinces page
-	Route::get('/provinces', 'AdminController@provinces');
+    // To get the details for the selected page
+    Route::get('/getpagedetails', 'AdminController@getPageDetails');
 
-	// To save the province details
-	Route::post('/saveprovince', 'AdminController@saveProvince');
+    // To return the provinces page
+    Route::get('/provinces', 'AdminController@provinces');
 
-	// To show the province list in datatable
-	Route::get('/fetchprovinces', 'AdminController@fetchProvinces');
+    // To save the province details
+    Route::post('/saveprovince', 'AdminController@saveProvince');
 
-	// To get the details for the selected province
-	Route::get('/getprovincedetails', 'AdminController@getProvinceDetails');
+    // To show the province list in datatable
+    Route::get('/fetchprovinces', 'AdminController@fetchProvinces');
 
-	// To return the moving Category page
-	Route::get('/movingcategory', 'AdminController@movingCategory');
+    // To get the details for the selected province
+    Route::get('/getprovincedetails', 'AdminController@getProvinceDetails');
 
-	// To save the moving Category details
-	Route::post('/savemovingcategory', 'AdminController@saveMovingCategory');
+    // To return the moving Category page
+    Route::get('/movingcategory', 'AdminController@movingCategory');
 
-	// To show the moving Category list in datatable
-	Route::get('/fetchmovingcategory', 'AdminController@fetchMovingCategory');
+    // To save the moving Category details
+    Route::post('/savemovingcategory', 'AdminController@saveMovingCategory');
 
-	// To get the details for the selected moving Category
-	Route::get('/getmovingcategory', 'AdminController@getMovingCategory');
+    // To show the moving Category list in datatable
+    Route::get('/fetchmovingcategory', 'AdminController@fetchMovingCategory');
 
-	// To return the moving Category details page
-	Route::get('/movingitemdetails', 'AdminController@movingItemDetails');
+    // To get the details for the selected moving Category
+    Route::get('/getmovingcategory', 'AdminController@getMovingCategory');
 
-	// To save the moving Category details
-	Route::post('/savemovingitemdetails', 'AdminController@saveMovingItemDetails');
+    // To return the moving Category details page
+    Route::get('/movingitemdetails', 'AdminController@movingItemDetails');
 
-	// To show the moving Category details list in datatable
-	Route::get('/fetchmovingitemdetails', 'AdminController@fetchMovingItemDetails');
+    // To save the moving Category details
+    Route::post('/savemovingitemdetails', 'AdminController@saveMovingItemDetails');
 
-	// To get the details for the selected moving Category details
-	Route::get('/getmovingitemdetails', 'AdminController@getMovingItemDetails');
+    // To show the moving Category details list in datatable
+    Route::get('/fetchmovingitemdetails', 'AdminController@fetchMovingItemDetails');
 
-	// To return the activity feedback page
-	Route::get('/activityfeedback', 'AdminController@activityFeedback');
+    // To get the details for the selected moving Category details
+    Route::get('/getmovingitemdetails', 'AdminController@getMovingItemDetails');
 
-	// To show the activity list in datatable
-	Route::get('/fetchactivityfeedback', 'AdminController@fetchActivityFeedback');
+    // To return the activity feedback page
+    Route::get('/activityfeedback', 'AdminController@activityFeedback');
 
-	// To return the activity page
-	Route::get('/activity', 'AdminController@activity');
+    // To show the activity list in datatable
+    Route::get('/fetchactivityfeedback', 'AdminController@fetchActivityFeedback');
 
-	// To save the activity details
-	Route::post('/saveactivity', 'AdminController@saveActivity');
+    // To return the activity page
+    Route::get('/activity', 'AdminController@activity');
 
-	// To show the activity list in datatable
-	Route::get('/fetchactivity', 'AdminController@fetchActivity');
+    // To save the activity details
+    Route::post('/saveactivity', 'AdminController@saveActivity');
 
-	// To get the details for the selected activity
-	Route::get('/getactivitydetails', 'AdminController@getActivityDetails');
+    // To show the activity list in datatable
+    Route::get('/fetchactivity', 'AdminController@fetchActivity');
 
-	// To return the industry page
-	Route::get('/industrytype', 'AdminController@industryType');
+    // To get the details for the selected activity
+    Route::get('/getactivitydetails', 'AdminController@getActivityDetails');
 
-	// To save the industry details
-	Route::post('/saveindustrytype', 'AdminController@saveIndustryType');
+    // To return the industry page
+    Route::get('/industrytype', 'AdminController@industryType');
 
-	// To show the industry list in datatable
-	Route::get('/fetchindustrytype', 'AdminController@fetchIndustryType');
+    // To save the industry details
+    Route::post('/saveindustrytype', 'AdminController@saveIndustryType');
 
-	// To get the details for the selected industry
-	Route::get('/getindustrytypedetails', 'AdminController@getIndustryTypeDetails');
+    // To show the industry list in datatable
+    Route::get('/fetchindustrytype', 'AdminController@fetchIndustryType');
 
-	// To return the services page
-	Route::get('/services', 'AdminController@services');
+    // To get the details for the selected industry
+    Route::get('/getindustrytypedetails', 'AdminController@getIndustryTypeDetails');
 
-	// To save the services details
-	Route::post('/saveservices', 'AdminController@saveServices');
+    // To return the services page
+    Route::get('/services', 'AdminController@services');
 
-	// To show the services list in datatable
-	Route::get('/fetchservices', 'AdminController@fetchServices');
+    // To save the services details
+    Route::post('/saveservices', 'AdminController@saveServices');
 
-	// To get the details for the selected services
-	Route::get('/getservicesdetails', 'AdminController@getServicesDetails');
+    // To show the services list in datatable
+    Route::get('/fetchservices', 'AdminController@fetchServices');
 
-	// To return the utility service categories page
-	Route::get('/utilityservicecategories', 'AdminController@utilityServiceCategories');
+    // To get the details for the selected services
+    Route::get('/getservicesdetails', 'AdminController@getServicesDetails');
 
-	// To save the utility service categories details
-	Route::post('/saveutilityservicecategory', 'AdminController@saveUtilityServiceCategory');
+    // To return the utility service categories page
+    Route::get('/utilityservicecategories', 'AdminController@utilityServiceCategories');
 
-	// To show the utility service categories list in datatable
-	Route::get('/fetchutilityservicecategories', 'AdminController@fetchUtilityServiceCategories');
+    // To save the utility service categories details
+    Route::post('/saveutilityservicecategory', 'AdminController@saveUtilityServiceCategory');
 
-	// To get the details for the selected utility service category
-	Route::get('/getutilityservicecategorydetails', 'AdminController@getUtilityServiceCategoryDetails');
+    // To show the utility service categories list in datatable
+    Route::get('/fetchutilityservicecategories', 'AdminController@fetchUtilityServiceCategories');
 
-	// To return the utility service types page
-	Route::get('/utilityservicetypes', 'AdminController@utilityServiceTypes');
+    // To get the details for the selected utility service category
+    Route::get('/getutilityservicecategorydetails', 'AdminController@getUtilityServiceCategoryDetails');
 
-	// To save the utility service types
-	Route::post('/saveutilityservicetype', 'AdminController@saveUtilityServiceType');
+    // To return the utility service types page
+    Route::get('/utilityservicetypes', 'AdminController@utilityServiceTypes');
 
-	// To show the utility service type list in datatable
-	Route::get('/fetchutilityservicetypes', 'AdminController@fetchUtilityServiceTypes');
+    // To save the utility service types
+    Route::post('/saveutilityservicetype', 'AdminController@saveUtilityServiceType');
 
-	// To get the details for the selected utility service type
-	Route::get('/getutilityservicetypedetails', 'AdminController@getUtilityServiceTypeDetails');
+    // To show the utility service type list in datatable
+    Route::get('/fetchutilityservicetypes', 'AdminController@fetchUtilityServiceTypes');
 
-	// To return the utility service page
-	Route::get('/utilityserviceproviders', 'AdminController@utilityServiceProviders');
+    // To get the details for the selected utility service type
+    Route::get('/getutilityservicetypedetails', 'AdminController@getUtilityServiceTypeDetails');
 
-	// To get the service type on the basis of selected service category
-	Route::get('/getcategoryservicetypes', 'AdminController@getCategoryServiceTypes');
+    // To return the utility service page
+    Route::get('/utilityserviceproviders', 'AdminController@utilityServiceProviders');
 
-	// To get the cities on the basis of selected province
-	Route::get('/getprovincecities', 'AdminController@getProvinceCities');
+    // To get the service type on the basis of selected service category
+    Route::get('/getcategoryservicetypes', 'AdminController@getCategoryServiceTypes');
 
-	// To save the utility service provider details
-	Route::post('/saveserviceprovider', 'AdminController@saveServiceProvider');
+    // To get the cities on the basis of selected province
+    Route::get('/getprovincecities', 'AdminController@getProvinceCities');
 
-	// To show the utility service providers list in datatable
-	Route::get('/fetchserviceproviders', 'AdminController@fetchServiceProviders');
+    // To save the utility service provider details
+    Route::post('/saveserviceprovider', 'AdminController@saveServiceProvider');
 
-	// To get the details of the selected service provider
-	Route::get('/getserviceproviderdetails', 'AdminController@getServiceProviderDetails');
+    // To show the utility service providers list in datatable
+    Route::get('/fetchserviceproviders', 'AdminController@fetchServiceProviders');
 
-	// To return the payment plans view
-	Route::get('/paymentplans', 'AdminController@paymentPlans');
+    // To get the details of the selected service provider
+    Route::get('/getserviceproviderdetails', 'AdminController@getServiceProviderDetails');
 
-	// To save the payment plan details
-	Route::post('/savepaymentplan', 'AdminController@savePaymentPlan');
+    // To return the payment plans view
+    Route::get('/paymentplans', 'AdminController@paymentPlans');
 
-	// To show the payment plans list in datatable
-	Route::get('/fetchpaymentplans', 'AdminController@fetchPaymentPlans');
+    // To save the payment plan details
+    Route::post('/savepaymentplan', 'AdminController@savePaymentPlan');
 
-	// To get the details of the selected payment plan
-	Route::get('/getpaymentplandetails', 'AdminController@getPaymentPlanDetails');
+    // To show the payment plans list in datatable
+    Route::get('/fetchpaymentplans', 'AdminController@fetchPaymentPlans');
 
-	// To return the cities listing view
-	Route::get('/cities', 'AdminController@cities');
+    // To get the details of the selected payment plan
+    Route::get('/getpaymentplandetails', 'AdminController@getPaymentPlanDetails');
 
-	// To save the city details
-	Route::post('/savecity', 'AdminController@saveCity');
+    // To return the cities listing view
+    Route::get('/cities', 'AdminController@cities');
 
-	// To show the cities list in datatable
-	Route::get('/fetchcities', 'AdminController@fetchCities');
+    // To save the city details
+    Route::post('/savecity', 'AdminController@saveCity');
 
-	// To get the details of the selected city
-	Route::get('/getcitydetails', 'AdminController@getCityDetails');
+    // To show the cities list in datatable
+    Route::get('/fetchcities', 'AdminController@fetchCities');
 
-	// To return email template listing view
-	Route::get('/emailtemplates', 'AdminController@emailTemplates');
+    // To get the details of the selected city
+    Route::get('/getcitydetails', 'AdminController@getCityDetails');
 
-	// To save the email template details
-	Route::post('/saveemailtemplate', 'AdminController@saveEmailTemplate');
+    // To return email template listing view
+    Route::get('/emailtemplates', 'AdminController@emailTemplates');
 
-	// To show the email template list in datatable
-	Route::get('/fetchemailtemplates', 'AdminController@fetchEmailTemplates');
+    // To save the email template details
+    Route::post('/saveemailtemplate', 'AdminController@saveEmailTemplate');
 
-	// To get the details of selected email template
-	Route::get('/getemailtemplatedetails', 'AdminController@getEmailTemplateDetails');
+    // To show the email template list in datatable
+    Route::get('/fetchemailtemplates', 'AdminController@fetchEmailTemplates');
 
-	// To return the generate invoice page
-	Route::get('/generateinvoice', 'AdminController@generateInvoice');
+    // To get the details of selected email template
+    Route::get('/getemailtemplatedetails', 'AdminController@getEmailTemplateDetails');
 
-	// To convert html to dompdf
-	Route::get('htmltopdfview', array('as'=>'htmltopdfview','uses'=>'AdminController@htmltopdfview'));
-	
-	/* Newly added route start here */
-	
-	// To return role listing view
-	Route::get('/roles', 'AdminController@roles');
-	
-	// To save new role
-	Route::post('/saverole', 'AdminController@saveRole');
+    // To return the generate invoice page
+    Route::get('/generateinvoice', 'AdminController@generateInvoice');
 
-	// To show the role list in datatable
-	Route::get('/fetchroles', 'AdminController@fetchRoles');
+    // To convert html to dompdf
+    Route::get('htmltopdfview', array('as' => 'htmltopdfview', 'uses' => 'AdminController@htmltopdfview'));
 
-	// To get the details of selected role
-	Route::get('/getselectedrole', 'AdminController@getSelectedRole');
-	
-	// To return permission listing view
-	Route::get('/permissions', 'AdminController@permissions');
+    /* Newly added route start here */
 
-	// To save new permission
-	Route::post('/savepermission', 'AdminController@savePermission');
+    // To return role listing view
+    Route::get('/roles', 'AdminController@roles');
 
-	// To show the permission list in datatable
-	Route::get('/fetchpermissions', 'AdminController@fetchPermissions');
+    // To save new role
+    Route::post('/saverole', 'AdminController@saveRole');
 
-	// To get the details of selected permission
-	Route::get('/getselectedpermission', 'AdminController@getSelectedPermission');
-	
-	// To detach permission from role
-	Route::get('/detachrolepermission', 'AdminController@detachRolePermission');
+    // To show the role list in datatable
+    Route::get('/fetchroles', 'AdminController@fetchRoles');
 
-	// To return rolespermissions listing view
-	Route::get('/rolespermissions', 'AdminController@rolesPermissions');
+    // To get the details of selected role
+    Route::get('/getselectedrole', 'AdminController@getSelectedRole');
 
-	// To save new rolepermission
-	Route::post('/saverolepermission', 'AdminController@saveRolePermission');
+    // To return permission listing view
+    Route::get('/permissions', 'AdminController@permissions');
 
-	// To show the rolespermissions list in datatable
-	Route::get('/fetchrolespermissions', 'AdminController@fetchRolesPermissions');
+    // To save new permission
+    Route::post('/savepermission', 'AdminController@savePermission');
 
-	
-	// To detach role from user
-	Route::get('/detachroleuser', 'AdminController@detachRoleUser');
+    // To show the permission list in datatable
+    Route::get('/fetchpermissions', 'AdminController@fetchPermissions');
 
-	// To return rolesusers listing view
-	Route::get('/rolesusers', 'AdminController@rolesUsers');
+    // To get the details of selected permission
+    Route::get('/getselectedpermission', 'AdminController@getSelectedPermission');
 
-	// To save new roleuser
-	Route::post('/saveroleuser', 'AdminController@saveRoleUser');
+    // To detach permission from role
+    Route::get('/detachrolepermission', 'AdminController@detachRolePermission');
 
-	// To show the rolesusers list in datatable
-	Route::get('/fetchrolesusers', 'AdminController@fetchRolesUsers');
-	
-	
-	// To detach permission from user
-	Route::get('/detachpermissionuser', 'AdminController@detachPermissionUser');
+    // To return rolespermissions listing view
+    Route::get('/rolespermissions', 'AdminController@rolesPermissions');
 
-	// To return permissionsusers listing view
-	Route::get('/permissionsusers', 'AdminController@permissionsUsers');
+    // To save new rolepermission
+    Route::post('/saverolepermission', 'AdminController@saveRolePermission');
 
-	// To save new permissionuser
-	Route::post('/savepermissionuser', 'AdminController@savePermissionUser');
+    // To show the rolespermissions list in datatable
+    Route::get('/fetchrolespermissions', 'AdminController@fetchRolesPermissions');
 
-	// To show the permissionsusers list in datatable
-	Route::get('/fetchpermissionsusers', 'AdminController@fetchPermissionsUsers');
 
-	// To show the job payment details
-	Route::get('/jobpayments', 'AdminController@jobpayments');
+    // To detach role from user
+    Route::get('/detachroleuser', 'AdminController@detachRoleUser');
 
-	// To fetch the job payment details
-	Route::get('/fetchjobpayments', 'AdminController@fetchJobPayments');
+    // To return rolesusers listing view
+    Route::get('/rolesusers', 'AdminController@rolesUsers');
 
-	/* -----------------  Newly added route end here ------------------*/
-	
-	
-	/* ---------- Company related functionality ---------- */
+    // To save new roleuser
+    Route::post('/saveroleuser', 'AdminController@saveRoleUser');
 
-	// To return the company categories view
-	Route::get('/companycategories', 'CompanyController@companyCategories');
+    // To show the rolesusers list in datatable
+    Route::get('/fetchrolesusers', 'AdminController@fetchRolesUsers');
 
-	// To save the company category details
-	Route::post('/savecompanycategory', 'CompanyController@saveCompanyCategory');
 
-	// To show the company categories list in datatable
-	Route::get('/fetchcompanycategories', 'CompanyController@fetchCompanyCategories');
+    // To detach permission from user
+    Route::get('/detachpermissionuser', 'AdminController@detachPermissionUser');
 
-	// To get the details of the selected company category
-	Route::get('/getcompanycategorydetails', 'CompanyController@getCompanyCategoryDetails');
+    // To return permissionsusers listing view
+    Route::get('/permissionsusers', 'AdminController@permissionsUsers');
 
-	// To return the company listing view
-	Route::get('/companies', 'CompanyController@companies');
+    // To save new permissionuser
+    Route::post('/savepermissionuser', 'AdminController@savePermissionUser');
 
-	// To save the company details
-	Route::post('/savecompanydetails', 'CompanyController@saveCompanyDetails');
+    // To show the permissionsusers list in datatable
+    Route::get('/fetchpermissionsusers', 'AdminController@fetchPermissionsUsers');
 
-	// To fetch the companies list and show in datatable
-	Route::get('/fetchcompanies', 'CompanyController@fetchCompanies');
+    // To show the job payment details
+    Route::get('/jobpayments', 'AdminController@jobpayments');
 
-	// To get the details of the selected company
-	Route::get('/getcompanydetails', 'CompanyController@getCompanyDetails');
+    // To fetch the job payment details
+    Route::get('/fetchjobpayments', 'AdminController@fetchJobPayments');
 
-	// To update the company details
-	Route::post('/updatecompanydetails', 'CompanyController@updateCompanyDetails');
+    /* -----------------  Newly added route end here ------------------ */
 
-	// To return the company agent view
-	Route::get('/agents', 'CompanyController@agents');
 
-	// To save the agent details
-	Route::post('/saveagent', 'CompanyController@saveAgent');
+    /* ---------- Company related functionality ---------- */
 
-	// To fetch the agent list and show in datatable
-	Route::get('/fetchagents', 'CompanyController@fetchAgents');
+    // To return the company categories view
+    Route::get('/companycategories', 'CompanyController@companyCategories');
 
-	// To get the agent details
-	Route::get('/getagentdetails', 'CompanyController@getAgentDetails');
+    // To save the company category details
+    Route::post('/savecompanycategory', 'CompanyController@saveCompanyCategory');
 
-	// To update the agent details
-	Route::post('/updateagent', 'CompanyController@updateAgent');
+    // To show the company categories list in datatable
+    Route::get('/fetchcompanycategories', 'CompanyController@fetchCompanyCategories');
 
-	// To save the company representative details
-	Route::post('/savecompanyrepresentative', 'CompanyController@saveCompanyRepresentative');
+    // To get the details of the selected company category
+    Route::get('/getcompanycategorydetails', 'CompanyController@getCompanyCategoryDetails');
 
-	// To get the company representative details
-	Route::get('/getcompanyrepresentativedetails', 'CompanyController@getCompanyRepresentativeDetails');
+    // To return the company listing view
+    Route::get('/companies', 'CompanyController@companies');
 
-	// To update the company representative details
-	Route::post('/updatecompanyrepresentative', 'CompanyController@updateCompanyRepresentative');
+    // To save the company details
+    Route::post('/savecompanydetails', 'CompanyController@saveCompanyDetails');
 
-	// To update company image
-	Route::post('/updatecompanyimage', 'CompanyController@updateCompanyImage');
+    // To fetch the companies list and show in datatable
+    Route::get('/fetchcompanies', 'CompanyController@fetchCompanies');
 
-	// To show response time listing page
-	Route::get('/responsetime', 'AdminController@responsetime');
+    // To get the details of the selected company
+    Route::get('/getcompanydetails', 'CompanyController@getCompanyDetails');
 
-	// To save response time
-	Route::post('/saveresponsetime', 'AdminController@saveResponseTime');
+    // To update the company details
+    Route::post('/updatecompanydetails', 'CompanyController@updateCompanyDetails');
 
-	// To get the response time slot listing
-	Route::get('/fetchresponsetimeslots', 'AdminController@fetchResponseTimeSlots');
+    // To return the company agent view
+    Route::get('/agents', 'CompanyController@agents');
 
-	// To get response time slot details
-	Route::get('/getresponsetimeslotdetails', 'AdminController@getResponseTimeSlotDetails');
+    // To save the agent details
+    Route::post('/saveagent', 'CompanyController@saveAgent');
 
-	// To return the company representative view
-	Route::get('/companyrepresentatives', 'CompanyController@companyRepresentatives');
+    // To fetch the agent list and show in datatable
+    Route::get('/fetchagents', 'CompanyController@fetchAgents');
 
-	// To fetch the company representative list and show in datatable
-	Route::get('/fetchcompanyrepresentatives', 'CompanyController@fetchCompanyRepresentatives');
+    // To get the agent details
+    Route::get('/getagentdetails', 'CompanyController@getAgentDetails');
 
-	/* ---------- Company related functionality ---------- */
+    // To update the agent details
+    Route::post('/updateagent', 'CompanyController@updateAgent');
 
-	// To return the provincial agency details page
-	Route::get('/provincialagencies', 'AdminController@provincialAgencies');
+    // To save the company representative details
+    Route::post('/savecompanyrepresentative', 'CompanyController@saveCompanyRepresentative');
 
-	// To save the provincial agency details
-	Route::post('/saveprovincialagency', 'AdminController@saveProvincialAgency');
+    // To get the company representative details
+    Route::get('/getcompanyrepresentativedetails', 'CompanyController@getCompanyRepresentativeDetails');
 
-	// To show the provincial agency list in datatable
-	Route::get('/fetchprovincialagencies', 'AdminController@fetchProvincialAgencies');
+    // To update the company representative details
+    Route::post('/updatecompanyrepresentative', 'CompanyController@updateCompanyRepresentative');
 
-	// To get the details for the selected provincial agency
-	Route::get('/getprovincialagencydetails', 'AdminController@getProvincialAgencyDetails');
+    // To update company image
+    Route::post('/updatecompanyimage', 'CompanyController@updateCompanyImage');
 
-	// Change Password
-	Route::get('/changepassword', 'AdminController@getchangepassword');
+    // To show response time listing page
+    Route::get('/responsetime', 'AdminController@responsetime');
 
-	// To update Password
-	Route::post('/changepassword', 'AdminController@changePassword');
+    // To save response time
+    Route::post('/saveresponsetime', 'AdminController@saveResponseTime');
 
-	// To upload the file and send the email with attachement
-	Route::post('/sendagentemailnotification', 'EmailController@sendAgentEmailNotification');
+    // To get the response time slot listing
+    Route::get('/fetchresponsetimeslots', 'AdminController@fetchResponseTimeSlots');
 
-	// To update the payment status
-	Route::post('/releasepayment', 'AdminController@releasepayment');
+    // To get response time slot details
+    Route::get('/getresponsetimeslotdetails', 'AdminController@getResponseTimeSlotDetails');
 
+    // To return the company representative view
+    Route::get('/companyrepresentatives', 'CompanyController@companyRepresentatives');
+
+    // To fetch the company representative list and show in datatable
+    Route::get('/fetchcompanyrepresentatives', 'CompanyController@fetchCompanyRepresentatives');
+
+    /* ---------- Company related functionality ---------- */
+
+    // To return the provincial agency details page
+    Route::get('/provincialagencies', 'AdminController@provincialAgencies');
+
+    // To save the provincial agency details
+    Route::post('/saveprovincialagency', 'AdminController@saveProvincialAgency');
+
+    // To show the provincial agency list in datatable
+    Route::get('/fetchprovincialagencies', 'AdminController@fetchProvincialAgencies');
+
+    // To get the details for the selected provincial agency
+    Route::get('/getprovincialagencydetails', 'AdminController@getProvincialAgencyDetails');
+
+    // Change Password
+    Route::get('/changepassword', 'AdminController@getchangepassword');
+
+    // To update Password
+    Route::post('/changepassword', 'AdminController@changePassword');
+
+    // To upload the file and send the email with attachement
+    Route::post('/sendagentemailnotification', 'EmailController@sendAgentEmailNotification');
+
+    // To update the payment status
+    Route::post('/releasepayment', 'AdminController@releasepayment');
 });
 
 /* ---------- Agent related functionality ---------- */
 
 // Agent openly access routes
 Route::group(['prefix' => 'agent'], function() {
-	
-	// Agent login page
-	Route::get('/', 'AgentController@index');
 
-	// Function to check user credentials
-	Route::post('/login', 'AgentController@login');
+    // Agent login page
+    Route::get('/', 'AgentController@index');
 
-	Route::get('/logout', 'HomeController@logout');
+    // Function to check user credentials
+    Route::post('/login', 'AgentController@login');
 
-	// Forgot Password function
-	Route::get('/forgotpassword', 'AgentController@getForgotPassword');
+    Route::get('/logout', 'HomeController@logout');
 
-	Route::post('/forgotpassword', 'AgentController@forgotPassword');
+    // Forgot Password function
+    Route::get('/forgotpassword', 'AgentController@getForgotPassword');
 
-
+    Route::post('/forgotpassword', 'AgentController@forgotPassword');
 });
 
 // Agent protected routes
 Route::group(['prefix' => 'agent', 'middleware' => 'auth'], function() {
 
-	// Agent dashboard
-	Route::get('/dashboard', 'AgentController@dashboard');
+    // Agent dashboard
+    Route::get('/dashboard', 'AgentController@dashboard');
 
-	// To show agent clients listing page
-	Route::get('/clients', 'AgentController@clients');
+    // To show agent clients listing page
+    Route::get('/clients', 'AgentController@clients');
 
-	// To show agent invite listing page
-	Route::get('/invites', 'AgentController@invites');
+    // To show agent invite listing page
+    Route::get('/invites', 'AgentController@invites');
 
-	// To save the client details
-	Route::post('/saveclient', 'AgentController@saveClient');
+    // To save the client details
+    Route::post('/saveclient', 'AgentController@saveClient');
 
-	// To fetch the clients list and show in datatable
-	Route::get('/fetchclients', 'AgentController@fetchClients');
+    // To fetch the clients list and show in datatable
+    Route::get('/fetchclients', 'AgentController@fetchClients');
 
-	// To fetch the invited clients list and show in datatable
-	Route::get('/fetchinvitedclients', 'AgentController@fetchInvitedClients');
+    // To fetch the invited clients list and show in datatable
+    Route::get('/fetchinvitedclients', 'AgentController@fetchInvitedClients');
 
-	// To fetch the clients invites and show in datatable
-	Route::get('/fetchinvites', 'AgentController@fetchInvites');
+    // To fetch the clients invites and show in datatable
+    Route::get('/fetchinvites', 'AgentController@fetchInvites');
 
-	// To resend invitation email
-	Route::post('/resendemail', 'AgentController@resendEmail');
+    // To resend invitation email
+    Route::post('/resendemail', 'AgentController@resendEmail');
 
-	// To get the details of the selected client
-	Route::get('/getclientdetails', 'AgentController@getClientDetails');
+    // To get the details of the selected client
+    Route::get('/getclientdetails', 'AgentController@getClientDetails');
 
-	// To get the details of the selected invite
-	Route::get('/getinvitedetails', 'AgentController@getInviteDetails');
+    // To get the details of the selected invite
+    Route::get('/getinvitedetails', 'AgentController@getInviteDetails');
 
-	// To show agent profile page
-	Route::get('/profile', 'AgentController@profile');
+    // To show agent profile page
+    Route::get('/profile', 'AgentController@profile');
 
-	// To save the agent profile details
-	Route::post('/saveprofiledetails', 'AgentController@saveProfileDetails');
+    // To save the agent profile details
+    Route::post('/saveprofiledetails', 'AgentController@saveProfileDetails');
 
-	// To save the agent contact details
-	Route::post('/savecontactdetails', 'AgentController@saveContactDetails');
+    // To save the agent contact details
+    Route::post('/savecontactdetails', 'AgentController@saveContactDetails');
 
-	// To save the agent address details
-	Route::post('/saveaddressdetails', 'AgentController@saveAddressDetails');
+    // To save the agent address details
+    Route::post('/saveaddressdetails', 'AgentController@saveAddressDetails');
 
-	// To save the agent social details
-	Route::post('/savesocialdetails', 'AgentController@saveSocialDetails');
+    // To save the agent social details
+    Route::post('/savesocialdetails', 'AgentController@saveSocialDetails');
 
-	// To save the agent company details
-	Route::post('/savecompanydetails', 'AgentController@saveCompanyDetails');
+    // To save the agent company details
+    Route::post('/savecompanydetails', 'AgentController@saveCompanyDetails');
 
-	// To update the agent message
-	Route::post('/updatemessage', 'AgentController@updateMssage');
+    // To update the agent message
+    Route::post('/updatemessage', 'AgentController@updateMssage');
 
-	// To fetch the client details as well as its associated message and template details to show in popup
-	Route::get('/createinvitation', 'AgentController@createInvitation');
+    // To fetch the client details as well as its associated message and template details to show in popup
+    Route::get('/createinvitation', 'AgentController@createInvitation');
 
-	// To get the email template content
-	Route::get('/getemailtemplatecontent', 'AgentController@getEmailTemplateContent');
+    // To get the email template content
+    Route::get('/getemailtemplatecontent', 'AgentController@getEmailTemplateContent');
 
-	// To update agent email template
-	Route::post('/updateemailtemplate', 'AgentController@updateEmailTemplate');
+    // To update agent email template
+    Route::post('/updateemailtemplate', 'AgentController@updateEmailTemplate');
 
-	// To update agent image
-	Route::post('/updateagentimage', 'AgentController@updateAgentImage');
+    // To update agent image
+    Route::post('/updateagentimage', 'AgentController@updateAgentImage');
 
-	// To update agent company image
-	Route::post('/updateagentcompanyimage', 'AgentController@updateAgentCompanyImage');
+    // To update agent company image
+    Route::post('/updateagentcompanyimage', 'AgentController@updateAgentCompanyImage');
 
-	// To save the agent invitation details
-	Route::post('/saveinvitationdetails', 'AgentController@saveInvitationDetails');
+    // To save the agent invitation details
+    Route::post('/saveinvitationdetails', 'AgentController@saveInvitationDetails');
 
-	// To return email template listing view
-	Route::get('/emailtemplates', 'AgentController@emailTemplates');
+    // To return email template listing view
+    Route::get('/emailtemplates', 'AgentController@emailTemplates');
 
-	// To save the email template details
-	Route::post('/saveemailtemplate', 'AgentController@saveEmailTemplate');
+    // To save the email template details
+    Route::post('/saveemailtemplate', 'AgentController@saveEmailTemplate');
 
-	// To show the email template list in datatable
-	Route::get('/fetchemailtemplates', 'AgentController@fetchEmailTemplates');
+    // To show the email template list in datatable
+    Route::get('/fetchemailtemplates', 'AgentController@fetchEmailTemplates');
 
-	// To get the details of selected email template
-	Route::get('/getemailtemplatedetails', 'AgentController@getEmailTemplateDetails');
+    // To get the details of selected email template
+    Route::get('/getemailtemplatedetails', 'AgentController@getEmailTemplateDetails');
 
-	// Change Password
-	Route::get('/changepassword', 'AgentController@getchangepassword');
+    // Change Password
+    Route::get('/changepassword', 'AgentController@getchangepassword');
 
-	// To update Password
-	Route::post('/changepassword', 'AgentController@changePassword');
+    // To update Password
+    Route::post('/changepassword', 'AgentController@changePassword');
 
-	// To check email preview
-	Route::post('/emailpreview', 'AgentController@emailPreview');
+    // To check email preview
+    Route::post('/emailpreview', 'AgentController@emailPreview');
 
-	// To uplaod the email template image
-	Route::post('/uploademailimage', 'AgentController@uploadEmailImage');
+    // To uplaod the email template image
+    Route::post('/uploademailimage', 'AgentController@uploadEmailImage');
 
-	// To return agent review board page
-	Route::get('/reviews', 'AgentController@reviews');
+    // To return agent review board page
+    Route::get('/reviews', 'AgentController@reviews');
 
-	// To fetch reviews and show in datatable
-	Route::get('/fetchreviews', 'AgentController@fetchReviews');
+    // To fetch reviews and show in datatable
+    Route::get('/fetchreviews', 'AgentController@fetchReviews');
 
-	// To return payment view
-	Route::get('/paymentplan', 'AgentController@paymentplan');
-	
-	/* -----------Newly added route for agent partner start here------------------*/
-	
-	// To save the partner details
-	Route::post('/savepartnerdetails', 'AgentController@savePartnerDetails');
-	
-	// To get the details of the selected partner
-	Route::get('/getpartnerdetails', 'AgentController@getPartnerDetails');
-	
-	// To fetch the partners and show in datatable
-	Route::get('/fetchpartners', 'AgentController@fetchPartners');
-	
-	// To show partner listing page
-	Route::get('/partners', 'AgentController@partners');
+    // To return payment view
+    Route::get('/paymentplan', 'AgentController@paymentplan');
 
-	// To get the payment plan details for paypal payment
-	Route::get('/getplandetails', 'AgentController@getPlanDetails');
-		
-	/* -----------Newly added route for agent partner end here------------------*/
+    /* -----------Newly added route for agent partner start here------------------ */
 
+    // To save the partner details
+    Route::post('/savepartnerdetails', 'AgentController@savePartnerDetails');
 
+    // To get the details of the selected partner
+    Route::get('/getpartnerdetails', 'AgentController@getPartnerDetails');
+
+    // To fetch the partners and show in datatable
+    Route::get('/fetchpartners', 'AgentController@fetchPartners');
+
+    // To show partner listing page
+    Route::get('/partners', 'AgentController@partners');
+
+    // To get the payment plan details for paypal payment
+    Route::get('/getplandetails', 'AgentController@getPlanDetails');
+
+    /* -----------Newly added route for agent partner end here------------------ */
 });
 
 /* ---------- Agent related functionality ---------- */
@@ -693,75 +684,75 @@ Route::group(['prefix' => 'agent', 'middleware' => 'auth'], function() {
 
 // Movers openly access routes
 Route::group(['prefix' => 'movers'], function() {
-	
-	// Movers home page
-	Route::get('/', 'MoversController@index');
 
-	// To check whether the user is authorized or not
-	Route::get('/authenticate', 'MoversController@authenticate');
+    // Movers home page
+    Route::get('/', 'MoversController@index');
 
-	// Movers my move page
-	Route::get('/mymove', 'MoversController@myMove');
+    // To check whether the user is authorized or not
+    Route::get('/authenticate', 'MoversController@authenticate');
 
-	// Check the user authentication
-	Route::post('/checkuserauthentication', 'MoversController@checkUserAuthentication');
+    // Movers my move page
+    Route::get('/mymove', 'MoversController@myMove');
 
-	// To update the completed activity status
-	Route::post('/updateactivitystatus', 'MoversController@updateActivityStatus');
+    // Check the user authentication
+    Route::post('/checkuserauthentication', 'MoversController@checkUserAuthentication');
 
-	// To save the agent feedback given by the client
-	Route::post('/updateagentfeedback', 'MoversController@updateAgentFeedback');
+    // To update the completed activity status
+    Route::post('/updateactivitystatus', 'MoversController@updateActivityStatus');
 
-	// To update the helpful click response
-	Route::post('/updatehelpfulcount', 'MoversController@updateHelpfulCount');
+    // To save the agent feedback given by the client
+    Route::post('/updateagentfeedback', 'MoversController@updateAgentFeedback');
 
-	// To update the user feedback on individual activity
-	Route::post('/updateactivityfeedback', 'MoversController@updateActivityFeedback');
+    // To update the helpful click response
+    Route::post('/updatehelpfulcount', 'MoversController@updateHelpfulCount');
 
-	// To save the user's moving query detail
-	Route::post('/saveusermovingquery', 'MoversController@saveUserMovingQuery');
+    // To update the user feedback on individual activity
+    Route::post('/updateactivityfeedback', 'MoversController@updateActivityFeedback');
 
-	// To get the list of companies satisfying all the criteria to get the mover's quotations
-	Route::get('/quotation', 'MoversController@getFilteredMoverCompaniesList');
+    // To save the user's moving query detail
+    Route::post('/saveusermovingquery', 'MoversController@saveUserMovingQuery');
 
-	// To save the user's tech concierge query detail
-	Route::post('/savetechconciergequery', 'MoversController@saveTechConciergeQuery');
+    // To get the list of companies satisfying all the criteria to get the mover's quotations
+    Route::get('/quotation', 'MoversController@getFilteredMoverCompaniesList');
 
-	// To save the user's cable & internet query detail
-	Route::post('/savecableinternetquery', 'MoversController@saveCableInternetQuery');
+    // To save the user's tech concierge query detail
+    Route::post('/savetechconciergequery', 'MoversController@saveTechConciergeQuery');
 
-	// To save the user's home cleaning query detail
-	Route::post('/savehomecleaningquery', 'MoversController@saveHomeCleaningQuery');
+    // To save the user's cable & internet query detail
+    Route::post('/savecableinternetquery', 'MoversController@saveCableInternetQuery');
 
-	// To get the list of quotation response
-	Route::get('/quotationresponse', 'MoversController@quotationResponse');
+    // To save the user's home cleaning query detail
+    Route::post('/savehomecleaningquery', 'MoversController@saveHomeCleaningQuery');
 
-	// To get the list of datatable quotation response
-	Route::get('/getquotationresponse', 'MoversController@getQuotationResponse');
+    // To get the list of quotation response
+    Route::get('/quotationresponse', 'MoversController@quotationResponse');
 
-	// To get the details for the selected Home Service Request
-	Route::get('/gethomeservicerequest', 'MoversController@getHomeServiceRequest');
+    // To get the list of datatable quotation response
+    Route::get('/getquotationresponse', 'MoversController@getQuotationResponse');
 
-	// To get the details for the selected Cable Service Request
-	Route::get('/getcableservicerequest', 'MoversController@getCableServiceRequest');
+    // To get the details for the selected Home Service Request
+    Route::get('/gethomeservicerequest', 'MoversController@getHomeServiceRequest');
 
-	// To get the details for the selected Tech Concierge Request
-	Route::get('/gettechconciergerequest', 'MoversController@getTechConciergeRequest');
+    // To get the details for the selected Cable Service Request
+    Route::get('/getcableservicerequest', 'MoversController@getCableServiceRequest');
 
-	// To get the details for the selected Moving Companies Request
-	Route::get('/getmovingcompaniesrequest', 'MoversController@getMovingCompaniesRequest');
+    // To get the details for the selected Tech Concierge Request
+    Route::get('/gettechconciergerequest', 'MoversController@getTechConciergeRequest');
 
-	// To get the quotation response details
-	Route::get('/getquotationresponsedetails', 'MoversController@getQuotationResponseDetails');
+    // To get the details for the selected Moving Companies Request
+    Route::get('/getmovingcompaniesrequest', 'MoversController@getMovingCompaniesRequest');
 
-	// To save the share announcement email and message
-	Route::post('/saveannouncementemail', 'MoversController@saveAnnouncementEmail');
+    // To get the quotation response details
+    Route::get('/getquotationresponsedetails', 'MoversController@getQuotationResponseDetails');
 
-	// To fetch the utility services for the selected company
-	Route::get('/getcompanyservices', 'MoversController@getCompanyServices');
+    // To save the share announcement email and message
+    Route::post('/saveannouncementemail', 'MoversController@saveAnnouncementEmail');
 
-	// To save the completed utility
-	Route::post('/updateutilityservicelog', 'MoversController@updateUtilityServiceLog');
+    // To fetch the utility services for the selected company
+    Route::get('/getcompanyservices', 'MoversController@getCompanyServices');
+
+    // To save the completed utility
+    Route::post('/updateutilityservicelog', 'MoversController@updateUtilityServiceLog');
 });
 
 /* ---------- Movers related functionality ---------- */
@@ -769,161 +760,157 @@ Route::group(['prefix' => 'movers'], function() {
 // Company openly access routes
 Route::group(['prefix' => 'company'], function() {
 
-	// Company login page
-	Route::get('/', 'CompanyController@index');
-	
-	// Company registration page home page
-	Route::get('/registration', 'CompanyController@register');
+    // Company login page
+    Route::get('/', 'CompanyController@index');
 
-	// Function to check company credentials
-	Route::post('/login', 'CompanyController@login');
+    // Company registration page home page
+    Route::get('/registration', 'CompanyController@register');
 
-	Route::get('/logout', 'HomeController@logout');
+    // Function to check company credentials
+    Route::post('/login', 'CompanyController@login');
 
-	// To register a new company
-	Route::post('/registercompany', 'CompanyController@registerCompany');
+    Route::get('/logout', 'HomeController@logout');
 
-	// To return the payment plan page
-	Route::get('/paymentplan', 'CompanyController@paymentplan');
+    // To register a new company
+    Route::post('/registercompany', 'CompanyController@registerCompany');
 
-	// To update the company payment plan
-	Route::post('/updatecompanypaymentplan', 'CompanyController@updateCompanyPaymentPlan');
+    // To return the payment plan page
+    Route::get('/paymentplan', 'CompanyController@paymentplan');
 
-	// Forgot Password function
-	Route::get('/forgotpassword', 'CompanyController@getForgotPassword');
-	
-	Route::post('/forgotpassword', 'CompanyController@forgotPassword');
-	
+    // To update the company payment plan
+    Route::post('/updatecompanypaymentplan', 'CompanyController@updateCompanyPaymentPlan');
+
+    // Forgot Password function
+    Route::get('/forgotpassword', 'CompanyController@getForgotPassword');
+
+    Route::post('/forgotpassword', 'CompanyController@forgotPassword');
 });
 
 Route::group(['prefix' => 'company', 'middleware' => 'auth'], function() {
 
-	// Company dashboard
-	Route::get('/dashboard', 'CompanyController@dashboard');
+    // Company dashboard
+    Route::get('/dashboard', 'CompanyController@dashboard');
 
-	// Company profile
-	Route::get('/profile', 'CompanyController@profile');
+    // Company profile
+    Route::get('/profile', 'CompanyController@profile');
 
-	// To update company details
-	Route::post('/updatecompanybasicdetails', 'CompanyController@updateCompanyBasicDetails');
+    // To update company details
+    Route::post('/updatecompanybasicdetails', 'CompanyController@updateCompanyBasicDetails');
 
-	// To update company address details
-	Route::post('/updatecompanyaddressdetails', 'CompanyController@updateCompanyAddressDetails');
+    // To update company address details
+    Route::post('/updatecompanyaddressdetails', 'CompanyController@updateCompanyAddressDetails');
 
-	// To update company social details
-	Route::post('/updatecompanysocialdetails', 'CompanyController@updateCompanySocialDetails');
+    // To update company social details
+    Route::post('/updatecompanysocialdetails', 'CompanyController@updateCompanySocialDetails');
 
-	// To fetch the services as per the selected category
-	Route::get('/getcompanycategoryservices', 'CompanyController@getCompanyCategoryServices');
+    // To fetch the services as per the selected category
+    Route::get('/getcompanycategoryservices', 'CompanyController@getCompanyCategoryServices');
 
-	// To update company additional details
-	Route::post('/updatecompanyadditionaldetails', 'CompanyController@updateCompanyAdditionalDetails');
+    // To update company additional details
+    Route::post('/updatecompanyadditionaldetails', 'CompanyController@updateCompanyAdditionalDetails');
 
-	// To update company image
-	Route::post('/updatecompanyimage', 'CompanyController@updateCompanyImage');
+    // To update company image
+    Route::post('/updatecompanyimage', 'CompanyController@updateCompanyImage');
 
-	// Change Password
-	Route::get('/changepassword', 'CompanyController@getchangepassword');
+    // Change Password
+    Route::get('/changepassword', 'CompanyController@getchangepassword');
 
-	// To update Password
-	Route::post('/changepassword', 'CompanyController@changePassword');
+    // To update Password
+    Route::post('/changepassword', 'CompanyController@changePassword');
 
-	// To get the details for the selected Home Service Request
-	Route::get('/gethomeservicerequest', 'CompanyController@getHomeServiceRequest');
+    // To get the details for the selected Home Service Request
+    Route::get('/gethomeservicerequest', 'CompanyController@getHomeServiceRequest');
 
-	// To get the details for the selected Cable Service Request
-	Route::get('/getcableservicerequest', 'CompanyController@getCableServiceRequest');
+    // To get the details for the selected Cable Service Request
+    Route::get('/getcableservicerequest', 'CompanyController@getCableServiceRequest');
 
-	// To get the details for the selected Tech Concierge Request
-	Route::get('/gettechconciergerequest', 'CompanyController@getTechConciergeRequest');
+    // To get the details for the selected Tech Concierge Request
+    Route::get('/gettechconciergerequest', 'CompanyController@getTechConciergeRequest');
 
-	// To get the details for the selected Moving Companies Request
-	Route::get('/getmovingcompaniesrequest', 'CompanyController@getMovingCompaniesRequest');
+    // To get the details for the selected Moving Companies Request
+    Route::get('/getmovingcompaniesrequest', 'CompanyController@getMovingCompaniesRequest');
 
-	// To return the Quotation Request page
-	Route::get('/quotationrequest', 'CompanyController@QuotationRequest');
+    // To return the Quotation Request page
+    Route::get('/quotationrequest', 'CompanyController@QuotationRequest');
 
-	// To save the Quotation Request
-	Route::post('/savequotationrequest', 'CompanyController@saveQuotationRequest');
+    // To save the Quotation Request
+    Route::post('/savequotationrequest', 'CompanyController@saveQuotationRequest');
 
-	// To show the Quotation Request list in datatable
-	Route::get('/fetchquotationrequest', 'CompanyController@fetchQuotationRequest');
+    // To show the Quotation Request list in datatable
+    Route::get('/fetchquotationrequest', 'CompanyController@fetchQuotationRequest');
 
-	// To get the details for the selected Quotation Request
-	Route::get('/getquotationrequest', 'CompanyController@getQuotationRequest');
+    // To get the details for the selected Quotation Request
+    Route::get('/getquotationrequest', 'CompanyController@getQuotationRequest');
 
-	// To update the home cleaning request quotation price related data
-	Route::post('/updatehomecleaningservicerequest', 'CompanyController@updateHomeCleaningServiceRequest');
+    // To update the home cleaning request quotation price related data
+    Route::post('/updatehomecleaningservicerequest', 'CompanyController@updateHomeCleaningServiceRequest');
 
-	// To update the moving request quotation price related data
-	Route::post('/updatemovingservicerequest', 'CompanyController@updateMovingServiceRequest');
+    // To update the moving request quotation price related data
+    Route::post('/updatemovingservicerequest', 'CompanyController@updateMovingServiceRequest');
 
-	// To update the tech concierge quotation price related data
-	Route::post('/updatetechconciergeservicerequest', 'CompanyController@updateTechConciergeServiceRequest');
+    // To update the tech concierge quotation price related data
+    Route::post('/updatetechconciergeservicerequest', 'CompanyController@updateTechConciergeServiceRequest');
 
-	// To update the cable internet quotation price related data
-	Route::post('/updatecableinternetservicerequest', 'CompanyController@updateCableInternetServiceRequest');
+    // To update the cable internet quotation price related data
+    Route::post('/updatecableinternetservicerequest', 'CompanyController@updateCableInternetServiceRequest');
 
-	// To get the pst, gst, hst, service charge values
-	Route::get('/fetchprovincetaxes', 'CompanyController@fetchProvinceTaxes');
+    // To get the pst, gst, hst, service charge values
+    Route::get('/fetchprovincetaxes', 'CompanyController@fetchProvinceTaxes');
 
-	// To show the review page
-	Route::get('/review', 'CompanyController@review');
+    // To show the review page
+    Route::get('/review', 'CompanyController@review');
 
-	// To fetch the reviews and show in datatable
-	Route::get('/fetchreviews', 'CompanyController@fetchReviews');
+    // To fetch the reviews and show in datatable
+    Route::get('/fetchreviews', 'CompanyController@fetchReviews');
 
-	// To show the assigned jobs to the company
-	Route::get('/jobs', 'CompanyController@jobs');
+    // To show the assigned jobs to the company
+    Route::get('/jobs', 'CompanyController@jobs');
 
-	// To fetch the job listing
-	Route::get('/fetchjobs', 'CompanyController@fetchJobs');
+    // To fetch the job listing
+    Route::get('/fetchjobs', 'CompanyController@fetchJobs');
 
-	// Company request to release money
-	Route::post('/requestmoney', 'CompanyController@requestMoney');
-
+    // Company request to release money
+    Route::post('/requestmoney', 'CompanyController@requestMoney');
 });
 
 // Paypal payment related routes
 Route::group(['prefix' => 'paypal'], function() {
 
-	// Payment is successfully done
-	Route::get('/success', 'PaymentController@success');
+    // Payment is successfully done
+    Route::get('/success', 'PaymentController@success');
 
-	// Payment is cancelled
-	Route::get('/cancel', 'PaymentController@cancel');
+    // Payment is cancelled
+    Route::get('/cancel', 'PaymentController@cancel');
 
-	// To check the paypal payment status by using IPN
-	Route::post('/paymentstatus', 'PaymentController@paymentStatus');
-
+    // To check the paypal payment status by using IPN
+    Route::post('/paymentstatus', 'PaymentController@paymentStatus');
 });
 
 // CRON URL's
 Route::group(['prefix' => 'scheduler'], function() {
 
-	// To send invitation email
-	Route::get('/sendinvitationemail', 'SchedulerController@sendInvitationEmail');
+    // To send invitation email
+    Route::get('/sendinvitationemail', 'SchedulerController@sendInvitationEmail');
 
-	// To send the mover emails
-	Route::get('/sendcompanyquotationresponseemail', 'SchedulerController@sendCompanyQuotationResponseEmail');
+    // To send the mover emails
+    Route::get('/sendcompanyquotationresponseemail', 'SchedulerController@sendCompanyQuotationResponseEmail');
 
-	// To send the company notification emails
-	Route::get('/sendcompanynotificationemail', 'SchedulerController@sendCompanyNotificationEmail');
+    // To send the company notification emails
+    Route::get('/sendcompanynotificationemail', 'SchedulerController@sendCompanyNotificationEmail');
 
-	// To send the share announcement email
-	Route::get('/sendannouncementemail', 'SchedulerController@sendAnnouncementEmail');
-
+    // To send the share announcement email
+    Route::get('/sendannouncementemail', 'SchedulerController@sendAnnouncementEmail');
 });
 
 // Logout
 Route::get('/logout', 'HomeController@logout');
 
 // To fetch the images from storage and return it
-Route::get('/images/{entity}/{filename}', function ($entity, $filename)
-{
+Route::get('/images/{entity}/{filename}', function ($entity, $filename) {
     $path = storage_path() . '/uploads/' . $entity . '/' . $filename;
 
-    if(!File::exists($path)) abort(404);
+    if (!File::exists($path))
+        abort(404);
 
     $file = File::get($path);
     $type = File::mimeType($path);

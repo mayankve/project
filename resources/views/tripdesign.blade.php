@@ -356,7 +356,8 @@
             }
 
             if ($(".selected_todo:checked").val() == undefined)
-            {
+            {   
+                $('#Section2').focus();
                 alert('Please select Packing List');
                 return false;
             }

@@ -58,8 +58,6 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <!--------Cart Begin------->
-                    
-                    
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><a href="{{url('/about') }}">About </a></li>
                         <li class="dropdown dropdown-hov">
@@ -72,7 +70,7 @@
                                 @endif
                             </ul>
                         </li>
-                        <li><a href="#"> Testimony </a></li>
+                        <!--<li><a href="#"> Testimony </a></li>-->
                         <li><a href="{{url('/contact') }}"> Contact</a></li>
                         <?php
                         //  log(1);
@@ -82,7 +80,6 @@
                         <li>
                         <a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
                         <?php } else{
-						//	echo "<pre>";print_r($data['user_data']);die;
                             ?> 
                             <li><a href="{{url('/dashboard') }}"> Dashboard</a></li>
                             <div class="user-profile">
