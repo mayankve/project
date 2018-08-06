@@ -405,6 +405,7 @@
         });
 
         $('#is_solo a').on('click', function () {
+			//alert();
             $('.selected_hotel').prop('checked', false);
             $('.total_hotel_cost').text('$' + '0')
             var sel = $(this).data('title');

@@ -242,7 +242,7 @@ $addonfinal_price=0;
 							$addonprice=$value['add_on_detail']->addons_cost;
 							$addonflight_price=(is_array($value['flight_data']))?'0':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'0';
 							$addonhote_price=!empty($value['hote_data'])?$value['hote_data']->hotel_reserve_amount:'';
-							$addontravler= count($value['travler_info']);
+							$addontravler= !empty($value['travler_info'])?count($value['travler_info']):'0';
 							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
 						 ?> 
 					<div class="col-sm-12">
@@ -783,7 +783,11 @@ $trip_only_amount= 	($trip_flight_amount + $trip_hotel_amount) * $trip_traveler	
 // end here//
 $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 ?>
-    <div class="form-group">
+  
+</div>
+</div>
+</div>
+ 
         <div class="col-sm-12 text-right">
             <div class="update-btn">
 			<div class="panel-tools">
@@ -805,10 +809,6 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 
 	<div>
 	<?php
@@ -816,7 +816,7 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 	?>
 			<button type="submit"  name="checkout">Pay Now</button>
 		<?php } ?>
-			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Cart</a>
+			<a href="javascript:history.back()">Edit Cart</a>	
 	</div>
 	
 	

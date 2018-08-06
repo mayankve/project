@@ -102,9 +102,8 @@ class CartController extends Controller
 				}
 			}
 			
-		}
-		
-	//echo '<pre>';print_r($flightdata);die;	
+		}		
+	//==echo '<pre>';print_r($flightdata);die;	
 		// trip flight info//
 		
 		  $data['tripAirlines'] = DB::table('trip_airline')
@@ -186,7 +185,7 @@ class CartController extends Controller
 						}						
 				}	
 				
-		//echo '<pre>';print_r($addondetail);die;
+		
 				for($i = 0; $i < count($addondetail['add_on_detail']); $i++){
 					
 					$test[$i]['add_on_detail'] = (!empty($addondetail['add_on_detail'][$i+1][0]))?$addondetail['add_on_detail'][$i+1][0]:'';
@@ -244,7 +243,7 @@ class CartController extends Controller
 			
 		}
 		
-	//echo '<pre>';print_r($activityflightarray);die;	
+	
 		
 		
 		$activity=array();

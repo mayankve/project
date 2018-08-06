@@ -4,7 +4,7 @@
     <div class="panel-heading">
         <h3 class="panel-title"><strong>included Activities</strong></h3>
         <div class="panel-tools">
-            <label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
+            <!--<label style="color: black">Total Cost: </label> <label class="" style="color: black">$0</label>-->
             <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>
         </div>
     </div>
