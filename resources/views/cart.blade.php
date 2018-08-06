@@ -783,7 +783,11 @@ $trip_only_amount= 	($trip_flight_amount + $trip_hotel_amount) * $trip_traveler	
 // end here//
 $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 ?>
-    <div class="form-group">
+  
+</div>
+</div>
+</div>
+ 
         <div class="col-sm-12 text-right">
             <div class="update-btn">
 			<div class="panel-tools">
@@ -805,10 +809,6 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 
 	<div>
 	<?php
@@ -816,7 +816,7 @@ $final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
 	?>
 			<button type="submit"  name="checkout">Pay Now</button>
 		<?php } ?>
-			<a href="{{url('mytripdesign/'.$trip_id)}}">Edit Cart</a>
+			<a href="javascript:history.back()">Edit Cart</a>	
 	</div>
 	
 	
