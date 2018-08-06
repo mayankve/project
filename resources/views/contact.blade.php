@@ -6,7 +6,7 @@
 <div class="alert-message">
 </div>
 
-            <div class="container contact-form">
+<div class="container contact-form">
     <h3></h3>
   <div class="row">
     <div class="col-md-12">

@@ -3,9 +3,8 @@
 @section('content')
 
 <?php
-
-$tavelerearray=array();
-$addonfinal_price=0;
+$tavelerearray = array();
+$addonfinal_price = 0;
 //echo $trip_only_amount;											
 ?>
 
@@ -34,305 +33,22 @@ $addonfinal_price=0;
     <div class="row text-right">
         <!--<h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
     </div>
-	
-	<?php if(isset($_SESSION['card_item']) && !empty($_SESSION['card_item'])){?>
-	<form method="post" action="{{url('checkout')}}">
-    <div class="" id="pageWrapper">
-        <div id="" class="customtab">
-            <!-- Nav tabs -->
-           
-            <div class="tab-content">
-                <!-- flight-land-------------------Start --------------------------------------->
-                <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-                    <input type="hidden" name="trip_id" id="trip_id"  value="<?php echo (!empty($_SESSION['card_item']))?$_SESSION['card_item']['trip_id']:'';?>">
-                    <div class="panel panel-primary trip-design-flight">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><strong>Trip Flight</strong></h3>
-                            <div class="panel-tools">
-                               
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="basic_info_view">   
-                                <div class="form-horizontal">
-                                    <div class="form-group pdrow-group">
-                                        <div class="col-sm-9">
-                                            <div class="row">
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Airline Panel -->
-                                    <div class="panel panel-default">
-											<div class="available-flights">
-                                        <div class="form-group pdrow-group">
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    
-                                                    <div class="col-sm-2">
-                                                        <b>Airline Name</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Departure Location</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Departure Date</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Departure Time</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Reserve Amount</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Cost</b>
-                                                    </div>
-                                                   
-                                                </div>
-                                            </div>
-                                        </div>
-																
-                                        <div class="form-group pdrow-group parent">
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->name:$_SESSION['card_item']['flight_name'];?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                       <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_departure_location:$_SESSION['card_item']['flight_number'];?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                      <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_departure_date:$_SESSION['card_item']['departure_date'];?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                      <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_departure_time:$_SESSION['card_item']['departure_time'];?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_reserve_amount:'';?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                          <?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->airline_cost:'';?>
-                                                    </div>
-                                                  
-                                                    <input type="hidden" name="trip_flight_id" value="<?php echo (count($tripdata['tripAirlines'])>0)?$tripdata['tripAirlines'][0]->id:'';?>">
-                                                </div>
-                                            </div>
-                                        </div>
-										
-                                        
-                                        </div>                                        
-                               </div>                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>                  
-                </div>
-				
-				
-				
-				<!-- trip hotel here -->
-				
-				 <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-                  
-                    <div class="panel panel-primary trip-design-flight">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><strong>Trip Hotel</strong></h3>
-                            <div class="panel-tools">
-                                
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="basic_info_view">   
-                                <div class="form-horizontal">
-                                    <div class="form-group pdrow-group">
-                                        <div class="col-sm-9">
-                                            <div class="row">
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Airline Panel -->
-                                    <div class="panel panel-default">
-											<div class="available-flights">
-                                        <div class="form-group pdrow-group">
-                                            <div class="col-sm-12">
-                               <div class="row">
-									<div class="col-sm-2">
-										<b>Hotel Name</b>
-									</div>
-									<div class="col-sm-2">
-										<b>Type</b>
-									</div>
-									<div class="col-sm-2">
-										<b>Due Date</b>
-									</div>
-									<div class="col-sm-2">
-										<b>Reserve Amount</b>
-									</div>
-									<div class="col-sm-2" >
-										<b>Cost</b>
-									</div>
 
-									<div class="col-sm-2">
-										<b>Solo Cost</b>
-									</div>
-                            </div>
-                                            </div>
-                                        </div>
-                                        <?php
-                                      
-                                         if(count($tripdata['tripHotels'])>0){
-											
-                                        ?>                                    
-                                        <div class="form-group pdrow-group parent">
-                                            <div class="col-sm-12">
-                                                <div class="row">
-                                                    <div class="col-sm-2">
-                                                        <?php echo $tripdata['tripHotels'][0]->hotel_name;?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                         <?php echo $tripdata['tripHotels'][0]->hotel_type;?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                     <?php echo $tripdata['tripHotels'][0]->hotel_due_date;?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                       <?php echo $tripdata['tripHotels'][0]->hotel_reserve_amount;?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                         <?php echo $tripdata['tripHotels'][0]->hotel_cost;?>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                            <?php echo $tripdata['tripHotels'][0]->hotel_solo_cost;?>
-                                                    </div>
-                                                     <input type="hidden" name="trip_hotel_id" value="<?php echo (count($tripdata['tripHotels'])>0)?$tripdata['tripHotels'][0]->id:'';?>">
-                                                </div>
-                                            </div>
-										 </div><?php } ?>
-                                        
-                                        </div>                                        
-                               </div>                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>                  
-                </div>
-						
-				<!-- trip hotel here -->
-<?php if(!empty($final)){?>
-<div class="panel panel-primary addon-main">
-    <div class="panel-heading">
-        <h3 class="panel-title"><strong>Add Ons</strong></h3>
-        <div class="panel-tools">
-           <!-- <label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$<?php //echo $finaladd_on_amount;?></label>
-            <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
-        </div>
-    </div>
-<div class="panel-body">
-    <div class="basic_info_view">   
-        <div class="form-horizontal">
-            <div class="trip-addons">
-                <div class="form-group">
-                   
-                       <?php
-					  // echo '<pre>';print_r($final);die;
-						$i=1;
-						
-						foreach($final as $key=>$value){
-							$addonprice=$value['add_on_detail']->addons_cost;
-							$addonflight_price=(is_array($value['flight_data']))?'0':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'0';
-							$addonhote_price=!empty($value['hote_data'])?$value['hote_data']->hotel_reserve_amount:'';
-							$addontravler= !empty($value['travler_info'])?count($value['travler_info']):'0';
-							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
-						 ?> 
-					<div class="col-sm-12">
-                        <div class="row number-group-row parent">
-						<div class="addon">
-							
-							 <div class="col-sm-3">
-                                <?php echo $i;?>
-                            </div>
-							
-                            <div class="col-sm-3">
-                                <?php echo (!empty($value['add_on_detail']))?$value['add_on_detail']->addons_name:'';?>
-                            </div>
-                            <div class="col-sm-3">
-                           <?php echo (!empty($value['add_on_detail']))?$value['add_on_detail']->addons_detail:'';?>
-                            </div>
-                            <div class="col-sm-3">
-                              $<?php echo (!empty($value['add_on_detail']))?$value['add_on_detail']->addons_cost:'';?>
-                            </div>
-                            <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo $value['add_on_detail']->id;?>">                  
-                        </div>
-                        <div class="row">
-                            
-							
-							<div class="panel panel-primary traveler-list">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Travelers list</strong></h3>
-                                    <div class="panel-tools">                                   
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="basic_info_view">   
-                                        <div class="form-horizontal">
-                                            <div class="trip-addons">
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                                <label>SN.</label>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                <label>Name</label>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                <label>Gender</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-												<?php 
-												
-												$j=1;
-												if(!empty($value['travler_info'])){
-												foreach($value['travler_info'] as $travelerkey=>$traveler){
-													array_push($tavelerearray,$travelerkey);
-													//$travelere=DB::select('select * from trip_traveler where trip_id='.$trip_id.' and status="1" and id='.$traveler.'');?>
-                                                <div class="form-group pdrow-group">
-                                                   
-                                                    <div class="col-sm-12 travler">
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                              <?php echo $j;?>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                 <?php echo $traveler[0]->first_name;?> <?php echo $traveler[0]->last_name;?>
-                                                            </div>
-                                                            <div class="col-sm-5">
-                                                                <?php echo ($traveler[0]->gender==1)?'Male':'Female';?>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                   <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$travelerkey}}]" value="<?php echo (!empty($traveler[0]->id))?$traveler[0]->id:'';?>"> 
-                                                </div>
-												</div><?php $j++; } }
-										//print_r($tavelerearray);											
-										?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <?php if (isset($_SESSION['card_item']) && !empty($_SESSION['card_item'])) { ?>
+        <form method="post" action="{{url('checkout')}}">
+            <div class="" id="pageWrapper">
+                <div id="" class="customtab">
+                    <!-- Nav tabs -->
 
-						
-						
-                        <div class="row addon_flight">
+                    <div class="tab-content">
+                        <!-- flight-land-------------------Start --------------------------------------->
+                        <div role="tabpanel" class="tab-pane active" id="DesignTrip">
+                            <input type="hidden" name="trip_id" id="trip_id"  value="<?php echo (!empty($_SESSION['card_item'])) ? $_SESSION['card_item']['trip_id'] : ''; ?>">
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
+                                    <h3 class="panel-title"><strong>Trip Flight</strong></h3>
                                     <div class="panel-tools">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="panel-body">
@@ -341,248 +57,18 @@ $addonfinal_price=0;
                                             <div class="form-group pdrow-group">
                                                 <div class="col-sm-9">
                                                     <div class="row">
-                                                       
-                                                        <div class="col-sm-6">
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="addon-available-flights">
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            
-                                                            <div class="col-sm-2">
-                                                                <b>Airline Name</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Departure Location</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Departure Date</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Departure Time</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Reserve Amount</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Cost</b>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-													<?php 
-													 ?>
-
-                                                <div class="form-group pdrow-group flightparent">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                               <?php echo (is_array ($value['flight_data']))?$value['flight_data'][0]:$value['flight_data']->name;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                 <?php echo (is_array($value['flight_data']))?$value['flight_data'][1]:$value['flight_data']->airline_departure_location;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                              <?php echo (is_array($value['flight_data']))?$value['flight_data'][2]:$value['flight_data']->airline_departure_date;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <?php echo (is_array($value['flight_data']))?$value['flight_data'][3]:$value['flight_data']->airline_departure_time;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <?php echo (is_array($value['flight_data']))?'':$value['flight_data']->airline_reserve_amount;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                 <?php echo (is_array($value['flight_data']))?'':$value['flight_data']->airline_cost;?>
-                                                            </div>
-                                                           <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data']))?'':$value['flight_data']->id;?>">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    <div class="row addon_hotel">
-                        <div class="panel panel-primary trip-design-hotel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Hotels</strong></h3>
-                                <div class="panel-tools">
-                                  
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="basic_info_view">   
-                                    <div class="form-horizontal">
-                                        <div class="trip-addons">
-                                            <div class="form-group pdrow-group">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-9">
-                                                            
-                                                        </div>
-                                                       
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group pdrow-group">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        
-                                                        <div class="col-sm-2">
-                                                            <b>Hotel Name</b>
-                                                        </div>
-                                                        <div class="col-sm-2">
-                                                            <b>Type</b>
-                                                        </div>
-                                                        <div class="col-sm-2">
-                                                            <b>Due Date</b>
-                                                        </div>
-                                                        
-                                                        <div class="col-sm-2 hotel_solo_cost">
-                                                            <b>Reserve Amount</b>
-                                                        </div>
-                                                        <div class="col-sm-2 hotel_solo_cost">
-                                                            <b>Solo Cost</b>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                           <?php 
-											 ?>
-                                                <div class="form-group pdrow-group hotleparent">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                                <?php echo $value['hote_data']->hotel_name;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <?php echo $value['hote_data']->hotel_type;?>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                               <?php echo ($value['hote_data']->hotel_due_date!='')?$value['hote_data']->hotel_due_date:'';?>
-                                                            </div>
-                                                            
-                                                            <div class="col-sm-2 hotel_cost" >
-                                                                <label>$</label>
-                                                                <label class="cost">
-                                                                   <?php echo $value['hote_data']->hotel_reserve_amount;?>
-                                                                </label>
-                                                             </div>
-                                                            <div class="col-sm-2 hotel_cost">
-                                                                <label>$</label> 
-                                                                <label class="cost"> <?php echo $value['hote_data']->hotel_solo_cost;?></label>
-                                                            </div>                                                            
-                                                            	<input type="hidden" name="add_on_hotel_id[{{$i}}]" value="<?php echo (!empty($value['hote_data']))?$value['hote_data']->id:'';?>">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                               
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-12 text-right">
-                                                <div class="update-btn">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-						</div>
-                        </div>
-                      
-					   </div><?php $i++; } ?>
-					
-                </div>
-				
-            </div>
-        </div>
-    </div>
-</div>
-</div>	<?php }?>
-
-
-<!-- include activity-->
-
-<div class="panel panel-primary addon-main">
-    <div class="panel-heading">
-        <h3 class="panel-title"><strong>included Activities</strong></h3>
-        <div class="panel-tools">
-            <!--<label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
-            <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="basic_info_view">   
-            <div class="form-horizontal">
-                <div class="trip-addons">
-                    <div class="form-group">
-					 <?php
-                            $id = 1;	
-								$activityamount=0;	
-								$activityflightamount=0;
-								$activityhotelamount=0;	
-                            ?>   
-                            @if(!empty($tripIncludedActivities))
-                           
-                            @foreach ( $tripIncludedActivities AS $includedActivity)
-								<?php $activityamount = $activityamount+$includedActivity['tripIncludedActivities']->activity_cost;?>
-                        <div class="col-sm-12">
-                           
-                            <div class="row number-group-row">
-                                <div class="col-sm-1">
-                                    {{$id}}     
-                                </div>
-                                <div class="col-sm-3">
-                                    {{ isset($includedActivity['tripIncludedActivities']->activity_name) ? $includedActivity['tripIncludedActivities']->activity_name : 'N/A' }}
-                                </div>
-                                <div class="col-sm-3">
-                                    {{ isset($includedActivity['tripIncludedActivities']->activity_detail) ? $includedActivity['tripIncludedActivities']->activity_detail : 'N/A' }}
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>${{ isset($includedActivity['tripIncludedActivities']->activity_cost) ? $includedActivity['tripIncludedActivities']->activity_cost : 'N/A' }}</label>
-                                    <label class="addon_cost"> </label>
-                                </div>
-                                <!------ Radio button here--------------->
-                            </div>
-                          <input type="hidden" name="includedactivity_id[{{$id}}]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
-                        
-                            <div class="row">
-                                <div class="panel panel-primary trip-design-flight">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
-                                        <div class="panel-tools">
-                                         
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="basic_info_view">   
-                                            <div class="form-horizontal">
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-9">
-                                                        <div class="row">
-                                                           
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="addon-available-flights">
+                                            <!-- Airline Panel -->
+                                            <div class="panel panel-default">
+                                                <div class="available-flights">
                                                     <div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
-                                                               
-                                                                <div class="col-sm-3">
+
+                                                                <div class="col-sm-2">
                                                                     <b>Airline Name</b>
                                                                 </div>
                                                                 <div class="col-sm-2">
@@ -591,251 +77,766 @@ $addonfinal_price=0;
                                                                 <div class="col-sm-2">
                                                                     <b>Departure Date</b>
                                                                 </div>
-                                                                <div class="col-sm-1">
+                                                                <div class="col-sm-2">
                                                                     <b>Departure Time</b>
                                                                 </div>
-                                                                <div class="col-sm-1">
+                                                                <div class="col-sm-2">
                                                                     <b>Reserve Amount</b>
                                                                 </div>
-                                                                <div class="col-sm-1">
+                                                                <div class="col-sm-2">
                                                                     <b>Cost</b>
                                                                 </div>
-                                                               
+
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
-                                                    @if(!empty($includedActivity['activity_flight']))
-                                                  <?php 
-												$reserve_amount= (is_array ($includedActivity['activity_flight']))?'0': !empty($includedActivity['activity_flight'])?$includedActivity['activity_flight']->airline_reserve_amount:'0';
-											  $activityflightamount = $activityflightamount+ $reserve_amount;?>
-													
-													<div class="form-group pdrow-group">
+
+                                                    <div class="form-group pdrow-group parent">
                                                         <div class="col-sm-12">
                                                             <div class="row">
-                                                               
-															  
-                                                                <div class="col-sm-3">
-																 <?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][0]:$includedActivity['activity_flight']->airline_name;?>
-                                                              
+                                                                <div class="col-sm-2">
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->name : $_SESSION['card_item']['flight_name']; ?>
                                                                 </div>
                                                                 <div class="col-sm-2">
-																 <?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][1]:$includedActivity['activity_flight']->airline_departure_location;?>
-                                                                    
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_location : $_SESSION['card_item']['flight_number']; ?>
                                                                 </div>
                                                                 <div class="col-sm-2">
-																<?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][2]:$includedActivity['activity_flight']->airline_departure_date;?>
-                                                                 
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_date : $_SESSION['card_item']['departure_date']; ?>
                                                                 </div>
-                                                                <div class="col-sm-1">
-																<?php echo (is_array ($includedActivity['activity_flight']))?$includedActivity['activity_flight'][3]:$includedActivity['activity_flight']->airline_departure_time;?>
-                                                                   
+                                                                <div class="col-sm-2">
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_time : $_SESSION['card_item']['departure_time']; ?>
                                                                 </div>
-                                                                <div class="col-sm-1">
-																	<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->airline_reserve_amount;?>
-                                                               
+                                                                <div class="col-sm-2">
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : ''; ?>
                                                                 </div>
-                                                                <div class="col-sm-1">
-																<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->airline_cost;?>
-                                                                  
+                                                                <div class="col-sm-2">
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : ''; ?>
                                                                 </div>
-                                                                <div class="col-sm-1">
-                                                                <label>
-                                              <input type="hidden" name="includedactivity_flight_id[{{$id}}]" value="<?php echo (is_array ($includedActivity['activity_flight']))?'':$includedActivity['activity_flight']->id;?>" >
-																 
-                                                                </label>
-                                                                </div>
+
+                                                                <input type="hidden" name="trip_flight_id" value="<?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->id : ''; ?>">
                                                             </div>
                                                         </div>
-                                                   
-                                                </div>
-                                                @endif
-                                            </div>
+                                                    </div>
+
+
+                                                </div>                                        
+                                            </div>                                   
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                  
                         </div>
-                        <div class="row">
-                            <div class="panel panel-primary trip-design-hotel">
+
+
+
+                        <!-- trip hotel here -->
+
+                        <div role="tabpanel" class="tab-pane active" id="DesignTrip">
+
+                            <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><strong>Hotels</strong></h3>
+                                    <h3 class="panel-title"><strong>Trip Hotel</strong></h3>
                                     <div class="panel-tools">
-                                        
 
                                     </div>
                                 </div>
                                 <div class="panel-body">
                                     <div class="basic_info_view">   
                                         <div class="form-horizontal">
-                                            <div class="trip-addons">
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                           
-                                                            <div class="col-sm-3 text-right">
-                                                                
-                                                            </div>
-                                                        </div>
+                                            <div class="form-group pdrow-group">
+                                                <div class="col-sm-9">
+                                                    <div class="row">
+
                                                     </div>
-                                                </div>
-                                                <div class="form-group pdrow-group">
-                                                    <div class="col-sm-12">
-                                                        <div class="row">
-                                                           
-                                                            <div class="col-sm-3">
-                                                                <b>Hotel Name</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Type</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Due Date</b>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <b>Reserve Amount</b>
-                                                            </div>
-                                                            <div class="col-sm-1 ">
-                                                                <b>Cost</b>
-                                                            </div>
-
-                                                           
-                                                            <div class="col-sm-1 hotel_solo_cost">
-                                                                <b>Solo Cost</b>
-                                                            </div>
-
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group pdrow-group">
-                                                  
-                                                    @if(!empty($includedActivity['activity_hotel']))
-                                                 <?php $activityhotelamount = $activityhotelamount+$includedActivity['activity_hotel']->hotel_reserve_amount;?>
-												<div class="form-group pdrow-group">
-                                                        <div class="col-sm-12">
-                                                            <div class="row">
-																
-																
-																<div class="col-sm-3">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_name) ? $includedActivity['activity_hotel']->hotel_name : 'N/A' }}
-                                                                </div>
-																<div class="col-sm-2">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_type) ? $includedActivity['activity_hotel']->hotel_type : 'N/A' }}
-                                                                </div>
-																 <div class="col-sm-2">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_due_date) ? $includedActivity['activity_hotel']->hotel_due_date : 'N/A' }}
-                                                                </div>
-																<div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_reserve_amount) ? $includedActivity['activity_hotel']->hotel_reserve_amount : 'N/A' }}
-                                                                </div>
-																
-																 <div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_cost) ? $includedActivity['activity_hotel']->hotel_cost : 'N/A' }}
-                                                                </div>
-																 <div class="col-sm-1">
-                                                                    {{ isset($includedActivity['activity_hotel']->hotel_solo_cost) ? $includedActivity['activity_hotel']->hotel_solo_cost : 'N/A' }}
-                                                                </div>
-															
-                                                                </div>
-																  <input type="hidden" name="includedactivity_hotel_id[{{$id}}]" value="<?php echo $includedActivity['activity_hotel']->id; ?>">
-                                                            </div>
-                                                        </div>                                                 
-                                                   
-                                                    @endif
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-12 text-right">
-                                                    <div class="update-btn">
+                                            <!-- Airline Panel -->
+                                            <div class="panel panel-default">
+                                                <div class="available-flights">
+                                                    <div class="form-group pdrow-group">
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <b>Hotel Name</b>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <b>Type</b>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <b>Due Date</b>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <b>Reserve Amount</b>
+                                                                </div>
+                                                                <div class="col-sm-2" >
+                                                                    <b>Cost</b>
+                                                                </div>
+
+                                                                <div class="col-sm-2">
+                                                                    <b>Solo Cost</b>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <?php
+                                                    if (count($tripdata['tripHotels']) > 0) {
+                                                        ?>                                    
+                                                        <div class="form-group pdrow-group parent">
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-2">
+        <?php echo $tripdata['tripHotels'][0]->hotel_name; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo $tripdata['tripHotels'][0]->hotel_type; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo $tripdata['tripHotels'][0]->hotel_due_date; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo $tripdata['tripHotels'][0]->hotel_reserve_amount; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo $tripdata['tripHotels'][0]->hotel_cost; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo $tripdata['tripHotels'][0]->hotel_solo_cost; ?>
+                                                                    </div>
+                                                                    <input type="hidden" name="trip_hotel_id" value="<?php echo (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->id : ''; ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div><?php } ?>
+
+                                                </div>                                        
+                                            </div>                                   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                  
+                        </div>
+
+                        <!-- trip hotel here -->
+    <?php if (!empty($final)) { ?>
+                            <div class="panel panel-primary addon-main">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><strong>Add Ons</strong></h3>
+                                    <div class="panel-tools">
+                                       <!-- <label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$<?php //echo $finaladd_on_amount; ?></label>
+                                        <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="basic_info_view">   
+                                        <div class="form-horizontal">
+                                            <div class="trip-addons">
+                                                <div class="form-group">
+
+        <?php
+        // echo '<pre>';print_r($final);die;
+        $i = 1;
+
+        foreach ($final as $key => $value) {
+            $addonprice = $value['add_on_detail']->addons_cost;
+            $addonflight_price = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_reserve_amount : '0';
+            $addonhote_price = !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : '';
+            $addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
+            $addonfinal_price = $addonfinal_price + ($addonprice + $addonflight_price + $addonhote_price) * $addontravler;
+            ?> 
+                                                        <div class="col-sm-12">
+                                                            <div class="row number-group-row parent">
+                                                                <div class="addon">
+
+                                                                    <div class="col-sm-3">
+            <?php echo $i; ?>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+            <?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_name : ''; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_detail : ''; ?>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        $<?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_cost : ''; ?>
+                                                                    </div>
+                                                                    <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo $value['add_on_detail']->id; ?>">                  
+                                                                </div>
+                                                                <div class="row">
+
+
+                                                                    <div class="panel panel-primary traveler-list">
+                                                                        <div class="panel-heading">
+                                                                            <h3 class="panel-title"><strong>Travelers list</strong></h3>
+                                                                            <div class="panel-tools">                                   
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="panel-body">
+                                                                            <div class="basic_info_view">   
+                                                                                <div class="form-horizontal">
+                                                                                    <div class="trip-addons">
+                                                                                        <div class="form-group pdrow-group">
+                                                                                            <div class="col-sm-12">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-sm-2">
+                                                                                                        <label>SN.</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-5">
+                                                                                                        <label>Name</label>
+                                                                                                    </div>
+                                                                                                    <div class="col-sm-5">
+                                                                                                        <label>Gender</label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+            <?php
+            $j = 1;
+            if (!empty($value['travler_info'])) {
+                foreach ($value['travler_info'] as $travelerkey => $traveler) {
+                    array_push($tavelerearray, $travelerkey);
+                    //$travelere=DB::select('select * from trip_traveler where trip_id='.$trip_id.' and status="1" and id='.$traveler.'');
+                    ?>
+                                                                                                <div class="form-group pdrow-group">
+
+                                                                                                    <div class="col-sm-12 travler">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-sm-2">
+                    <?php echo $j; ?>
+                                                                                                            </div>
+                                                                                                            <div class="col-sm-5">
+                                                                                                                <?php echo $traveler[0]->first_name; ?> <?php echo $traveler[0]->last_name; ?>
+                                                                                                            </div>
+                                                                                                            <div class="col-sm-5">
+                                                                                                                <?php echo ($traveler[0]->gender == 1) ? 'Male' : 'Female'; ?>
+                                                                                                            </div>
+
+                                                                                                        </div>
+                                                                                                        <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$travelerkey}}]" value="<?php echo (!empty($traveler[0]->id)) ? $traveler[0]->id : ''; ?>"> 
+                                                                                                    </div>
+                                                                                                </div><?php
+                                                                                            $j++;
+                                                                                        }
+                                                                                    }
+                                                                                    //print_r($tavelerearray);											
+                                                                                                        ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <div class="row addon_flight">
+                                                                        <div class="panel panel-primary trip-design-flight">
+                                                                            <div class="panel-heading">
+                                                                                <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
+                                                                                <div class="panel-tools">
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="panel-body">
+                                                                                <div class="basic_info_view">   
+                                                                                    <div class="form-horizontal">
+                                                                                        <div class="form-group pdrow-group">
+                                                                                            <div class="col-sm-9">
+                                                                                                <div class="row">
+
+                                                                                                    <div class="col-sm-6">
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="addon-available-flights">
+                                                                                            <div class="form-group pdrow-group">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <div class="row">
+
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Airline Name</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Departure Location</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Departure Date</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Departure Time</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Reserve Amount</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Cost</b>
+                                                                                                        </div>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <?php
+                                                                                            ?>
+
+                                                                                            <div class="form-group pdrow-group flightparent">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? $value['flight_data'][0] : $value['flight_data']->name; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? $value['flight_data'][1] : $value['flight_data']->airline_departure_location; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? $value['flight_data'][2] : $value['flight_data']->airline_departure_date; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? $value['flight_data'][3] : $value['flight_data']->airline_departure_time; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->airline_reserve_amount; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->airline_cost; ?>
+                                                                                                        </div>
+                                                                                                        <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->id; ?>">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row addon_hotel">
+                                                                        <div class="panel panel-primary trip-design-hotel">
+                                                                            <div class="panel-heading">
+                                                                                <h3 class="panel-title"><strong>Hotels</strong></h3>
+                                                                                <div class="panel-tools">
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="panel-body">
+                                                                                <div class="basic_info_view">   
+                                                                                    <div class="form-horizontal">
+                                                                                        <div class="trip-addons">
+                                                                                            <div class="form-group pdrow-group">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-sm-9">
+
+                                                                                                        </div>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group pdrow-group">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <div class="row">
+
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Hotel Name</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Type</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <b>Due Date</b>
+                                                                                                        </div>
+
+                                                                                                        <div class="col-sm-2 hotel_solo_cost">
+                                                                                                            <b>Reserve Amount</b>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2 hotel_solo_cost">
+                                                                                                            <b>Solo Cost</b>
+                                                                                                        </div>
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <?php
+                                                                                            ?>
+                                                                                            <div class="form-group pdrow-group hotleparent">
+                                                                                                <div class="col-sm-12">
+                                                                                                    <div class="row">
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo $value['hote_data']->hotel_name; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo $value['hote_data']->hotel_type; ?>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2">
+                                                                                                            <?php echo ($value['hote_data']->hotel_due_date != '') ? $value['hote_data']->hotel_due_date : ''; ?>
+                                                                                                        </div>
+
+                                                                                                        <div class="col-sm-2 hotel_cost" >
+                                                                                                            <label>$</label>
+                                                                                                            <label class="cost">
+                                                                                                                <?php echo $value['hote_data']->hotel_reserve_amount; ?>
+                                                                                                            </label>
+                                                                                                        </div>
+                                                                                                        <div class="col-sm-2 hotel_cost">
+                                                                                                            <label>$</label> 
+                                                                                                            <label class="cost"> <?php echo $value['hote_data']->hotel_solo_cost; ?></label>
+                                                                                                        </div>                                                            
+                                                                                                        <input type="hidden" name="add_on_hotel_id[{{$i}}]" value="<?php echo (!empty($value['hote_data'])) ? $value['hote_data']->id : ''; ?>">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <div class="col-sm-12 text-right">
+                                                                                            <div class="update-btn">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div><?php $i++;
+                                                                                                } ?>
+
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                     
-                        
-                    </div>
-                </div>
-				<?php $id++; ?>
-                        @endforeach
-                        @endif
-            </div>
-        </div>
-    </div>
-	
-<?php
-$addontravelerarryacount= count($tavelerearray);
-$trip_flight_amount= (count($tripdata['tripAirlines'])>0)? $tripdata['tripAirlines'][0]->airline_reserve_amount:'0';
-$trip_hotel_amount= (count($tripdata['tripHotels'])>0)? $tripdata['tripHotels'][0]->hotel_reserve_amount:'0';	
-$trip_traveler=  (count($tripdata['tripTravelers'])>0)? count($tripdata['tripTravelers']):'';
-// trip amount add//
-$trip_only_amount= 	($trip_flight_amount + $trip_hotel_amount) * $trip_traveler	;
-// end here//
+                            </div>	<?php } ?>
 
+
+                        <!-- include activity-->
+
+                        <div class="panel panel-primary addon-main">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><strong>included Activities</strong></h3>
+                                <div class="panel-tools">
+                                    <!--<label style="color: black">Total Cost: </label> <label class="total_addon_cost" style="color: black">$0</label>
+                                    <a href="#" class="updown"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="basic_info_view">   
+                                    <div class="form-horizontal">
+                                        <div class="trip-addons">
+                                            <div class="form-group">
+                                                <?php
+                                                $id = 1;
+                                                $activityamount = 0;
+                                                $activityflightamount = 0;
+                                                $activityhotelamount = 0;
+                                                ?>   
+                                                @if(!empty($tripIncludedActivities))
+
+                                                @foreach ( $tripIncludedActivities AS $includedActivity)
+    <?php $activityamount = $activityamount + $includedActivity['tripIncludedActivities']->activity_cost; ?>
+                                                <div class="col-sm-12">
+
+                                                    <div class="row number-group-row">
+                                                        <div class="col-sm-1">
+                                                            {{$id}}     
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            {{ isset($includedActivity['tripIncludedActivities']->activity_name) ? $includedActivity['tripIncludedActivities']->activity_name : 'N/A' }}
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            {{ isset($includedActivity['tripIncludedActivities']->activity_detail) ? $includedActivity['tripIncludedActivities']->activity_detail : 'N/A' }}
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label>${{ isset($includedActivity['tripIncludedActivities']->activity_cost) ? $includedActivity['tripIncludedActivities']->activity_cost : 'N/A' }}</label>
+                                                            <label class="addon_cost"> </label>
+                                                        </div>
+                                                        <!------ Radio button here--------------->
+                                                    </div>
+                                                    <input type="hidden" name="includedactivity_id[{{$id}}]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
+
+                                                    <div class="row">
+                                                        <div class="panel panel-primary trip-design-flight">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
+                                                                <div class="panel-tools">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="basic_info_view">   
+                                                                    <div class="form-horizontal">
+                                                                        <div class="form-group pdrow-group">
+                                                                            <div class="col-sm-9">
+                                                                                <div class="row">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="addon-available-flights">
+                                                                            <div class="form-group pdrow-group">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-3">
+                                                                                            <b>Airline Name</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <b>Departure Location</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <b>Departure Date</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+                                                                                            <b>Departure Time</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+                                                                                            <b>Reserve Amount</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+                                                                                            <b>Cost</b>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            @if(!empty($includedActivity['activity_flight']))
+                                                                            <?php
+                                                                            $reserve_amount = (is_array($includedActivity['activity_flight'])) ? '0' : !empty($includedActivity['activity_flight']) ? $includedActivity['activity_flight']->airline_reserve_amount : '0';
+                                                                            $activityflightamount = $activityflightamount + $reserve_amount;
+                                                                            ?>
+
+                                                                            <div class="form-group pdrow-group">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+
+
+                                                                                        <div class="col-sm-3">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][0] : $includedActivity['activity_flight']->airline_name; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][1] : $includedActivity['activity_flight']->airline_departure_location; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][2] : $includedActivity['activity_flight']->airline_departure_date; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+                                                                                            <label>
+                                                                                                <input type="hidden" name="includedactivity_flight_id[{{$id}}]" value="<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->id; ?>" >
+
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            @endif
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="panel panel-primary trip-design-hotel">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title"><strong>Hotels</strong></h3>
+                                                                <div class="panel-tools">
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="basic_info_view">   
+                                                                    <div class="form-horizontal">
+                                                                        <div class="trip-addons">
+                                                                            <div class="form-group pdrow-group">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-3 text-right">
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group pdrow-group">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-sm-3">
+                                                                                            <b>Hotel Name</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <b>Type</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-2">
+                                                                                            <b>Due Date</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+                                                                                            <b>Reserve Amount</b>
+                                                                                        </div>
+                                                                                        <div class="col-sm-1 ">
+                                                                                            <b>Cost</b>
+                                                                                        </div>
+
+
+                                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                                            <b>Solo Cost</b>
+                                                                                        </div>
+
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group pdrow-group">
+
+                                                                                @if(!empty($includedActivity['activity_hotel']))
+    <?php $activityhotelamount = $activityhotelamount + $includedActivity['activity_hotel']->hotel_reserve_amount; ?>
+                                                                                <div class="form-group pdrow-group">
+                                                                                    <div class="col-sm-12">
+                                                                                        <div class="row">
+
+
+                                                                                            <div class="col-sm-3">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_name) ? $includedActivity['activity_hotel']->hotel_name : 'N/A' }}
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_type) ? $includedActivity['activity_hotel']->hotel_type : 'N/A' }}
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_due_date) ? $includedActivity['activity_hotel']->hotel_due_date : 'N/A' }}
+                                                                                            </div>
+                                                                                            <div class="col-sm-1">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_reserve_amount) ? $includedActivity['activity_hotel']->hotel_reserve_amount : 'N/A' }}
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-1">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_cost) ? $includedActivity['activity_hotel']->hotel_cost : 'N/A' }}
+                                                                                            </div>
+                                                                                            <div class="col-sm-1">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_solo_cost) ? $includedActivity['activity_hotel']->hotel_solo_cost : 'N/A' }}
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <input type="hidden" name="includedactivity_hotel_id[{{$id}}]" value="<?php echo $includedActivity['activity_hotel']->id; ?>">
+                                                                                    </div>
+                                                                                </div>                                                 
+
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12 text-right">
+                                                                                <div class="update-btn">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+    <?php $id++; ?>
+                                            @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php
+                                $addontravelerarryacount = count($tavelerearray);
+                                $trip_flight_amount = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : '0';
+                                $trip_hotel_amount = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_reserve_amount : '0';
+                                $trip_traveler = (count($tripdata['tripTravelers']) > 0) ? count($tripdata['tripTravelers']) : '';
+// trip amount add//
+                                $trip_only_amount = ($trip_flight_amount + $trip_hotel_amount) * $trip_traveler;
+// end here//
 // includeactivity amount add//
 
- $includedactivity= ($activityamount+$activityflightamount+$activityhotelamount) * $trip_traveler;
+                                $includedactivity = ($activityamount + $activityflightamount + $activityhotelamount) * $trip_traveler;
 // end here//
-$final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
-?>
-  
-</div>
-</div>
-</div>
- 
-        <div class="col-sm-12 text-right">
-            <div class="update-btn">
-			<div class="panel-tools">
-						
-					   
-						<label style="color: black">Trip Cost: </label>
-					   <label class="total_addon_cost" style="color: black">$<?php echo $trip_only_amount;?></label></br>
-					   
-					   
-						<label style="color: black">Add on Cost: </label>
-					   <label class="total_addon_cost" style="color: black">$<?php echo $addonfinal_price;?></label></br>
-					   
-					   <label style="color: black">Included Activity Cost: </label>
-					   <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity;?></label></br>
-					   
-					   <label style="color: black">Total Cost: </label>
-					   <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount;?></label>
-              </div>
+                                $final_trip_amount = $trip_only_amount + $addonfinal_price + $includedactivity;
+                                ?>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-right">
+                        <div class="update-btn">
+                            <div class="panel-tools">
+
+
+                                <label style="color: black">Trip Cost: </label>
+                                <label class="total_addon_cost" style="color: black">$<?php echo $trip_only_amount; ?></label></br>
+
+
+                                <label style="color: black">Add on Cost: </label>
+                                <label class="total_addon_cost" style="color: black">$<?php echo $addonfinal_price; ?></label></br>
+
+                                <label style="color: black">Included Activity Cost: </label>
+                                <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity; ?></label></br>
+
+                                <label style="color: black">Total Cost: </label>
+                                <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount; ?></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <?php
+                    if (!empty($tripIncludedActivities)) {
+                        ?>
+                        <button type="submit"  name="checkout">Pay Now</button>
+    <?php } ?>
+                    <a href="javascript:history.back()">Edit Cart</a>	
+                </div>
+
+
+                <!--<div>
+        <a href="{{url('cartremove')}}">Delete</a>
+        </div>-->
+
+
             </div>
-        </div>
-    </div>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </div>
 
-	<div>
-	<?php
-		if(!empty($tripIncludedActivities)){
-	?>
-			<button type="submit"  name="checkout">Pay Now</button>
-		<?php } ?>
-			<a href="javascript:history.back()">Edit Cart</a>	
-	</div>
-	
-	
-		<!--<div>
-	<a href="{{url('cartremove')}}">Delete</a>
-	</div>-->
+        </form>	
+    <?php } else {
+        ?>
+        <h1>CART IS EMPTY</h1>
 
-	
-  </div>
-	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-	</div>
-	
-</form>	
-	<?php }else{
-		?>
-		<h1>CART IS EMPTY</h1>
-		
-<?php 	} ?>
-  </div>
+<?php } ?>
+</div>
 </div>
 
 @endsection

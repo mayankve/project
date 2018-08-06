@@ -87,8 +87,8 @@ Route::group(['middleware' => ['auth']], function() {
 // traveler profile in user dashboard
     Route::match(['get', 'post'], 'view-traveler/{id}', 'HomeController@travelerProfile');
     
-    // EMI  calculation blade
-    Route::get('view-emi-calculator', 'HomeController@emiCalculator');
+    // EMI  calculation bladee
+    Route::get('emi-calculation', 'CartController@emiCalculator');
 });
 
 
@@ -150,7 +150,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
 // demo route
     Route::get('/check-validation', 'AdminController@checkValidationBlade');
-
+    
     Route::post('check-validation/', 'AdminController@checkValidation');
 });
 

@@ -25,11 +25,11 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-		session_start();
-		
-		$_SESSION['card_item']=$_POST;
-		//echo'<pre>';print_r($_SESSION['card_item']);die;
-		return redirect('cart');
+        session_start();
+
+        $_SESSION['card_item']=$_POST;
+        //echo'<pre>';print_r($_SESSION['card_item']);die;
+        return redirect('cart');
 		
     }
 	
@@ -385,7 +385,7 @@ class CartController extends Controller
 		$packing_list=!empty($_POST['packing_list'])?$_POST['packing_list']:'';
 		$add_on_flight_name= !empty($_SESSION['card_item']['add_on_flight_name'])?$_SESSION['card_item']['add_on_flight_name']:'';
 	
-		echo '<pre>';print_r($add_on_flight_name);
+		//echo '<pre>';print_r($add_on_flight_name);
 		//print_r($selected_addon_hotel);die;
 		
 		$addonfinal=array();
@@ -487,4 +487,15 @@ class CartController extends Controller
 			return redirect('dashboard');
 		
 	}
+        
+    /* 
+     * Function to return view for EMI Calculation while checkout
+     */
+    public function emiCalculator(){
+        
+        $data = $this->dashboardElements();
+        return view('emi_calculation', ['data' => $data]);
+        
+    }
+    
 }
