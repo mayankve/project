@@ -558,12 +558,7 @@ public function bookTrip(Request $request) {
     }
 
     /**
-     * Function to return book trip view
-     * @param int id
-     * @return url
-     */
-        /**
-     * Function to return book trip view
+     * Function to return Trip Design view
      * @param int id
      * @return url
      */
@@ -656,60 +651,7 @@ public function bookTrip(Request $request) {
 				}
 			
 		}
-		
-		//echo '<pre>';print_r($addon['tripAddons_check']);die;
-		
-		
-		
-		
-				
-				
-				
-				
-				
-				
-       //echo '<pre>';print_r($tripAddons);die;
-        //Trip Addon arrays
-       // $tripAddonTravelers = array();
-        //$tripAddonFlights = array();
-       /* foreach ($tripAddons AS $key => $value) {
-        foreach($value AS $key1=>$value1){
-        //Trip Addon Traveler Details
-//        $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
-//                ->join('trip_traveler', 'trip_addon_traveler.trip_id', '=', 'trip_traveler.trip_id')
-//                ->where('trip_addon_traveler.trip_id', '=', $id)
-//                ->where('trip_addon_traveler.addon_id', '=', $value1->id)
-//                ->where('trip_addon_traveler.status', '=', '1')
-//                ->get();
-           
-        //Trip Addon Traveler Details
-        $tripAddons['tripAddonTravelers'] = DB::table('trip_addon_traveler')
-                ->where('trip_id', '=', $id)
-                ->where('addon_id', '=', $value1->id)
-                ->where('status', '=', '1')
-                ->get();
-         
-        //Trip Addon Flight Details
-        $tripAddons['tripAddonFlights'] = DB::table('trip_addon_airline')
-                ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-                ->where('trip_addon_airline.trip_id', '=', $id)
-                ->where('trip_addon_airline.addon_id', '=', $value1->id)
-                ->where('trip_addon_airline.status', '=', '1')
-                ->get();
-        
-        //echo "<pre>";print_r($tripAddons['tripAddonFlights']);die;
-
-        //Trip Addon Hotel Details
-        $tripAddons['tripAddonHotels'] = DB::table('trip_addon_hotel')
-                ->where('trip_id', '=', $id)
-                ->where('addon_id', '=', $value1->id)
-                ->where('status', '=', '1')
-                ->get();
-        }
-    }*/
 	
-	
-
         //Trip Included Activities Data
 		
 		$tripactivityarray = array();
@@ -758,34 +700,7 @@ public function bookTrip(Request $request) {
 				}	
 				
 		}
-     //echo  "<pre>"; print_r($tripactivityarray);die; 
-	 
-	 
-	 
-	 
-	 
-        //Include Activity arrays
-       // $includedActivityFlights = array();
-       // $includedActivityHotles = array();
-        
-        /*foreach ($tripIncludedActivities AS $key => $value) {
-            //Included Activity Flight Details
-			
-            $tripIncludedActivities['includedActivityFlights'] = DB::table('trip_included_activity_airline')
-                    ->where('airline_departure_date', '>', date('Y-m-d'))
-                    ->where('trip_id', '=', $id)
-                    ->where('activity_id', '=', $value->id)
-                    ->where('status', '=', '1')
-                    ->get();
-            
-            //Included Activity Hotel Details
-            $tripIncludedActivities['includedActivityHotles'] = DB::table('trip_included_activity_hotel')
-                    ->where('trip_id', '=', $id)
-                    ->where('hotel_due_date', '>', date('Y-m-d'))
-                    ->where('activity_id', '=', $value->id)
-                    ->where('status', '=', '1')
-                    ->get();
-        }*/
+        //echo  "<pre>"; print_r($tripactivityarray);die; 
        
         //To Do Packing Details
         $tripTodo = DB::table('trip_todo')
@@ -846,8 +761,6 @@ public function bookTrip(Request $request) {
      * @param int Request
      * @return url
      */
-	
-
 	public function travelerProfile($id,Request $request)
 	{
 
@@ -956,6 +869,14 @@ public function bookTrip(Request $request) {
 	}
 	
 
+        
+    /* 
+     * Function to return view for EMI Calculation while checkout
+     */
+    public function emiCalculator(Request $request){
+        return view('emi_calculation');
+    }
+    
 
 
 }

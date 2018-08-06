@@ -63,7 +63,7 @@
                     <a class="navbar-brand" href="/aat/public/"><img src="{{ url('images/logo.png') }}" alt="logo"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="navbar-right cartbtn">
+<!--                        <ul class="navbar-right cartbtn">
                         <li><a href="#" id="cart"><span class="cart-icon-btn"><i class="fa fa-shopping-cart"></i> Cart </span><span class="badge mybadge">3</span></a></li>
                        <div class="shopping-cart" style="display:none;">
                          <div class="shopping-cart-header">
@@ -72,7 +72,7 @@
                              <span class="lighter-text">Total:</span>
                              <span class="main-color-text">$2,229.97</span>
                            </div>
-                         </div> <!--end shopping-cart-header -->
+                         </div> end shopping-cart-header 
 
                          <ul class="shopping-cart-items">
                            <li class="clearfix">
@@ -94,7 +94,7 @@
 
                          <a href="#" class="button">Checkout</a>
                        </div>
-                   </ul>
+                   </ul>-->
                     <!-- User profile -->
                     <!-- Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -127,7 +127,6 @@
                         <?php } ?>
 <!--                        <li><a href="{{ url('/dashboard') }}">Dashboard </a></li>-->
                     </ul>
-                
                 </div>
             </div>
         </nav>

@@ -283,7 +283,7 @@ class AdminController extends Controller {
         ];
 
         // Airline validation
-        foreach($request->get('airline') as $key => $val)
+        /*foreach($request->get('airline') as $key => $val)
         {
             $rules["airline.{$key}.airline_name"]           = 'required';
             $rules["airline.{$key}.airline_departure_date"] = 'required';
@@ -408,9 +408,9 @@ class AdminController extends Controller {
                 $rules["misc_expense.{$key}.label"] = 'required';
                 $rules["misc_expense.{$key}.value"] = 'required';
             }
-        }
+        }*/
 
-        //echo '<pre>'; print_r($rules); exit;
+        //echo '<pre>'; print_r($request->all()); exit;
 
         $this->validate($request, $rules);
 
@@ -1914,13 +1914,10 @@ class AdminController extends Controller {
         }
         
         public function checkValidation(Request $request) {
+            //echo '<pre>'; print_r($request->all());
             
-            foreach ($request->get('traveler') as $key => $val) {
-            $rules["traveler.{$key}.first_name"] = 'required';
-            $rules["traveler.{$key}.email"] = 'required|email';
-//            $rules["traveler.{$key}.profile_image"] = 'required';
-//            $rules["traveler.{$key}.city"] = 'required';
-            }
-            echo  $this->validate($request, $rules);die;
+            $this->validate($request, [
+                'name' => 'required|numeric'
+            ]);
         }
 }

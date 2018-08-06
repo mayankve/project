@@ -242,7 +242,7 @@ $addonfinal_price=0;
 							$addonprice=$value['add_on_detail']->addons_cost;
 							$addonflight_price=(is_array($value['flight_data']))?'0':!empty($value['flight_data'])?$value['flight_data']->airline_reserve_amount:'0';
 							$addonhote_price=!empty($value['hote_data'])?$value['hote_data']->hotel_reserve_amount:'';
-							$addontravler= count($value['travler_info']);
+							$addontravler= !empty($value['travler_info'])?count($value['travler_info']):'0';
 							$addonfinal_price= $addonfinal_price+($addonprice+$addonflight_price+$addonhote_price)*$addontravler;
 						 ?> 
 					<div class="col-sm-12">
