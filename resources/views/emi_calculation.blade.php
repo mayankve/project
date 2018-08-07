@@ -16,13 +16,14 @@
             <div class="dashboardHeader">
                 <div class="row">
                     <div class="col-sm-8 text-left">
+					
                         <ol class="breadcrumb">
-                            <li> <a class="desh-title" href="#">{{$tripdata->name}}</a> </li>
+                            <li> <a class="desh-title" href="#">{{$data['tripdata']->name}}</a> </li>
                         </ol>
                     </div>
                     <div class="col-sm-4 text-right">
                         <ol class="breadcrumb">
-                            <li> <a class="desh-title">Base Cost:${{$tripdata->base_cost}}</a> </li>
+                            <li> <a class="desh-title">Base Cost:${{$data['tripdata']->base_cost}}</a> </li>
                         </ol>
                     </div>
                 </div>

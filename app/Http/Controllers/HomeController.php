@@ -870,11 +870,14 @@ public function bookTrip(Request $request) {
 	
 
         
-    /* 
+   /* 
      * Function to return view for EMI Calculation while checkout
      */
-    public function emiCalculator(Request $request){
-        return view('emi_calculation');
+    public function emiCalculator(){
+        
+        $data = $this->dashboardElements();
+        return view('emi_calculation', ['data' => $data]);
+        
     }
     
 
