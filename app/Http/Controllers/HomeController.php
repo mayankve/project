@@ -621,10 +621,10 @@ public function bookTrip(Request $request) {
 											->get();
 			//echo '<pre>';print_r($addondetail['flight_data']);													
 			   $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-											->where('trip_id', '=', $id)
-											->where('addon_id', '=', $addonitem->id)
-											->where('status', '=', '1')
-											->get();	
+                                                                        ->where('trip_id', '=', $id)
+                                                                        ->where('addon_id', '=', $addonitem->id)
+                                                                        ->where('status', '=', '1')
+                                                                        ->get();	
 				
 			}
 			

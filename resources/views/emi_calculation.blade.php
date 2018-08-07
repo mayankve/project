@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="pageContainer">
-    <div class="dashboardHeader" style="padding : 50px;">
+    <div class="dashboardHeader" >
         <div class="row">
             <div class="col-sm-6 text-left">
                 <div class="sidebar_toggle">
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="pageWrapper">
+    <div class="dashboardHeader" style="padding:100px 20px 20px 20px ;">
         <div class="row">
             <div class="col-md-6">
                 <div class="cust-input-group">
@@ -44,13 +44,13 @@
             </div>
             <div class="col-md-6">
                 <div class="cust-input-group">
-                    <label><span>Booking Date : </span></label> </div>
+                    <label><span>Booking Date : 08-06-2018 </span></label> </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="cust-input-group">
-                    <label><span>No emi months : 3</span></label>
+                    <label><span>No. emi months : 3</span></label>
                 </div>
             </div>
         </div>
@@ -68,7 +68,13 @@
                 </div>
             </div>
         </div>
+         <div class="row">
+        <div class="col-md-6 col-md-offset-6 sendbtn"> <i class="fa fa-paper-plane sendicon" aria-hidden="true"></i>
+            <input type="submit" name="submit" id="submitbutton" value="Checkout and pay">     
+        </div>
+        </div>
     </div>
+   
 </div>
 
 <style>
