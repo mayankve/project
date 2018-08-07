@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth']], function() {
 // traveler profile in user dashboard
     Route::match(['get', 'post'], 'view-traveler/{id}', 'HomeController@travelerProfile');
     
-    // EMI  calculation bladee
+    // EMI  calculation blade
     Route::get('emi-calculation', 'CartController@emiCalculator');
 });
 
