@@ -621,10 +621,10 @@ public function bookTrip(Request $request) {
 											->get();
 			//echo '<pre>';print_r($addondetail['flight_data']);													
 			   $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-											->where('trip_id', '=', $id)
-											->where('addon_id', '=', $addonitem->id)
-											->where('status', '=', '1')
-											->get();	
+                                                                        ->where('trip_id', '=', $id)
+                                                                        ->where('addon_id', '=', $addonitem->id)
+                                                                        ->where('status', '=', '1')
+                                                                        ->get();	
 				
 			}
 			
@@ -867,6 +867,7 @@ public function bookTrip(Request $request) {
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		
 		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
 	}
+
 	
 
         
@@ -879,7 +880,5 @@ public function bookTrip(Request $request) {
         return view('emi_calculation', ['data' => $data]);
         
     }
-    
-
 
 }
