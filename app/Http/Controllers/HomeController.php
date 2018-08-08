@@ -528,13 +528,10 @@ public function bookTrip(Request $request) {
         $trip_id = $request->get('trip_id');
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
+		$resever_pay_amount=$request->get('payamount');
         $flag = 0;
         if (count($traveler_details) > 0) {
-            foreach ($traveler_details as $index => $row) {
-//                $fileName = '';
-//                if ($request->hasFile('traveler.'.$index.'.profile_image')) {
-//                    $fileName = $this->imageUpload($request->file('traveler.'.$index.'.profile_image'), 'traveler_img', 'profile-image');
-//                }
+            foreach ($traveler_details as $index => $row) {         
                 $trip_traveler_id = TripTraveler::create(array(
                             'user_id' => $user_id,
                             'trip_id' => $trip_id,
@@ -542,9 +539,7 @@ public function bookTrip(Request $request) {
                             'first_name' => $row['first_name'],
                             'last_name' => $row['last_name'] ? $row['last_name'] : '',
                             'gender' => $row['gender'],
-//                            'profile_pic' => $fileName,
-//                            'city' => $row['city'],
-                            'created_at' => date('Y-m-d H:i:s')
+                          'created_at' => date('Y-m-d H:i:s')
                         ))->id;
                 if (isset($trip_traveler_id)){
                         $user_trip_id = UserTrip::create(array(
@@ -554,6 +549,17 @@ public function bookTrip(Request $request) {
                     ))->id;
                 }
             }
+				
+			// payment info detail save//
+				$paymentdata['user_id']=$user_id;
+				$paymentdata['trip_id']=$trip_id;
+				$paymentdata['reserve_paid_amount']=$resever_pay_amount;
+				$paymentdata['status']=1;
+				$paymentdata['txn_id']='HMX54887455212se';
+				$paymentdata['create_date']=date('y-m-d');
+				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);
+				//end here//		
+			
         }
         return redirect('/mytripdesign/' . $trip_id);
     }
@@ -860,6 +866,6 @@ public function bookTrip(Request $request) {
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		
 		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
 	}
-
+	  
 
 }

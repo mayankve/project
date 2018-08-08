@@ -95,6 +95,8 @@ $(document).ready(function () {
             } else {
                 $('.available-flights').hide();
                 $('.land-only').show();
+				$('input[name=flight_id]:checked').val("");
+				$('input[name=flight_id]:checked').prop('checked', false);
             }
         }
         

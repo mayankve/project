@@ -705,6 +705,7 @@ class AdminController extends Controller {
         ];
 
         // Airline validation
+		//echo '<pre>';print_r($request->get('airline'));die;
         foreach($request->get('airline') as $key => $val)
         {
             $rules["airline.{$key}.airline_name"]           = 'required';
@@ -840,7 +841,7 @@ class AdminController extends Controller {
         $trip = Trip::findOrFail($id);
 
         $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
-
+		
         if($dataTrip['requirement_is_passport'] == '0')
         {
             $dataTrip['requirement_passport_min_expiry'] = NULL;
@@ -872,13 +873,15 @@ class AdminController extends Controller {
         
         // 'UPDATE' TRIP AIRLINE
         $existingIds = TripAirline::where('trip_id', $id)->pluck('id')->toArray();
+		
         $updatingIds = array();
         
         // Get post airline
         $airline = $request->input('airline');
-
+		
         foreach($airline as $row)
         {
+
             if( isset($row['airline_id']) && is_numeric($row['airline_id']) )
             {
                 $updatingIds[] = $row['airline_id'];

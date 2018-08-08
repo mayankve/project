@@ -254,30 +254,35 @@
         $('.is_land_only_activity_flight').click(function () {
 
             if ($(this).val() == 1)
-            {
-
-                $(this).parents('.includeactivity').find('.land-only_activity').show();
-                $(this).parents('.includeactivity').find('.activity-available-flights').hide();
+            {             
+				$(this).parents('.includeactivity').find('.land-only_activity').show();
+				$(this).parents('.includeactivity').find('.activity-available-flights').hide();
+				$(this).parents('.includeactivity').find('.included_activity_flight').val("");
+				$(this).parents('.includeactivity').find('.included_activity_flight').prop('checked', false);
             } else {
                 $(this).parents('.includeactivity').find('.land-only_activity').hide();
                 $(this).parents('.includeactivity').find('.activity-available-flights').show();
             }
         });
-        $('.add_on_land-only').click(function () {
-            if ($(this).val() == 1)
-            {
+		
+		$('.add_on_land-only').click(function () {
+         if ($(this).val() == 1)
+         {			
+			$(this).parents('.addon_flight').find('.add_on_land-onlydetail').show();
+			$(this).parents('.addon_flight').find('.addon-available-flights').hide();
+			$(this).parents('.addon_flight').find('.addon_flight_name').val("");
+			$(this).parents('.addon_flight').find('.addon_flight_name').prop('checked', false);
+         } else {
+			
+			$(this).parents('.addon_flight').find('.add_on_land-onlydetail').hide();
+			$(this).parents('.addon_flight').find('.addon-available-flights').show();
+			
+			}
+         });
+    
+     
+	 $('#cartbutton').click(function () {
 
-                $(this).parents('.addon_flight').find('.add_on_land-onlydetail').show();
-                $(this).parents('.addon_flight').find('.addon-available-flights').hide();
-
-            } else {
-                $(this).parents('.addon_flight').find('.add_on_land-onlydetail').hide();
-                $(this).parents('.addon_flight').find('.addon-available-flights').show();
-            }
-        });
-
-
-        $('#cartbutton').click(function () {
             var ckbox = $('#selected_addons');
             //alert($( "input[type=checkbox][name=is_land_only]:checked" ).val());
             if ($("input[type=radio][name=is_land_only]:checked").val() == 0)
@@ -323,14 +328,6 @@
                     return false;
                 }
             }
-
-            // if($( ".included_activity_hotel:checked" ).val()==undefined)
-            // {
-            // alert('Please select activity hotel');
-            // return false;
-            // }	
-
-
             if ($(".is_land_only_activity_flight:checked").val() == 1)
             {
 
