@@ -867,18 +867,6 @@ public function bookTrip(Request $request) {
 		$data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();		
 		return view('traveler_profile',['travelerprofile' => $travelerprofile,'data'=>$data]);
 	}
-
-	
-
-        
-   /* 
-     * Function to return view for EMI Calculation while checkout
-     */
-    public function emiCalculator(){
-        
-        $data = $this->dashboardElements();
-        return view('emi_calculation', ['data' => $data]);
-        
-    }
+	  
 
 }

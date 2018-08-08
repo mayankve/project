@@ -256,6 +256,8 @@
              
 				$(this).parents('.includeactivity').find('.land-only_activity').show();
 				$(this).parents('.includeactivity').find('.activity-available-flights').hide();
+				$(this).parents('.includeactivity').find('.included_activity_flight').val("");
+				$(this).parents('.includeactivity').find('.included_activity_flight').prop('checked', false);
             } else {
 				$(this).parents('.includeactivity').find('.land-only_activity').hide();
 				$(this).parents('.includeactivity').find('.activity-available-flights').show();
@@ -267,11 +269,14 @@
 			
 			$(this).parents('.addon_flight').find('.add_on_land-onlydetail').show();
 			$(this).parents('.addon_flight').find('.addon-available-flights').hide();
-
+			$(this).parents('.addon_flight').find('.addon_flight_name').val("");
+			$(this).parents('.addon_flight').find('.addon_flight_name').prop('checked', false);
          } else {
-			 $(this).parents('.addon_flight').find('.add_on_land-onlydetail').hide();
+			
+			$(this).parents('.addon_flight').find('.add_on_land-onlydetail').hide();
 			$(this).parents('.addon_flight').find('.addon-available-flights').show();
-         }
+			
+			}
          });
          
        

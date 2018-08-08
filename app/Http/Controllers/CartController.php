@@ -83,11 +83,10 @@ class CartController extends Controller
 				{
 					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
 					{
+						//echo '<pre>';print_r($arry1);
 						foreach($arry1 as $arry1key=>$arry1value){
-								if(is_null($arry1value) || $arry1value == '')
+							if(!is_null($arry1value) && $arry1value != '')
 								{
-									unset($flightdataaddon[$arry1key]);
-								}else{
 									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
 								}						 
 						}
@@ -102,10 +101,24 @@ class CartController extends Controller
 				}
 			}
 			
-		}		
-	//==echo '<pre>';print_r($flightdata);die;	
+		}
+	
 		// trip flight info//
 		
+		$data['trip_data'] = DB::table('trips')
+                ->select('trips.*')
+                ->where('trips.id', '=', $trip)
+				 ->where('trips.status', '=', '1')
+                ->first();
+				
+		$data['payment_data'] = DB::table('trip_reserve_payment')
+                ->select('trip_reserve_payment.*')
+                ->where('trip_reserve_payment.trip_id', '=', $trip)
+				 ->where('trip_reserve_payment.user_id', '=', $userId)
+				 ->get();
+				
+				
+				
 		  $data['tripAirlines'] = DB::table('trip_airline')
                 ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
                 ->select('trip_airline.*', 'airlines.*')
@@ -213,36 +226,31 @@ class CartController extends Controller
 			foreach($is_land_only_activity as $is_land_only_activitykey=>$activityflightvalue)
 			{
 				
-				if($activityflightvalue==0)
-				{					
-					if(!empty($activityflight)){
-							
-						foreach($activityflight as $activityflightkey=>$activityflightvalue1)
-						{
-							
-							$activityflightarray[$activityflightkey] = $activityflightvalue1;
+				if($activityflightvalue==1)
+				{
+					foreach(array($activity_flight_name,$activity_flight_number,$activity_flight_date,$activity_flight_time) as $activityarry1)
+					{						
+						foreach($activityarry1 as $activityarry1key=>$activityarry1value){
+							if(!is_null($activityarry1value) && $activityarry1value != '')
+								{
+									$activityflightarray[$activityarry1key]['manualflightactivity'][] = $activityarry1value;
+								}					 
 						}
-					}
+					}				
 					
 				}else{
-					
-					foreach(array($activity_flight_name,$activity_flight_number,$activity_flight_date,$activity_flight_time) as $activityarry1)
-					{
-						
-						foreach($activityarry1 as $activityarry1key=>$activityarry1value){
-								if(is_null($activityarry1value) || $activityarry1value == '')
-								{
-									unset($activityflightarray[$activityarry1key]);
-								}else{
-									$activityflightarray[$activityarry1key]['manualflightactivity'][] = $activityarry1value;
-								}						 
+					if(!empty($activityflight)){
+												
+						foreach($activityflight as $activityflightkey=>$activityflightvalue1)
+						{
+							$activityflightarray[$activityflightkey] = $activityflightvalue1;
 						}
 					}
 				}
 			}
 			
 		}
-		
+		//echo '<pre>';print_r($activityflightarray);die;		
 	
 		
 		
@@ -253,7 +261,7 @@ class CartController extends Controller
                 ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
-		
+		//echo '<pre>';print_r($activityflightarray);die;
 				if(!empty($activity['tripIncludedActivities']) && !empty($activityhotel) && !empty($activityflightarray))
 				{
 					
@@ -367,6 +375,7 @@ class CartController extends Controller
 	
 	public function processtocheckout(Request $request)
 	{	
+	
 		session_start();			
 		
 		$userId = Auth::id();
@@ -384,16 +393,13 @@ class CartController extends Controller
 		$includedactivity_hotel_id=!empty($_POST['includedactivity_hotel_id'])?$_POST['includedactivity_hotel_id']:'';
 		$packing_list=!empty($_POST['packing_list'])?$_POST['packing_list']:'';
 		$add_on_flight_name= !empty($_SESSION['card_item']['add_on_flight_name'])?$_SESSION['card_item']['add_on_flight_name']:'';
+		$resever_pay_amount= !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
 	
-		//echo '<pre>';print_r($add_on_flight_name);
-		//print_r($selected_addon_hotel);die;
 		
 		$addonfinal=array();
 		$includeacitvitfinal=array();
 		if(!empty($selected_add_on_id) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			//echo 'sdfd';die;
-			foreach(array($selected_add_on_id,$selected_addon_flight,$selected_addon_hotel,$selected_addon_travelers) as $arr){
-				
+			foreach(array($selected_add_on_id,$selected_addon_flight,$selected_addon_hotel,$selected_addon_travelers) as $arr){				
 					foreach($arr as $key=>$value){					
 						 $addonfinal[$key][] = $value;
 					}				
@@ -414,32 +420,41 @@ class CartController extends Controller
 		
 		
 		// insert data here //
-		
-			$checkoutdata['user_id']=$userId;
-			$checkoutdata['trip_id']=$trip;
-			$checkoutdata['trip_flight_id']=$trip_flight_id;
-			$checkoutdata['trip_hotel_id']=$trip_hotel_id;
-			$checkoutdata['status']=1;
-			$checkoutdata['traveler_ids']=$trip_travelere;
-			$checkoutdata['flight_name']=$_SESSION['card_item']['flight_name'];
-			$checkoutdata['flight_number']=$_SESSION['card_item']['flight_number'];
-			$checkoutdata['flight_departure_date']=$_SESSION['card_item']['departure_date'];
-			$checkoutdata['flight_departure_time']=$_SESSION['card_item']['departure_time'];
-			$checkoutdata['create_date']=date('y-m-d');
-			$insertcheckoutid = DB::table('checkout')->insertGetId($checkoutdata);
-			 if(!empty($insertcheckoutid))
-			 {
+				$paymentdata['user_id']=$userId;
+				$paymentdata['trip_id']=$trip;
+				$paymentdata['reserve_paid_amount']=$resever_pay_amount;
+				$paymentdata['status']=1;
+				$paymentdata['txn_id']='HMX54887455212se';
+				$paymentdata['create_date']=date('y-m-d');
+				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);				
+			
+			 if(!empty($paymentdataid))
+			 {				 
+				$checkoutdata['user_id']=$userId;
+				$checkoutdata['trip_id']=$trip;
+				$checkoutdata['trip_flight_id']=$trip_flight_id;
+				$checkoutdata['trip_hotel_id']=$trip_hotel_id;
+				$checkoutdata['status']=1;
+				$checkoutdata['traveler_ids']=$trip_travelere;
+				$checkoutdata['flight_name']=$_SESSION['card_item']['flight_name'];
+				$checkoutdata['flight_number']=$_SESSION['card_item']['flight_number'];
+				$checkoutdata['flight_departure_date']=$_SESSION['card_item']['departure_date'];
+				$checkoutdata['flight_departure_time']=$_SESSION['card_item']['departure_time'];
+				$checkoutdata['create_date']=date('y-m-d');
+				$checkoutdata['payment_id']=$paymentdataid;
+				$insertcheckoutid = DB::table('checkout')->insertGetId($checkoutdata);			 
+				 
 				 if(!empty($addonfinal))
 				 {
 					 foreach($addonfinal as $addonkey=>$addonvalue)
-					 {
-						 
+					 {						 
 						 $addondata['user_id']=$userId;
 						 $addondata['trip_id']=$trip;
 						 $addondata['add_on_id']=$addonvalue[0];
 						 $addondata['flight_id']=(!empty($addonvalue[1]))?$addonvalue[1]:'';
 						 $addondata['hotel_id']=$addonvalue[2];
 						 $addondata['checkout_id']=$insertcheckoutid;
+						 $addondata['payment_id']=$paymentdataid;
 						 $addondata['created_date']=date('y-m-d');
 						 $insertaddondataid = DB::table('trip_addon_booking')->insertGetId($addondata);
 						 
@@ -452,13 +467,12 @@ class CartController extends Controller
 								$traveleredata['addon_id']=$addonvalue[0];
 								$traveleredata['traveler_id']=$addonvalue1;
 								$traveleredata['checkout_id']=$insertcheckoutid;
+								$traveleredata['payment_id']=$paymentdataid;
 								$traveleredata['created_date']=date('y-m-d');
 								$traveleredata['status']='1';
 								$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);
 							}						 
-						 //end here //
-						 
-						 
+						 //end here // 
 					 }
 					 
 				 }
@@ -474,6 +488,7 @@ class CartController extends Controller
 						 $activitydata['activity_flight_id']=(!empty($includeacitvitfinalvalue[1]))?$includeacitvitfinalvalue[1]:'';
 						 $activitydata['activity_hotel_id']=(!empty($includeacitvitfinalvalue[2]))?$includeacitvitfinalvalue[2]:'';
 						 $activitydata['checkout_id']=$insertcheckoutid;
+						 $activitydata['payment_id']=$paymentdataid;
 						 $activitydata['create_date']=date('y-m-d');
 						 $activitydata['status']='1';
 						 $insertactivitydataid = DB::table('trip_included_activity_booking')->insertGetId($activitydata);
@@ -481,11 +496,9 @@ class CartController extends Controller
 					 }
 					 
 				 }			 
-				 
+				 echo 'paymentdone';die;	
 			 }
-			 $request->session()->flash('success', 'your Trip booked..!');
-			return redirect('dashboard');
-		
+			
 	}
         
     /* 
@@ -494,7 +507,7 @@ class CartController extends Controller
     public function emiCalculator(){
         
         $data = $this->dashboardElements();
-        return view('emi_calculation', ['data' => $data]);
+	      return view('emi_calculation', ['data' => $data]);
         
     }
     

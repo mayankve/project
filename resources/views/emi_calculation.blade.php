@@ -1,57 +1,86 @@
-@extends('admin.layouts.home')
-@section('title', 'AAT:EMI Caclculation')
+@extends('layouts.dashboard')
+@section('title', 'EMI Calculator')
 @section('content')
 
-<style type="text/css">
-    .form-title {
-        background-color: #e3e3e3;
-        /* margin-bottom: 40px; */
-        text-transform: uppercase;
-    }
-</style>
-
-<div class="deshboard_body">
-    <div class="clearfix create-trip">
-        <div class="container container_page">
-            <div class="dashboardHeader">
-                <div class="row">
-                    <div class="col-sm-8 text-left">
-					
-                        <ol class="breadcrumb">
-                            <li> <a class="desh-title" href="#">{{$data['tripdata']->name}}</a> </li>
-                        </ol>
-                    </div>
-                    <div class="col-sm-4 text-right">
-                        <ol class="breadcrumb">
-                            <li> <a class="desh-title">Base Cost:${{$data['tripdata']->base_cost}}</a> </li>
-                        </ol>
-                    </div>
+<div class="pageContainer">
+    <div class="dashboardHeader" >
+        <div class="row">
+            <div class="col-sm-6 text-left">
+                <div class="sidebar_toggle">
+                    <i class="fa fa-chevron-right" data-unicode="f00a"></i>
                 </div>
+                <ol class="breadcrumb">
+                    <li>
+                        <a class="desh-title" href="#">Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <a> EMI Details  </a>
+                    </li>
+                </ol>
             </div>
-               
-          
+            <div class="col-sm-6 text-right">
+                <h3 class="userName">Welcome  {{ Auth::user()->name }}</h3>
+            </div>
         </div>
     </div>
+    <div class="dashboardHeader" style="padding:100px 20px 20px 20px ;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cust-input-group">
+                    <label><span>Total Cost : $5500</span></label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cust-input-group">
+                    <label><span>Total Reserve Cost : $2000</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="cust-input-group">
+                    <label><span>Trip date : 09-05-2018</span></label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cust-input-group">
+                    <label><span>Booking Date : 08-06-2018 </span></label> </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cust-input-group">
+                    <label><span>No. emi months : 3</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="row"> 
+            <div class="col-md-12">
+                <div class="cust-input-group">
+                    <label><span>EMI amount : $1920</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cust-input-group">
+                    <label><span>EMI payment date  : 5th of each month</span></label>
+                </div>
+            </div>
+        </div>
+         <div class="row">
+        <div class="col-md-6 col-md-offset-6 sendbtn"> <i class="fa fa-paper-plane sendicon" aria-hidden="true"></i>
+            <input type="submit" name="submit" id="submitbutton" value="Checkout and pay">     
+        </div>
+        </div>
+    </div>
+   
 </div>
 
-<script>
-var value = 1;
-var price='<?php echo $tripdata->base_cost;?> ';
-$('.add_more_traveler').click(function(){
-	
-		value=value+1;
-		$('.lable_cost').html("$"+price * value);
-});
-
-
-$('#remove_trip_traveler').click(function(){
-	alert("clicked");
-        value=value-1;
-        alert(value);
-        $('.lable_cost').html("$"+price * value);
-});
-
-
-</script>
-
+<style>
+    .cke_reset {
+        width: 557px;
+    </style>
+</div>
+</div>
 @endsection

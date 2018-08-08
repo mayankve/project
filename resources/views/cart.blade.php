@@ -38,7 +38,7 @@ $addonfinal_price_cost=0;
     </div>
 	
 	<?php if(isset($_SESSION['card_item']) && !empty($_SESSION['card_item'])){?>
-	<form method="post" action="{{url('checkout')}}">
+	<form method="post" id="myForm" >
     <div class="" id="pageWrapper">
         <div id="" class="customtab">
             <!-- Nav tabs -->
@@ -794,15 +794,58 @@ $trip_only_amount= 	($trip_flight_amount + $trip_hotel_amount) * $trip_traveler	
 
  $includedactivity= ($activityamount+$activityflightamount+$activityhotelamount) * $trip_traveler;
 // end here//
-$final_trip_amount= $trip_only_amount + $addonfinal_price + $includedactivity;
-// end here calculation//
+$final_trip_amount_reserve= $trip_only_amount + $addonfinal_price + $includedactivity;
 
 
+// start here cost amount//
 $trip_flight_cost= (count($tripdata['tripAirlines'])>0)? $tripdata['tripAirlines'][0]->airline_cost:'0';
 $trip_hotel_cost= (count($tripdata['tripHotels'])>0)? $tripdata['tripHotels'][0]->hotel_cost:'0';
 $trip_only_cost= 	($trip_flight_cost + $trip_hotel_cost) * $trip_traveler	;
 $includedactivity_cost= ($activityamount+$activityflightamount_cost+$activityhotelamount_cost) * $trip_traveler;
 $final_trip_amount_cost= $trip_only_cost + $addonfinal_price_cost + $includedactivity_cost;
+// end here//
+
+//check emi calculation//
+$paidamount=0;
+if(!empty($tripdata['payment_data'])){
+	foreach($tripdata['payment_data'] as $paymentitem){
+		$paidamount=$paidamount+$paymentitem->reserve_paid_amount;
+	}
+}
+
+$adjustmentdate= strtotime(!empty($tripdata['trip_data'])?$tripdata['trip_data']->adjustment_date:'');
+$currentdate= strtotime(date('Y-m-d'));
+$days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
+
+
+if($days_between < 31)
+{
+	$finalamount=$final_trip_amount_cost;	
+}else{	
+	$basecost= $tripdata['trip_data']->base_cost;
+	$paybale_amount= ($basecost * $trip_traveler)+$final_trip_amount_reserve;
+	$finalamount= $paybale_amount-$paidamount;
+	
+	//emi calculation //
+	$totalbasecost= $final_trip_amount_cost+($basecost*$trip_traveler);
+	if($paidamount > $totalbasecost){
+		$refund_amount=$paidamount-$totalbasecost;
+		$message="You will be refunded $".$refund_amount."";
+	}elseif($totalbasecost > $paidamount){
+		$numberofmonth = round($days_between/30);
+		$result= $totalbasecost - $paidamount;
+		$emi= $result/$numberofmonth;
+		$message="Your Per month emi amount is $".$emi."";
+	}else{
+		$message="There is nothing to pay and refund..";
+	}
+}
+
+
+
+//echo $finalcheck;die;
+
+
 ?>
   
 </div>
@@ -825,7 +868,7 @@ $final_trip_amount_cost= $trip_only_cost + $addonfinal_price_cost + $includedact
 						   <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity;?></label></br>
 						   
 						   <label style="color: black">Total Reserve Cost: </label>
-						   <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount;?></label>
+						   <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount_reserve;?></label>
 				  </div>
 				</div>
 			</div>
@@ -857,30 +900,158 @@ $final_trip_amount_cost= $trip_only_cost + $addonfinal_price_cost + $includedact
 
 	<div>
 	<?php
-		if(!empty($tripIncludedActivities)){
+		if(!empty($tripIncludedActivities) && $finalamount > 0){
 	?>
-			<button type="submit"  name="checkout">Pay Now</button>
+			<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
 		<?php } ?>
-			<a href="javascript:history.back()">Edit Cart</a>	
+			<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 	</div>
-	
-	
-		<!--<div>
-	<a href="{{url('cartremove')}}">Delete</a>
-	</div>-->
-
-	
   </div>
 	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-	</div>
-	
+	 <input type="hidden" name="resever_pay_amount" value="<?php echo $finalamount;?>">
 </form>	
-	<?php }else{
-		?>
-		<h1>CART IS EMPTY</h1>
-		
+	<?php }else{?>
+		<h1>CART IS EMPTY</h1>		
 <?php 	} ?>
+
+
+<!-- here is model popup for Emi detail for this trip-->
+
+<!-- paymenet detail-->
+<div class="modal" id="myModal12" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style=" width: 764px;margin-left: -69px;">
+        <div class="modal-body">
+		<h4 class="modal-title">Payment Detail</h4>
+						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="cust-input-group">
+									<label><span>Trip Name : <?php echo !empty($tripdata['trip_data'])?$tripdata['trip_data']->name:'';?></span></label>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="cust-input-group">
+									<label><span>Trip date : <?php echo !empty($tripdata['trip_data'])?$tripdata['trip_data']->date:'';?></span></label>
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="row">							
+							<div class="col-md-12">
+								<div class="cust-input-group">
+									<label><span>Payable Amount : $<?php echo !empty($finalamount)?$finalamount:'';?></span></label>
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="paynow" class="btn btn-default"  data-dismiss="modal">Pay Now</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
-</div>
+
+  
+<!-- end here-->
+
+ <!-- emi calculation detail-->
+ 
+
+
+<div class="modal" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style=" width: 764px;margin-left: -69px;">
+        <div class="modal-body">
+			<h4 class="modal-title">EMI Calculation</h4> <p><?php echo $message;?></p>
+						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
+						
+						<div class="row">
+							<div class="col-md-6">
+								<div class="cust-input-group">
+									<label><span>Trip date : <?php echo !empty($tripdata['trip_data'])?$tripdata['trip_data']->date:'';?></span></label>
+								</div>
+							</div>
+						<div class="col-md-6">
+						<div class="cust-input-group">
+							<label><span>No of Emi Months : <?php echo !empty($numberofmonth)?$numberofmonth:'0';?></span></label>
+						</div>
+					</div>
+						</div>
+				
+				<div class="row"> 
+					<div class="col-md-12">
+						<div class="cust-input-group">
+							<label><span>Emi amount : $<?php echo !empty($emi)?$emi:'0';?></span></label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="cust-input-group">
+							<label><span>Emi payment date  : 5th of each month</span></label>
+						</div>
+					</div>
+				</div>	
+			</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" id="close">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<!-- end here..-->
+
+ </div> 
+
+<script>
+$(document).ready(function(){
+	
+	 var action="{{url('checkout')}}";
+	 var form=$("#myForm");	
+		  $('#paynow').click(function()
+		 {		 
+			  $.ajax({
+					type:"POST",
+				    url:action,
+				   data:form.serialize(),
+				   success: function(response){
+					  if(response=='paymentdone')
+					 {
+							$("#myModal12").modal('hide');
+							$('#editcart').hide();
+							$('#checkout').hide();
+							$("#myModal1").modal({backdrop: "static"});	
+					 }
+				 }
+			 });
+		 });
+	$('#close').click(function()
+	{
+		var url="{{url('dashboard')}}";
+		location.href = url;
+	});	 
+	
+<?php if($finalamount < 0)
+{?>
+setTimeout(function() {
+     $("#myModal1").modal({backdrop: "static"});
+    }, 5000);
+<?php } ?>
+	
+});
+
+</script>
 
 @endsection
