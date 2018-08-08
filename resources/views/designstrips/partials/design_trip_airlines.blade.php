@@ -59,11 +59,12 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         {{$airlines->airline_cost}}
+                                                        <input type ="hidden" value="{{$airlines->airline_due_date}}" name="" id="airline_due_date"/>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
                                                             <!--{!! Form::radio('flight_id',$airlines->id,['class' => 'form-control flight_id']) !!} -->
-															<input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id">
+                                                            <input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id">
                                                         </label>
                                                     </div>
                                                 </div>

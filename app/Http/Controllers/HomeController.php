@@ -565,6 +565,8 @@ public function bookTrip(Request $request) {
     public function myTripDesign($id) {
         $userId = Auth::id();
         //Trip Travelers details
+        $tripDetails = Trip::where('id',$id)->first();
+        //echo "<pre>"; print_r($tripDueDate);die;
         $tripTravelers = DB::table('trip_traveler')
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
@@ -581,17 +583,8 @@ public function bookTrip(Request $request) {
                 ->where('trip_airline.status', '=', '1')
                 ->get();
         
-            // echo "<pre>";print_r($tripAirlines);die;
-            //Trip Hotels details
-//               $tripHotels = DB::table('trip_hotel_booking')
-//                ->join('trip_hotel', 'trip_hotel_booking.hotel_id', '=', 'trip_hotel.id')
-//                ->select('trip_hotel_booking.*', 'trip_hotel.*')
-//                ->where('trip_hotel_booking.trip_id', '=', $id)
-//                ->where('trip_hotel_booking.status', '=', '1')
-//                ->where('trip_hotel_booking.user_id', '=', $userId)
-//                ->get();
-        
-        
+//           echo "<pre>";print_r($tripAirlines);die;
+//           
          //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
                 ->select('trip_hotel.*')
@@ -601,13 +594,12 @@ public function bookTrip(Request $request) {
 
         //Trip Addon Details
 		$tripaddonarray = array();
+                
         $addon['tripAddons_check'] = DB::table('trip_addon')
                 ->where('trip_id', '=', $id)
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
-                ->get();
-			
-		
+                ->get();	
 		if(!empty($addon['tripAddons_check']))
 		{
 			foreach($addon['tripAddons_check'] as $addonkey=> $addonitem)
@@ -661,6 +653,7 @@ public function bookTrip(Request $request) {
                 ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
+          
 		if(!empty($activity['tripIncludedActivities_check']))
 		{			
 				foreach($activity['tripIncludedActivities_check'] as $activitykey=>$activityvalue)
@@ -721,8 +714,7 @@ public function bookTrip(Request $request) {
             'tripIncludedActivities' => $tripactivityarray,
             'tripTodo' => $tripTodo
         );
-	//echo '<pre>';print_r($tripTravelers);die;	
-        return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id]);
+        return view('tripdesign', ['tripdata' => $data,'data' => $dashboardData,'trip_id' => $id,'tripDetails' => $tripDetails]);
     }
     
     

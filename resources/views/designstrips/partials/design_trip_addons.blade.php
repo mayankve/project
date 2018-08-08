@@ -59,9 +59,9 @@
                             </div>
                             <div class="col-sm-2">
                                 <label>
-                                   
-									<input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}" class="selected_addons" id="selected_addons">
-									<input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
+                                 <input type="hidden" name="addon_due_date" class="addon_due_date" value=""> 
+                                <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}" class="selected_addons" id="selected_addons">
+                                <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
                                 </label>  
                             </div>
                         </div>

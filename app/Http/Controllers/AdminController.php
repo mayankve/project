@@ -283,7 +283,7 @@ class AdminController extends Controller {
         ];
 
         // Airline validation
-        /*foreach($request->get('airline') as $key => $val)
+        foreach($request->get('airline') as $key => $val)
         {
             $rules["airline.{$key}.airline_name"]           = 'required';
             $rules["airline.{$key}.airline_departure_date"] = 'required';
@@ -408,7 +408,7 @@ class AdminController extends Controller {
                 $rules["misc_expense.{$key}.label"] = 'required';
                 $rules["misc_expense.{$key}.value"] = 'required';
             }
-        }*/
+        }
 
         //echo '<pre>'; print_r($request->all()); exit;
 
