@@ -327,14 +327,6 @@
                     return false;
                 }
             }
-
-            // if($( ".included_activity_hotel:checked" ).val()==undefined)
-            // {
-            // alert('Please select activity hotel');
-            // return false;
-            // }	
-
-
             if ($(".is_land_only_activity_flight:checked").val() == 1)
             {
 

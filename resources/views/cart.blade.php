@@ -821,7 +821,8 @@ $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
 if($days_between < 31)
 {
 	$finalamount=$final_trip_amount_cost;	
-}else{	
+}else{
+	
 	$basecost= $tripdata['trip_data']->base_cost;
 	$paybale_amount= ($basecost * $trip_traveler)+$final_trip_amount_reserve;
 	$finalamount= $paybale_amount-$paidamount;
@@ -972,7 +973,7 @@ if($days_between < 31)
       <!-- Modal content-->
       <div class="modal-content" style=" width: 764px;margin-left: -69px;">
         <div class="modal-body">
-			<h4 class="modal-title">EMI Calculation</h4> <p><?php echo $message;?></p>
+			<h4 class="modal-title">EMI Calculation</h4> <b><?php echo $message;?></b>
 						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
 						
 						<div class="row">
