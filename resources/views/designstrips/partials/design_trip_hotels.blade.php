@@ -68,7 +68,41 @@
                 ?>
                 @if(count($tripdata['tripHotels'])>0)
                 @foreach( $tripdata['tripHotels'] AS $hotels)
+                
+                @if(($hotels->hotel_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))           
                 <div class="form-group pdrow-group parent">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-1"> {{$sr}} </div>
+                            <div class="col-sm-3">{{$hotels->hotel_name}}</div>
+                            <div class="col-sm-2">{{$hotels->hotel_type}} </div>
+                            <div class="col-sm-2">{{$hotels->hotel_due_date}}</div>
+                            <div class="col-sm-1 hotel_cost" style="display: none;">
+                                <label>$</label> <label class="cost">
+                                    {{$hotels->hotel_reserve_amount}}</label>
+                            </div>
+                            <div class="col-sm-1 hotel_cost" style="display: none;">
+                                <label>$</label> <label class="cost">{{$hotels->hotel_cost}}</label>
+                            </div>
+                            <div class="col-sm-1 hotel_solo_cost">
+                                <label>$</label> <label class="cost">
+                                    {{$hotels->hotel_reserve_amount}} </label>
+                            </div>
+                            <div class="col-sm-1 hotel_solo_cost">
+                                <label>$</label> <label class="solo_cost"> {{$hotels->hotel_solo_cost}}</label>
+                            </div>
+                            <div class="col-sm-1 text">
+                                <label>
+                                    <label>
+                                        <input type ="hidden" value="{{$hotels->hotel_due_date}}" name="" id="hotel_due_date"/>
+                                    </label>
+                                </label> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 @else
+                   <div class="form-group pdrow-group parent">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-1"> {{$sr}} </div>
@@ -94,16 +128,15 @@
 
                             <div class="col-sm-1 text">
                                 <label>
-                                    <input type="hidden" id = "trip_hotel_due_date" value="{{$hotels->hotel_due_date}}">
                                     <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}" checked>
                                     <input type="hidden" name="reserver_amount" class="reserver_amount" value="{{$hotels->hotel_reserve_amount}}">
                                 </label> 
                             </div>
                         </div>
-                        <?php $sr++; ?>
-
                     </div>
                 </div>
+                @endif
+                <?php $sr++; ?>
                 @endforeach
                 @endif
             </div>

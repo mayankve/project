@@ -51,8 +51,9 @@ class HomeController extends Controller {
                 ->select('trips.*', 'user_trip.*')
                 ->where('user_trip.user_id', '=', $userId)
                 ->where('user_trip.status', '=', '1')
+                ->groupby('trips.id')
                 ->get();
-
+        
         //For Basic Info
         $userData = User::where('id', '=', $userId)
                 ->where('status', '=', '1')

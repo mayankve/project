@@ -79,8 +79,7 @@
                                     <!-------------Design Your Trip Section-------------------------------->
                                     <!-- flight-land-------------------Start --------------------------------------->
                                     <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
-                                    <input type="hidden" name="trip_adjustment_date" id="trip_adjustment_date" value="{{ isset($tripDetails['adjustment_date']) ? $tripDetails['adjustment_date'] : 'N/A' }}">
-
+<!--                                    <input type="hidden" name="trip_adjustment_date" id="trip_adjustment_date" value="{{ isset($tripDetails['adjustment_date']) ? $tripDetails['adjustment_date'] : 'N/A' }}">-->
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -95,7 +94,7 @@
                                             <div class="form-horizontal">
                                                 <div class="form-group pdrow-group">
                                                     <div class="col-sm-9">
-                                                        <div class="row">
+                                                        <div class="row flights_heading">
                                                             <div class="col-sm-6 pr-3">
                                                                 <label>
                                                                     <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights
@@ -110,6 +109,8 @@
                                                     </div>
                                                 </div>
                                                 <!-- Airline Panel -->
+                                                
+                                                <?php //echo "<pre>"; print_r($tripDetails['adjustment_date']);die;?>
                                                 <div class="panel panel-default" id = "trip_airlines">
                                                     @include('designstrips.partials.design_trip_airlines')
                                                 </div>
@@ -375,9 +376,6 @@
 
 </script>
 
-
-
-
 <script>
     $(document).on('click', '.panel-heading span.clickable', function (e) {
         var $this = $(this);
@@ -395,17 +393,22 @@
     $(function () {
         $('head').append('<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">');
     });
-
+    
     $('document').ready(function () {
-        // Disable the Trip Flight sections
-        var current_date = formatDate(new Date());
-        var trip_adjustment_date = $('#trip_adjustment_date').val();
-        
-        if (trip_adjustment_date > current_date)
-        {
-            $('.trip-design-flight *').attr("disabled", "disabled");
-            $('.trip-design-hotel *').attr("disabled", "disabled");
-        }
+//         $('.disable_airline').hide();
+//        // Disable the Trip Flight sections
+//        var current_date = formatDate(new Date());
+//        var trip_adjustment_date = $('#trip_adjustment_date').val();
+//
+//        if (trip_adjustment_date < current_date)
+//        {
+//           /// $('.trip-design-flight *').attr("disabled", "disabled");
+//           // $('.trip-design-hotel *').attr("disabled", "disabled");
+//           $('.disable_airline').show();
+//           $('.available_airlines').hide();
+//           $('.flights_heading').hide();
+//           
+//        }
 
         // Disable the Trip Addon sections
 //        var hotel_due_date = $('#trip_hotel_due_date').val();
@@ -415,7 +418,7 @@
 //            $('#trip_hotels *').attr("disabled", "disabled");
 //        }
 
-   
+
 
         $('#is_solo a').each(function () {
             if ($(this).hasClass('active')) {
@@ -478,7 +481,6 @@
             var data = {todo_ids: dataArray};
             saveTodoData(data);
             console.log(data);
-
         });
 
     });
@@ -516,7 +518,4 @@
     }
 
 </script>
-
-
-
 @endsection

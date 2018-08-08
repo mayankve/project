@@ -32,11 +32,11 @@
                                         </div>
                                         <?php
                                         $sr = 1;
-                                            // echo "<pre>";print_r($tripdata);die;
                                         ?>
                                         @if(count($tripdata['tripAirlines'])>0)
                                         @foreach( $tripdata['tripAirlines'] AS $airlines)
-                                        <div class="form-group pdrow-group parent">
+                                        @if(($airlines->airline_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))                
+                                        <div class="form-group pdrow-group parent available_airlines">
                                             <div class="col-sm-12">
                                                 <div class="row">
                                                     <div class="col-sm-1">
@@ -59,17 +59,51 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         {{$airlines->airline_cost}}
-                                                        <input type ="hidden" value="{{$airlines->airline_due_date}}" name="" id="airline_due_date"/>
+                                                        
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
-                                                            <!--{!! Form::radio('flight_id',$airlines->id,['class' => 'form-control flight_id']) !!} -->
+                                                            <input type ="hidden" value="{{$airlines->airline_due_date}}" name="" id="airline_due_date"/>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         @else                                                    
+                                        <div class="form-group pdrow-group parent available_airlines">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-1">
+                                                        {{$sr}}
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        {{$airlines->name}}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        {{$airlines->airline_departure_location}}
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        {{$airlines->airline_departure_date}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        {{$airlines->airline_departure_time}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        {{$airlines->airline_reserve_amount}}
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        {{$airlines->airline_cost}}
+                                                        
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <label>
                                                             <input type="radio" name="flight_id" value="{{$airlines->id}}" class="flight_id">
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                       @endif
                                         <?php $sr++; ?>
                                         @endforeach
                                         @endif
