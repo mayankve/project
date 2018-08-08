@@ -815,17 +815,35 @@ if(!empty($tripdata['payment_data'])){
 
 $adjustmentdate= strtotime(!empty($tripdata['trip_data'])?$tripdata['trip_data']->adjustment_date:'');
 $currentdate= strtotime(date('Y-m-d'));
-$days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
-
-
+if($adjustmentdate > date('y-m-d'))
+{
+    $days_between = ceil(abs($adjustmentdate - $currentdate) / 86400);
+}
+//else{
+//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
+//}
+//echo $days_between;die;
 if($days_between < 31)
 {
-	$finalamount=$final_trip_amount_cost;	
+     $finalcost=$final_trip_amount_cost;
+     
+    if($paidamount > $finalcost)
+    {
+        $finalamount= $paidamount-$finalcost;
+         $message="You will be refunded $".$finalamount."";
+    }elseif($finalcost > $paidamount){
+        $finalamount=$finalcost-$paidamount;
+         $message="You have to pay $".$finalamount."";
+    }else{
+        $finalamount=0;
+        $message="There is nothing to pay";
+    }        
+    
 }else{
 	
 	$basecost= $tripdata['trip_data']->base_cost;
 	$paybale_amount= ($basecost * $trip_traveler)+$final_trip_amount_reserve;
-	$finalamount= $paybale_amount-$paidamount;
+        $finalamount= $paybale_amount-$paidamount;
 	
 	//emi calculation //
 	$totalbasecost= $final_trip_amount_cost+($basecost*$trip_traveler);
@@ -838,7 +856,7 @@ if($days_between < 31)
 		$emi= $result/$numberofmonth;
 		$message="Your Per month emi amount is $".$emi."";
 	}else{
-		$message="There is nothing to pay and refund..";
+		$message="There is nothing to pay";
 	}
 }
 
@@ -901,11 +919,11 @@ if($days_between < 31)
 
 	<div>
 	<?php
-		if(!empty($tripIncludedActivities) && $finalamount > 0){
+	if(!empty($tripIncludedActivities) && $finalamount > 0 || $days_between < 31){
 	?>
-			<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
-		<?php } ?>
-			<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
+           <button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
+	<?php } ?>
+            <a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 	</div>
   </div>
 	 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -973,7 +991,7 @@ if($days_between < 31)
       <!-- Modal content-->
       <div class="modal-content" style=" width: 764px;margin-left: -69px;">
         <div class="modal-body">
-			<h4 class="modal-title">EMI Calculation</h4> <b><?php echo $message;?></b>
+			<h4 class="modal-title">Payment Information</h4> <b><?php echo $message;?></b>
 						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
 						
 						<div class="row">
@@ -1044,7 +1062,7 @@ $(document).ready(function(){
 		location.href = url;
 	});	 
 	
-<?php if($finalamount < 0)
+<?php if($finalamount <= 0 || $days_between > 31)
 {?>
 setTimeout(function() {
      $("#myModal1").modal({backdrop: "static"});

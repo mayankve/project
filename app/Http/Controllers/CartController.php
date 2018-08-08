@@ -498,9 +498,7 @@ class CartController extends Controller
 				 }			 
 				 echo 'paymentdone';die;	
 			 }
-			
 	}
-        
     /* 
      * Function to return view for EMI Calculation while checkout
      */
