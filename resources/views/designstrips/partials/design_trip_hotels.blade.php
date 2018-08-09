@@ -68,8 +68,7 @@
                 ?>
                 @if(count($tripdata['tripHotels'])>0)
                 @foreach( $tripdata['tripHotels'] AS $hotels)
-                
-                @if(($hotels->hotel_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))           
+                @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($hotels->hotel_due_date < date('Y-m-d')))           
                 <div class="form-group pdrow-group parent">
                     <div class="col-sm-12">
                         <div class="row">
