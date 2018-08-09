@@ -127,7 +127,7 @@
 
                             <div class="col-sm-1 text">
                                 <label>
-                                    <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}"<?php echo ($hotels->id==$hotels->trip_hotel_id)?'checked':'';?>>
+                                    <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}" checked>
                                     <input type="hidden" name="reserver_amount" class="reserver_amount" value="{{$hotels->hotel_reserve_amount}}">
                                 </label> 
                             </div>

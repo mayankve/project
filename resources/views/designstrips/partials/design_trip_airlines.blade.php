@@ -98,7 +98,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
-                                                            <input type="radio" name="flight_id" value="{{$airlines->airline_name}}" <?php echo ($airlines->airline_name==$airlines->trip_flight_id)?'checked':'';?>  class="flight_id">
+                                                            <input type="radio" name="flight_id" value="{{$airlines->airline_name}}" class="flight_id" checked>
                                                         </label>
                                                     </div>
                                                 </div>
