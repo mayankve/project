@@ -583,8 +583,6 @@ class HomeController extends Controller {
                 ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
                 ->select('trip_airline.*', 'airlines.*')
                 ->where('trip_airline.trip_id', '=', $id)
-//                ->where('trip_airline.airline_departure_date', '>=', date('Y-m-d'))
-//                ->where('trip_airline.airline_departure_time', '<=', date('H:i:s'))
                 ->where('trip_airline.status', '=', '1')
                 ->get();
 
@@ -613,15 +611,13 @@ class HomeController extends Controller {
                         ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
                         ->where('trip_addon_airline.status', '=', '1')
                         ->get();
-                //echo '<pre>';print_r($addondetail['flight_data']);
+             
                 $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
                         ->where('trip_id', '=', $id)
                         ->where('addon_id', '=', $addonitem->id)
                         ->where('status', '=', '1')
                         ->get();
             }
-
-            //echo '<pre>';	print_r($addon);die;
 
             for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
                 $tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
@@ -635,12 +631,9 @@ class HomeController extends Controller {
 
                     $tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
                 }
-
-                //$tripaddonarray[$i]['tripAddonFlights'] = !empty($addon['tripAddonFlights'][$i][0])?$addon['tripAddonFlights'][$i][0]:'';
-                //$tripaddonarray[$i]['tripAddonHotels'] = !empty($addon['tripAddonHotels'][$i][0])?$addon['tripAddonHotels'][$i][0]:'';
             }
         }
-
+ 
         //Trip Included Activities Data
 
         $tripactivityarray = array();
@@ -666,8 +659,8 @@ class HomeController extends Controller {
                         ->where('status', '=', '1')
                         ->get();
             }
-            //echo  "<pre>"; print_r($activity['tripIncludedActivities_check']);die;
-
+           
+           
             for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
                 $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
                 foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
@@ -676,7 +669,7 @@ class HomeController extends Controller {
                 }
 
                 foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
-                    //echo $activityhotelkey2;die;
+                   
                     $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
                 }
                 //$tripactivityarray[$i]['includedActivityFlights'] = !empty($activity['includedActivityFlights'][$i][0])?$activity['includedActivityFlights'][$i][0]:'';
