@@ -35,8 +35,7 @@
                                         ?>
                                         @if(count($tripdata['tripAirlines'])>0)
                                         @foreach( $tripdata['tripAirlines'] AS $airlines)
-                                        
-                                        @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($airlines->airline_due_date < date('Y-m-d')))                
+                                        @if(($airlines->airline_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))                
                                         <div class="form-group pdrow-group parent available_airlines">
                                             <div class="col-sm-12">
                                                 <div class="row">
@@ -98,7 +97,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <label>
-                                                            <input type="radio" name="flight_id" value="{{$airlines->airline_name}}" class="flight_id" checked>
+                                                            <input type="radio" name="flight_id" value="{{$airlines->airline_name}}" <?php echo ($airlines->airline_name==$airlines->trip_flight_id)?'checked':'';?>  class="flight_id">
                                                         </label>
                                                     </div>
                                                 </div>
