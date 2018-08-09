@@ -21,6 +21,9 @@
         background-image:-webkit-linear-gradient(top,white 0,white 100%);
     }
 
+    #disabled_trip{
+        opacity : .6;
+    }
     /* Style the Tabs */
     .basic_info_view .panel-default {
         border: transparent;
@@ -71,15 +74,15 @@
                             <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Todo/Packing List</a></li>
                             <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Travelers</a></li>
                         </ul>
+                        
+                        @if($tripDetails['adjustment_date'] < date('Y-m-d'))
                         <!-- Tab panes -->
-                        <div class="tab-content tabs">
+                        <div class="tab-content tabs" id = "disabled_trip">
                             <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                <!--<h3>Design Your Trip</h3>-->
                                 <p>
                                     <!-------------Design Your Trip Section-------------------------------->
                                     <!-- flight-land-------------------Start --------------------------------------->
-                                    <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
-<!--                                    <input type="hidden" name="trip_adjustment_date" id="trip_adjustment_date" value="{{ isset($tripDetails['adjustment_date']) ? $tripDetails['adjustment_date'] : 'N/A' }}">-->
+                                <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -163,6 +166,97 @@
                                 </div>
                             </div>
                         </div>
+                        @else
+                         <div class="tab-content tabs">
+                            <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                                <p>
+                                    <!-------------Design Your Trip Section-------------------------------->
+                                    <!-- flight-land-------------------Start --------------------------------------->
+                                <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
+                                <div class="panel panel-primary trip-design-flight">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
+                                        <div class="">
+                                            <a href="#" class="updown">
+                                                <span class="clickable"><i class="glyphicon glyphicon-chevron-up" aria-hidden="true"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="basic_info_view">   
+                                            <div class="form-horizontal">
+                                                <div class="form-group pdrow-group">
+                                                    <div class="col-sm-9">
+                                                        <div class="row flights_heading">
+                                                            <div class="col-sm-6 pr-3">
+                                                                <label>
+                                                                    <input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" checked>Avaliable Flights
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" name="is_land_only" class="land_only" value="1">Land only
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Airline Panel -->
+                                                
+                                                <?php //echo "<pre>"; print_r($tripDetails['adjustment_date']);die;?>
+                                                <div class="panel panel-default" id = "trip_airlines">
+                                                    @include('designstrips.partials.design_trip_airlines')
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <!-- Hotel Panel -->
+                                <div class="panel panel-default trip-design-hotel">
+                                    @include('designstrips.partials.design_trip_hotels')
+                                </div>
+                                <br>
+                                <!-- Addons Panel -->
+                                <div class="panel panel-default trip-design-addon">
+                                    @include('designstrips.partials.design_trip_addons')
+                                </div>
+                                <br>
+                                <!-- Included Activities Panel -->
+                                <div class="panel panel-default trip-design-activity">
+                                    @include('designstrips.partials.design_trip_included_activity')
+                                </div>
+
+                                <!-----------------------Design  your Trip ends----------------------------------------->
+                                </p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="Section2">
+                                <!--<h3>Todo/Packing List</h3>-->
+                                <p>
+                                    <!-- Trip Todo Panel -->
+                                    @include('designstrips.partials.design_trip_todo')
+                                </p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="Section3">
+                                <!--<h3>Travelers</h3>-->
+                                <p>
+                                    <!-- Trip Travelers Panel -->
+                                    @include('designstrips.partials.design_trip_traveler')
+                                </p>
+                            </div>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']); ?>"> 
+                            <input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">
+                            <input type="hidden" class="trip_hotel_amount" name="trip_hotel_amount" value="">
+                            <input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
+                            <input type="hidden" class="final_add_amount" name="final_add_amount" value="">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="submit" name="button" id="cartbutton" value="Go to cart">
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -392,31 +486,10 @@
     });
     
     $('document').ready(function () {
-//         $('.disable_airline').hide();
-//        // Disable the Trip Flight sections
-//        var current_date = formatDate(new Date());
-//        var trip_adjustment_date = $('#trip_adjustment_date').val();
-//
-//        if (trip_adjustment_date < current_date)
-//        {
-//           /// $('.trip-design-flight *').attr("disabled", "disabled");
-//           // $('.trip-design-hotel *').attr("disabled", "disabled");
-//           $('.disable_airline').show();
-//           $('.available_airlines').hide();
-//           $('.flights_heading').hide();
-//           
-//        }
-
-        // Disable the Trip Addon sections
-//        var hotel_due_date = $('#trip_hotel_due_date').val();
-//
-//        if (hotel_due_date < current_date)
-//        {
-//            $('#trip_hotels *').attr("disabled", "disabled");
-//        }
-
-
-
+        
+        //Disable trip after adjustment date
+        $('#disabled_trip *').attr("disabled", "disabled");
+        
         $('#is_solo a').each(function () {
             if ($(this).hasClass('active')) {
                 hotelCost($(this).data('title'));

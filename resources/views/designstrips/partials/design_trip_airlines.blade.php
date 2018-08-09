@@ -35,7 +35,8 @@
                                         ?>
                                         @if(count($tripdata['tripAirlines'])>0)
                                         @foreach( $tripdata['tripAirlines'] AS $airlines)
-                                        @if(($airlines->airline_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))                
+                                        
+                                        @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($airlines->airline_due_date < date('Y-m-d')))                
                                         <div class="form-group pdrow-group parent available_airlines">
                                             <div class="col-sm-12">
                                                 <div class="row">

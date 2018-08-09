@@ -1,24 +1,4 @@
 
-<style>
-    #is_solo .notActive{
-        color: black;
-        background-color: #e4b068;
-    }
-    .btn-primary,
-    .btn-primary:hover,
-    .btn-primary:active,
-    .btn-primary:visited,
-    .btn-primary:focus {
-        background-color: #e4b068;
-        border-color: #8064A2;
-    }
-
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-        background-color: #e4b068 !important;
-        background-image:-webkit-linear-gradient(top,white 0,white 100%);
-    }
-</style>
-
 <!---------------------Addon Main------------------------------------>
 <div class="panel panel-primary addon-main">
     <div class="panel-heading">
@@ -36,7 +16,6 @@
 
                         <?php
                         $id = 1;
-                        //echo '<pre>';print_r($tripdata['tripAddons']);die;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
 
@@ -44,7 +23,7 @@
 
                         <div class="col-sm-12">
                             <div class="row number-group-row parent">
-                                @if(($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d')))
+                                @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
                                 <div class="row addon">
                                     <div class="col-sm-1">
                                         {{$id}}        
@@ -407,14 +386,16 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-<?php
-$sr = 1;
+                                                                </div>
+                                                        <?php
+                                                        $sr = 1;
 
-if (array_key_exists("tripAddonHotels", $addOn)) {
-    ?>
+                                                        if (array_key_exists("tripAddonHotels", $addOn)) {
+                                                            ?>
                                                             @if(count($addOn['tripAddonHotels'])>0)
                                                             @foreach($addOn['tripAddonHotels'] as $triphotel)
+                                                            
+                                                             @if((($tripDetails['adjustment_date'] < date('Y-m-d')) && $addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) && ($triphotel->hotel_due_date < date('Y-m-d')) )
                                                             <div class="form-group pdrow-group hotleparent">
                                                                 <div class="col-sm-12">
                                                                     <div class="row">
@@ -460,7 +441,57 @@ if (array_key_exists("tripAddonHotels", $addOn)) {
 
                                                                         <div class="col-sm-1">
                                                                             <label>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                             @else
+                                                             <div class="form-group pdrow-group hotleparent">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-1">
+                                                                            {{$sr}}
+                                                                        </div>
 
+                                                                        <div class="col-sm-3">
+
+    <?php echo (!empty($triphotel->hotel_name)) ? $triphotel->hotel_name : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <?php echo (!empty($triphotel->hotel_type)) ? $triphotel->hotel_type : ''; ?>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-2">
+    <?php echo (!empty($triphotel->hotel_due_date)) ? $triphotel->hotel_due_date : ''; ?>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+    <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
+
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label> 
+                                                                            <label class="cost">
+    <?php echo (!empty($triphotel->hotel_cost)) ? $triphotel->hotel_cost : ''; ?></label>
+                                                                        </div>
+
+                                                                        <div class="col-sm-1">
+    <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
+
+                                                                        </div>
+                                                                        <div class="col-sm-1 hotel_solo_cost">
+    <?php echo (!empty($triphotel->hotel_solo_cost)) ? $triphotel->hotel_solo_cost : ''; ?>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-1">
+                                                                            <label>
                                                                                 <input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}">	
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">			
                                                                             </label>
@@ -468,7 +499,9 @@ if (array_key_exists("tripAddonHotels", $addOn)) {
                                                                     </div>
                                                                 </div>
                                                             </div>
-    <?php $sr++; ?>
+                                                             @endif
+                                                            <?php $sr++; ?>
+                                                            
                                                             @endforeach                                                
                                                             @endif
                                                         <?php } ?>
@@ -487,7 +520,7 @@ if (array_key_exists("tripAddonHotels", $addOn)) {
                             </div>
                         </div>
 
-<?php $id++; ?>
+                    <?php $id++; ?>
                         @endforeach
                         @endif
                     </div>
