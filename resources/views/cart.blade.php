@@ -777,38 +777,37 @@ $addonfinal_price_cost = 0;
 
                                                 </div>
                                             </div>
-    <?php $id++; ?>
+										<?php $id++; ?>
                                             @endforeach
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-
                                 <?php
-// reserve code detail//
+								// reserve code detail//
                                 $addontravelerarryacount = count($tavelerearray);
                                 $trip_flight_amount = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : '0';
                                 $trip_hotel_amount = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_reserve_amount : '0';
 
                                 $trip_traveler = (count($tripdata['tripTravelers']) > 0) ? count($tripdata['tripTravelers']) : '';
-// trip amount add//
+							// trip amount add//
                                 $trip_only_amount = ($trip_flight_amount + $trip_hotel_amount) * $trip_traveler;
-// end here//
-// includeactivity amount add//
+							// end here//
+								// includeactivity amount add//
 
                                 $includedactivity = ($activityamount + $activityflightamount + $activityhotelamount) * $trip_traveler;
-// end here//
+							// end here//
                                 $final_trip_amount_reserve = $trip_only_amount + $addonfinal_price + $includedactivity;
 
 
-// start here cost amount//
+								// start here cost amount//
                                 $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : '0';
                                 $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_cost : '0';
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;
                                 $final_trip_amount_cost = $trip_only_cost + $addonfinal_price_cost + $includedactivity_cost;
-// end here//
-//check emi calculation//
+								// end here//
+								//check emi calculation//
                                 $paidamount = 0;
                                 if (!empty($tripdata['payment_data'])) {
                                     foreach ($tripdata['payment_data'] as $paymentitem) {
@@ -821,24 +820,23 @@ $addonfinal_price_cost = 0;
                                 if ($adjustmentdate > date('y-m-d')) {
                                     $days_between = ceil(abs($adjustmentdate - $currentdate) / 86400);
                                 }
-//else{
-//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
-//}
-//echo $days_between;die;
+								//else{
+								//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
+								//}
+								//echo $days_between;die;
                                 if ($days_between < 31) {
                                     $finalcost = $final_trip_amount_cost;
                                     if ($paidamount > $finalcost) {
-                                        $finalamount = $finalcost - $paidamount;
-                                        $message = "You will be refunded $" . $finalamount . "";
-                                    } elseif ($finalcost > $paidamount) {
+										$finalamount = $finalcost - $paidamount;
+                                        $message = "You will be refunded $" . abs($finalamount) . "";
+                                    } elseif ($finalcost > $paidamount) {										
                                         $finalamount = $finalcost - $paidamount;
                                         $message = "You have to pay $" . $finalamount . "";
                                     } else {
                                         $finalamount = 0;
                                         $message = "There is nothing to pay";
                                     }
-                                } else {
-
+                                } else {										
                                     $basecost = $tripdata['trip_data']->base_cost;
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
                                     $finalamount = $paybale_amount - $paidamount;
@@ -847,7 +845,7 @@ $addonfinal_price_cost = 0;
                                     $totalbasecost = $final_trip_amount_cost + ($basecost * $trip_traveler);
                                     if ($paidamount > $totalbasecost) {
                                         $refund_amount = $paidamount - $totalbasecost;
-                                        $message = "You will be refunded $" . $refund_amount . "";
+                                        $message = "You will be refunded $" . abs($refund_amount) . "";
                                     } elseif ($totalbasecost > $paidamount) {
                                         $numberofmonth = round($days_between / 30);
                                         $result = $totalbasecost - $paidamount;
@@ -857,12 +855,8 @@ $addonfinal_price_cost = 0;
                                         $message = "There is nothing to pay";
                                     }
                                 }
-
-
-
 //echo $finalcheck;die;
                                 ?>
-
                             </div>
                         </div>
                     </div>
@@ -1056,7 +1050,7 @@ $addonfinal_price_cost = 0;
             location.href = url;
         });
 
-<?php if ($finalamount <= 0 || $days_between > 31) {
+<?php if ($finalamount <= 0) {
     ?>
             setTimeout(function () {
                 $("#emi_model").modal({backdrop: "static"});
