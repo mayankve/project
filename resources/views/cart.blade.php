@@ -843,7 +843,7 @@ if($days_between < 31)
 	
 	$basecost= $tripdata['trip_data']->base_cost;
 	$paybale_amount= ($basecost * $trip_traveler)+$final_trip_amount_reserve;
-        $finalamount= $paybale_amount-$paidamount;
+     $finalamount= $paybale_amount-$paidamount;
 	
 	//emi calculation //
 	$totalbasecost= $final_trip_amount_cost+($basecost*$trip_traveler);
@@ -856,6 +856,7 @@ if($days_between < 31)
 		$emi= $result/$numberofmonth;
 		$message="Your Per month emi amount is $".$emi."";
 	}else{
+		$finalamount=0;
 		$message="There is nothing to pay";
 	}
 }
@@ -938,13 +939,12 @@ if($days_between < 31)
 
 <!-- paymenet detail-->
 <div class="modal" id="myModal12" role="dialog">
-    <div class="modal-dialog">
-    
+    <div class="modal-dialog">    
       <!-- Modal content-->
       <div class="modal-content" style=" width: 764px;margin-left: -69px;">
         <div class="modal-body">
-		<h4 class="modal-title">Payment Detail</h4>
-						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
+			<h4 class="modal-title">Payment Detail</h4>
+				<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
 						<div class="row">
 							<div class="col-md-6">
 								<div class="cust-input-group">
@@ -966,15 +966,13 @@ if($days_between < 31)
 								</div>
 							</div>
 							
-						</div>
-						
-					</div>
+						</div>						
+				</div>
         </div>
         <div class="modal-footer">
           <button type="button" id="paynow" class="btn btn-default"  data-dismiss="modal">Pay Now</button>
         </div>
-      </div>
-      
+      </div>      
     </div>
   </div>
 
@@ -986,48 +984,45 @@ if($days_between < 31)
 
 
 <div class="modal" id="myModal1" role="dialog">
-    <div class="modal-dialog">
-    
+    <div class="modal-dialog">    
       <!-- Modal content-->
       <div class="modal-content" style=" width: 764px;margin-left: -69px;">
         <div class="modal-body">
 			<h4 class="modal-title">Payment Information</h4> <b><?php echo $message;?></b>
-						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
-						
+						<div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">						
 						<div class="row">
 							<div class="col-md-6">
 								<div class="cust-input-group">
 									<label><span>Trip date : <?php echo !empty($tripdata['trip_data'])?$tripdata['trip_data']->date:'';?></span></label>
 								</div>
 							</div>
-						<div class="col-md-6">
-						<div class="cust-input-group">
-							<label><span>No of Emi Months : <?php echo !empty($numberofmonth)?$numberofmonth:'0';?></span></label>
-						</div>
-					</div>
+							<div class="col-md-6">
+								<div class="cust-input-group">
+									<label><span>No of Emi Months : <?php echo !empty($numberofmonth)?$numberofmonth:'0';?></span></label>
+								</div>
+							</div>
 						</div>
 				
-				<div class="row"> 
-					<div class="col-md-12">
-						<div class="cust-input-group">
-							<label><span>Emi amount : $<?php echo !empty($emi)?$emi:'0';?></span></label>
+						<div class="row"> 
+							<div class="col-md-12">
+								<div class="cust-input-group">
+									<label><span>Emi amount : $<?php echo !empty($emi)?$emi:'0';?></span></label>
+								</div>
+							</div>
 						</div>
-					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="cust-input-group">
+								<label><span>Emi payment date  : 5th of each month</span></label>
+							</div>
+						</div>
+					</div>	
 				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="cust-input-group">
-							<label><span>Emi payment date  : 5th of each month</span></label>
-						</div>
-					</div>
-				</div>	
-			</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" id="close">Close</button>
         </div>
-      </div>
-      
+      </div>      
     </div>
   </div>
 <!-- end here..-->
@@ -1066,7 +1061,7 @@ $(document).ready(function(){
 {?>
 setTimeout(function() {
      $("#myModal1").modal({backdrop: "static"});
-    }, 5000);
+    }, 1000);
 <?php } ?>
 	
 });
