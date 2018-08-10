@@ -471,10 +471,10 @@ $addonfinal_price_cost = 0;
                                                                                                 <div class="col-sm-12">
                                                                                                     <div class="row">
                                                                                                         <div class="col-sm-2">
-                                                                                                            <?php echo!empty($value['hote_data']) ? $value['hote_data']->hotel_name : ''; ?>
+                                                                                                            <?php echo  !empty($value['hote_data']) ? $value['hote_data']->hotel_name : ''; ?>
                                                                                                         </div>
                                                                                                         <div class="col-sm-2">
-                                                                                                            <?php echo!empty($value['hote_data']) ? $value['hote_data']->hotel_type : ''; ?>
+                                                                                                            <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_type : ''; ?>
                                                                                                         </div>
                                                                                                         <div class="col-sm-2">
                                                                                                             <?php echo empty($value['hote_data']) ? '' : ($value['hote_data']->hotel_due_date != '') ? $value['hote_data']->hotel_due_date : ''; ?>
@@ -483,12 +483,12 @@ $addonfinal_price_cost = 0;
                                                                                                         <div class="col-sm-2 hotel_cost" >
                                                                                                             <label>$</label>
                                                                                                             <label class="cost">
-                                                                                                                <?php echo!empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : ''; ?>
+                                                                                                                <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : ''; ?>
                                                                                                             </label>
                                                                                                         </div>
                                                                                                         <div class="col-sm-2 hotel_cost">
                                                                                                             <label>$</label> 
-                                                                                                            <label class="cost"> <?php echo!empty($value['hote_data']) ? $value['hote_data']->hotel_solo_cost : ''; ?></label>
+                                                                                                            <label class="cost"> <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_solo_cost : ''; ?></label>
                                                                                                         </div>                                                            
                                                                                                         <input type="hidden" name="add_on_hotel_id[{{$i}}]" value="<?php echo (!empty($value['hote_data'])) ? $value['hote_data']->id : ''; ?>">
                                                                                                     </div>
@@ -661,7 +661,6 @@ $addonfinal_price_cost = 0;
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-
                                                                             </div>
                                                                             @endif
                                                                         </div>
