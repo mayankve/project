@@ -234,11 +234,11 @@ $addonfinal_price_cost = 0;
                                                 <div class="form-group">
 
                                                     <?php
-                                                    // echo '<pre>';print_r($final);die;
+                                                  // echo '<pre>';print_r($final);die;
                                                     $i = 1;
 
                                                     foreach ($final as $key => $value) {
-                                                        $addonprice = $value['add_on_detail']->addons_cost;
+                                                        $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_cost:'';
                                                         $addonflight_price = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_reserve_amount : '0';
                                                         $addonhote_price = !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : '';
                                                         $addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
@@ -265,7 +265,7 @@ $addonfinal_price_cost = 0;
                                                                     <div class="col-sm-3">
                                                                         $<?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_cost : ''; ?>
                                                                     </div>
-                                                                    <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo $value['add_on_detail']->id; ?>">                  
+                                                                    <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo !empty($value['add_on_detail'])?$value['add_on_detail']->id:''; ?>">                  
                                                                 </div>
                                                                 <div class="row">
 
@@ -382,6 +382,8 @@ $addonfinal_price_cost = 0;
                                                                                                 </div>
                                                                                             </div>
                                                                                             <?php
+																							if(!empty($value['flight_data']))
+																							{
                                                                                             ?>
 
                                                                                             <div class="form-group pdrow-group flightparent">
@@ -408,7 +410,7 @@ $addonfinal_price_cost = 0;
                                                                                                         <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->id; ?>">
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
+                                                                                            </div><?php } ?>
 
                                                                                         </div>
 
@@ -465,6 +467,7 @@ $addonfinal_price_cost = 0;
                                                                                                 </div>
                                                                                             </div>
                                                                                             <?php
+																							
                                                                                             ?>
                                                                                             <div class="form-group pdrow-group hotleparent">
                                                                                                 <div class="col-sm-12">
@@ -904,17 +907,17 @@ $addonfinal_price_cost = 0;
                         </div>
                     </div>
 
-
-                </div>
-
-                <div>
+					<div>
                     <?php
                     if (!empty($tripIncludedActivities) && $finalamount > 0) {
                         ?>
                         <button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
-    <?php } ?>
+				<?php } ?>
                     <a href="javascript:history.back()" id="editcart">Edit Cart</a>	
                 </div>
+
+                </div>
+
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="resever_pay_amount" value="<?php echo $finalamount; ?>">
