@@ -119,8 +119,6 @@ $addonfinal_price_cost = 0;
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>                                        
                                             </div>                                   
                                         </div>
@@ -234,11 +232,11 @@ $addonfinal_price_cost = 0;
                                                 <div class="form-group">
 
                                                     <?php
-                                                    // echo '<pre>';print_r($final);die;
+                                                  // echo '<pre>';print_r($final);die;
                                                     $i = 1;
 
                                                     foreach ($final as $key => $value) {
-                                                        $addonprice = $value['add_on_detail']->addons_cost;
+                                                        $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_cost:'';
                                                         $addonflight_price = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_reserve_amount : '0';
                                                         $addonhote_price = !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : '';
                                                         $addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
@@ -265,7 +263,7 @@ $addonfinal_price_cost = 0;
                                                                     <div class="col-sm-3">
                                                                         $<?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_cost : ''; ?>
                                                                     </div>
-                                                                    <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo $value['add_on_detail']->id; ?>">                  
+                                                                    <input type="hidden" name="add_on_id[{{$i}}]" value="<?php echo !empty($value['add_on_detail'])?$value['add_on_detail']->id:''; ?>">                  
                                                                 </div>
                                                                 <div class="row">
 
@@ -382,6 +380,8 @@ $addonfinal_price_cost = 0;
                                                                                                 </div>
                                                                                             </div>
                                                                                             <?php
+																							if(!empty($value['flight_data']))
+																							{
                                                                                             ?>
 
                                                                                             <div class="form-group pdrow-group flightparent">
@@ -408,7 +408,7 @@ $addonfinal_price_cost = 0;
                                                                                                         <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->id; ?>">
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
+                                                                                            </div><?php } ?>
 
                                                                                         </div>
 
@@ -465,6 +465,7 @@ $addonfinal_price_cost = 0;
                                                                                                 </div>
                                                                                             </div>
                                                                                             <?php
+																							
                                                                                             ?>
                                                                                             <div class="form-group pdrow-group hotleparent">
                                                                                                 <div class="col-sm-12">
@@ -633,23 +634,23 @@ $addonfinal_price_cost = 0;
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][1] : $includedActivity['activity_flight']->airline_departure_location; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][1] : $includedActivity['activity_flight']->airline_departure_location; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][2] : $includedActivity['activity_flight']->airline_departure_date; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][2] : $includedActivity['activity_flight']->airline_departure_date; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
@@ -777,38 +778,37 @@ $addonfinal_price_cost = 0;
 
                                                 </div>
                                             </div>
-    <?php $id++; ?>
+										<?php $id++; ?>
                                             @endforeach
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-
                                 <?php
-// reserve code detail//
+								// reserve code detail//
                                 $addontravelerarryacount = count($tavelerearray);
                                 $trip_flight_amount = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : '0';
                                 $trip_hotel_amount = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_reserve_amount : '0';
 
                                 $trip_traveler = (count($tripdata['tripTravelers']) > 0) ? count($tripdata['tripTravelers']) : '';
-// trip amount add//
+							// trip amount add//
                                 $trip_only_amount = ($trip_flight_amount + $trip_hotel_amount) * $trip_traveler;
-// end here//
-// includeactivity amount add//
+							// end here//
+								// includeactivity amount add//
 
                                 $includedactivity = ($activityamount + $activityflightamount + $activityhotelamount) * $trip_traveler;
-// end here//
+							// end here//
                                 $final_trip_amount_reserve = $trip_only_amount + $addonfinal_price + $includedactivity;
 
 
-// start here cost amount//
+								// start here cost amount//
                                 $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : '0';
                                 $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_cost : '0';
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;
                                 $final_trip_amount_cost = $trip_only_cost + $addonfinal_price_cost + $includedactivity_cost;
-// end here//
-//check emi calculation//
+								// end here//
+								//check emi calculation//
                                 $paidamount = 0;
                                 if (!empty($tripdata['payment_data'])) {
                                     foreach ($tripdata['payment_data'] as $paymentitem) {
@@ -821,24 +821,23 @@ $addonfinal_price_cost = 0;
                                 if ($adjustmentdate > date('y-m-d')) {
                                     $days_between = ceil(abs($adjustmentdate - $currentdate) / 86400);
                                 }
-//else{
-//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
-//}
-//echo $days_between;die;
+								//else{
+								//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
+								//}
+								//echo $days_between;die;
                                 if ($days_between < 31) {
                                     $finalcost = $final_trip_amount_cost;
                                     if ($paidamount > $finalcost) {
-                                        $finalamount = $finalcost - $paidamount;
-                                        $message = "You will be refunded $" . $finalamount . "";
-                                    } elseif ($finalcost > $paidamount) {
+										$finalamount = $finalcost - $paidamount;
+                                        $message = "You will be refunded $" . abs($finalamount) . "";
+                                    } elseif ($finalcost > $paidamount) {										
                                         $finalamount = $finalcost - $paidamount;
                                         $message = "You have to pay $" . $finalamount . "";
                                     } else {
                                         $finalamount = 0;
                                         $message = "There is nothing to pay";
                                     }
-                                } else {
-
+                                } else {										
                                     $basecost = $tripdata['trip_data']->base_cost;
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
                                     $finalamount = $paybale_amount - $paidamount;
@@ -847,7 +846,7 @@ $addonfinal_price_cost = 0;
                                     $totalbasecost = $final_trip_amount_cost + ($basecost * $trip_traveler);
                                     if ($paidamount > $totalbasecost) {
                                         $refund_amount = $paidamount - $totalbasecost;
-                                        $message = "You will be refunded $" . $refund_amount . "";
+                                        $message = "You will be refunded $" . abs($refund_amount) . "";
                                     } elseif ($totalbasecost > $paidamount) {
                                         $numberofmonth = round($days_between / 30);
                                         $result = $totalbasecost - $paidamount;
@@ -857,12 +856,8 @@ $addonfinal_price_cost = 0;
                                         $message = "There is nothing to pay";
                                     }
                                 }
-
-
-
 //echo $finalcheck;die;
                                 ?>
-
                             </div>
                         </div>
                     </div>
@@ -910,17 +905,17 @@ $addonfinal_price_cost = 0;
                         </div>
                     </div>
 
-
-                </div>
-
-                <div>
+					<div>
                     <?php
                     if (!empty($tripIncludedActivities) && $finalamount > 0) {
                         ?>
                         <button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
-    <?php } ?>
+				<?php } ?>
                     <a href="javascript:history.back()" id="editcart">Edit Cart</a>	
                 </div>
+
+                </div>
+
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="resever_pay_amount" value="<?php echo $finalamount; ?>">
@@ -1056,7 +1051,7 @@ $addonfinal_price_cost = 0;
             location.href = url;
         });
 
-<?php if ($finalamount <= 0 || $days_between > 31) {
+<?php if ($finalamount <= 0) {
     ?>
             setTimeout(function () {
                 $("#emi_model").modal({backdrop: "static"});
