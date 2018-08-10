@@ -119,8 +119,6 @@ $addonfinal_price_cost = 0;
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>                                        
                                             </div>                                   
                                         </div>
@@ -636,23 +634,23 @@ $addonfinal_price_cost = 0;
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][1] : $includedActivity['activity_flight']->airline_departure_location; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][1] : $includedActivity['activity_flight']->airline_departure_location; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][2] : $includedActivity['activity_flight']->airline_departure_date; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][2] : $includedActivity['activity_flight']->airline_departure_date; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
