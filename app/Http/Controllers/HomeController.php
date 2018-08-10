@@ -571,7 +571,7 @@ class HomeController extends Controller {
         $userId = Auth::id();
         //Trip Travelers details
         $tripDetails = Trip::where('id', $id)->first();
-        //echo "<pre>"; print_r($tripDueDate);die;
+        
         $tripTravelers = DB::table('trip_traveler')
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
@@ -602,6 +602,7 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
+       
         if (!empty($addon['tripAddons_check'])) {
             foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
@@ -687,7 +688,7 @@ class HomeController extends Controller {
 
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
-
+        
         $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
@@ -696,7 +697,52 @@ class HomeController extends Controller {
             'tripIncludedActivities' => $tripactivityarray,
             'tripTodo' => $tripTodo
         );
-        return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails]);
+        
+        //For Trip Customization
+        
+        // Last Booking data
+        $BookedTripDetails = DB::table('checkout')
+                ->where('trip_id', '=', $id)
+                ->where('user_id', '=', $userId)
+                ->where('status', '=', '1')
+                ->orderBy('id','desc')
+                ->first(); 
+        
+        $bookedData = array();
+        if(isset($BookedTripDetails->id)){
+         //Booked Addons
+         $bookedAddons['addons'] = DB::table('trip_addon_booking')
+                        ->where('checkout_id','=',$BookedTripDetails->id)
+                        ->where('trip_id', '=', $id)
+                        ->where('user_id', '=', $userId)
+                        ->get();
+//         echo "<pre>";
+//         print_r($bookedAddons);
+//         die;
+         foreach($bookedAddons AS $bookedAddon){
+            //Booked Addon Travelers
+            $bookedAddons['travelers'] = DB::table('trip_addon_traveler')
+                           ->where('addon_id','=', $bookedAddon->add_on_id)
+                           ->where('checkout_id','=',$BookedTripDetails->id)
+                           ->where('trip_id', '=', $id)
+                           ->where('user_id', '=', $userId)
+                           ->get();
+         }
+       //Booked Included Activities
+        $bookedAcitivities = DB::table('trip_included_activity_booking')
+                      ->where('checkout_id','=',$BookedTripDetails->id)
+                      ->where('trip_id', '=', $id)
+                      ->where('user_id', '=', $userId)
+                      ->get();
+   
+            $bookedData = array(
+                'bookedTrip' => $BookedTripDetails,
+                'bookedAddons' => $bookedAddons,
+                'bookedActivities' =>$bookedAcitivities
+            );
+        }
+        //echo "<pre>";print_r($bookedData);die;
+        return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 
     /**
