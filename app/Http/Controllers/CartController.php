@@ -414,15 +414,15 @@ class CartController extends Controller
 		
 		$addonfinal=array();
 		$includeacitvitfinal=array();
-		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $arr){				
+		if(!empty($selected_add_on_id)  && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
+			foreach(array($selected_add_on_id,$selected_addon_flight,$selected_addon_hotel,$selected_addon_travelers) as $arr){				
 					foreach($arr as $key=>$value){					
 						 $addonfinal[$key][] = $value;
 					}				
 			}			
 			
 		}			
-		
+		//print_r($addonfinal);die;
 		if(!empty($includedactivity_id) && !empty($includedactivity_hotel_id)){
 			//echo 'sdfd';die;
 			foreach(array($includedactivity_id,$includedactivity_flight_id,$includedactivity_hotel_id) as $arr1){
