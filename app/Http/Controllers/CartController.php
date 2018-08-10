@@ -429,10 +429,8 @@ class CartController extends Controller
 				foreach($arr1 as $key1=>$value1){					
 						 $includeacitvitfinal[$key1][] = $value1;
 					}				
-			}			
-			
-		}		
-		
+			}	
+		}	
 		
 		// insert data here //
 				$paymentdata['user_id']=$userId;
