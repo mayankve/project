@@ -140,7 +140,7 @@
 <script>
 var value = 1;
 var price='<?php echo $tripdata->base_cost;?> ';
-$('.add_more_traveler').click(function(){
+$(document).on('click','.add_more_traveler',function(){
 	
 		value=value+1;
 		$('.lable_cost').html("$"+price * value);
@@ -148,10 +148,10 @@ $('.add_more_traveler').click(function(){
 });
 
 
-$('.remove-row').click(function(){
-	alert();
+$(document).on('click','.remove_trip_traveler',function(){
+	//alert();
         value=value-1;
-        alert(value);
+      //  alert(value);
         $('.lable_cost').html("$"+price * value);
 		$('#payamount').val(price * value);
 });
