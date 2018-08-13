@@ -752,7 +752,6 @@ class HomeController extends Controller {
                 'bookedActivities' =>$bookedAcitivities
             );
         }
-       //echo "<pre>";print_r($addonarrayto);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 

@@ -495,6 +495,7 @@
                 hotelCost($(this).data('title'));
             }
         });
+		
 
         $('#is_solo a').on('click', function () {
             //alert();
@@ -508,6 +509,8 @@
             hotelCost(sel);
             console.log(hotelCost(sel));
         });
+		
+		
         $('.selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
 //            saveData(data);
