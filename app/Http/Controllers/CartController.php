@@ -159,14 +159,17 @@ class CartController extends Controller
 		$addonsetkey=array();
 		$addonsetrecord = array();
 		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $arr){
-					foreach($arr as $key=>$value){					
-						 $addonsetkey[$key][] = $value;
-					}				
+			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $keyall=>  $arr){
+						foreach($arr as $key=>$value){
+							$addonsetkey[$key][] = $value;
+					}
+									
 			}	
 		}else{			
 			$addonsetkey='';
 		}
+		
+		//echo '<pre>';print_r($addonsetkey);die;
 		
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)

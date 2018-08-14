@@ -76,7 +76,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row addon_travler">
                                     <div class="panel panel-primary traveler-list">
                                         <div class="panel-heading">
                                             <h3 class="panel-title"><strong>Travelers list</strong></h3>
