@@ -170,7 +170,7 @@ class CartController extends Controller
 		}
 		
 		//echo '<pre>';print_r($addonsetkey);die;
-		
+		try{
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)
 				{
@@ -216,7 +216,11 @@ class CartController extends Controller
 				}
 			}else{
 				$addonsetrecord='';
-			}	
+			}
+		}catch(Exception $e){
+					echo '<script>alert("Hi There is some Thing missing")</script>';
+					return redirect('mytripdesign/'.$trip);
+		}			
 	// end here add on functionality//
 		//echo '<pre>';print_r($final);die;		
 	
@@ -592,7 +596,10 @@ class CartController extends Controller
 				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);				
 			
 			 if(!empty($paymentdataid))
-			 {				 
+			 {			
+
+				DB::table('checkout')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+				
 				$checkoutdata['user_id']=$userId;
 				$checkoutdata['trip_id']=$trip;
 				$checkoutdata['trip_flight_id']=$trip_flight_id;
@@ -609,6 +616,8 @@ class CartController extends Controller
 				 
 				 if(!empty($addonsetrecord))
 				 {
+					 DB::table('trip_addon_booking')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+					  DB::table('trip_addon_traveler')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
 					 foreach($addonsetrecord as $addonkey=>$addonvalue)
 					 {						 
 						$addondata=array();
@@ -652,7 +661,8 @@ class CartController extends Controller
 				 }
 				 
 				 if(!empty($activitysetrecord))
-				 {					 
+				 {
+						DB::table('trip_included_activity_booking')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
 					 foreach($activitysetrecord as $includeacitvitfinalkey=>$includeacitvitfinalvalue)
 					 {
 						 $activitydata=array();
