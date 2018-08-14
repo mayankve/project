@@ -568,7 +568,7 @@ $addonfinal_price_cost = 0;
                                                         </div>
                                                         <!------ Radio button here--------------->
                                                     </div>
-                                                    <input type="hidden" name="includedactivity_id[{{$id}}]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
+                                                    <input type="hidden" name="includedactivity_id[<?php echo $includedActivity['tripIncludedActivities']->id; ?>]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
 
                                                     <div class="row">
                                                         <div class="panel panel-primary trip-design-flight">
@@ -630,7 +630,7 @@ $addonfinal_price_cost = 0;
 
 
                                                                                         <div class="col-sm-3">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][0] : $includedActivity['activity_flight']->airline_name; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][0] : $includedActivity['activity_flight']->airline_name; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
@@ -823,7 +823,7 @@ $addonfinal_price_cost = 0;
 								//else{
 								//    $days_between = ceil(abs($currentdate - $adjustmentdate) / 86400);
 								//}
-								//echo $days_between;die;
+								//=echo $days_between;die;
                                 if ($days_between < 31) {
                                     $finalcost = $final_trip_amount_cost;
                                     if ($paidamount > $finalcost) {
@@ -836,7 +836,8 @@ $addonfinal_price_cost = 0;
                                         $finalamount = 0;
                                         $message = "There is nothing to pay";
                                     }
-                                } else {										
+                                } else {
+										//echo $paidamount;die;
                                     $basecost = $tripdata['trip_data']->base_cost;
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
                                     $finalamount = $paybale_amount - $paidamount;
@@ -859,8 +860,7 @@ $addonfinal_price_cost = 0;
                                 ?>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+						<div class="row">
                         <div class="col-sm-6">
                             <div class="update-btn">
                                 <div class="panel-tools">
@@ -903,18 +903,17 @@ $addonfinal_price_cost = 0;
                             </div>
                         </div>
                     </div>
-
+						
 					<div>
-                    <?php
-                    if (!empty($tripIncludedActivities) && $finalamount > 0) {
-                        ?>
-                        <button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
-				<?php } ?>
-                    <a href="javascript:history.back()" id="editcart">Edit Cart</a>	
+						<?php
+						if (!empty($tripIncludedActivities) && $finalamount > 0) {
+							?>
+							<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
+					<?php } ?>
+						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
+					</div>
+                    </div>
                 </div>
-
-                </div>
-
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="resever_pay_amount" value="<?php echo $finalamount; ?>">
