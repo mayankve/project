@@ -494,7 +494,6 @@
 		
 
         $('#is_solo a').on('click', function () {
-            //alert();
             $('.selected_hotel').prop('checked', false);
             $('.total_hotel_cost').text('$' + '0')
             var sel = $(this).data('title');
@@ -503,13 +502,12 @@
             $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
             $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
             hotelCost(sel);
-            console.log(hotelCost(sel));
+            //console.log(hotelCost(sel));
         });
-		
-		
+	
         $('.selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
-//            saveData(data);
+            //saveData(data);
             hotelTotalCost($(this));
 
         });
