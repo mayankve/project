@@ -707,8 +707,9 @@ class HomeController extends Controller {
                 ->orderBy('id','desc')
                 ->first(); 
 
-        $addonarrayto=array();
+        $addonarray=array();
         $bookedData = array();
+        
         if(isset($BookedTripDetails->id)){
          //Booked Addons
          $bookedAddons['add_on'] = DB::table('trip_addon_booking')
@@ -754,7 +755,7 @@ class HomeController extends Controller {
                 'bookedActivities' =>$bookedAcitivities
             );
         }
-        //echo "<pre>";print_r($bookedAddons);die;
+//        echo "<pre>";print_r($addonarray);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 
