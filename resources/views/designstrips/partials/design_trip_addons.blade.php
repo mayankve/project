@@ -13,14 +13,11 @@
             <div class="form-horizontal">
                 <div class="trip-addons">
                     <div class="form-group">
-
                         <?php
                         $id = 1;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
-
-                        @foreach ( $tripdata['tripAddons'] AS $addOn)
-
+                        @foreach ( $tripdata['tripAddons'] AS $addOn) 
                         <div class="col-sm-12">
                             <div class="row number-group-row parent">
                                 @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
