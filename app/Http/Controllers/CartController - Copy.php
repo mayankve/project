@@ -221,7 +221,6 @@ class CartController extends Controller
 		// trip activity start here ..//
 		$activityflight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
 		$activityhotel=!empty($_SESSION['card_item']['included_activity_hotel'])?$_SESSION['card_item']['included_activity_hotel']:'0';
-		
 		$activityflightarray=array();
 		if(!empty($is_land_only_activity))
 		{			
@@ -250,7 +249,7 @@ class CartController extends Controller
 			}
 			
 		}
-	//echo '<pre>';print_r($activityflight);die;
+	
 		
 		
 		$activity=array();
@@ -381,203 +380,39 @@ class CartController extends Controller
 		$trip_flight_id=!empty($_POST['trip_flight_id'])?$_POST['trip_flight_id']:'';
 		$trip_travelere=!empty($_POST['trip_traveler_id'])?$_POST['trip_traveler_id']:'';
 		$trip_hotel_id=!empty($_POST['trip_hotel_id'])?$_POST['trip_hotel_id']:'';
+		$selected_add_on_id=!empty($_POST['add_on_id'])?$_POST['add_on_id']:'';
+		$selected_addon_travelers=!empty($_POST['add_on_traveler_id'])?$_POST['add_on_traveler_id']:'';
+		$selected_addon_flight=!empty($_POST['add_on_flight_id'])?$_POST['add_on_flight_id']:'';
+		$selected_addon_hotel=!empty($_POST['add_on_hotel_id'])?$_POST['add_on_hotel_id']:'';
 		$trip_hotel_amount=!empty($_POST['add_on_hotel_id'])?$_POST['add_on_hotel_id']:'';
 		$includedactivity_id=!empty($_POST['includedactivity_id'])?$_POST['includedactivity_id']:'';
+		$includedactivity_flight_id=!empty($_POST['includedactivity_flight_id'])?$_POST['includedactivity_flight_id']:'';
+		$includedactivity_hotel_id=!empty($_POST['includedactivity_hotel_id'])?$_POST['includedactivity_hotel_id']:'';
 		$packing_list=!empty($_POST['packing_list'])?$_POST['packing_list']:'';
 		$add_on_flight_name= !empty($_SESSION['card_item']['add_on_flight_name'])?$_SESSION['card_item']['add_on_flight_name']:'';
 		$resever_pay_amount= !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
+		// manual flight//
+
 		
-		// manual flight add on //		
-		
-		$selected_add_on_id=!empty($_SESSION['card_item']['selected_addons'])?$_SESSION['card_item']['selected_addons']:'';
-		$selected_addon_travelers=!empty($_SESSION['card_item']['selected_addon_traveler'])?$_SESSION['card_item']['selected_addon_traveler']:'';
-		$selected_addon_flight=!empty($_SESSION['card_item']['addon_flight_name'])?$_SESSION['card_item']['addon_flight_name']:'0';
-		$selected_addon_hotel=!empty($_SESSION['card_item']['selected_addon_hotel'])?$_SESSION['card_item']['selected_addon_hotel']:'';
-		$add_on_flight_name= !empty($_SESSION['card_item']['add_on_flight_name'])?$_SESSION['card_item']['add_on_flight_name']:'';
-		$add_on_flight_number= !empty($_SESSION['card_item']['add_on_flight_number'])?$_SESSION['card_item']['add_on_flight_number']:'';
-		$add_on_departure_date= !empty($_SESSION['card_item']['add_on_departure_date'])?$_SESSION['card_item']['add_on_departure_date']:'';
-		$add_on_departure_time= !empty($_SESSION['card_item']['add_on_departure_time'])?$_SESSION['card_item']['add_on_departure_time']:'';
-		$add_on_land = !empty($_SESSION['card_item']['add_on_land-only'])?$_SESSION['card_item']['add_on_land-only']:'';
-		
-		// end here..//
-		
-		$activityflight= !empty($_SESSION['card_item']['included_activity_flight'])?$_SESSION['card_item']['included_activity_flight']:'0';
-		$activityhotel=!empty($_SESSION['card_item']['included_activity_hotel'])?$_SESSION['card_item']['included_activity_hotel']:'0';		
-		$is_land_only_activity = !empty($_SESSION['card_item']['is_land_only_activity_flight'])?$_SESSION['card_item']['is_land_only_activity_flight']:'';
-		$activity_flight_name = !empty($_SESSION['card_item']['activity_flight_name'])?$_SESSION['card_item']['activity_flight_name']:'';
-		$activity_flight_number = !empty($_SESSION['card_item']['activity_flight_flight_number'])?$_SESSION['card_item']['activity_flight_flight_number']:'';
-		$activity_flight_date = !empty($_SESSION['card_item']['activity_flight_departure_date'])?$_SESSION['card_item']['activity_flight_departure_date']:'';
-		$activity_flight_time = !empty($_SESSION['card_item']['activity_flight_departure_time'])?$_SESSION['card_item']['activity_flight_departure_time']:'';
-		
-		
-		
-		
-		
-		$flightdataaddon=array();
-		if(!empty($selected_add_on_id))
-		{
-			foreach($add_on_land as $onlykey=>$onlyvalue)
-			{
-				if($onlyvalue==1)
-				{
-					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
-					{
-							//echo '<pre>';print_r($arry1);die;
-						foreach($arry1 as $arry1key=>$arry1value){
-							if(!empty($arry1value) && $arry1value != '')
-								{									
-									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
-								}						 
-						}
-					}
-				}else{
-					if(!empty($selected_addon_flight)){
-						foreach($selected_addon_flight as $addonflightkey=>$addonflightvalue)
-						{
-							$flightdataaddon[$addonflightkey] = $addonflightvalue;
-						}
-					}
-				}
-			}
-			
-		}		
-			//print_r($flightdataaddon);die;
-		
-		$addonsetkey=array();
-		$addondetail = array();
-		$addonsetrecord=array();
-		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $arr){
+		$addonfinal=array();
+		$includeacitvitfinal=array();
+		if(!empty($selected_add_on_id)  && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
+			foreach(array($selected_add_on_id,$selected_addon_flight,$selected_addon_hotel,$selected_addon_travelers) as $arr){				
 					foreach($arr as $key=>$value){					
-						 $addonsetkey[$key][] = $value;
+						 $addonfinal[$key][] = $value;
 					}				
-			}	
-		}else{			
-			$addonsetkey='';
-		}		
-		
-		if(!empty($addonsetkey)){
-		foreach($addonsetkey as $key=>$value)
-				{
-					$addondetail['addon_id'][$key]=$value[0];
-					if(is_array($value[1]) && array_key_exists("manualflight",$value[1]))
-					{
-						$addondetail['manual_flight_id'][$key]=$value[1]['manualflight'];
-					}else{
-						$addondetail['flight_id'][$key] =$value[1];
-					}																		
-					$addondetail['hotel_id'][$key]=$value[2];
-																	
-				if(!empty($value[3])){
-							foreach($value[3] as $travelerkey=>$traveler){
-									$addondetail['travler_info'][$key][]=	$traveler;
-							}
-						}		
-			}
-			
-			foreach($addondetail['addon_id'] as $keyofaddondetail=>$valuofaddon)
-				{
-					$addonsetrecord[$keyofaddondetail]['addon_id']= (!empty($addondetail['addon_id'][$keyofaddondetail]))?$addondetail['addon_id'][$keyofaddondetail]:'';
-					if(!empty($addondetail['manual_flight_id'][$keyofaddondetail]))
-					{
-						$addonsetrecord[$keyofaddondetail]['manual_flight_id'] = (!empty($addondetail['manual_flight_id'][$keyofaddondetail]))?$addondetail['manual_flight_id'][$keyofaddondetail]:'';
-					}else{
-						$addonsetrecord[$keyofaddondetail]['flight_id'] = (!empty($addondetail['flight_id'][$keyofaddondetail]))?$addondetail['flight_id'][$keyofaddondetail]:'';
-					}
-					 $addonsetrecord[$keyofaddondetail]['hotel_id'] = (!empty($addondetail['hotel_id'][$keyofaddondetail]))?$addondetail['hotel_id'][$keyofaddondetail]:'';
-					 if(!empty($addondetail['travler_info'][$keyofaddondetail]))
-					 {
-						 foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1)
-						 {			
-							 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;
-						 }
-						 
-					 }
-				}
-		}else{
-			$addonsetrecord='';
-		}			
-		
-		// end here add on detail//
-		
-		
-		
-		// activity data set here ..//
-		
-		$activityflightarray=array();
-		$activitysetkey=array();
-		$activitdetail = array();
-		$activitysetrecord=array();
-		if(!empty($is_land_only_activity))
-		{			
-			foreach($is_land_only_activity as $is_land_only_activitykey=>$activityflightvalue)
-			{				
-				if($activityflightvalue==1)
-				{
-					foreach(array($activity_flight_name,$activity_flight_number,$activity_flight_date,$activity_flight_time) as $activityarry1)
-					{						
-						foreach($activityarry1 as $activityarry1key=>$activityarry1value){
-							if(!empty($activityarry1value) && $activityarry1value != '')
-								{
-									$activityflightarray[$activityarry1key]['manualflightactivity'][] = $activityarry1value;
-								}					 
-						}
-					}
-				}else{
-					if(!empty($activityflight)){
-												
-						foreach($activityflight as $activityflightkey=>$activityflightvalue1)
-						{
-							$activityflightarray[$activityflightkey] = $activityflightvalue1;
-						}
-					}
-				}
-			}
-			
-		}	
-		
-		if(!empty($includedactivity_id) && !empty($activityflightarray) && !empty($activityhotel)){
-			foreach(array($includedactivity_id,$activityflightarray,$activityhotel) as $activityarr){
-					foreach($activityarr as $activityarrkey=>$activityarrvalue){					
-						 $activitysetkey[$activityarrkey][] = $activityarrvalue;
-					}				
-			}	
-		}else{			
-			$activitysetkey='';
-		}			
-		
-		if(!empty($activitysetkey)){
-		foreach($activitysetkey as $activitysetkey1=>$activitysetkeyvalue1)
-				{
-					$activitdetail['activity_id'][$activitysetkey1]=$activitysetkeyvalue1[0];
-					if(is_array($activitysetkeyvalue1[1]) && array_key_exists("manualflightactivity",$activitysetkeyvalue1[1]))
-					{
-						$activitdetail['manual_activity_flight_id'][$activitysetkey1]=$activitysetkeyvalue1[1]['manualflightactivity'];
-					}else{
-						$activitdetail['activity_flight_id'][$activitysetkey1] =$activitysetkeyvalue1[1];
-					}																		
-					$activitdetail['activity_hotel_id'][$activitysetkey1]=$activitysetkeyvalue1[2];
-																	
-						
 			}			
-			foreach($activitdetail['activity_id'] as $keyofactivitydetail=>$valuofactivity)
-				{
-					$activitysetrecord[$keyofactivitydetail]['activity_id']= (!empty($activitdetail['activity_id'][$keyofactivitydetail]))?$activitdetail['activity_id'][$keyofactivitydetail]:'';
-					if(!empty($activitdetail['manual_activity_flight_id'][$keyofactivitydetail]))
-					{
-						$activitysetrecord[$keyofactivitydetail]['manual_activity_flight_id'] = (!empty($activitdetail['manual_activity_flight_id'][$keyofactivitydetail]))?$activitdetail['manual_activity_flight_id'][$keyofactivitydetail]:'';
-					}else{
-						$activitysetrecord[$keyofactivitydetail]['activity_flight_id'] = (!empty($activitdetail['activity_flight_id'][$keyofactivitydetail]))?$activitdetail['activity_flight_id'][$keyofactivitydetail]:'';
-					}					
-					 $activitysetrecord[$keyofactivitydetail]['activity_hotel_id'] = (!empty($activitdetail['activity_hotel_id'][$keyofactivitydetail]))?$activitdetail['activity_hotel_id'][$keyofactivitydetail]:'';
-					
-				}
-		}else{
-			$activitysetrecord='';
-		}
-		// end here to activity data//
-		//print_r($activitysetrecord);die;
-		
+			
+		}			
+		//print_r($addonfinal);die;
+		if(!empty($includedactivity_id) && !empty($includedactivity_hotel_id)){
+			//echo 'sdfd';die;
+			foreach(array($includedactivity_id,$includedactivity_flight_id,$includedactivity_hotel_id) as $arr1){
+				foreach($arr1 as $key1=>$value1){					
+						 $includeacitvitfinal[$key1][] = $value1;
+					}				
+			}	
+		}	
 		
 		// insert data here //
 				$paymentdata['user_id']=$userId;
@@ -604,26 +439,15 @@ class CartController extends Controller
 				$checkoutdata['payment_id']=$paymentdataid;
 				$insertcheckoutid = DB::table('checkout')->insertGetId($checkoutdata);			 
 				 
-				 if(!empty($addonsetrecord))
+				 if(!empty($addonfinal))
 				 {
-					 foreach($addonsetrecord as $addonkey=>$addonvalue)
+					 foreach($addonfinal as $addonkey=>$addonvalue)
 					 {						 
-						$addondata=array();
-					//	print_r($addonvalue);
 						 $addondata['user_id']=$userId;
 						 $addondata['trip_id']=$trip;
-						 $addondata['add_on_id']=$addonvalue['addon_id'];
-						 if(isset($addonvalue['manual_flight_id']) && !empty($addonvalue['manual_flight_id']))
-						 {
-							 $addondata['flight_name']=(!empty($addonvalue['manual_flight_id'][0]))?$addonvalue['manual_flight_id'][0]:'';
-							 $addondata['flight_number']=(!empty($addonvalue['manual_flight_id'][1]))?$addonvalue['manual_flight_id'][1]:'';
-							 $addondata['flight_departure_date']=(!empty($addonvalue['manual_flight_id'][2]))?$addonvalue['manual_flight_id'][2]:'';
-							 $addondata['flight_departure_time']=(!empty($addonvalue['manual_flight_id'][3]))?$addonvalue['manual_flight_id'][3]:'';
-							 
-						 }else{
-							$addondata['flight_id']=(!empty($addonvalue['flight_id']))?$addonvalue['flight_id']:'0';
-						 }
-						 $addondata['hotel_id']=(!empty($addonvalue['hotel_id']))?$addonvalue['hotel_id']:'';
+						 $addondata['add_on_id']=$addonvalue[0];
+						 $addondata['flight_id']=(!empty($addonvalue[1]))?$addonvalue[1]:'';
+						 $addondata['hotel_id']=(!empty($addonvalue[2]))?$addonvalue[2]:'';
 						 $addondata['checkout_id']=$insertcheckoutid;
 						 $addondata['payment_id']=$paymentdataid;
 						 $addondata['created_date']=date('y-m-d');
@@ -631,11 +455,11 @@ class CartController extends Controller
 						 
 						 // travlere detail //
 						 
-							foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+							foreach($addonvalue[3] as $addonvaluekey=>$addonvalue1)
 							{
 								$traveleredata['user_id']=$userId;
 								$traveleredata['trip_id']=$trip;
-								$traveleredata['addon_id']=$addonvalue['addon_id'];
+								$traveleredata['addon_id']=$addonvalue[0];
 								$traveleredata['traveler_id']=$addonvalue1;
 								$traveleredata['checkout_id']=$insertcheckoutid;
 								$traveleredata['payment_id']=$paymentdataid;
@@ -648,25 +472,15 @@ class CartController extends Controller
 					 
 				 }
 				 
-				 if(!empty($activitysetrecord))
+				 if(!empty($includeacitvitfinal))
 				 {					 
-					 foreach($activitysetrecord as $includeacitvitfinalkey=>$includeacitvitfinalvalue)
+					 foreach($includeacitvitfinal as $includeacitvitfinalkey=>$includeacitvitfinalvalue)
 					 {
-						 $activitydata=array();
-						 
 						 $activitydata['user_id']=$userId;
 						 $activitydata['trip_id']=$trip;
-						 $activitydata['activity_id']=(!empty($includeacitvitfinalvalue['activity_id']))?$includeacitvitfinalvalue['activity_id']:'';
-						 if(isset($includeacitvitfinalvalue['manual_activity_flight_id']) && !empty($includeacitvitfinalvalue['manual_activity_flight_id'])){
-							
-							 $activitydata['flight_name']=(!empty($includeacitvitfinalvalue['manual_activity_flight_id'][0]))?$includeacitvitfinalvalue['manual_activity_flight_id'][0]:'';
-							 $activitydata['flight_number']=(!empty($includeacitvitfinalvalue['manual_activity_flight_id'][1]))?$includeacitvitfinalvalue['manual_activity_flight_id'][1]:'';
-							 $activitydata['flight_departure_date']=(!empty($includeacitvitfinalvalue['manual_activity_flight_id'][2]))?$includeacitvitfinalvalue['manual_activity_flight_id'][2]:'';
-							 $activitydata['flight_departure_time']=(!empty($includeacitvitfinalvalue['manual_activity_flight_id'][3]))?$includeacitvitfinalvalue['manual_activity_flight_id'][3]:'';
-						 }else{							 
-							$activitydata['activity_flight_id']=(!empty($includeacitvitfinalvalue['activity_flight_id']))?$includeacitvitfinalvalue['activity_flight_id']:'0';
-						 }
-						 $activitydata['activity_hotel_id']=(!empty($includeacitvitfinalvalue['activity_hotel_id']))?$includeacitvitfinalvalue['activity_hotel_id']:'';
+						 $activitydata['activity_id']=(!empty($includeacitvitfinalvalue[0]))?$includeacitvitfinalvalue[0]:'';
+						 $activitydata['activity_flight_id']=(!empty($includeacitvitfinalvalue[1]))?$includeacitvitfinalvalue[1]:'';
+						 $activitydata['activity_hotel_id']=(!empty($includeacitvitfinalvalue[2]))?$includeacitvitfinalvalue[2]:'';
 						 $activitydata['checkout_id']=$insertcheckoutid;
 						 $activitydata['payment_id']=$paymentdataid;
 						 $activitydata['create_date']=date('y-m-d');

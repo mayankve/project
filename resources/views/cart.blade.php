@@ -568,7 +568,7 @@ $addonfinal_price_cost = 0;
                                                         </div>
                                                         <!------ Radio button here--------------->
                                                     </div>
-                                                    <input type="hidden" name="includedactivity_id[{{$id}}]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
+                                                    <input type="hidden" name="includedactivity_id[<?php echo $includedActivity['tripIncludedActivities']->id; ?>]" value="<?php echo $includedActivity['tripIncludedActivities']->id; ?>">
 
                                                     <div class="row">
                                                         <div class="panel panel-primary trip-design-flight">
@@ -630,7 +630,7 @@ $addonfinal_price_cost = 0;
 
 
                                                                                         <div class="col-sm-3">
-    <?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][0] : $includedActivity['activity_flight']->airline_name; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][0] : $includedActivity['activity_flight']->airline_name; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-2">
