@@ -269,6 +269,7 @@
         //hide hotel and flight of addon//
         $(".addon_flight").hide();
         $(".addon_hotel").hide();
+		$(".addon_travler").hide();
         // here end//
         // var addon_id=[];
         // var traveler_id=[];
@@ -294,6 +295,7 @@
 
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
+			$(this).parents('.parent').find('.addon_travler').toggle();
 
             $(".addon input[type=checkbox]:checked").each(function () {
 
@@ -464,6 +466,7 @@
 		{
 				$(this).parents('.parent').find('.addon_flight').toggle();
 				$(this).parents('.parent').find('.addon_hotel').toggle();
+				$(this).parents('.parent').find('.addon_travler').toggle();
 		});	
 // end here//			
 		
