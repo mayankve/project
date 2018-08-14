@@ -70,7 +70,8 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
-                                            <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}" class="selected_addons" id="selected_addons">
+										<?php //echo '<pre>';print_r($bookedData['bookedAddons']['addon_id']);die;?>
+                               <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}"<?php if(!empty($bookedData)){ if(in_array($addOn['tripAddons_check']->id,$bookedData['bookedAddons']['addon_id'])){ echo 'checked';} };?> class="selected_addons" id="selected_addons">
                                             <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
                                         </label>
                                     </div>
@@ -269,7 +270,7 @@
                                                                         </div>
                                                                         <div class="col-sm-1">
                                                                             <label>
-                                                                                <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}">
+                                                                                <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}" <?php if(!empty($bookedData)){ if(in_array($tripflight->id,$bookedData['bookedAddons']['flight_id'])){ echo 'checked';} };?>>
                                                                                 <input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($tripflight->airline_reserve_amount) ? $tripflight->airline_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>
@@ -503,7 +504,9 @@
 
                                                                         <div class="col-sm-1">
                                                                             <label>
-                                                                                <input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}">
+                                                                                <input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}"
+																				<?php if(!empty($bookedData)){ if(in_array($triphotel->id,$bookedData['bookedAddons']['hote_id'])){ echo 'checked';} };?>
+																				>
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>

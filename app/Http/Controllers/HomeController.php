@@ -709,6 +709,7 @@ class HomeController extends Controller {
 
         $addonarray=array();
         $bookedData = array();
+		$activitycustom=array();
         
         if(isset($BookedTripDetails->id)){
          //Booked Addons
@@ -729,7 +730,7 @@ class HomeController extends Controller {
                               ->get();
             }
             
-           // echo "<pre>";print_r($bookedAddons['travelers'][$addonkey]);die;
+          // echo "<pre>";print_r($bookedAddons);die;
             foreach($bookedAddons['add_on'] as $key=>$value)
             {
                 $addonarray['addon_id'][]=$value->add_on_id;
@@ -737,9 +738,11 @@ class HomeController extends Controller {
                 $addonarray['hote_id'][]=$value->hotel_id;
                 foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
                 {
-                     $addonarray['traveler'][$key] = $travelervalue->traveler_id;
+                     $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
                 }
             }
+			
+			
             
             //Booked Included Activities
             $bookedAcitivities = DB::table('trip_included_activity_booking')
@@ -747,15 +750,28 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->get();
+				
+				
+			foreach($bookedAcitivities as $activitykeyforCustom => $activityCustomValue)
+			{
+				
+				$activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
+				$activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
+				$activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
+			}			
+				
 
             //Booked Data array creation
             $bookedData = array(
                 'bookedTrip' => $BookedTripDetails,
                 'bookedAddons' => $addonarray,
-                'bookedActivities' =>$bookedAcitivities
+                'bookedActivities' =>$activitycustom,
+				'activitydata'=>$bookedAcitivities
             );
-        }
-//        echo "<pre>";print_r($addonarray);die;
+        }else{
+			$bookedData='';
+		}
+	//echo "<pre>";print_r($bookedAcitivities);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 

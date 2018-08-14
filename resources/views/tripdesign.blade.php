@@ -288,7 +288,7 @@
             $('.total_hotel_cost').html("$" + reserveramount * travlercont);
         }
 
-
+			
         $('.selected_addons').click(function () {
             add_on_price = 0;
 
@@ -455,13 +455,30 @@
             }
             // end here//
         });
-    });
+		
+	
+	
+// for customize functionality//
+		
+		$(".addon input[type=checkbox]:checked").each (function()
+		{
+				$(this).parents('.parent').find('.addon_flight').toggle();
+				$(this).parents('.parent').find('.addon_hotel').toggle();
+		});	
+// end here//			
+		
+ });
 
-    $('.flightdeparture').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: 'yy-mm-dd'
-    });
+$('.flightdeparture').datepicker({
+	changeMonth: true,
+	changeYear: true,
+	dateFormat: 'yy-mm-dd'
+});
+
+
+	
+	
+	
 </script>
 
 <script>

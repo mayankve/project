@@ -94,6 +94,7 @@
                                                     <?php
                                                     $sr = 1;
                                                     if (array_key_exists("includedActivityFlights", $includedActivity)) {
+
                                                         ?>
                                                         @if(!empty($includedActivity['includedActivityFlights']))
                                                         @foreach( $includedActivity['includedActivityFlights'] AS $airlines)
@@ -155,7 +156,9 @@
                                                                     </div>
                                                                     <div class="col-sm-1">
                                                                         <label>
-                                                                            <input type="radio" name="included_activity_flight[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$airlines->id}}" class="included_activity_flight">
+                                               <input type="radio" name="included_activity_flight[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$airlines->id}}"
+											   <?php if(!empty($bookedData)){ if(in_array($airlines->id,$bookedData['bookedActivities']['flight_id'])){ echo 'checked';} };?>
+											   class="included_activity_flight">
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -167,7 +170,7 @@
                                                         @endif
                                                     <?php } ?>
                                                     </div>
-
+												
                                                 <div class="land-only_activity" style="display: none;">
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
@@ -358,7 +361,9 @@
 
                                                                             <div class="col-sm-1">
                                                                                 <label>
-                                                                                    <input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}" class="included_activity_hotel">
+                                                            <input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}"
+															 <?php if(!empty($bookedData)){ if(in_array($hotels->id,$bookedData['bookedActivities']['hotel_id'])){ echo 'checked';} };?>
+															  class="included_activity_hotel">
                                                                                 </label>
                                                                             </div>
                                                                         </div>
