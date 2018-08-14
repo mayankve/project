@@ -596,10 +596,10 @@ class CartController extends Controller
 				$checkoutdata['trip_hotel_id']=$trip_hotel_id;
 				$checkoutdata['status']=1;
 				$checkoutdata['traveler_ids']=$trip_travelere;
-				$checkoutdata['flight_name']=$_SESSION['card_item']['flight_name'];
-				$checkoutdata['flight_number']=$_SESSION['card_item']['flight_number'];
-				$checkoutdata['flight_departure_date']=$_SESSION['card_item']['departure_date'];
-				$checkoutdata['flight_departure_time']=$_SESSION['card_item']['departure_time'];
+				$checkoutdata['flight_name']=!empty($_SESSION['card_item']['flight_name'])?$_SESSION['card_item']['flight_name']:'';
+				$checkoutdata['flight_number']=!empty($_SESSION['card_item']['flight_number'])?$_SESSION['card_item']['flight_number']:'';
+				$checkoutdata['flight_departure_date']=!empty($_SESSION['card_item']['departure_date'])?$_SESSION['card_item']['departure_date']:'';
+				$checkoutdata['flight_departure_time']=!empty($_SESSION['card_item']['departure_time'])?$_SESSION['card_item']['departure_time']:'';
 				$checkoutdata['create_date']=date('y-m-d');
 				$checkoutdata['payment_id']=$paymentdataid;
 				$insertcheckoutid = DB::table('checkout')->insertGetId($checkoutdata);			 

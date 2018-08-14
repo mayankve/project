@@ -113,8 +113,8 @@
     @endforeach
     @endif
 </div>
-@if(!empty($bookedData['bookedTrip']->flight_name))
-<div class="land-only">
+
+<div class="land-only" style="display:none;">
     <div class="form-group">
         <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
         <!--{!! Form::label('airline[0][flight_name]', 'Flight Name','control-label col-sm-3 custom-lbl') !!}-->
@@ -159,5 +159,4 @@
             </div>
         </div>
     </div>
-</div>   
-@endif
+</div>

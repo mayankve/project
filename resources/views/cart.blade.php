@@ -837,7 +837,7 @@ $addonfinal_price_cost = 0;
                                         $message = "There is nothing to pay";
                                     }
                                 } else {
-										//echo $paidamount;die;
+										
                                     $basecost = $tripdata['trip_data']->base_cost;
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
                                     $finalamount = $paybale_amount - $paidamount;
