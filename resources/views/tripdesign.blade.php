@@ -447,7 +447,6 @@
                 }
 
             }
-
             if ($(".selected_todo:checked").val() == undefined)
             {
                 $('#Section2').focus();
@@ -463,8 +462,6 @@
         changeYear: true,
         dateFormat: 'yy-mm-dd'
     });
-
-
 </script>
 
 <script>
@@ -486,7 +483,6 @@
     });
     
     $('document').ready(function () {
-        
         //Disable trip after adjustment date
         $('#disabled_trip *').attr("disabled", "disabled");
         
@@ -590,5 +586,6 @@
         return [year, month, day].join('-');
     }
 
+    
 </script>
 @endsection

@@ -93,6 +93,9 @@
                             <div class="col-sm-1 text">
                                 <label>
                                     <label>
+                                        @if(isset($bookedData['bookedTrip']->trip_hotel_id) && ($bookedData['bookedTrip']->trip_hotel_id == $hotels->id))
+                                            Selected
+                                        @endif
                                         <input type ="hidden" value="{{$hotels->hotel_due_date}}" name="" id="hotel_due_date"/>
                                     </label>
                                 </label> 
@@ -120,14 +123,16 @@
                                 <label>$</label> <label class="cost">
                                     {{$hotels->hotel_reserve_amount}} </label>
                             </div>
-
                             <div class="col-sm-1 hotel_solo_cost">
                                 <label>$</label> <label class="solo_cost"> {{$hotels->hotel_solo_cost}}</label>
                             </div>
-
                             <div class="col-sm-1 text">
                                 <label>
+                                    @if(isset($bookedData['bookedTrip']->trip_hotel_id) && ($bookedData['bookedTrip']->trip_hotel_id == $hotels->id))
                                     <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}" checked>
+                                    @else
+                                    <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}">
+                                    @endif
                                     <input type="hidden" name="reserver_amount" class="reserver_amount" value="{{$hotels->hotel_reserve_amount}}">
                                 </label> 
                             </div>
@@ -141,26 +146,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <!--</div>-->
-<style>
-    #is_solo .notActive{
-        color: black;
-        background-color: #e4b068;
-    }
-    .btn-primary,
-    .btn-primary:hover,
-    .btn-primary:active,
-    .btn-primary:visited,
-    .btn-primary:focus {
-        background-color: #e4b068;
-        border-color: #8064A2;
-    }
-
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-        background-color: #e4b068 !important;
-        background-image:-webkit-linear-gradient(top,white 0,white 100%);
-    }
-</style>
 
