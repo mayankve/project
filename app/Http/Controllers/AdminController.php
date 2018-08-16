@@ -410,13 +410,13 @@ class AdminController extends Controller {
             }
         }
 
-        //echo '<pre>'; print_r($request->all()); exit;
+//        echo '<pre>'; print_r($request->all()); exit;
 
         $this->validate($request, $rules);
 
         // Create trip
         $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
-
+          
         if( $request->hasFile('banner_image') )
         {
             $trip['banner_image'] = $this->imageUpload($request->file('banner_image'), 'trip', 'banner-img');
