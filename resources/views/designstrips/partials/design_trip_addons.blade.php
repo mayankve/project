@@ -263,10 +263,18 @@
                                                                             {{$tripflight->airline_departure_time}}
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            {{$tripflight->airline_reserve_amount}}
+                                                                            <?php
+                                                                                if ($tripflight->airline_reserve_type == 1 ){
+                                                                                    echo $tripflight->airline_reserve_amount * $tripflight->airline_our_cost/100;
+
+                                                                                }else{
+                                                                                    echo $tripflight->airline_reserve_amount;
+
+                                                                                }?>
+                                                                            <!--{{$tripflight->airline_reserve_amount}}-->
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            {{$tripflight->airline_cost}}
+                                                                            {{$tripflight->airline_our_cost}}
                                                                         </div>
                                                                         <div class="col-sm-1">
                                                                             <label>

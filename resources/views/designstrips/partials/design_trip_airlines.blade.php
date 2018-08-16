@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-sm-1">
                 <?php
-                if ($hotels->airline_reserve_type == 1 ){
+                if ($airlines->airline_reserve_type == 1 ){
                     echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
 
                 }else{
@@ -99,7 +99,7 @@
                 </div>
                 <div class="col-sm-1">
                    <?php
-                    if ($hotels->airline_reserve_type == 1 ){
+                    if ($airlines->airline_reserve_type == 1 ){
                         echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
 
                     }else{
