@@ -39,7 +39,7 @@
                     </div>
                     <div class="mask">
                         <h2>{{$trip->name}}</h2>
-                        <p>{{$trip->about_trip}}</p>
+                        <p><?php echo strip_tags($trip->about_trip);?></p>
                         <!--<a href="{{url('book').'/'.$trip->id}}" class="info">Book</a>-->
                     </div>
                 </div>

@@ -29,7 +29,7 @@
 <div class="container">
 <div class="descp-pera">
 <h2>About <span>Trip</span></h2>
-<p>{{ $tripdata->about_trip }}</p>
+<p><?php echo strip_tags($tripdata->about_trip);?></p>
 <p><em>Oct 26,2017</em></p>
 <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
 </div>
