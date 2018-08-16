@@ -244,7 +244,7 @@ $addonfinal_price_cost = 0;
                                                         // trip cost detail//
                                                         $addonflight_price_cost = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_cost : '0';
                                                         $addonhote_price_cost = !empty($value['hote_data']) ? $value['hote_data']->hotel_cost : '';
-                                                        $addonfinal_price_cost = $addonfinal_price + ($addonprice + $addonflight_price_cost + $addonhote_price_cost) * $addontravler;
+                                                        $addonfinal_price_cost = $addonfinal_price_cost + ($addonprice + $addonflight_price_cost + $addonhote_price_cost) * $addontravler;
                                                         ?> 
                                                         <div class="col-sm-12">
                                                             <div class="row number-group-row parent">
@@ -549,7 +549,7 @@ $addonfinal_price_cost = 0;
                                                 @if(!empty($tripIncludedActivities))
 
                                                 @foreach ( $tripIncludedActivities AS $includedActivity)
-    <?php $activityamount = $activityamount + $includedActivity['tripIncludedActivities']->activity_cost; ?>
+								<?php $activityamount = $activityamount + $includedActivity['tripIncludedActivities']->activity_cost; ?>
                                                 <div class="col-sm-12">
 
                                                     <div class="row number-group-row">
@@ -727,7 +727,7 @@ $addonfinal_price_cost = 0;
                                                                                 @if(!empty($includedActivity['activity_hotel']))
                                                                                 <?php
                                                                                 $activityhotelamount = $activityhotelamount + $includedActivity['activity_hotel']->hotel_reserve_amount;
-                                                                                $activityhotelamount_cost = $activityhotelamount + $includedActivity['activity_hotel']->hotel_cost;
+                                                                                $activityhotelamount_cost = $activityhotelamount_cost + $includedActivity['activity_hotel']->hotel_cost;
                                                                                 ?>
                                                                                 <div class="form-group pdrow-group">
                                                                                     <div class="col-sm-12">
@@ -784,6 +784,7 @@ $addonfinal_price_cost = 0;
                                     </div>
                                 </div>
                                 <?php
+								//echo $addonfinal_price_cost;die;
 								// reserve code detail//
                                 $addontravelerarryacount = count($tavelerearray);
                                 $trip_flight_amount = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : '0';
@@ -804,6 +805,7 @@ $addonfinal_price_cost = 0;
                                 $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : '0';
                                 $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_cost : '0';
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
+							//	echo $activityhotelamount_cost;die;
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;
                                 $final_trip_amount_cost = $trip_only_cost + $addonfinal_price_cost + $includedactivity_cost;
 								// end here//

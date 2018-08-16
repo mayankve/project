@@ -170,7 +170,7 @@ class CartController extends Controller
 		}
 		
 		//echo '<pre>';print_r($addonsetkey);die;
-		try{
+		
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)
 				{
@@ -217,10 +217,7 @@ class CartController extends Controller
 			}else{
 				$addonsetrecord='';
 			}
-		}catch(Exception $e){
-					echo '<script>alert("Hi There is some Thing missing")</script>';
-					return redirect('mytripdesign/'.$trip);
-		}			
+				
 	// end here add on functionality//
 		//echo '<pre>';print_r($final);die;		
 	
