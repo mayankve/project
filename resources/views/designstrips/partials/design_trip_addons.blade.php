@@ -463,7 +463,7 @@
                                                                                 if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
+                                                                                   echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
 
@@ -481,7 +481,7 @@
                                                                                 if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
+                                                                                    echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
                                                                             </label>
@@ -532,7 +532,7 @@
                                                                                 if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
+                                                                                    echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
 
@@ -550,7 +550,7 @@
                                                                                 if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
+                                                                                    echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
                                                                             </label>

@@ -334,7 +334,7 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                                                                 if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_type == 1)) {
                                                                                     echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                    echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
 
@@ -354,7 +354,7 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                                                                 if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_type == 1)) {
                                                                                     echo $hotels->hotel_reserve_amount * $hotels->hotel_our_solo_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                   echo  (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
                                                                             </label>
@@ -397,7 +397,7 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                                                                 if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_type == 1)) {
                                                                                     echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                   echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
 
@@ -417,7 +417,7 @@ if (array_key_exists("includedActivityHotles", $includedActivity)) {
                                                                                 if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_type == 1)) {
                                                                                     echo $hotels->hotel_reserve_amount * $hotels->hotel_our_solo_cost / 100;
                                                                                 } else {
-                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                    echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
                                                                                 }
                                                                                 ?>
                                                                             </label>
