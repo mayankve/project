@@ -1678,12 +1678,26 @@ class AdminController extends Controller {
      */
     public function listTrip() {
         //for Trips 
-        $trips = Trip::all();
+        $trips = Trip::where('status', '1')
+               ->orderBy('id', 'desc')
+               ->get();
         $userId = Auth::id();
-        //For Basic Info
+        //For Basic Info    
         $userData = User::where('id', '=', $userId)->first();
         return view('admin/triplist', ['trips' => $trips, 'data' => $userData]);
     }
+    
+    
+    /**
+     * Function to return trip view
+     * @param int id
+     * @return url
+     */
+    public function tripView($id) {
+        $tripData = Trip::where('id', '=', $id)->first();
+        return view('admin/viewtrip', ['tripdata' => $tripData]);
+    }
+    
     /**
      * Function to return trip spot view
      * @param void

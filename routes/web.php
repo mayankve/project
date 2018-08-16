@@ -33,11 +33,14 @@ Route::get('/logout', 'HomeController@logout');
 
 // Front end Change Password
 Route::get('/changepassword', 'HomeController@changePassword');
+
 // Front end Change Password
 Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
-//List Trips for users
+
+//List Trips for guest
 Route::get('listtrip', 'HomeController@listTrip');
 
+//List Trips for guest
 Route::get('tripview/{id}', 'HomeController@tripView');
 
 /* * ************ User end routes start************************* */
@@ -53,10 +56,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/updateuserprofileinfo', 'HomeController@updateUserProfileInfo');
 
 //List Trips for users
-    Route::get('listtrip', 'HomeController@listTrip');
+//Route::get('listtrip', 'HomeController@listTrip');
 
 //view Trips for users
-// Route::get('tripview/{id}','HomeController@tripView');
+ Route::get('tripview/{id}','HomeController@tripView');
+ 
 //Book Trip for users
     Route::get('book/{id}', 'HomeController@bookTripView');
 
@@ -117,7 +121,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     //  List trip
     Route::get('/listtrip', 'AdminController@listTrip');
-
+    
+    //view Trip for admin
+     Route::get('tripview/{id}','AdminController@tripView');
+     
     // Trip Spots
     Route::get('/tripspot', 'AdminController@tripSpot');
 
@@ -137,21 +144,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Upload Video
     Route::get('/uploadvideo', 'AdminController@uploadVideo');
-
-
-    //view Trips for admin
-    Route::get('/tripview/{id}', 'HomeController@tripView');
-
+    
     //Book Trip for users
     Route::get('/book/{id}', 'HomeController@bookTrip');
 
 // traveler profile in admin dashboard	
     Route::match(['get', 'post'], 'view-traveler/{id}', 'AdminController@adminTravelerProfile');
 
-// demo route
-    Route::get('/check-validation', 'AdminController@checkValidationBlade');
-    
-    Route::post('check-validation/', 'AdminController@checkValidation');
 });
 
 

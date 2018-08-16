@@ -69,10 +69,12 @@
                         <ul class="nav navbar-nav navbar-right">
                         <li class=""><a href="{{url('/about') }}">About </a></li>
                         <li class="dropdown dropdown-hov">
-                            <a href="{{url('/listtrip')}}">Trips <span class="caret"></span></a>
-                            <ul class="dropdown-menu" style="display: none;">
+                            <a href="{{url('/listtrip')}}">Trips
+                                <!--<span class="caret"></span>-->
+                            </a>
+<!--                            <ul class="dropdown-menu" style="display: none;">
                                 <li><a href="#">Australia New Zealand 2018</a></li>
-                            </ul>
+                            </ul>-->
                            </li>
                         <li><a href="#"> Testimony </a></li>
                         <!--<li><a href="#!/"> Blog </a></li>-->

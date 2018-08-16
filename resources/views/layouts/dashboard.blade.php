@@ -62,13 +62,13 @@
                         <li class=""><a href="{{url('/about') }}">About </a></li>
                         <li class="dropdown dropdown-hov">
                             <a href="{{url('/listtrip') }}">Trips <span class="caret"></span></a>
-                            <ul class="dropdown-menu" style="display: none;">
+<!--                            <ul class="dropdown-menu" style="display: none;">
                                 @if(count($data['trips']) > 0))
                                 @foreach($data['trips'] AS $trip)
                                 <li><a href="{{url('tripview/'.$trip->trip_id)}}">{{$trip->name}}</a></li>
                                 @endforeach      
                                 @endif
-                            </ul>
+                            </ul>-->
                         </li>
                         <!--<li><a href="#"> Testimony </a></li>-->
                         <li><a href="{{url('/contact') }}"> Contact</a></li>

@@ -127,28 +127,25 @@
                                     @include('designstrips.partials.design_trip_hotels')
                                 </div>
                                 <br>
+                                <!-- Included Activities Panel -->
+                                <div class="panel panel-default trip-design-activity">
+                                    @include('designstrips.partials.design_trip_included_activity')
+                                </div>
                                 <!-- Addons Panel -->
                                 <div class="panel panel-default trip-design-addon">
                                     @include('designstrips.partials.design_trip_addons')
                                 </div>
                                 <br>
-                                <!-- Included Activities Panel -->
-                                <div class="panel panel-default trip-design-activity">
-                                    @include('designstrips.partials.design_trip_included_activity')
-                                </div>
-
                                 <!-----------------------Design  your Trip ends----------------------------------------->
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section2">
-                                <!--<h3>Todo/Packing List</h3>-->
                                 <p>
                                     <!-- Trip Todo Panel -->
                                     @include('designstrips.partials.design_trip_todo')
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section3">
-                                <!--<h3>Travelers</h3>-->
                                 <p>
                                     <!-- Trip Travelers Panel -->
                                     @include('designstrips.partials.design_trip_traveler')
@@ -217,28 +214,26 @@
                                     @include('designstrips.partials.design_trip_hotels')
                                 </div>
                                 <br>
+                                  <!-- Included Activities Panel -->
+                                <div class="panel panel-default trip-design-activity">
+                                    @include('designstrips.partials.design_trip_included_activity')
+                                </div>
+                                  
+                                <br>
                                 <!-- Addons Panel -->
                                 <div class="panel panel-default trip-design-addon">
                                     @include('designstrips.partials.design_trip_addons')
                                 </div>
-                                <br>
-                                <!-- Included Activities Panel -->
-                                <div class="panel panel-default trip-design-activity">
-                                    @include('designstrips.partials.design_trip_included_activity')
-                                </div>
-
                                 <!-----------------------Design  your Trip ends----------------------------------------->
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section2">
-                                <!--<h3>Todo/Packing List</h3>-->
                                 <p>
                                     <!-- Trip Todo Panel -->
                                     @include('designstrips.partials.design_trip_todo')
                                 </p>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="Section3">
-                                <!--<h3>Travelers</h3>-->
                                 <p>
                                     <!-- Trip Travelers Panel -->
                                     @include('designstrips.partials.design_trip_traveler')

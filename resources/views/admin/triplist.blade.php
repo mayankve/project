@@ -50,6 +50,7 @@
                 <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
                     <img src="{{ url('/') . '/uploads/trip/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
                     <div class="text-overlay">
+                        <!--<a href="{{ url('/admin/tripview/'.$trip->id) }}">{{$trip->name}} </a>-->
                         <a href="#">{{$trip->name}} </a>
                         <a href="{{ url('/').'/admin/deletetrip/'.$trip->id }}" class="info confirmation"><span><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i></span></a>
 

@@ -478,14 +478,16 @@ class HomeController extends Controller {
      */
     public function listTrip() {
         //for Trips
-        $trips = Trip::all();
+        $trips = Trip::where('status', '1')
+             ->orderBy('id', 'desc')
+             ->get();
         $userId = Auth::id();
-        if (isset($userId)) {
+        //if (isset($userId)) {
             $userData = User::where('id', '=', $userId)->first();
             return view('triplist', ['trips' => $trips, 'data' => $userData]);
-        } else {
-            return view('triplist', ['trips' => $trips]);
-        }
+       // } else {
+           // return view('triplist', ['trips' => $trips]);
+        //}
     }
 
     /**
