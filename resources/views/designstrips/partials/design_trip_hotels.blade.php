@@ -85,7 +85,18 @@
                             </div>
                             <div class="col-sm-1 hotel_solo_cost">
                                 <label>$</label> <label class="cost">
-                                    {{$hotels->hotel_reserve_amount}} </label>
+                                    <?php
+                                    
+                                        if ($hotels->hotel_reserve_type == 1 ){
+                                            echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost/100;
+                                           
+                                        }else{
+                                            echo $hotels->hotel_reserve_amount;
+                                           
+                                        }
+                                    ?>
+                                   
+                                </label>
                             </div>
                             <div class="col-sm-1 hotel_solo_cost">
                                 <label>$</label> <label class="solo_cost"> {{$hotels->hotel_solo_cost}}</label>
@@ -113,7 +124,8 @@
                             <div class="col-sm-2">{{$hotels->hotel_due_date}}</div>
                             <div class="col-sm-1 hotel_cost" style="display: none;">
                                 <label>$</label> <label class="cost">
-                                    {{$hotels->hotel_reserve_amount}}</label>
+                                    {{$hotels->hotel_reserve_amount}}
+                                </label>
                             </div>
                             <div class="col-sm-1 hotel_cost" style="display: none;">
                                 <label>$</label> <label class="cost">{{$hotels->hotel_cost}}</label>
@@ -121,7 +133,18 @@
 
                             <div class="col-sm-1 hotel_solo_cost">
                                 <label>$</label> <label class="cost">
-                                    {{$hotels->hotel_reserve_amount}} </label>
+                                    <!--{{$hotels->hotel_reserve_amount}}--> 
+                                 <?php
+                                       
+                                        if ($hotels->hotel_reserve_type == 1 ){
+                                            echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost/100;
+                                           
+                                        }else{
+                                            echo $hotels->hotel_reserve_amount;
+                                           
+                                        }
+                                    ?>
+                                </label>
                             </div>
                             <div class="col-sm-1 hotel_solo_cost">
                                 <label>$</label> <label class="solo_cost"> {{$hotels->hotel_solo_cost}}</label>

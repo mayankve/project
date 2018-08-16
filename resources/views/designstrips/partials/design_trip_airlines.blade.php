@@ -54,7 +54,14 @@
                     {{$airlines->airline_departure_time}}
                 </div>
                 <div class="col-sm-1">
-                    {{$airlines->airline_reserve_amount}}
+                <?php
+                if ($hotels->airline_reserve_type == 1 ){
+                    echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
+
+                }else{
+                    echo $airlines->airline_reserve_amount;
+
+                }?>
                 </div>
                 <div class="col-sm-1">
                     {{$airlines->airline_cost}}
@@ -91,7 +98,14 @@
                     {{$airlines->airline_departure_time}}
                 </div>
                 <div class="col-sm-1">
-                    {{$airlines->airline_reserve_amount}}
+                   <?php
+                    if ($hotels->airline_reserve_type == 1 ){
+                        echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
+
+                    }else{
+                        echo $airlines->airline_reserve_amount;
+
+                    }?>
                 </div>
                 <div class="col-sm-1">
                     {{$airlines->airline_cost}} 

@@ -116,7 +116,7 @@
                                                                         {{ $sr }}
                                                                     </div>
                                                                     <div class="col-sm-5">
-                                                                        {{ $triptraveler->first_name }}   {{ $triptraveler->last_name }}
+                                                                        {{ ucwords($triptraveler->first_name) }}   {{ ucwords($triptraveler->last_name) }}
                                                                     </div>
                                                                     <div class="col-sm-2">
                                                                         {{ ($triptraveler->gender == '1') ? 'Male' : 'Female' }}
