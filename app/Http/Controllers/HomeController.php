@@ -762,7 +762,7 @@ class HomeController extends Controller {
 				$activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
 			}			
 				
-
+	//echo '<pre>';print_r($addonarray['traveler']);die;
             //Booked Data array creation
             $bookedData = array(
                 'bookedTrip' => $BookedTripDetails,

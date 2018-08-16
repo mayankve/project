@@ -26,12 +26,12 @@
 //                        die;
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
-                        @foreach ( $tripdata['tripAddons'] AS $addOn)
-
-                        <?php
+                        @foreach ( $tripdata['tripAddons'] AS $addOn) 
+                        
+                        <?php 
 //                        $result = in_array( $addOn->id , $bookedData['bookedAddons']['addon_id']);
 //                         echo $result."lkldkfdl";die;
-                        ?>
+                         ?>
                         <div class="col-sm-12">
                             <div class="row number-group-row parent">
                                 @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
@@ -70,14 +70,8 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
-                                            <?php //echo '<pre>';print_r($bookedData['bookedAddons']['addon_id']);die;?>
-                                            <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}"<?php
-                                            if (!empty($bookedData)) {
-                                                if (in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['addon_id'])) {
-                                                    echo 'checked';
-                                                }
-                                            };
-                                            ?> class="selected_addons" id="selected_addons">
+										<?php //echo '<pre>';print_r($bookedData['bookedAddons']['addon_id']);die;?>
+                               <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}"<?php if(!empty($bookedData)){ if(in_array($addOn['tripAddons_check']->id,$bookedData['bookedAddons']['addon_id'])){ echo 'checked';} };?> class="selected_addons" id="selected_addons">
                                             <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
                                         </label>
                                     </div>
@@ -113,9 +107,12 @@
                                                         <div class="form-group pdrow-group">
                                                             <?php
                                                             $sr = 1;
+															//echo '<pre>';print_r($tripdata['tripTravelers']);die;
                                                             ?>
                                                             @if(count($tripdata['tripTravelers']))
                                                             @foreach($tripdata['tripTravelers'] AS $triptraveler)
+														  <?php  //echo "<pre>"; print_r($bookedData['bookedAddons']['traveler'][$addOn['tripAddons_check']->id]); die;   echo $addOn['tripAddons_check']->id;   ?>
+														
                                                             <div class="col-sm-12 travler">
                                                                 <div class="row">
                                                                     <div class="col-sm-1">
@@ -134,9 +131,8 @@
                                                                         <label>
                                                                              <!--<input type="checkbox" name="selected_addon_travelers[]" class="selected_addon_traveler" id="selected_addon_traveler" value="{{ $triptraveler->id }}">-->
                                                                             <!-- {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}-->
-                            <input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler" <?php if(!empty($bookedData['bookedAddons'])){if(array_key_exists($addOn['tripAddons_check']->id,$bookedData['bookedAddons']['traveler'])) {
-		if(in_array($triptraveler->id, $bookedData['bookedAddons']['traveler'][$addOn['tripAddons_check']->id])){echo 'checked';} } }?>>
-                                                                        </label>
+		<input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler"<?php if(!empty($bookedData['bookedAddons'])){if(array_key_exists($addOn['tripAddons_check']->id,$bookedData['bookedAddons']['traveler'])) {
+		if(in_array($triptraveler->id, $bookedData['bookedAddons']['traveler'][$addOn['tripAddons_check']->id])){echo 'checked';} } }?>>                                                                       </label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -216,6 +212,7 @@
                                                             ?>
                                                             @if(count($addOn['tripAddonFlights'])>0)
                                                             @foreach($addOn['tripAddonFlights'] as $tripflight)
+
                                                             @if(($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) && ($tripDetails['adjustment_date'] < date('Y-m-d'))&& ($tripflight->airline_due_date < date('Y-m-d')) )
                                                             <div class="form-group pdrow-group flightparent">
                                                                 <div class="col-sm-12">
@@ -236,18 +233,10 @@
                                                                             {{$tripflight->airline_departure_time}}
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label> <label class="cost">
-                                                                                <?php
-                                                                                if ($tripflight->airline_reserve_type == 1) {
-                                                                                    echo $tripflight->airline_reserve_amount * $tripflight->airline_our_cost / 100;
-                                                                                } else {
-                                                                                    echo $tripflight->airline_reserve_amount;
-                                                                                }
-                                                                                ?>
-                                                                            </label>
+                                                                            {{$tripflight->airline_reserve_amount}}
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label> <label class="cost">{{$tripflight->airline_our_cost}}</label>
+                                                                            {{$tripflight->airline_cost}}
                                                                         </div>
                                                                         <div class="col-sm-1">
                                                                             <label>
@@ -277,28 +266,22 @@
                                                                             {{$tripflight->airline_departure_time}}
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label> <label class="cost">
-                                                                                <?php
-                                                                                if ($tripflight->airline_reserve_type == 1) {
-                                                                                    echo $tripflight->airline_reserve_amount * $tripflight->airline_our_cost / 100;
-                                                                                } else {
+                                                                            <?php
+                                                                                if ($tripflight->airline_reserve_type == 1 ){
+                                                                                    echo $tripflight->airline_reserve_amount * $tripflight->airline_our_cost/100;
+
+                                                                                }else{
                                                                                     echo $tripflight->airline_reserve_amount;
-                                                                                }
-                                                                                ?>
-                                                                            </label>
+
+                                                                                }?>
+                                                                            <!--{{$tripflight->airline_reserve_amount}}-->
                                                                         </div>
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label> <label class="cost">{{$tripflight->airline_our_cost}}</label>
+                                                                            {{$tripflight->airline_our_cost}}
                                                                         </div>
                                                                         <div class="col-sm-1">
                                                                             <label>
-                                                                                <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}" <?php
-                                                                                if (!empty($bookedData)) {
-                                                                                    if (in_array($tripflight->id, $bookedData['bookedAddons']['flight_id'])) {
-                                                                                        echo 'checked';
-                                                                                    }
-                                                                                };
-                                                                                ?>>
+                                                                                <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}" <?php if(!empty($bookedData)){ if(in_array($tripflight->id,$bookedData['bookedAddons']['flight_id'])){ echo 'checked';} };?>>
                                                                                 <input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($tripflight->airline_reserve_amount) ? $tripflight->airline_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>
@@ -434,6 +417,7 @@
                                                             ?>
                                                             @if(count($addOn['tripAddonHotels'])>0)
                                                             @foreach($addOn['tripAddonHotels'] as $triphotel)
+
                                                             @if((($tripDetails['adjustment_date'] < date('Y-m-d')) && $addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) && ($triphotel->hotel_due_date < date('Y-m-d')) )
                                                             <div class="form-group pdrow-group hotleparent">
                                                                 <div class="col-sm-12">
@@ -443,6 +427,7 @@
                                                                         </div>
 
                                                                         <div class="col-sm-3">
+
                                                                             <?php echo (!empty($triphotel->hotel_name)) ? $triphotel->hotel_name : ''; ?>
                                                                         </div>
                                                                         <div class="col-sm-2">
@@ -458,39 +443,23 @@
                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                             <label>$</label>
                                                                             <label class="cost">
-                                                                                <?php
-                                                                                // echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
-                                                                                    echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
-                                                                                } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                }
-                                                                                ?>
+                                                                                <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
 
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                             <label>$</label>
                                                                             <label class="cost">
-                                                                                <?php echo (!empty($triphotel->hotel_our_cost)) ? $triphotel->hotel_our_cost : ''; ?></label>
+                                                                                <?php echo (!empty($triphotel->hotel_cost)) ? $triphotel->hotel_cost : ''; ?></label>
                                                                         </div>
+
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label>
-                                                                            <label class="cost">
-                                                                                <?php
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
-                                                                                    echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
-                                                                                } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                }
-                                                                                ?>
-                                                                            </label>
+                                                                            <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
+
                                                                         </div>
                                                                         <div class="col-sm-1 hotel_solo_cost">
-                                                                            <label>$</label>
-                                                                            <label class="cost">
-                                                                                <?php echo (!empty($triphotel->hotel_our_solo_cost)) ? $triphotel->hotel_our_solo_cost : ''; ?>
-                                                                            </label>
+                                                                            <?php echo (!empty($triphotel->hotel_solo_cost)) ? $triphotel->hotel_solo_cost : ''; ?>
+
                                                                         </div>
 
                                                                         <div class="col-sm-1">
@@ -522,58 +491,33 @@
 
                                                                         </div>
 
-
-
                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                             <label>$</label>
                                                                             <label class="cost">
-                                                                                <?php
-                                                                                // echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
-                                                                                    echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
-                                                                                } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                }
-                                                                                ?>
+                                                                                <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
 
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                             <label>$</label>
                                                                             <label class="cost">
-                                                                                <?php echo (!empty($triphotel->hotel_our_cost)) ? $triphotel->hotel_our_cost : ''; ?></label>
+                                                                                <?php echo (!empty($triphotel->hotel_cost)) ? $triphotel->hotel_cost : ''; ?></label>
                                                                         </div>
+
                                                                         <div class="col-sm-1">
-                                                                            <label>$</label>
-                                                                            <label class="cost">
-                                                                                <?php
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
-                                                                                    echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
-                                                                                } else {
-                                                                                    (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                }
-                                                                                ?>
-                                                                            </label>
+                                                                            <?php echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : ''; ?>
+
                                                                         </div>
                                                                         <div class="col-sm-1 hotel_solo_cost">
-                                                                            <label>$</label>
-                                                                            <label class="cost">
-                                                                                <?php echo (!empty($triphotel->hotel_our_solo_cost)) ? $triphotel->hotel_our_solo_cost : ''; ?>
-                                                                            </label>
-                                                                        </div>
+                                                                            <?php echo (!empty($triphotel->hotel_solo_cost)) ? $triphotel->hotel_solo_cost : ''; ?>
 
+                                                                        </div>
 
                                                                         <div class="col-sm-1">
                                                                             <label>
                                                                                 <input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}"
-                                                                                <?php
-                                                                                if (!empty($bookedData)) {
-                                                                                    if (in_array($triphotel->id, $bookedData['bookedAddons']['hote_id'])) {
-                                                                                        echo 'checked';
-                                                                                    }
-                                                                                };
-                                                                                ?>
-                                                                                       >
+																				<?php if(!empty($bookedData)){ if(in_array($triphotel->id,$bookedData['bookedAddons']['hote_id'])){ echo 'checked';} };?>
+																				>
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>
