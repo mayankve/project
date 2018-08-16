@@ -460,7 +460,7 @@
                                                                             <label class="cost">
                                                                                 <?php
                                                                                 // echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
+                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_type == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
                                                                                 } else {
                                                                                     (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
@@ -478,7 +478,7 @@
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
+                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_type == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
                                                                                 } else {
                                                                                     (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
@@ -528,8 +528,7 @@
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
-                                                                                // echo (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
+                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_type == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_cost / 100;
                                                                                 } else {
                                                                                     (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';
@@ -547,7 +546,7 @@
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
-                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_amount == 1)) {
+                                                                                if (!empty($triphotel->hotel_reserve_amount) && ($triphotel->hotel_reserve_type == 1)) {
                                                                                     echo $triphotel->hotel_reserve_amount * $triphotel->hotel_our_solo_cost / 100;
                                                                                 } else {
                                                                                     (!empty($triphotel->hotel_reserve_amount)) ? $triphotel->hotel_reserve_amount : '';

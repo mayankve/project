@@ -75,6 +75,7 @@
                     <div class="form-group {{ $errors->has('about_trip') ? 'has-error' : ''}}">
                         {!! Form::label('about_trip', 'About Trip') !!}
                         {!! Form::textarea('about_trip', null, ['class' => 'form-control']) !!}
+                        <!--<textarea class="form-control" name="about_trip" wrap="soft" ></textarea>-->
                         @if($errors->has('about_trip'))
                         <span class="help-block">{{ $errors->first('about_trip') }}</span>
                         @endif
