@@ -94,7 +94,6 @@
                                                     <?php
                                                     $sr = 1;
                                                     if (array_key_exists("includedActivityFlights", $includedActivity)) {
-
                                                         ?>
                                                         @if(!empty($includedActivity['includedActivityFlights']))
                                                         @foreach( $includedActivity['includedActivityFlights'] AS $airlines)
@@ -118,10 +117,18 @@
                                                                         {{ isset($airlines->airline_departure_time) ? $airlines->airline_departure_time : 'N/A' }}
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        {{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}
+                                                                        <label>$</label> <label class="cost">
+                                                                            <?php
+                                                                            if (isset($airlines->airline_reserve_amount) && ($airlines->airline_reserve_type == 1)) {
+                                                                                echo $airlines->airline_reserve_amount * $airlines->airline_our_cost / 100;
+                                                                            } else {
+                                                                                echo $airlines->airline_reserve_amount;
+                                                                            }
+                                                                            ?>
+                                                                        </label>
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        {{ isset($airlines->airline_cost) ? $airlines->airline_cost : 'N/A' }}
+                                                                        <label>$</label> <label class="cost">{{ isset($airlines->airline_our_cost) ? $airlines->airline_our_cost : 'N/A' }}</label>
                                                                     </div>
                                                                     <div class="col-sm-1">
                                                                         <label></label>
@@ -149,28 +156,40 @@
                                                                         {{ isset($airlines->airline_departure_time) ? $airlines->airline_departure_time : 'N/A' }}
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        {{ isset($airlines->airline_reserve_amount) ? $airlines->airline_reserve_amount : 'N/A' }}
+                                                                        <label>$</label> <label class="cost">
+                                                                            <?php
+                                                                            if (isset($airlines->airline_reserve_amount) && ($airlines->airline_reserve_type == 1)) {
+                                                                                echo $airlines->airline_reserve_amount * $airlines->airline_our_cost / 100;
+                                                                            } else {
+                                                                                echo $airlines->airline_reserve_amount;
+                                                                            }
+                                                                            ?>
+                                                                        </label>
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        {{ isset($airlines->airline_cost) ? $airlines->airline_cost : 'N/A' }}
+                                                                        <label>$</label> <label class="cost">{{ isset($airlines->airline_our_cost) ? $airlines->airline_our_cost : 'N/A' }}</label>
                                                                     </div>
                                                                     <div class="col-sm-1">
                                                                         <label>
-                                               <input type="radio" name="included_activity_flight[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$airlines->id}}"
-											   <?php if(!empty($bookedData)){ if(in_array($airlines->id,$bookedData['bookedActivities']['flight_id'])){ echo 'checked';} };?>
-											   class="included_activity_flight">
+                                                                            <input type="radio" name="included_activity_flight[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$airlines->id}}"
+                                                                            <?php if (!empty($bookedData)) {
+                                                                                if (in_array($airlines->id, $bookedData['bookedActivities']['flight_id'])) {
+                                                                                    echo 'checked';
+                                                                                }
+                                                                            }; ?>
+                                                                                   class="included_activity_flight">
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         @endif
-                                                        <?php $sr++; ?>
+    <?php $sr++; ?>
                                                         @endforeach
                                                         @endif
-                                                    <?php } ?>
-                                                    </div>
-												
+<?php } ?>
+                                                </div>
+
                                                 <div class="land-only_activity" style="display: none;">
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
@@ -178,7 +197,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                <input type="text" name="activity_flight_name[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_name" value="">
+                                                                    <input type="text" name="activity_flight_name[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_name" value="">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -188,7 +207,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                  <input type="text" name="activity_flight_flight_number[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_number" value="">
+                                                                    <input type="text" name="activity_flight_flight_number[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_number" value="">
 
                                                                 </div>
 
@@ -284,96 +303,149 @@
                                                     </div>
 
                                                     <div class="form-group pdrow-group">
-                                                        <?php
-                                                        $sr = 1;
-                                                        if (array_key_exists("includedActivityHotles", $includedActivity)) {
-                                                                ?>
+<?php
+$sr = 1;
+if (array_key_exists("includedActivityHotles", $includedActivity)) {
+    ?>
                                                             @if(!empty($includedActivity['includedActivityHotles']))
                                                             @foreach( $includedActivity['includedActivityHotles'] AS $hotels)
                                                             @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($includedActivity['tripIncludedActivities_check']->activity_due_date < date('Y-m-d')) && ($hotels->hotel_due_date < date('Y-m-d')) )
                                                             <div class="form-group pdrow-group">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-1">
-                                                                                {{$sr}}
-                                                                            </div>
-                                                                            <div class="col-sm-3">
-                                                                                <?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <?php echo (!empty($hotels->hotel_type)) ? $hotels->hotel_type : ''; ?>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-1">
+                                                                            {{$sr}}
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+    <?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <?php echo (!empty($hotels->hotel_type)) ? $hotels->hotel_type : ''; ?>
 
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+    <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
 
-                                                                            </div>
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php
+                                                                                if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_amount == 1)) {
+                                                                                    echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost / 100;
+                                                                                } else {
+                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                }
+                                                                                ?>
 
-                                                                            </div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                            <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
+                                                                        </div>
 
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_cost)) ? $hotels->hotel_cost : ''; ?>
-
-                                                                            </div>
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_solo_cost)) ? $hotels->hotel_solo_cost : ''; ?>
-                                                                            </div>
-                                                                            <div class="col-sm-1">
-                                                                                <label>
-                                                                                </label>
-                                                                            </div>
+                                                                        <div class="col-sm-1">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php
+                                                                                if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_amount == 1)) {
+                                                                                    echo $hotels->hotel_reserve_amount * $hotels->hotel_our_solo_cost / 100;
+                                                                                } else {
+                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                }
+                                                                                ?>
+                                                                            </label>
+                                                                        </div>
+                                                                       <div class="col-sm-1 hotel_solo_cost">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php echo (!empty($hotels->hotel_our_solo_cost)) ? $hotels->hotel_our_solo_cost : ''; ?>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-sm-1">
+                                                                            <label>
+                                                                            </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
                                                             @else
                                                             <div class="form-group pdrow-group">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-1">
-                                                                                {{$sr}}
-                                                                            </div>
-                                                                            <div class="col-sm-3">
-                                                                                <?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <?php echo (!empty($hotels->hotel_type)) ? $hotels->hotel_type : ''; ?>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-1">
+                                                                            {{$sr}}
+                                                                        </div>
+                                                                        <div class="col-sm-3">
+    <?php echo (!empty($hotels->hotel_name)) ? $hotels->hotel_name : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <?php echo (!empty($hotels->hotel_type)) ? $hotels->hotel_type : ''; ?>
 
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                                <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
 
-                                                                            </div>
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : ''; ?>
+                                                                        </div>
+                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php
+                                                                                if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_amount == 1)) {
+                                                                                    echo $hotels->hotel_reserve_amount * $hotels->hotel_our_cost / 100;
+                                                                                } else {
+                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                }
+                                                                                ?>
 
-                                                                            </div>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="col-sm-1 hotel_cost" style="display: none;">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                            <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
+                                                                        </div>
 
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_cost)) ? $hotels->hotel_cost : ''; ?>
-
-                                                                            </div>
-                                                                            <div class="col-sm-1">
-                                                                                <?php echo (!empty($hotels->hotel_solo_cost)) ? $hotels->hotel_solo_cost : ''; ?>
-
-                                                                            </div>
-
-                                                                            <div class="col-sm-1">
-                                                                                <label>
-                                                            <input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}"
-															 <?php if(!empty($bookedData)){ if(in_array($hotels->id,$bookedData['bookedActivities']['hotel_id'])){ echo 'checked';} };?>
-															  class="included_activity_hotel">
-                                                                                </label>
-                                                                            </div>
+                                                                        <div class="col-sm-1">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php
+                                                                                if (!empty($hotels->hotel_reserve_amount) && ($hotels->hotel_reserve_amount == 1)) {
+                                                                                    echo $hotels->hotel_reserve_amount * $hotels->hotel_our_solo_cost / 100;
+                                                                                } else {
+                                                                                    (!empty($hotels->hotel_reserve_amount)) ? $hotels->hotel_reserve_amount : '';
+                                                                                }
+                                                                                ?>
+                                                                            </label>
+                                                                        </div>
+                                                                       <div class="col-sm-1 hotel_solo_cost">
+                                                                            <label>$</label>
+                                                                            <label class="cost">
+                                                                                <?php echo (!empty($hotels->hotel_our_solo_cost)) ? $hotels->hotel_our_solo_cost : ''; ?>
+                                                                            </label>
+                                                                        </div>
+                                
+                                                                        <div class="col-sm-1">
+                                                                            <label>
+                                                                                <input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}"
+    <?php if (!empty($bookedData)) {
+        if (in_array($hotels->id, $bookedData['bookedActivities']['hotel_id'])) {
+            echo 'checked';
+        }
+    }; ?>
+                                                                                       class="included_activity_hotel">
+                                                                            </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
                                                             @endif
-                                                                <?php $sr++; ?>
+    <?php $sr++; ?>
                                                             @endforeach
                                                             @endif
-                                                        <?php } ?>
+<?php } ?>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-sm-12 text-right">
