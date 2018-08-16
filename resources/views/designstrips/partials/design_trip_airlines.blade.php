@@ -54,6 +54,7 @@
                     {{$airlines->airline_departure_time}}
                 </div>
                 <div class="col-sm-1">
+                  <label>$</label> <label class="cost">
                 <?php
                 if ($airlines->airline_reserve_type == 1 ){
                     echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
@@ -61,13 +62,12 @@
                 }else{
                     echo $airlines->airline_reserve_amount;
 
-                }?>
+                }?></label>
                 </div>
                 <div class="col-sm-1">
-                    {{$airlines->airline_cost}}
+                    <label>$</label> <label class="cost"> {{$airlines->airline_cost}}</label>
                 </div>
                 <div class="col-sm-1">
-
                     <label>
                         @if(!empty($bookedData['bookedTrip']->trip_flight_id) && ($bookedData['bookedTrip']->trip_flight_id == $airlines->airline_name)) 
                         Selected
@@ -98,6 +98,7 @@
                     {{$airlines->airline_departure_time}}
                 </div>
                 <div class="col-sm-1">
+                   <label>$</label> <label class="cost">
                    <?php
                     if ($airlines->airline_reserve_type == 1 ){
                         echo $airlines->airline_reserve_amount * $airlines->airline_our_cost/100;
@@ -106,9 +107,10 @@
                         echo $airlines->airline_reserve_amount;
 
                     }?>
+                   </label>
                 </div>
                 <div class="col-sm-1">
-                    {{$airlines->airline_cost}} 
+                    <label>$</label> <label class="cost">{{$airlines->airline_cost}} </label>
                 </div>
                 <div class="col-sm-1">
                     <label> 

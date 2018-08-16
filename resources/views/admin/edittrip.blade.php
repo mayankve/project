@@ -138,6 +138,10 @@
 		<div class="panel panel-default">
 			@include('admin.trip.partials.update-trip-airlines')
 		</div>
+                <!-- Hotel Panel -->
+		<div class="panel panel-default">
+			@include('admin.trip.partials.update-trip-hotels')
+		</div>
 		<!-- Included Actiivity Panel -->
 		<div class="panel panel-default">
 			@include('admin.trip.partials.update-trip-included-activity')
@@ -145,10 +149,6 @@
 		<!-- Add-ons Panel -->
 		<div class="panel panel-default">
 			@include('admin.trip.partials.update-trip-add-ons')
-		</div>
-		<!-- Hotel Panel -->
-		<div class="panel panel-default">
-			@include('admin.trip.partials.update-trip-hotels')
 		</div>
 		<!-- Packing Panel -->
 		<div class="panel panel-default">
