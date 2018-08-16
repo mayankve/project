@@ -134,7 +134,8 @@
                                                                         <label>
                                                                              <!--<input type="checkbox" name="selected_addon_travelers[]" class="selected_addon_traveler" id="selected_addon_traveler" value="{{ $triptraveler->id }}">-->
                                                                             <!-- {{ Form::checkbox('selected_addon_travelers[]', $triptraveler->id , null, ['class' => 'selected_addon_traveler' , 'id' => 'selected_addon_traveler'])}}-->
-                                                                            <input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler">
+                            <input type="checkbox" name="selected_addon_traveler[{{$id}}][{{$sr}}]" value="{{$triptraveler->id}}" class="selected_addon_traveler" id="selected_addon_traveler" <?php if(!empty($bookedData['bookedAddons'])){if(array_key_exists($addOn['tripAddons_check']->id,$bookedData['bookedAddons']['traveler'])) {
+		if(in_array($triptraveler->id, $bookedData['bookedAddons']['traveler'][$addOn['tripAddons_check']->id])){echo 'checked';} } }?>>
                                                                         </label>
                                                                     </div>
                                                                 </div>
