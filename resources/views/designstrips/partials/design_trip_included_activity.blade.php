@@ -244,7 +244,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row activity_hotel">
                                 <div class="panel panel-primary trip-design-hotel">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Hotels</strong></h3>
@@ -264,7 +264,7 @@
                                                                     <label>Upgrade solo room </label>
                                                                 </div>
                                                                 <div class="col-sm-3 text-right">
-                                                                    <div id="activity_hotel_is_solo" class="btn-group" hot="1">
+                                                                    <div id="is_solo" class="btn-group" hot="1">
                                                                         <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
                                                                         <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
                                                                     </div>
@@ -349,7 +349,7 @@
                                                                             <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
                                                                         </div>
 
-                                                                        <div class="col-sm-1">
+                                                                        <div class="col-sm-1 hotel_solo_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
@@ -414,7 +414,7 @@
                                                                             <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
                                                                         </div>
 
-                                                                        <div class="col-sm-1">
+                                                                        <div class="col-sm-1 hotel_solo_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php

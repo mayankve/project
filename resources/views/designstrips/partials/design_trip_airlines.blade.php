@@ -65,7 +65,7 @@
                 }?></label>
                 </div>
                 <div class="col-sm-1">
-                    <label>$</label> <label class="cost"> {{$airlines->airline_cost}}</label>
+                    <label>$</label> <label class="cost"> {{$airlines->airline_our_cost}}</label>
                 </div>
                 <div class="col-sm-1">
                     <label>
@@ -110,7 +110,7 @@
                    </label>
                 </div>
                 <div class="col-sm-1">
-                    <label>$</label> <label class="cost">{{$airlines->airline_cost}} </label>
+                    <label>$</label> <label class="cost">{{$airlines->airline_our_cost}} </label>
                 </div>
                 <div class="col-sm-1">
                     <label> 

@@ -1,6 +1,6 @@
 <!------------Trip Design Hotel---------------------------------------->
 <!--<div class="panel panel-primary trip-design-hotel">-->
-<div class="panel-heading">
+<div class="panel-heading trip-hotel">
     <h3 class="panel-title"><strong>Hotels</strong></h3>
     <div class="panel-tools">
         <label style="color: black">Total Cost: </label> <label class="total_hotel_cost" style="color: black">$00</label>
@@ -9,7 +9,7 @@
         <a href="#"><span class="clickable"><i class="glyphicon glyphicon-chevron-up"></i></span></a>-->
     </div>
 </div>
-<div class="panel-body">
+<div class="panel-body trip-hotel">
     <div class="basic_info_view">   
         <div class="form-horizontal">
             <div class="trip-addons">
