@@ -18,6 +18,43 @@
                         ?>                   
                         @if(count($tripdata['tripAddons'])>0)
                         @foreach ( $tripdata['tripAddons'] AS $addOn)
+						<?php
+						if(!empty($bookedData['bookedAddons']))
+						{
+							if(!empty($bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id])){
+						
+								if(!empty($bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_id'])){
+									 $display='style="display: none;"';
+									 $flightdisplay='';
+									 $checkedflight='checked';
+									 $flight_name='';
+									 $flight_number='';
+									 $flight_departure_date='';
+									 $flight_departure_time='';
+								} else {
+									$display='';
+									$flightdisplay='style="display: none;"';
+									$checkedlandonly='checked';								
+									$flight_name= $bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_name'];
+									$flight_number=$bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_number'];
+									$flight_departure_date=$bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_departure_date'];
+									$flight_departure_time=$bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_departure_time'];
+								}
+							}else{
+							$display='style="display: none;"';
+							$flightdisplay='';
+							$flight_name='';
+							$flight_number='';
+							$flight_departure_date='';
+							$flight_departure_time='';
+							$checkedlandonly='';
+						}	
+					}else{
+						$display='style="display: none;"';
+						$flightdisplay='';
+					}			
+					
+						?>
                         <div class="col-sm-12">
                             <div class="row number-group-row parent">
                                 @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
@@ -153,8 +190,8 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="col-sm-6 pr-3">
-                                                                    <label><input type="radio" name="add_on_land-only[{{$id}}]" id="add_on_land-only" class="add_on_land-only" value="0" checked>Avaliable Flights</label>
-                                                                    <label><input type="radio" name="add_on_land-only[{{$id}}]" class="add_on_land-only" value="1">Land only</label>
+                                                                    <label><input type="radio" name="add_on_land-only[{{$id}}]" id="add_on_land-only" class="add_on_land-only" value="0" <?php echo !empty($checkedflight)?$checkedflight:'checked';?>>Avaliable Flights</label>
+                                                                    <label><input type="radio" name="add_on_land-only[{{$id}}]" class="add_on_land-only" value="1" <?php echo !empty($checkedlandonly)?$checkedlandonly:'';?>>Land only</label>
                                                                 </div>
                                                                 <div class="col-sm-6">
 
@@ -162,7 +199,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="addon-available-flights">
+                                                    <div class="addon-available-flights" <?php echo !empty($flightdisplay)?$flightdisplay:'';?>>
                                                         <div class="form-group pdrow-group">
                                                             <div class="col-sm-12">
                                                                 <div class="row">
@@ -295,7 +332,7 @@
                                                             @endif
                                                         <?php } ?>
                                                     </div>
-                                                    <div class="add_on_land-onlydetail" style="display: none;">
+                                                    <div class="add_on_land-onlydetail" <?php echo !empty($display)?$display:'';?>>
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
 
@@ -303,7 +340,7 @@
                                                                 <div class="row">
                                                                     <div class="user-edit col-sm-6">
 
-                                                                        <input type="text" name="add_on_flight_name[{{$id}}]" class="form-control" value="">
+                                                                        <input type="text" name="add_on_flight_name[{{$id}}]"  class="form-control" value="{{!empty($flight_name)?$flight_name:''}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -313,7 +350,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="row">
                                                                     <div class="user-edit col-sm-6">
-                                                                        <input type="text" name="add_on_flight_number[{{$id}}]" class="form-control" value="">
+                                                                        <input type="text" name="add_on_flight_number[{{$id}}]" class="form-control" value="{{!empty($flight_number)?$flight_number:''}}">
                                                                     </div>
 
                                                                 </div>
@@ -324,7 +361,7 @@
                                                             <div class="col-sm-9">
                                                                 <div class="row">
                                                                     <div class="user-edit col-sm-6">
-                                                                        <input type="text" name="add_on_departure_date[{{$id}}]"  class="form-control flightdeparture" value="">
+                                                                        <input type="text" name="add_on_departure_date[{{$id}}]"  class="form-control flightdeparture" value="{{!empty($flight_departure_date)?$flight_departure_date:''}}">
                                                                     </div>
 
                                                                 </div>
@@ -337,7 +374,7 @@
                                                                     <div class="user-edit col-sm-6">
                                                                         <!--<input type="text" name="departure_time" class="form-control" value="">-->
                                                                         <!-- {{ Form::text('add_on_departure_time' , null, ['class' => 'form-control']) }}-->
-                                                                        <input type="text" name="add_on_departure_time[{{$id}}]" class="form-control" value="">
+                                                                        <input type="text" name="add_on_departure_time[{{$id}}]" class="form-control" value="{{!empty($flight_departure_time)?$flight_departure_time:''}}">
                                                                     </div>
                                                                 </div>
                                                             </div>

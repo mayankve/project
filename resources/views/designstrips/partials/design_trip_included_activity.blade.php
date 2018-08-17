@@ -17,6 +17,40 @@
                         ?>
                         @if(count($tripdata['tripIncludedActivities'])>0)
                         @foreach ( $tripdata['tripIncludedActivities'] AS $includedActivity)
+						<?php
+						if(!empty($bookedData['bookedActivities']))
+						{
+							if(!empty($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id])){
+								//echo ($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['activity_flight_id']);
+								if(!empty($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['activity_flight_id'])){
+									 $display_manual='style="display: none;"';
+									 $flightdisplay='';
+									 $checkedflight='checked';
+									 $flight_name='';
+									 $flight_number='';
+									 $flight_departure_date='';
+									 $flight_departure_time='';
+								} else {
+									$display_manual='';
+									$flightdisplay='style="display: none;"';
+									 $checkedlandonly='checked';								
+									$flight_name= $bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_name'];
+									$flight_number=$bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_number'];
+									$flight_departure_date=$bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_departure_date'];
+									$flight_departure_time=$bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_departure_time'];
+								}
+							}else{
+							$display_manual='style="display: none;"';
+							$flightdisplay='';
+							$flight_name='';
+							$flight_number='';
+							$flight_departure_date='';
+							$flight_departure_time='';
+							$checkedlandonly='';
+						}	
+					}				
+					
+						?>
                         <div class="col-sm-12">
                             <div class="row number-group-row">
                                 <div class="col-sm-1">
@@ -51,8 +85,8 @@
                                                     <div class="col-sm-9">
                                                         <div class="row">
                                                             <div class="col-sm-6 pr-3">
-                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" id="is_land_only_activity_flight" class="is_land_only_activity_flight" value="0" checked>Avaliable Flights</label>
-                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" class="is_land_only_activity_flight" value="1">Land only</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" id="is_land_only_activity_flight" class="is_land_only_activity_flight" value="0" <?php echo !empty($checkedflight)?$checkedflight:'checked';?>>Avaliable Flights</label>
+                                                                <label><input type="radio" name="is_land_only_activity_flight[{{$id}}]" class="is_land_only_activity_flight" value="1"<?php echo !empty($checkedlandonly)?$checkedlandonly:'';?>>Land only</label>
                                                             </div>
                                                             <div class="col-sm-6">
 
@@ -60,7 +94,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="activity-available-flights">
+                                                <div class="activity-available-flights" <?php echo !empty($flightdisplay)?$flightdisplay:'';?>>
                                                     <div class="form-group pdrow-group">
                                                         <div class="col-sm-12">
                                                             <div class="row">
@@ -191,14 +225,14 @@
 											<?php } ?>
                                                 </div>
 
-                                                <div class="land-only_activity" style="display: none;">
+                                                <div class="land-only_activity" <?php echo !empty($display_manual)?$display_manual:'';?>>
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-3 custom-lbl">Flight Name</label>
 
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="activity_flight_name[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_name" value="">
+                                                                    <input type="text" name="activity_flight_name[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_name" value="{{!empty($flight_name)?$flight_name:''}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -208,7 +242,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="activity_flight_flight_number[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_number" value="">
+                                                                    <input type="text" name="activity_flight_flight_number[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control flight_number" value="{{!empty($flight_number)?$flight_number:''}}">
 
                                                                 </div>
 
@@ -220,7 +254,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="activity_flight_departure_date[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_date flightdeparture" value="">
+                                                                    <input type="text" name="activity_flight_departure_date[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_date flightdeparture" value="{{!empty($flight_departure_date)?$flight_departure_date:''}}">
 
                                                                 </div>
 
@@ -232,7 +266,7 @@
                                                         <div class="col-sm-9">
                                                             <div class="row">
                                                                 <div class="user-edit col-sm-6">
-                                                                    <input type="text" name="activity_flight_departure_time[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_time" value="">
+                                                                    <input type="text" name="activity_flight_departure_time[{{$includedActivity['tripIncludedActivities_check']->id}}]" class="form-control departure_time" value="{{!empty($flight_departure_time)?$flight_departure_time:''}}">
                                                                 </div>
                                                             </div>
                                                         </div>
