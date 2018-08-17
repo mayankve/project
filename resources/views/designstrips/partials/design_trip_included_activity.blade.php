@@ -156,7 +156,8 @@
                                                                         {{ isset($airlines->airline_departure_time) ? $airlines->airline_departure_time : 'N/A' }}
                                                                     </div>
                                                                     <div class="col-sm-1">
-                                                                        <label>$</label> <label class="cost">
+                                                                        <label>$</label>
+																		<label class="cost">
                                                                             <?php
                                                                             if (isset($airlines->airline_reserve_amount) && ($airlines->airline_reserve_type == 1)) {
                                                                                 echo $airlines->airline_reserve_amount * $airlines->airline_our_cost / 100;
@@ -184,10 +185,10 @@
                                                             </div>
                                                         </div>
                                                         @endif
-    <?php $sr++; ?>
+											<?php $sr++; ?>
                                                         @endforeach
                                                         @endif
-<?php } ?>
+											<?php } ?>
                                                 </div>
 
                                                 <div class="land-only_activity" style="display: none;">
@@ -303,10 +304,10 @@
                                                     </div>
 
                                                     <div class="form-group pdrow-group">
-<?php
-$sr = 1;
-if (array_key_exists("includedActivityHotles", $includedActivity)) {
-    ?>
+														<?php
+														$sr = 1;
+														if (array_key_exists("includedActivityHotles", $includedActivity)) {
+															?>
                                                             @if(!empty($includedActivity['includedActivityHotles']))
                                                             @foreach( $includedActivity['includedActivityHotles'] AS $hotels)
                                                             @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($includedActivity['tripIncludedActivities_check']->activity_due_date < date('Y-m-d')) && ($hotels->hotel_due_date < date('Y-m-d')) )

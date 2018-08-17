@@ -306,7 +306,7 @@ class CartController extends Controller
 					
 					$testactivity='';
 				}
-	//echo '<pre>';print_r($test);die;
+		//echo '<pre>';print_r($data);die;
 		$dashboardData = $this->dashboardElements();	
         return view('cart',['data'=>$dashboardData,'tripdata'=>$data,'final'=>$addonsetrecord,'trip_id'=>$trip,'finaladd_on_amount'=>$finaladd_on_amount,'tripIncludedActivities'=>$testactivity]);
 	}

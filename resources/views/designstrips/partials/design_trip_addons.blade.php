@@ -15,23 +15,11 @@
                     <div class="form-group">
                         <?php
                         $id = 1;
-//                        echo "<pre>";print_r($bookedData['bookedAddons']);die;
-//                        foreach($bookedData['bookedAddons'] AS $bookedAddon){
-//                            $result = in_array($bookedAddon , $tripdata['tripAddons']);
-//                            if($result){
-//                                echo "in IF";
-//                            }
-//                            die("else");
-//                        }
-//                        die;
+//                       
                         ?>
                         @if(count($tripdata['tripAddons'])>0)
                         @foreach ( $tripdata['tripAddons'] AS $addOn)
 
-                        <?php
-//                        $result = in_array( $addOn->id , $bookedData['bookedAddons']['addon_id']);
-//                         echo $result."lkldkfdl";die;
-                        ?>
                         <div class="col-sm-12">
                             <div class="row number-group-row parent">
                                 @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
