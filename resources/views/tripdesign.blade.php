@@ -501,26 +501,29 @@ $('.flightdeparture').datepicker({
         //Disable trip after adjustment date
         $('#disabled_trip *').attr("disabled", "disabled");
         
-        $('#is_solo a').each(function () {
+		
+	/*****Solo upgrade selection functionality for Trip Hotel starts*****/
+		
+        $('.trip-hotel #is_solo a').each(function () {
             if ($(this).hasClass('active')) {
                 hotelCost($(this).data('title'));
             }
         });
 		
 
-        $('#is_solo a').on('click', function () {
-            $('.selected_hotel').prop('checked', false);
-            $('.total_hotel_cost').text('$' + '0')
+        $('.trip-hotel #is_solo a').on('click', function () {
+            $('.trip-hotel .selected_hotel').prop('checked', false);
+            $('.trip-hotel .total_hotel_cost').text('$' + '0')
             var sel = $(this).data('title');
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
-            $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-            $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+		    $('.trip-hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+		    $('.trip-hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
             hotelCost(sel);
             //console.log(hotelCost(sel));
         });
 	
-        $('.selected_hotel').click(function () {
+        $('.trip-hotel .selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
             //saveData(data);
             hotelTotalCost($(this));
@@ -529,19 +532,78 @@ $('.flightdeparture').datepicker({
 
         function hotelCost(sel) {
             if (sel == 'Y') {
-                $('.hotel_solo_cost').show();
-                $('.hotel_cost').hide();
+                $('.trip-hotel .hotel_solo_cost').show();
+                $('.trip-hotel .hotel_cost').hide();
                 var data = {is_solo: '1'};
             } else {
-                $('.hotel_solo_cost').hide();
-                $('.hotel_cost').show();
+                $('.trip-hotel .hotel_solo_cost').hide();
+                $('.trip-hotel .hotel_cost').show();
                 var data = {is_solo: '0'};
             }
             // saveData(data);
         }
+		
         function hotelTotalCost($this) {
             var costLabel = 'cost';
-            $('#is_solo a').each(function () {
+            $('.trip-hotel #is_solo a').each(function () {
+                if ($(this).hasClass('active')) {
+                    if ($(this).data('title') == 'Y') {
+                        costLabel = 'solo_cost';
+                    }
+					else {
+                        costLabel = 'solo_cost';
+                    }
+                }
+            });
+            var cost = $this.closest(".row").find("." + costLabel).text();
+            $('.trip-hotel .total_hotel_cost').text('$' + cost)
+        }
+
+		/*****Solo upgrade selection functionality for Trip Hotel ends****/
+		
+		
+		/***Solo upgrade selection functionality for Addon Hotel starts*****/
+		
+		$('.addon_hotel #is_solo a').each(function () {
+            if ($(this).hasClass('active')) {
+                addonHotelCost($(this).data('title'));
+            }
+        });
+		
+		 $('.addon_hotel #is_solo a').on('click', function () {
+            $('.addon_hotel .selected_hotel').prop('checked', false);
+            $('.addon_hotel .total_hotel_cost').text('$' + '0')
+            var sel = $(this).data('title');
+            var tog = $(this).data('toggle');
+            $('#' + tog).prop('value', sel);
+		    $('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+		    $('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+            addonHotelCost(sel);
+            //console.log(hotelCost(sel));
+        });
+	   $('.addon_hotel .selected_hotel').click(function () {
+            var data = {hotel_id: $(this).val()};
+            //saveData(data);
+            addonHotelTotalCost($(this));
+
+        });
+		
+		 function addonHotelCost(sel) {
+            if (sel == 'Y') {
+                $('.addon_hotel .hotel_solo_cost').show();
+                $('.addon_hotel .hotel_cost').hide();
+                var data = {is_solo: '1'};
+            } else {
+                $('.addon_hotel .hotel_solo_cost').hide();
+                $('.addon_hotel .hotel_cost').show();
+                var data = {is_solo: '0'};
+            }
+            // saveData(data);
+        }
+
+		function addonHotelTotalCost($this) {
+            var costLabel = 'cost';
+            $('.addon_hotel #is_solo a').each(function () {
                 if ($(this).hasClass('active')) {
                     if ($(this).data('title') == 'Y') {
                         costLabel = 'solo_cost';
@@ -551,9 +613,69 @@ $('.flightdeparture').datepicker({
                 }
             });
             var cost = $this.closest(".row").find("." + costLabel).text();
-            $('.total_hotel_cost').text('$' + cost)
+            $('.addon_hotel .total_hotel_cost').text('$' + cost)
         }
 
+		/*******Solo upgrade selection functionality for Addon Hotel ends*****/
+		
+		
+		/***Solo upgrade selection functionality for Activity Hotel starts*****/
+		
+		$('.activity_hotel #is_solo a').each(function () {
+            if ($(this).hasClass('active')) {
+                activityHotelCost($(this).data('title'));
+            }
+        });
+		
+		 $('.activity_hotel #is_solo a').on('click', function () {
+            $('.activity_hotel .selected_hotel').prop('checked', false);
+            $('.activity_hotel .total_hotel_cost').text('$' + '0')
+            var sel = $(this).data('title');
+            var tog = $(this).data('toggle');
+            $('#' + tog).prop('value', sel);
+		    $('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+		    $('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+            activityHotelCost(sel);
+            //console.log(hotelCost(sel));
+        });
+	   $('.activity_hotel .selected_hotel').click(function () {
+            var data = {hotel_id: $(this).val()};
+            //saveData(data);
+            activityHotelTotalCost($(this));
+
+        });
+		
+		 function activityHotelCost(sel) {
+            if (sel == 'Y') {
+                $('.activity_hotel .hotel_solo_cost').show();
+                $('.activity_hotel .hotel_cost').hide();
+                var data = {is_solo: '1'};
+            } else {
+                $('.activity_hotel .hotel_solo_cost').hide();
+                $('.activity_hotel .hotel_cost').show();
+                var data = {is_solo: '0'};
+            }
+            // saveData(data);
+        }
+
+		function activityHotelTotalCost($this) {
+            var costLabel = 'cost';
+            $('.activity_hotel #is_solo a').each(function () {
+                if ($(this).hasClass('active')) {
+                    if ($(this).data('title') == 'Y') {
+                        costLabel = 'solo_cost';
+                    } else {
+                        costLabel = 'solo_cost';
+                    }
+                }
+            });
+            var cost = $this.closest(".row").find("." + costLabel).text();
+            $('.activity_hotel .total_hotel_cost').text('$' + cost)
+        }
+
+		/*******Solo upgrade selection functionality for Activity Hotel ends*****/
+		
+		
         //to do
         $('.selected_todo').click(function () {
             var dataArray = [];
