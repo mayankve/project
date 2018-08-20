@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::match(['get', 'post'], 'view-traveler/{id}', 'HomeController@travelerProfile');
     
     // EMI  calculation blade
-    Route::get('emi-calculation', 'CartController@emiCalculator');
+    Route::match(['get','post'],'emi-calculation', 'CartController@emiCalculator');
 });
 
 

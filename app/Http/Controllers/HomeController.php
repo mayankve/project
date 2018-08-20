@@ -721,27 +721,7 @@ class HomeController extends Controller {
                         ->where('user_id', '=', $userId)
                         ->get();
 			
-			// $arr = array();
-			// if( isset( $bookedAddons['add_on'] ) && count( $bookedAddons['add_on'] ) > 0 )
-			// {
-				// foreach( $bookedAddons['add_on'] as $addOn )
-				// {
-					// $arr[] = array(
-						// 'id' => $addOn->id,
-						// 'user_id' => $addOn->user_id,
-						// 'id' => $addOn->id,
-						// 'id' => $addOn->id,
-						// 'id' => $addOn->id,
-						// 'id' => $addOn->id,
-						// 'id' => $addOn->id,
-					// );
-				// }
-			// }
 			
-			// echo '<pre>';
-			// print_r($bookedAddons['add_on']);
-			// exit;
-
 
           foreach($bookedAddons['add_on'] AS $addonkey=> $bookedAddon){               //Booked Addon Travelers
 			   
@@ -810,7 +790,7 @@ class HomeController extends Controller {
         }else{
 			$bookedData='';
 		}
-	//echo "<pre>";print_r($activitycustom);die;
+	//echo "<pre>";print_r($BookedTripDetails);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 
