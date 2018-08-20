@@ -108,20 +108,11 @@ $addonfinal_price_cost = 0;
                                                                 <div class="col-sm-2">
                                                                     <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_time : $_SESSION['card_item']['departure_time']; ?>
                                                                 </div>
-																<?php  if (count($tripdata['tripAirlines']) > 0){
-																	if($tripdata['tripAirlines'][0]->airline_reserve_type==1)
-																	{
-																	?>
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount*$tripdata['tripAirlines'][0]->airline_our_cost/100 : ''; ?>
-                                                                </div>
-																<?php }else{?>
-																 <div class="col-sm-2">
                                                                     <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : ''; ?>
                                                                 </div>
-																<?php } } ?>
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_our_cost : ''; ?>
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : ''; ?>
                                                                 </div>
 
                                                                 <input type="hidden" name="trip_flight_id" value="<?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->id : ''; ?>">
@@ -135,6 +126,7 @@ $addonfinal_price_cost = 0;
                                 </div>
                             </div>                  
                         </div>
+
 
 
                         <!-- trip hotel here -->
@@ -176,8 +168,7 @@ $addonfinal_price_cost = 0;
                                                                 <div class="col-sm-2">
                                                                     <b>Reserve Amount</b>
                                                                 </div>
-																
-                                                                <div class="col-sm-2" style="display: none;">
+                                                                <div class="col-sm-2" >
                                                                     <b>Cost</b>
                                                                 </div>
 
@@ -202,29 +193,15 @@ $addonfinal_price_cost = 0;
                                                                     <div class="col-sm-2">
                                                                         <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_due_date : ''; ?>
                                                                     </div>
-																	
-																	<?php
-																	if(!empty($tripdata['tripHotels']))
-																	{
-																		if($tripdata['tripHotels'][0]->hotel_reserve_type==1)
-																		{
-																	?>																	
                                                                     <div class="col-sm-2">
-                                                                        <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_reserve_amount*$tripdata['tripHotels'][0]->hotel_our_solo_cost/100 : ''; ?>
+                                                                        <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_reserve_amount : ''; ?>
                                                                     </div>
-																		<?php }else{ ?>
-																		 <div class="col-sm-2">
-																		<?php echo !empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_reserve_amount:''; } ?>
-																		 </div>
-                                                                    <div class="col-sm-2" style="display: none;">
-                                                                        <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_our_cost : ''; ?>
+                                                                    <div class="col-sm-2">
+                                                                        <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_cost : ''; ?>
                                                                     </div>
-																	
                                                                     <div class="col-sm-2">
                                                                         <?php echo $tripdata['tripHotels'][0]->hotel_solo_cost; ?>
                                                                     </div>
-																	
-																	<?php } ?>
                                                                     <input type="hidden" name="trip_hotel_id" value="<?php echo (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->id : ''; ?>">
                                                                 </div>
                                                             </div>
@@ -255,34 +232,18 @@ $addonfinal_price_cost = 0;
                                                 <div class="form-group">
 
                                                     <?php
-                                                 // echo '<pre>';print_r($final);die;
+                                                  // echo '<pre>';print_r($final);die;
                                                     $i = 1;
 
                                                     foreach ($final as $key => $value) {
                                                         $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_cost:'';
-														if(is_array($value['flight_data'])){
-															$addonflight_price='0';
-														}elseif(!empty($value['flight_data']) && $value['flight_data']->airline_reserve_type==1){
-															$addonflight_price= $value['flight_data']->airline_reserve_amount*$value['flight_data']->airline_our_cost/100;
-														}else{
-															$addonflight_price=$value['flight_data']->airline_reserve_amount;
-														}
-                                                      
-														if(!empty($value['hote_data']))
-														{
-															if($value['hote_data']->hotel_reserve_type==1){
-																$addonhote_price = $value['hote_data']->hotel_reserve_amount* $value['hote_data']->hotel_our_cost/100;}else{
-																		$addonhote_price=$value['hote_data']->hotel_reserve_amount;
-																}
-														}else{
-															$addonhote_price='0';
-														}
-														
+                                                        $addonflight_price = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_reserve_amount : '0';
+                                                        $addonhote_price = !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : '';
                                                         $addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
                                                         $addonfinal_price = $addonfinal_price + ($addonprice + $addonflight_price + $addonhote_price) * $addontravler;
                                                         // trip cost detail//
-                                                        $addonflight_price_cost = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_our_cost : '0';
-                                                        $addonhote_price_cost = !empty($value['hote_data']) ? $value['hote_data']->hotel_our_cost : '';
+                                                        $addonflight_price_cost = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_cost : '0';
+                                                        $addonhote_price_cost = !empty($value['hote_data']) ? $value['hote_data']->hotel_cost : '';
                                                         $addonfinal_price_cost = $addonfinal_price_cost + ($addonprice + $addonflight_price_cost + $addonhote_price_cost) * $addontravler;
                                                         ?> 
                                                         <div class="col-sm-12">
@@ -438,26 +399,11 @@ $addonfinal_price_cost = 0;
                                                                                                         <div class="col-sm-2">
                                                                                                             <?php echo (is_array($value['flight_data'])) ? $value['flight_data'][3] : $value['flight_data']->airline_departure_time; ?>
                                                                                                         </div>
-																										
-																										<?php if(is_array($value['flight_data']))
-																										{																											
-																										?>
                                                                                                         <div class="col-sm-2">
-                                                                                                            
-                                                                                                        </div><?php }elseif($value['flight_data']->airline_reserve_type==1){
-																											?>
-																										<div class="col-sm-2">
-                                                                                                            <?php echo $value['flight_data']->airline_reserve_amount*$value['flight_data']->airline_our_cost/100; ?>
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->airline_reserve_amount; ?>
                                                                                                         </div>
-																										<?php }else{ ?>
-																										<div class="col-sm-2">
-                                                                                                            <?php echo $value['flight_data']->airline_reserve_amount; ?>
-                                                                                                        </div><?php } ?>
-																										
-																										
-																										
                                                                                                         <div class="col-sm-2">
-                                                                                                            <?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->airline_our_cost; ?>
+                                                                                                            <?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->airline_cost; ?>
                                                                                                         </div>
                                                                                                         <input type="hidden" name="add_on_flight_id[{{$i}}]" value="<?php echo (is_array($value['flight_data'])) ? '' : $value['flight_data']->id; ?>">
                                                                                                     </div>
@@ -511,9 +457,6 @@ $addonfinal_price_cost = 0;
                                                                                                         <div class="col-sm-2 hotel_solo_cost">
                                                                                                             <b>Reserve Amount</b>
                                                                                                         </div>
-																										<div class="col-sm-2 hotel_solo_cost" style="display: none;">
-                                                                                                            <b>Cost</b>
-                                                                                                        </div>
                                                                                                         <div class="col-sm-2 hotel_solo_cost">
                                                                                                             <b>Solo Cost</b>
                                                                                                         </div>
@@ -536,38 +479,17 @@ $addonfinal_price_cost = 0;
                                                                                                         <div class="col-sm-2">
                                                                                                             <?php echo empty($value['hote_data']) ? '' : ($value['hote_data']->hotel_due_date != '') ? $value['hote_data']->hotel_due_date : ''; ?>
                                                                                                         </div>
-						                                                                               <?php
-																										if(!empty($value['hote_data']))
-																										{
-																											if(!empty($value['hote_data']->hotel_reserve_amount) && $value['hote_data']->hotel_reserve_type == 1)
-																											{
-																									   ?>
+
                                                                                                         <div class="col-sm-2 hotel_cost" >
-                                                                                                            <label>$</label>
-                                                                                                            <label class="cost">
-                                                                                                                <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount*$value['hote_data']->hotel_our_cost / 100 : ''; ?>
-                                                                                                            </label>
-                                                                                                        </div>
-																											<?php }else{ ?> 
-																											<div class="col-sm-2 hotel_cost" >
                                                                                                             <label>$</label>
                                                                                                             <label class="cost">
                                                                                                                 <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_reserve_amount : ''; ?>
                                                                                                             </label>
                                                                                                         </div>
-																										<?php } ?>
-																										
-																										  <div class="col-sm-2 hotel_cost" style="display: none;">
-                                                                                                            <label>$</label>
-                                                                                                            <label class="cost">
-                                                                                                                <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_our_cost : ''; ?>
-                                                                                                            </label>
-                                                                                                        </div>
                                                                                                         <div class="col-sm-2 hotel_cost">
                                                                                                             <label>$</label> 
                                                                                                             <label class="cost"> <?php echo !empty($value['hote_data']) ? $value['hote_data']->hotel_solo_cost : ''; ?></label>
-                                                                                                        </div> 
-																										<?php }?>
+                                                                                                        </div>                                                            
                                                                                                         <input type="hidden" name="add_on_hotel_id[{{$i}}]" value="<?php echo (!empty($value['hote_data'])) ? $value['hote_data']->id : ''; ?>">
                                                                                                     </div>
                                                                                                 </div>
@@ -589,9 +511,11 @@ $addonfinal_price_cost = 0;
                                                             </div>
 
                                                         </div><?php $i++;
-                                                           }
-                                                         ?>
+                                                                                                }
+                                                                                                            ?>
+
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -625,7 +549,7 @@ $addonfinal_price_cost = 0;
                                                 @if(!empty($tripIncludedActivities))
 
                                                 @foreach ( $tripIncludedActivities AS $includedActivity)
-									<?php $activityamount = $activityamount + $includedActivity['tripIncludedActivities']->activity_our_cost; ?>
+								<?php $activityamount = $activityamount + $includedActivity['tripIncludedActivities']->activity_cost; ?>
                                                 <div class="col-sm-12">
 
                                                     <div class="row number-group-row">
@@ -694,16 +618,10 @@ $addonfinal_price_cost = 0;
 
                                                                             @if(!empty($includedActivity['activity_flight']))
                                                                             <?php
-																		if(is_array($includedActivity['activity_flight'])){
-																				$reserve_amount='0';
-																			}elseif(!empty($includedActivity['activity_flight']) && $includedActivity['activity_flight']->airline_reserve_type==1){
-																				$reserve_amount= $includedActivity['activity_flight']->airline_reserve_amount*$includedActivity['activity_flight']->airline_our_cost/100;
-																			}else{
-																				$reserve_amount=$includedActivity['activity_flight']->airline_reserve_amount;
-																			}	
-                                                                            $flight_amount_cost = (is_array($includedActivity['activity_flight'])) ? '0' : !empty($includedActivity['activity_flight']) ? $includedActivity['activity_flight']->airline_our_cost : '0';
+                                                                            $reserve_amount = (is_array($includedActivity['activity_flight'])) ? '0' : !empty($includedActivity['activity_flight']) ? $includedActivity['activity_flight']->airline_reserve_amount : '0';
+                                                                            $reserve_amount_cost = (is_array($includedActivity['activity_flight'])) ? '0' : !empty($includedActivity['activity_flight']) ? $includedActivity['activity_flight']->airline_cost : '0';
                                                                             $activityflightamount = $activityflightamount + $reserve_amount;
-                                                                            $activityflightamount_cost = $activityflightamount_cost + $flight_amount_cost
+                                                                            $activityflightamount_cost = $activityflightamount_cost + $reserve_amount_cost
                                                                             ?>
 
                                                                             <div class="form-group pdrow-group">
@@ -727,18 +645,12 @@ $addonfinal_price_cost = 0;
 																		<?php echo (is_array($includedActivity['activity_flight'])) ? $includedActivity['activity_flight'][3] : $includedActivity['activity_flight']->airline_departure_time; ?>
 
                                                                                         </div>
-																						<?php if(is_array($includedActivity['activity_flight'])){?>
-                                                                                        
-																						<?php }elseif($includedActivity['activity_flight']->airline_reserve_type==1){ ?>
-																						<div class="col-sm-1">
-																						<?php echo $includedActivity['activity_flight']->airline_reserve_amount*$includedActivity['activity_flight']->airline_our_cost/100; ?>
-                                                                                        </div>																						
-																						<?php }else{ ?>
-																						<div class="col-sm-1">
-																						<?php echo $includedActivity['activity_flight']->airline_reserve_amount; ?>
-                                                                                        </div><?php } ?>
                                                                                         <div class="col-sm-1">
-																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_our_cost; ?>
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_reserve_amount; ?>
+
+                                                                                        </div>
+                                                                                        <div class="col-sm-1">
+																		<?php echo (is_array($includedActivity['activity_flight'])) ? '' : $includedActivity['activity_flight']->airline_cost; ?>
 
                                                                                         </div>
                                                                                         <div class="col-sm-1">
@@ -796,7 +708,7 @@ $addonfinal_price_cost = 0;
                                                                                         <div class="col-sm-1">
                                                                                             <b>Reserve Amount</b>
                                                                                         </div>
-                                                                                        <div class="col-sm-1" style="display: none;">
+                                                                                        <div class="col-sm-1 ">
                                                                                             <b>Cost</b>
                                                                                         </div>
 
@@ -814,18 +726,8 @@ $addonfinal_price_cost = 0;
 
                                                                                 @if(!empty($includedActivity['activity_hotel']))
                                                                                 <?php
-																			
-																				if(!empty($includedActivity['activity_hotel']))
-																					{
-																						if($includedActivity['activity_hotel']->hotel_reserve_type==1){
-																							$activityhotelreserveamount = $includedActivity['activity_hotel']->hotel_reserve_amount* $includedActivity['activity_hotel']->hotel_our_cost/100;}else{
-																									$activityhotelreserveamount=$includedActivity['activity_hotel']->hotel_reserve_amount;
-																							}
-																					}else{
-																						$activityhotelreserveamount='0';
-																					}
-                                                                                $activityhotelamount = $activityhotelamount + $activityhotelreserveamount;
-                                                                                $activityhotelamount_cost = $activityhotelamount_cost + $includedActivity['activity_hotel']->hotel_our_cost;
+                                                                                $activityhotelamount = $activityhotelamount + $includedActivity['activity_hotel']->hotel_reserve_amount;
+                                                                                $activityhotelamount_cost = $activityhotelamount_cost + $includedActivity['activity_hotel']->hotel_cost;
                                                                                 ?>
                                                                                 <div class="form-group pdrow-group">
                                                                                     <div class="col-sm-12">
@@ -841,21 +743,12 @@ $addonfinal_price_cost = 0;
                                                                                             <div class="col-sm-2">
                                                                                                 {{ isset($includedActivity['activity_hotel']->hotel_due_date) ? $includedActivity['activity_hotel']->hotel_due_date : 'N/A' }}
                                                                                             </div>
-																							<?php
-																								if($includedActivity['activity_hotel']->hotel_reserve_type==1)
-																								{
-																							?>
                                                                                             <div class="col-sm-1">
-                                                                                               <?php echo $includedActivity['activity_hotel']->hotel_reserve_amount*$includedActivity['activity_hotel']->hotel_our_cost/100;?>
-                                                                                            </div>
-																								<?php }else{ ?>
-																								
-																							<div class="col-sm-1">
                                                                                                 {{ isset($includedActivity['activity_hotel']->hotel_reserve_amount) ? $includedActivity['activity_hotel']->hotel_reserve_amount : 'N/A' }}
                                                                                             </div>
-																								<?php } ?>
-                                                                                            <div class="col-sm-1" style="display: none;">
-                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_our_cost) ? $includedActivity['activity_hotel']->hotel_our_cost : 'N/A' }}
+
+                                                                                            <div class="col-sm-1">
+                                                                                                {{ isset($includedActivity['activity_hotel']->hotel_cost) ? $includedActivity['activity_hotel']->hotel_cost : 'N/A' }}
                                                                                             </div>
                                                                                             <div class="col-sm-1">
                                                                                                 {{ isset($includedActivity['activity_hotel']->hotel_solo_cost) ? $includedActivity['activity_hotel']->hotel_solo_cost : 'N/A' }}
@@ -894,26 +787,9 @@ $addonfinal_price_cost = 0;
 								//echo $addonfinal_price_cost;die;
 								// reserve code detail//
                                 $addontravelerarryacount = count($tavelerearray);
-								if(count($tripdata['tripAirlines']) > 0)	{
-									if($tripdata['tripAirlines'][0]->airline_reserve_type==1){
-										$trip_flight_amount=$tripdata['tripAirlines'][0]->airline_reserve_amount*$tripdata['tripAirlines'][0]->airline_our_cost/100;
-									}else{
-										$trip_flight_amount=$tripdata['tripAirlines'][0]->airline_reserve_amount;
-									}								
-								}else{
-									$trip_flight_amount='0';
-								}
-								if(count($tripdata['tripHotels']) > 0){
-									if($tripdata['tripHotels'][0]->hotel_reserve_type==1){
-										$trip_hotel_amount=$tripdata['tripHotels'][0]->hotel_reserve_amount*$tripdata['tripHotels'][0]->hotel_our_solo_cost/100;
-									}else{
-										 $trip_hotel_amount=$tripdata['tripHotels'][0]->hotel_reserve_amount;
-									}
-								}else{
-									$trip_hotel_amount='0';
-								}
-                               
-				//echo $trip_hotel_amount;
+                                $trip_flight_amount = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_reserve_amount : '0';
+                                $trip_hotel_amount = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_reserve_amount : '0';
+
                                 $trip_traveler = (count($tripdata['tripTravelers']) > 0) ? count($tripdata['tripTravelers']) : '';
 							// trip amount add//
                                 $trip_only_amount = ($trip_flight_amount + $trip_hotel_amount) * $trip_traveler;
@@ -926,8 +802,8 @@ $addonfinal_price_cost = 0;
 
 
 								// start here cost amount//
-                                $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_our_cost : '0';
-                                $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_our_cost : '0';
+                                $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_cost : '0';
+                                $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_cost : '0';
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
 							//	echo $activityhotelamount_cost;die;
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;

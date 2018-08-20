@@ -163,6 +163,8 @@
                                     <input type="radio" name="selected_hotel" class="selected_hotel" value="{{$hotels->id}}">
                                     @endif
                                     <input type="hidden" name="reserver_amount" class="reserver_amount" value="{{$hotels->hotel_reserve_amount}}">
+									<input type="hidden" name="yesno" value="yes">
+									
                                 </label> 
                             </div>
                         </div>
