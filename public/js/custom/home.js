@@ -1,6 +1,23 @@
 /* Common js for all front-end related functionalities like register, login etc */
 
 $(document).ready(function () {
+	
+	$('.airline_departure_date').blur(function(){
+			
+		var departure_date = $(this).val();
+		var trip_date = $('#date').val();
+		
+		var trip_return_date = $(input['name'= 'end_date']).val();
+		alert(trip_return_date);
+		
+		if(trip_date == ''){
+			alert('Please select Trip Date');
+			return false;
+		}
+		else if(departure_date > trip_return_date){
+			alert('Departure date can not come before  Trip Date');
+		}
+		});
     $('#frm_user_basic_info').submit(function (e) {
         e.preventDefault();
     });

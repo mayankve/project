@@ -510,7 +510,6 @@ $('.flightdeparture').datepicker({
             }
         });
 		
-
         $('.trip-hotel #is_solo a').on('click', function () {
             $('.trip-hotel .selected_hotel').prop('checked', false);
             $('.trip-hotel .total_hotel_cost').text('$' + '0')
@@ -576,11 +575,16 @@ $('.flightdeparture').datepicker({
             var sel = $(this).data('title');
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
-		    $('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-		    $('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-            addonHotelCost(sel);
-            //console.log(hotelCost(sel));
+			
+			 $('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+		     $('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+		     addonHotelCost(sel);
+			 
+			// $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive'));
+			// $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]')).removeClass('notActive').addClass('active');
+           
         });
+		
 	   $('.addon_hotel .selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
             //saveData(data);
@@ -632,11 +636,14 @@ $('.flightdeparture').datepicker({
             $('.activity_hotel .total_hotel_cost').text('$' + '0')
             var sel = $(this).data('title');
             var tog = $(this).data('toggle');
+			
             $('#' + tog).prop('value', sel);
-		    $('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-		    $('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-            activityHotelCost(sel);
-            //console.log(hotelCost(sel));
+			$('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+			$('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+			activityHotelCost(sel);
+			
+			// $(this).closest($('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]')).removeClass('active').addClass('notActive');
+			// $(this).closest($('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]')).removeClass('notActive').addClass('active');
         });
 	   $('.activity_hotel .selected_hotel').click(function () {
             var data = {hotel_id: $(this).val()};
