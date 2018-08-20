@@ -3,6 +3,7 @@
 	<a class="addMore airline-plus pull-right" row="airline-row" style="padding: 0;"><i class="fa fa-plus" aria-hidden="true"></i></a>
 </div>
 <div class="panel-body">
+
 	@if(count(old('airline')))
 		@foreach (old('airline') as $key => $value)
 			<div class="panel panel-success airline_details">

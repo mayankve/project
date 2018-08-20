@@ -1,4 +1,4 @@
-<?php if(!empty($bookedData['bookedTrip']->trip_flight_id)){
+<?php if(!empty($bookedData['bookedTrip'])){if(!empty($bookedData['bookedTrip']->trip_flight_id)){
 	$display='style="display:none;"';
 	$flightdisplay='';
 	$checkedlandonly='';
@@ -8,13 +8,18 @@
 		$checkedlandonly='checked';
 		$checkedflight='';
 		$flightdisplay='style="display:none;"';
-	}?>
+	}
+}else{
+	$checkedflight='';
+	$checkedlandonly='';
+	$display='style="display:none;"';
+}?>
 <div class="form-group pdrow-group">
 		<div class="col-sm-9">
 			<div class="row flights_heading">
 				<div class="col-sm-6 pr-3">
 					<label>
-						<input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" <?php echo !empty($checkedflight)?$checkedflight:'';?>>Avaliable Flights
+						<input type="radio" name="is_land_only" id="is_land_only" class="land_only" value="0" <?php echo !empty($checkedflight)?$checkedflight:'checked';?>>Avaliable Flights
 					</label>
 					<label>
 						<input type="radio" name="is_land_only" class="land_only" value="1" <?php echo !empty($checkedlandonly)?$checkedlandonly:'';?>>Land only
