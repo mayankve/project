@@ -813,6 +813,15 @@ class AdminController extends Controller {
             $rules["airline.{$key}.airline_due_date"]       = 'required';
             $rules["airline.{$key}.airline_reserve_type"]   = 'required';
             $rules["airline.{$key}.airline_reserve_amount"] = 'required';
+			
+			 $message["airline.{$key}.airline_departure_date.required"] = 'Air line departure date required';
+			 $message["airline.{$key}.airline_departure_time.required"] = 'Air line departure time required';
+			 $message["airline.{$key}.airline_layovers.required"] = 'Air line layovers required';
+			 $message["airline.{$key}.airline_baggage_allowance.required"] = 'Air line baggage allowance required';
+			 $message["airline.{$key}.airline_our_cost.required"] = 'Air line our cost required';
+			 $message["airline.{$key}.airline_cost.required"] = 'Air line cost  date required';
+			 $message["airline.{$key}.airline_due_date.required"] = 'Air line due date required';
+			 $message["airline.{$key}.airline_reserve_amount.required"] = 'Air line reserve amount required';
         }
 
         // Included Activity validation
@@ -825,6 +834,13 @@ class AdminController extends Controller {
             $rules["included_activity.{$key}.activity_due_date"]        = 'required';
             $rules["included_activity.{$key}.activity_reserve_type"]    = 'required';
             $rules["included_activity.{$key}.activity_reserve_amount"]  = 'required';
+			
+			$message["included_activity.{$key}.activity_name.required"] = 'Activity name required';
+			 $message["included_activity.{$key}.activity_detail.required"] = 'Activity detail required';
+			 $message["included_activity.{$key}.activity_cost.required"] = 'Activity cost required';
+			 $message["included_activity.{$key}.activity_our_cost.required"] = 'Activity our cost required';
+			 $message["included_activity.{$key}.activity_due_date.required"] = 'Activity due date required';
+			 $message["included_activity.{$key}.activity_reserve_amount.required"] = 'Activity reserve amount required';
 
             // Included Activity Hotels
             foreach($request->get('included_activity')[$key]['activity_hotels'] as $key1 => $val1)
@@ -838,6 +854,19 @@ class AdminController extends Controller {
                 $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_due_date"]       = 'required';
                 $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_type"]   = 'required';
                 $rules["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_amount"] = 'required';
+				
+				
+				
+				$message["included_activity.{$key}.activity_hotels.{$key1}.hotel_name.required"]           = 'Activity hotel name required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_type.required"]           = 'Activity hotel type required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_cost.required"]           = 'Activity hotel cost required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_solo_cost.required"]      = 'Activity hotel solocost required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_our_cost.required"]       = 'Activity hotel our cost required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_our_solo_cost.required"]  = 'Activity hotel our solo cost required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_due_date.required"]       = 'Activity hotel due date required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_type.required"]   = 'Activity hotel reserve type required';
+                $message["included_activity.{$key}.activity_hotels.{$key1}.hotel_reserve_amount.required"] = 'Activity reserve amount required';
+				
             }
 
             // Included Activity Airlines
@@ -853,6 +882,19 @@ class AdminController extends Controller {
                 $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_due_date"]       = 'required';
                 $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_type"]   = 'required';
                 $rules["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_amount"] = 'required';
+				
+				
+				$message["included_activity.{$key}.activity_airlines.{$key1}.airline_name.required"]           = 'Activity airline name required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_departure_date.required"]           = 'Activity airline departure date required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_departure_time.required"]           = 'Activity airline departure time required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_layovers.required"]      = 'Activity airline layovers required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_baggage_allowance.required"]       = 'Activity airline baggage allowance required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_our_cost.required"]  = 'Activity airline our cost required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_cost.required"]       = 'Activity airline cost required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_due_date.required"]   = 'Activity airline due date required';
+                $message["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_type.required"] = 'Activity airline reserve type required';
+				$message["included_activity.{$key}.activity_airlines.{$key1}.airline_reserve_amount.required"] = 'Activity airline reserve amount required';
+				
             }
         }
 
@@ -866,6 +908,15 @@ class AdminController extends Controller {
             $rules["addon.{$key}.addons_due_date"]        = 'required';
             $rules["addon.{$key}.addons_reserve_type"]    = 'required';
             $rules["addon.{$key}.addons_reserve_amount"]  = 'required';
+			
+			
+			 $message["addon.{$key}.addons_name.required"] = 'Addon name required';
+			 $message["addon.{$key}.addons_detail.required"] = 'Addon detail required';
+			 $message["addon.{$key}.addons_cost.required"] = 'Addon cost required';
+			 $message["addon.{$key}.addons_our_cost.required"] = 'Addon our cost required';
+			 $message["addon.{$key}.addons_due_date.required"] = 'Addon due date required';
+			 $message["addon.{$key}.addons_reserve_type.required"] = 'Addon reserve amount required';
+			 $message["addon.{$key}.addons_reserve_amount.required"] = 'Addon reserve amount required';
 
             // Included Activity Hotels
             foreach($request->get('addon')[$key]['addons_hotels'] as $key1 => $val1)
@@ -879,6 +930,16 @@ class AdminController extends Controller {
                 $rules["addon.{$key}.addons_hotels.{$key1}.hotel_due_date"]       = 'required';
                 $rules["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_type"]   = 'required';
                 $rules["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_amount"] = 'required';
+				
+				$message["addon.{$key}.addons_hotels.{$key1}.hotel_name.required"]           = 'Addon hotel name required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_type.required"]           = 'Addon hotel type required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_cost.required"]           = 'Addon hotel cost required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_solo_cost.required"]      = 'Addon hotel solocost required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_our_cost.required"]       = 'Addon hotel our cost required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_our_solo_cost.required"]  = 'Addon hotel our solo cost required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_due_date.required"]       = 'Addon hotel due date required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_type.required"]   = 'Addon hotel reserve type required';
+                $message["addon.{$key}.addons_hotels.{$key1}.hotel_reserve_amount.required"] = 'Addon reserve amount required';
             }
 
             // Included Activity Airlines
@@ -894,6 +955,18 @@ class AdminController extends Controller {
                 $rules["addon.{$key}.addons_airlines.{$key1}.airline_due_date"]       = 'required';
                 $rules["addon.{$key}.addons_airlines.{$key1}.airline_reserve_type"]   = 'required';
                 $rules["addon.{$key}.addons_airlines.{$key1}.airline_reserve_amount"] = 'required';
+				
+				$message["addon.{$key}.addons_airlines.{$key1}.airline_name.required"]           = 'Addon airline name required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_departure_date.required"]           = 'Addon airline departure date required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_departure_time.required"]           = 'Addon airline departure time required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_layovers.required"]      = 'Addon airline layovers required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_baggage_allowance.required"]       = 'Addon airline baggage allowance required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_our_cost.required"]  = 'Addon airline our cost required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_cost.required"]       = 'Addon airline cost required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_due_date.required"]   = 'Addon airline due date required';
+                $message["addon.{$key}.addons_airlines.{$key1}.airline_reserve_type.required"] = 'Addon airline reserve type required';
+				$message["addon.{$key}.addons_airlines.{$key1}.airline_reserve_amount.required"] = 'Addon airline reserve amount required';
+				
             }
         }
 
@@ -909,12 +982,23 @@ class AdminController extends Controller {
             $rules["hotels.{$key}.hotel_due_date"]       = 'required';
             $rules["hotels.{$key}.hotel_reserve_type"]   = 'required';
             $rules["hotels.{$key}.hotel_reserve_amount"] = 'required';
+			
+			$message["hotels.{$key}.hotel_name.required"] = 'Hotel name required';
+			 $message["hotels.{$key}.hotel_type.required"] = 'Hotel type required';
+			 $message["hotels.{$key}.hotel_cost.required"] = 'Hotel cost required';
+			 $message["hotels.{$key}.hotel_solo_cost.required"] = 'Hotel solo cost required';
+			 $message["hotels.{$key}.hotel_our_cost.required"] = 'Hotel our cost required';
+			 $message["hotels.{$key}.hotel_our_solo_cost.required"] = 'Hotel our solo cost  date required';
+			 $message["hotels.{$key}.hotel_due_date.required"] = 'Hotel due date required';
+			 $message["hotels.{$key}.hotel_reserve_type.required"] = 'Hotel reserve type required';
+			 $message["hotels.{$key}.hotel_reserve_amount.required"] = 'Hotel reserve amount required';
         }
 
         // To-do validation
         foreach($request->get('to_do') as $key => $val)
         {
             $rules["to_do.{$key}.todo_name"] = 'required';
+			$message["to_do.{$key}.todo_name.required"] = 'To do name required';
         }
 
         // Misc expense validation
@@ -925,12 +1009,14 @@ class AdminController extends Controller {
             {
                 $rules["misc_expense.{$key}.label"] = 'required';
                 $rules["misc_expense.{$key}.value"] = 'required';
+				$message["misc_expense.{$key}.label.required"] = 'The misc expense  required';
+				$message["misc_expense.{$key}.value.required"] = 'The misc expense  required';
             }
         }
 
         //echo '<pre>'; print_r($rules); exit;
 
-        $this->validate($request, $rules);
+        $this->validate($request, $rules,$message);
 
         // 'UPDATE' Get trip data and update it
         $trip = Trip::findOrFail($id);
