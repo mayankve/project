@@ -95,7 +95,7 @@
                                     <div class="panel-body">
                                         <div class="basic_info_view">   
                                             <div class="form-horizontal">
-                                                <div class="form-group pdrow-group">
+                                               <!-- <div class="form-group pdrow-group">
                                                     <div class="col-sm-9">
                                                         <div class="row flights_heading">
                                                             <div class="col-sm-6 pr-3">
@@ -110,7 +110,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <!-- Airline Panel -->
                                                 
                                                 <?php //echo "<pre>"; print_r($tripDetails['adjustment_date']);die;?>
@@ -182,7 +182,7 @@
                                     <div class="panel-body">
                                         <div class="basic_info_view">   
                                             <div class="form-horizontal">
-                                                <div class="form-group pdrow-group">
+                                                <!--<div class="form-group pdrow-group">
                                                     <div class="col-sm-9">
                                                         <div class="row flights_heading">
                                                             <div class="col-sm-6 pr-3">
@@ -197,7 +197,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <!-- Airline Panel -->
                                                 
                                                 <?php //echo "<pre>"; print_r($tripDetails['adjustment_date']);die;?>
@@ -287,25 +287,31 @@
 			
         $('.selected_addons').click(function () {
             add_on_price = 0;
-
+			
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
 			$(this).parents('.parent').find('.addon_travler').toggle();
-
+			
             $(".addon input[type=checkbox]:checked").each(function () {
-
                 var add_on = $(this).parents('.parent').find('.add_on_cost').val();
+				//alert(add_on);
                 if (add_on != undefined) {
                     //alert(add_on);
                     add_on_price = parseInt(add_on_price) + parseInt(add_on);
                 }
-
                 // code add here//
                 addfinalvalue();
                 //end here//
 
             });
-
+				
+				 if (this.checked) {
+						//alert($('.addon_flight_name').parents('.flightparent').find('.add_on_cost_flight').val());
+						}else{
+							$(this).parents('.parent').find('.addon_flight_name').attr('checked',false);
+							$(this).parents('.parent').find('.selected_addon_hotel').attr('checked',false);
+							$(this).parents('.parent').find('.selected_addon_traveler').attr('checked',false);
+						}
         });
         $('.addon_flight_name').click(function () {
             add_flight_price = 0;

@@ -20,20 +20,22 @@
 						<?php
 						if(!empty($bookedData['bookedActivities']))
 						{
+						//	echo '<pre>';print_r($bookedData['bookedActivities']['activity_data']);die;
 							if(!empty($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id])){
-								//echo ($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['activity_flight_id']);
 								if(!empty($bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['activity_flight_id'])){
 									 $display_manual='style="display: none;"';
 									 $flightdisplay='';
 									 $checkedflight='checked';
+									 $checkedlandonly='';
 									 $flight_name='';
 									 $flight_number='';
 									 $flight_departure_date='';
 									 $flight_departure_time='';
-								} else {
+								} else {	
 									$display_manual='';
 									$flightdisplay='style="display: none;"';
-									 $checkedlandonly='checked';								
+									 $checkedlandonly='checked';
+									$checkedflight='';		
 									$flight_name= $bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_name'];
 									$flight_number=$bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_number'];
 									$flight_departure_date=$bookedData['bookedActivities']['activity_data'][$includedActivity['tripIncludedActivities_check']->id]['flight_departure_date'];
@@ -48,6 +50,9 @@
 							$flight_departure_time='';
 							$checkedlandonly='';
 						}	
+					}else{
+						$display_manual='style="display: none;"';
+						$flightdisplay='';
 					}				
 					
 						?>
@@ -472,12 +477,12 @@
                                                                         <div class="col-sm-1">
                                                                             <label>
                                                                                 <input type="radio" name="included_activity_hotel[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="{{$hotels->id}}"
-    <?php if (!empty($bookedData)) {
-        if (in_array($hotels->id, $bookedData['bookedActivities']['hotel_id'])) {
-            echo 'checked';
-        }
-    }; ?>
-                                                                                       class="included_activity_hotel">
+																		<?php if (!empty($bookedData)) {
+																			if (in_array($hotels->id, $bookedData['bookedActivities']['hotel_id'])) {
+																				echo 'checked';
+																			}
+																		}; ?>
+																																						   class="included_activity_hotel">
                                                                             </label>
                                                                         </div>
                                                                     </div>

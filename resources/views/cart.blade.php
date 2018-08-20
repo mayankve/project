@@ -1035,6 +1035,9 @@ $addonfinal_price_cost = 0;
 						if (!empty($tripIncludedActivities) && $finalamount > 0) {
 							?>
 							<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
+					<?php }else{
+						?>
+					<button type="button" id="processtoemi"  name="checkout">Process</button>
 					<?php } ?>
 						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 					</div>
@@ -1169,18 +1172,36 @@ $addonfinal_price_cost = 0;
                 }
             });
         });
+		
+	$('#processtoemi').click(function(){
+		var actionemi="{{url('emi-calculation')}}";
+			 $.ajax({
+                type: "POST",
+                url: actionemi,
+                data: form.serialize(),
+                success: function (response1) {
+				 if (response1 == 'Emidataupdate')
+                    {
+                        $("#emi_model").modal({backdrop: "static"});
+                    }
+                }
+            });
+			
+	});	
+		
+		
         $('#close').click(function ()
         {
             var url = "{{url('dashboard')}}";
             location.href = url;
         });
 
-<?php if ($finalamount <= 0) {
-    ?>
-            setTimeout(function () {
-                $("#emi_model").modal({backdrop: "static"});
-            }, 5000);
-<?php } ?>
+// <?php if ($finalamount <= 0) {
+    // ?>
+            // setTimeout(function () {
+                // $("#emi_model").modal({backdrop: "static"});
+            // }, 5000);
+// <?php } ?>
 
     });
 
