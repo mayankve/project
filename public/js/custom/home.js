@@ -2,25 +2,28 @@
 
 $(document).ready(function () {
 	
-	$('.airline_departure_date').blur(function(){
-			
-		var departure_date = $(this).val();
-		var trip_date = $('#date').val();
-		
-		var trip_return_date = $(input['name'= 'end_date']).val();
-		alert(trip_return_date);
-		
-		if(trip_date == ''){
-			alert('Please select Trip Date');
-			return false;
-		}
-		else if(departure_date > trip_return_date){
-			alert('Departure date can not come before  Trip Date');
-		}
-		});
+	//Set Trip Date minimum value
+	
+	var trip_date = document.getElementById('date');
+	trip_date.min = current_date();
+	
+	//Set Trip End Date minimum value
+	var trip_end_date = document.getElementById("end_date");
+	trip_end_date.min = current_date();
+	
+	//Set Trip adjustment Date minimum value
+	var adjustment_date = document.getElementById("adjustment_date");
+	adjustment_date.min = current_date();
+	
+	//Set Trip land-only Date minimum value
+	var land_only_date = document.getElementById("land_only_date");
+	land_only_date.min = current_date();
+	
+	
     $('#frm_user_basic_info').submit(function (e) {
         e.preventDefault();
     });
+	
     $('#frm_user_basic_info').validate({
         rules: {
             first_name: {
@@ -262,6 +265,7 @@ $(document).ready(function () {
 		
 		$(".panel panel-default .trip-hotel").addClass("tabpanel");
         //}
+
     });
 
     // Add more airline details
@@ -707,3 +711,16 @@ $(document).ready(function () {
         $(this).toggleClass('open');
         $('b', this).toggleClass("caret caret-up");
     });
+	
+	
+	//Returns current date
+	function current_date(){
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+
+		var output = d.getFullYear() + '-' +
+		((''+month).length<2 ? '0' : '') + month + '-' +
+		((''+day).length<2 ? '0' : '') + day;
+		return output;
+	}
