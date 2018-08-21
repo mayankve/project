@@ -287,7 +287,6 @@
 			
         $('.selected_addons').click(function () {
             add_on_price = 0;
-			
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
 			$(this).parents('.parent').find('.addon_travler').toggle();
@@ -305,13 +304,13 @@
 
             });
 				
-				 if (this.checked) {
-						//alert($('.addon_flight_name').parents('.flightparent').find('.add_on_cost_flight').val());
-						}else{
-							$(this).parents('.parent').find('.addon_flight_name').attr('checked',false);
-							$(this).parents('.parent').find('.selected_addon_hotel').attr('checked',false);
-							$(this).parents('.parent').find('.selected_addon_traveler').attr('checked',false);
-						}
+			 if (this.checked) {
+					//alert($('.addon_flight_name').parents('.flightparent').find('.add_on_cost_flight').val());
+					}else{
+						$(this).parents('.parent').find('.addon_flight_name').attr('checked',false);
+						$(this).parents('.parent').find('.selected_addon_hotel').attr('checked',false);
+						$(this).parents('.parent').find('.selected_addon_traveler').attr('checked',false);
+					}
         });
         $('.addon_flight_name').click(function () {
             add_flight_price = 0;
@@ -647,7 +646,6 @@ $('.flightdeparture').datepicker({
 			$('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
 			$('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
 			activityHotelCost(sel);
-			
 			// $(this).closest($('.activity_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]')).removeClass('active').addClass('notActive');
 			// $(this).closest($('.activity_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]')).removeClass('notActive').addClass('active');
         });

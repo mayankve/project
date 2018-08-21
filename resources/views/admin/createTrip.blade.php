@@ -301,7 +301,7 @@
 			 return false;
 		 }
 		
-		event.preventDefault();
+		//event.preventDefault();
 	});
 	
 	$('.airline_departure_date').on('change',function(){
@@ -312,11 +312,5 @@
 		   }
 	})
 	
-	$('.airline_departure_date').on('change',function(){
-		var trip_return_date = $("input[name$='end_date']").val();
-		if($(this).val() > trip_return_date){
-			 alert("Airline departure should not be after Trip Return date");
-		   }
-	})
 </script>
 @endsection
