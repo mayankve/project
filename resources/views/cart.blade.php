@@ -313,7 +313,7 @@ $addonfinal_price_cost = 0;
                                                         $addonfinal_price = $addonfinal_price + ($addonprice + $addonflight_price + $addonhote_price) * $addontravler;
                                                         // trip cost detail//
                                                         $addonflight_price_cost = (is_array($value['flight_data'])) ? '0' : !empty($value['flight_data']) ? $value['flight_data']->airline_our_cost : '0';
-                                                        $addonhote_price_cost = !empty($value['hote_data']) ? $value['hote_data']->hotel_our_cost : '';
+                                                        $addonhote_price_cost = !empty($value['hote_data']) ? $hotelsolocost : '';
                                                         $addonfinal_price_cost = $addonfinal_price_cost + ($addonprice + $addonflight_price_cost + $addonhote_price_cost) * $addontravler;
                                                         ?> 
                                                         <div class="col-sm-12">
@@ -828,7 +828,7 @@ $addonfinal_price_cost = 0;
 																$activityhotelreserveamount='0';
 															}
 														$activityhotelamount = $activityhotelamount + $activityhotelreserveamount;
-														$activityhotelamount_cost = $activityhotelamount_cost + $includedActivity['activity_hotel']->hotel_our_cost;
+														$activityhotelamount_cost = $activityhotelamount_cost + $includehotelsolocost;
                                                                                 ?>
                                                             <div class="panel-body">
                                                                 <div class="basic_info_view">   
@@ -978,7 +978,7 @@ $addonfinal_price_cost = 0;
 
 								// start here cost amount//
                                 $trip_flight_cost = (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_our_cost : '0';
-                                $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->hotel_our_cost : '0';
+                                $trip_hotel_cost = (count($tripdata['tripHotels']) > 0) ? $is_solo_cost : '0';
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
 							//	echo $activityhotelamount_cost;die;
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;
