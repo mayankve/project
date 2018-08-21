@@ -408,9 +408,9 @@
                                                                     </div>
                                                                     <div class="col-sm-3 text-right">
 																		<!--<div id="addon_hotel_is_solo{{$id}}" class="btn-group" hot="1">-->
-																		<div id="is_solo" class="btn-group" hot="1">
-                                                                            <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
-                                                                            <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
+																		<div id="is_solo_addon{{$addOn['tripAddons_check']->id}}" class="btn-group" hot="1">
+                                                                            <a class="btn btn-primary btn-sm active cost_button_addon" data-toggle="happy" data-title="Y">YES</a>
+                                                                            <a class="btn btn-primary btn-sm notActive cost_button_addon" data-toggle="happy" data-title="N">NO</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -437,10 +437,10 @@
                                                                     <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                         <b>Cost</b>
                                                                     </div>
-                                                                    <div class="col-sm-1 hotel_solo_cost">
+                                                                    <div class="col-sm-1 hotel_cost">
                                                                         <b>Reserve Amount</b>
                                                                     </div>
-                                                                    <div class="col-sm-1 hotel_solo_cost">
+                                                                    <div class="col-sm-1 hotel_cost">
                                                                         <b>Solo Cost</b>
                                                                     </div>
                                                                     <div class="col-sm-1 text">
@@ -496,7 +496,7 @@
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($triphotel->hotel_our_cost)) ? $triphotel->hotel_our_cost : ''; ?></label>
                                                                         </div>
-                                                                        <div class="col-sm-1">
+                                                                        <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
@@ -508,7 +508,7 @@
                                                                                 ?>
                                                                             </label>
                                                                         </div>
-                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                        <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($triphotel->hotel_our_solo_cost)) ? $triphotel->hotel_our_solo_cost : ''; ?>
@@ -557,7 +557,7 @@
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($triphotel->hotel_our_cost)) ? $triphotel->hotel_our_cost : ''; ?></label>
                                                                         </div>
-                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                        <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
@@ -569,7 +569,7 @@
                                                                                 ?>
                                                                             </label>
                                                                         </div>
-                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                        <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($triphotel->hotel_our_solo_cost)) ? $triphotel->hotel_our_solo_cost : ''; ?>
@@ -588,6 +588,7 @@
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>
+																		<input type="hidden" class="hotel_cost_add_on" name="is_solo_addon[{{$addOn['tripAddons_check']->id}}]" value="y">
                                                                     </div>
                                                                 </div>
                                                             </div>

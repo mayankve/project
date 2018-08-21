@@ -303,9 +303,9 @@
                                                                     <label>Upgrade solo room </label>
                                                                 </div>
                                                                 <div class="col-sm-3 text-right">
-                                                                    <div id="is_solo" class="btn-group" hot="1">
-                                                                        <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="Y">YES</a>
-                                                                        <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="N">NO</a>
+                                                                    <div id="is_solo_activity{{$includedActivity['tripIncludedActivities_check']->id}}" class="btn-group" hot="1">
+                                                                        <a class="btn btn-primary btn-sm active cost_button" data-toggle="happy" data-title="Y">YES</a>
+                                                                        <a class="btn btn-primary btn-sm notActive cost_button" data-toggle="happy" data-title="N">NO</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -332,7 +332,7 @@
                                                                 <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                     <b>Cost</b>
                                                                 </div>
-                                                                <div class="col-sm-1 hotel_solo_cost">
+                                                                <div class="col-sm-1 hotel_cost">
                                                                     <b>Solo Cost</b>
                                                                 </div>
                                                                 <div class="col-sm-1 text">
@@ -367,6 +367,8 @@
     <?php echo (!empty($hotels->hotel_due_date)) ? $hotels->hotel_due_date : ''; ?>
 
                                                                         </div>
+																		
+																	
                                                                         <div class="col-sm-1 hotel_cost" style="display: none;">
                                                                             <label>$</label>
                                                                             <label class="cost">
@@ -387,8 +389,9 @@
                                                                             <label class="cost">
                                                                             <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
                                                                         </div>
+																		
 
-                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                        <div class="col-sm-1 hotel_cost" >
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
@@ -403,12 +406,14 @@
                                                                                 ?>
                                                                             </label>
                                                                         </div>
-                                                                       <div class="col-sm-1 hotel_solo_cost">
+                                                                       <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($hotels->hotel_our_solo_cost)) ? $hotels->hotel_our_solo_cost : ''; ?>
                                                                             </label>
                                                                         </div>
+																		
+																		
                                                                         <div class="col-sm-1">
                                                                             <label>
                                                                             </label>
@@ -453,7 +458,7 @@
                                                                             <?php echo (!empty($hotels->hotel_our_cost)) ? $hotels->hotel_our_cost : ''; ?></label>
                                                                         </div>
 
-                                                                        <div class="col-sm-1 hotel_solo_cost">
+                                                                        <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php
@@ -467,7 +472,7 @@
                                                                                 ?>
                                                                             </label>
                                                                         </div>
-                                                                       <div class="col-sm-1 hotel_solo_cost">
+                                                                       <div class="col-sm-1 hotel_cost">
                                                                             <label>$</label>
                                                                             <label class="cost">
                                                                                 <?php echo (!empty($hotels->hotel_our_solo_cost)) ? $hotels->hotel_our_solo_cost : ''; ?>
@@ -486,6 +491,9 @@
                                                                             </label>
                                                                         </div>
                                                                     </div>
+																	
+																	<input type="hidden" class="hotel_cost_activity" name="is_solo_activity[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="y">
+																																	
                                                                 </div>
                                                             </div>
                                                             @endif
