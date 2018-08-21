@@ -26,7 +26,6 @@ class CartController extends Controller
      */
     public function index() {
         session_start();
-
         $_SESSION['card_item']=$_POST;
        // echo'<pre>';print_r($_SESSION['card_item']);die;
         return redirect('cart');
