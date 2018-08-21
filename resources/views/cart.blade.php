@@ -36,7 +36,9 @@ $addonfinal_price_cost = 0;
         <!--<h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
     </div>
 
-    <?php if (isset($_SESSION['card_item']) && !empty($_SESSION['card_item'])) { ?>
+    <?php 
+	//echo '<pre>';echo print_r(session()->get('card_item'));die;
+	if (!empty(session()->get('card_item'))) { ?>
         <form method="post" id="myForm" >
             <div class="" id="pageWrapper">
                 <div id="" class="customtab">
@@ -45,7 +47,7 @@ $addonfinal_price_cost = 0;
                     <div class="tab-content">
                         <!-- flight-land-------------------Start --------------------------------------->
                         <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-                            <input type="hidden" name="trip_id" id="trip_id"  value="<?php echo (!empty($_SESSION['card_item'])) ? $_SESSION['card_item']['trip_id'] : ''; ?>">
+                            <input type="hidden" name="trip_id" id="trip_id"  value="<?php echo (!empty(session()->get('card_item'))) ? session()->get('card_item')['trip_id'] : ''; ?>">
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Trip Flight</strong></h3>
@@ -97,16 +99,16 @@ $addonfinal_price_cost = 0;
                                                         <div class="col-sm-12">
                                                             <div class="row">
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->name : $_SESSION['card_item']['flight_name']; ?>
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->name : session()->get('card_item')['flight_name']; ?>
                                                                 </div>
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_location : $_SESSION['card_item']['flight_number']; ?>
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_location : session()->get('card_item')['flight_number']; ?>
                                                                 </div>
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_date : $_SESSION['card_item']['departure_date']; ?>
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_date : session()->get('card_item')['departure_date']; ?>
                                                                 </div>
                                                                 <div class="col-sm-2">
-                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_time : $_SESSION['card_item']['departure_time']; ?>
+                                                                    <?php echo (count($tripdata['tripAirlines']) > 0) ? $tripdata['tripAirlines'][0]->airline_departure_time : session()->get('card_item')['departure_time']; ?>
                                                                 </div>
 																<?php  if (count($tripdata['tripAirlines']) > 0){
 																	if($tripdata['tripAirlines'][0]->airline_reserve_type==1)
@@ -162,7 +164,7 @@ $addonfinal_price_cost = 0;
 												<?php
                                                     if (count($tripdata['tripHotels']) > 0) {
 														//echo $_SESSION['card_item']['yesno'];die;
-														if($_SESSION['card_item']['is_solo']=='y')
+														if(session()->get('card_item')['is_solo']=='y')
 														{															
 															$costdisplay='style="display: none;"';
 															$solocostdisplay='';
@@ -252,7 +254,7 @@ $addonfinal_price_cost = 0;
                         </div>
 
                         <!-- trip hotel here -->
-                        <?php if (!empty($final)) { ?>
+                        <?php  if (!empty($final)) { ?>
                             <div class="panel panel-primary addon-main">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Add Ons</strong></h3>
@@ -268,9 +270,9 @@ $addonfinal_price_cost = 0;
                                                 <div class="form-group">
 
                                                     <?php
-                                                 // echo '<pre>';print_r($_SESSION['card_item']['is_solo_addon']);die;
+                                                  
                                                     $i = 1;
-	
+												//	echo '<pre>';print_r(session()->get('card_item')['is_solo_addon']);die;
                                                     foreach ($final as $key => $value) {
                                                         $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_cost:'';
 														if(is_array($value['flight_data'])){
@@ -282,10 +284,11 @@ $addonfinal_price_cost = 0;
 														}
                                                       
 														if(!empty($value['hote_data']))
-														{
-															if(array_key_exists($value['add_on_detail']->id,$_SESSION['card_item']['is_solo_addon']))
+														{															
+															if(array_key_exists($value['add_on_detail']->id,session()->get('card_item')['is_solo_addon']))
 															{
-																if($_SESSION['card_item']['is_solo_addon'][$value['add_on_detail']->id]='y')
+																//echo 'sfd';die;
+																if(session()->get('card_item')['is_solo_addon'][$value['add_on_detail']->id]=='y')
 																{
 																	$hotelsolocost=$value['hote_data']->hotel_our_solo_cost;
 																	$displayhotel_solo_cost='style="display: none;"';
@@ -799,13 +802,13 @@ $addonfinal_price_cost = 0;
 																  
                                                         <?php
 														//echo $includehotelsolocost=$value['hote_data']->hotel_our_solo_cost;
-														//echo '<pre>';print_r($_SESSION['card_item']['is_solo_activity']);die;
+														//echo '<pre>';print_r(session()->get('card_item')['is_solo_activity']);die;
 														if(!empty($includedActivity['activity_hotel']))
 															{																
-																if(array_key_exists($includedActivity['tripIncludedActivities']->id,$_SESSION['card_item']['is_solo_activity']))
+																if(array_key_exists($includedActivity['tripIncludedActivities']->id,session()->get('card_item')['is_solo_activity']))
 																{
-																	//print_r($_SESSION['card_item']['is_solo_activity'][$includedActivity['tripIncludedActivities']->id]);
-																		if($_SESSION['card_item']['is_solo_activity'][$includedActivity['tripIncludedActivities']->id]=='y')
+																	//print_r(session()->get('card_item')['is_solo_activity'][$includedActivity['tripIncludedActivities']->id]);die;
+																		if(session()->get('card_item')['is_solo_activity'][$includedActivity['tripIncludedActivities']->id]=='y')
 																		{
 																			$includehotelsolocost=$includedActivity['activity_hotel']->hotel_our_solo_cost;
 																			$includedisplayhotel_solo_cost='';

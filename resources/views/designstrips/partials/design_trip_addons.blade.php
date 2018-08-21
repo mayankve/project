@@ -95,7 +95,7 @@
                                         <label>
                                             <?php //echo '<pre>';print_r($bookedData['bookedAddons']['addon_id']);die;?>
                                             <input type="checkbox" name="selected_addons[{{$id}}]" value="{{$addOn['tripAddons_check']->id}}"<?php
-                                            if (!empty($bookedData)) {
+                                            if (!empty($bookedData['bookedAddons']['addon_id'])) {
                                                 if (in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['addon_id'])) {
                                                     echo 'checked';
                                                 }
@@ -314,7 +314,7 @@
                                                                         <div class="col-sm-1">
                                                                             <label>
                                                                                 <input type="radio" class="addon_flight_name" name="addon_flight_name[{{$id}}]" value="{{$tripflight->id}}" <?php
-                                                                                if (!empty($bookedData)) {
+                                                                                if (!empty($bookedData['bookedAddons']['flight_id'])) {
                                                                                     if (in_array($tripflight->id, $bookedData['bookedAddons']['flight_id'])) {
                                                                                         echo 'checked';
                                                                                     }
@@ -579,7 +579,7 @@
                                                                             <label>
                                                                                 <input type="radio" class="selected_addon_hotel" name="selected_addon_hotel[{{$id}}]" value="{{$triphotel->id}}"
                                                                                 <?php
-                                                                                if (!empty($bookedData)) {
+                                                                                if (!empty($bookedData['bookedAddons']['hote_id'])) {
                                                                                     if (in_array($triphotel->id, $bookedData['bookedAddons']['hote_id'])) {
                                                                                         echo 'checked';
                                                                                     }
