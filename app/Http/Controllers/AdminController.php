@@ -1930,7 +1930,7 @@ class AdminController extends Controller {
      */
 	function getTripTraveler($trip_id,$add_on_id)
 	{
-		
+
 		$tripAddontraveler = array();
 		if( !is_null($trip_id) )
         {
@@ -2101,21 +2101,5 @@ class AdminController extends Controller {
 		echo 'data update';die;							
 		
 	}
-
-        /**
-         * Function to load User 0
-         * @param void
-         * @return array
-         */
-        public function checkValidationBlade(){
-            return view('check_validation');
-        }
-        
-        public function checkValidation(Request $request) {
-            //echo '<pre>'; print_r($request->all());
-            
-            $this->validate($request, [
-                'name' => 'required|numeric'
-            ]);
-        }
+      
 }

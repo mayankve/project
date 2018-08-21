@@ -56,7 +56,7 @@
 					}				
 					
 						?>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 parent">
                             <div class="row number-group-row">
                                 <div class="col-sm-1">
                                     {{$id}}

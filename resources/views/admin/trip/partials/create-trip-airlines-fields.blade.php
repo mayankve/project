@@ -17,7 +17,7 @@
 	<div class="col-md-4">
 		<div class="form-group {{ $errors->has($hasName.'.'.$key.'.airline_departure_date') ? 'has-error' : ''}}">
 			{!! Form::label($name.'['.$key.'][airline_departure_date]', 'Departure Date') !!}
-			{!! Form::date($name.'['.$key.'][airline_departure_date]', null, ['class' => 'form-control']) !!}
+			{!! Form::date($name.'['.$key.'][airline_departure_date]', null, ['class' => 'form-control airline_departure_date']) !!}
 			@if($errors->has($hasName.'.'.$key.'.airline_departure_date'))
 				<span class="help-block">{{ $errors->first($hasName.'.'.$key.'.airline_departure_date') }}</span>
 			@endif
@@ -111,7 +111,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			{!! Form::label($name.'['.$key.'][airline_departure_date]', 'Departure Date') !!}
-			{!! Form::date($name.'['.$key.'][airline_departure_date]', null, ['class' => 'form-control']) !!}
+			{!! Form::date($name.'['.$key.'][airline_departure_date]', null, ['class' => 'form-control airline_departure_date']) !!}
 		</div>
 	</div>
 	<div class="col-md-4">

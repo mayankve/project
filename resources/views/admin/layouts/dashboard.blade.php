@@ -92,7 +92,7 @@
                                 </li>
                             </div>
                         <?php } ?>
-<!--                        <li><a href="{{ url('/dashboard') }}">Dashboard </a></li>-->
+                        <!--                        <li><a href="{{ url('/dashboard') }}">Dashboard </a></li>-->
                     </ul>
                 </div>
             </div>
@@ -108,50 +108,51 @@
                         </div>
                         <ul class="nav tablist-menu" id="accordion1">
                             <li><a class="tablinks" href="{{ url('admin/dashboard') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
-							
-							
-							
-							<li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
+
+
+
+                            <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
-								<?php 
-								 $userTrips = DB::select('select * from trips  join user_trip on user_trip.trip_id=trips.id where user_trip.status="1"');
-								
-							 if(count($userTrips)>0){
-								foreach($userTrips as $trip){	
-								?>
-												
-                                    <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
-                                        <ul id="level<?php echo $trip->id;?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-										
-											<?php  
-											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.' Group By user_id');
-											
-											foreach($results as $item):
-											//$user= DB::select('select * from users where id = '.$item->user_id.'');
-											?>
-											
-                                            <li class='travelers'><a href="{{url('admin/view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name;?></a></li>
-                                            <?php endforeach;?>
-                                            
-                                        </ul>
-                                    </li>
-								 <?php } } ?>
-                                  <!--  <li> 
-                                        <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
-                                        <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-                                            <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
-                                        </ul>
-                                    </li>-->
-									
-									
+                                    <?php
+                                    $userTrips = DB::select('select * from trips  join user_trip on user_trip.trip_id=trips.id where user_trip.status="1" Group By trip_id');
+
+                                    if (count($userTrips) > 0) {
+                                        foreach ($userTrips as $trip) {
+                                            ?>
+
+                                            <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id; ?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
+                                                <ul id="level<?php echo $trip->id; ?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+
+                                                    <?php
+                                                    $results = DB::select('select * from trip_traveler where trip_id =' . $trip->trip_id . ' Group By user_id');
+
+                                                    foreach ($results as $item):
+                                                        //$user= DB::select('select * from users where id = '.$item->user_id.'');
+                                                        ?>
+
+                                                        <li class='travelers'><a href="{{url('admin/view-traveler/'.$item->id)}}" class="tablinks "><?php echo $item->first_name; ?></a></li>
+                                                    <?php endforeach; ?>
+
+                                                </ul>
+                                            </li>
+                                        <?php }
+                                    } ?>
+                                    <!--  <li> 
+                                          <a data-toggle="collapse" data-parent="#accordion1" href="#level12"  class="tablinks collapsed" aria-expanded="false">Ghana, Togo, Benin & Morocco 2017</a>
+                                          <ul id="level12" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
+                                              <li class='travelers'><a href="/aat_backup/public/dashboard/view-traveler/1" class="tablinks ">vaishnavesh3</a></li>
+                                          </ul>
+                                      </li>-->
+
+
                                 </ul>
                             </li>
-							
-							
-							
-							
-							
-							
+
+
+
+
+
+
                             <li><a href="{{ url('admin/listtrip') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
                             <li>
                                 <a data-toggle="collapse" href="#manage_trips" class="tablinks "  data-parent="#accordion1" href="#my_trip"><i class=" fa fa-cog fa-spin margin-bottom"></i>Manage Trips</a>
@@ -247,118 +248,118 @@
             </footer>
         </div>
 
-  <script>
-$(document).ready(function () {
-$(".filter-button").click(function () {
-var value = $(this).attr('data-filter');
-if (value == "all")
-{
-    $('.filter').show('1000');
-} else
-{
-    $(".filter").not('.' + value).hide('3000');
-    $('.filter').filter('.' + value).show('3000');
-}
-});
+        <script>
+      $(document).ready(function () {
+          $(".filter-button").click(function () {
+              var value = $(this).attr('data-filter');
+              if (value == "all")
+              {
+                  $('.filter').show('1000');
+              } else
+              {
+                  $(".filter").not('.' + value).hide('3000');
+                  $('.filter').filter('.' + value).show('3000');
+              }
+          });
 
-if ($(".filter-button").removeClass("active")) {
-$(this).removeClass("active");
-}
-$(this).addClass("active");
+          if ($(".filter-button").removeClass("active")) {
+              $(this).removeClass("active");
+          }
+          $(this).addClass("active");
 
-$(".filter-button2").click(function () {
-var value = $(this).attr('data-filter');
-if (value == "all")
-{
-    $('.filter2').show('1000');
-} else
-{
-    $(".filter2").not('.' + value).hide('3000');
-    $('.filter2').filter('.' + value).show('3000');
-}
-});
+          $(".filter-button2").click(function () {
+              var value = $(this).attr('data-filter');
+              if (value == "all")
+              {
+                  $('.filter2').show('1000');
+              } else
+              {
+                  $(".filter2").not('.' + value).hide('3000');
+                  $('.filter2').filter('.' + value).show('3000');
+              }
+          });
 
-if ($(".filter-button2").removeClass("active2")) {
-$(this).removeClass("active2");
-}
-$(this).addClass("active2");
+          if ($(".filter-button2").removeClass("active2")) {
+              $(this).removeClass("active2");
+          }
+          $(this).addClass("active2");
 
-$('#itemslider').carousel({interval: 3000});
+          $('#itemslider').carousel({interval: 3000});
 
-$('.carousel-showmanymoveone .item').each(function () {
-var itemToClone = $(this);
+          $('.carousel-showmanymoveone .item').each(function () {
+              var itemToClone = $(this);
 
-for (var i = 1; i < 4; i++) {
-    itemToClone = itemToClone.next();
+              for (var i = 1; i < 4; i++) {
+                  itemToClone = itemToClone.next();
 
-    if (!itemToClone.length) {
-        itemToClone = $(this).siblings(':first');
-    }
+                  if (!itemToClone.length) {
+                      itemToClone = $(this).siblings(':first');
+                  }
 
-    itemToClone.children(':first-child').clone()
-            .addClass("cloneditem-" + (i))
-            .appendTo($(this));
-}
-});
+                  itemToClone.children(':first-child').clone()
+                          .addClass("cloneditem-" + (i))
+                          .appendTo($(this));
+              }
+          });
 
-$(".dropdown-hov").hover(function () {
-$('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-$(this).toggleClass('open');
-$('b', this).toggleClass("caret caret-up");
-},
-    function () {
-        $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-        $(this).toggleClass('open');
-        $('b', this).toggleClass("caret caret-up");
-    });
-});
+          $(".dropdown-hov").hover(function () {
+              $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+              $(this).toggleClass('open');
+              $('b', this).toggleClass("caret caret-up");
+          },
+                  function () {
+                      $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                      $(this).toggleClass('open');
+                      $('b', this).toggleClass("caret caret-up");
+                  });
+      });
 
-$("[rel='tooltip']").tooltip();
+      $("[rel='tooltip']").tooltip();
 
-$('.thumbnail').hover(
-function () {
-    $(this).find('.caption').slideDown(250); //.fadeIn(250)
-},
-function () {
-    $(this).find('.caption').slideUp(250); //.fadeOut(205)
-}
-);
+      $('.thumbnail').hover(
+              function () {
+                  $(this).find('.caption').slideDown(250); //.fadeIn(250)
+              },
+              function () {
+                  $(this).find('.caption').slideUp(250); //.fadeOut(205)
+              }
+      );
 
-// video
-var vid = document.getElementById("bgvid");
-var pauseButton = document.querySelector("#polina button");
+      // video
+      var vid = document.getElementById("bgvid");
+      var pauseButton = document.querySelector("#polina button");
 
-if (window.matchMedia('(prefers-reduced-motion)').matches) {
-vid.removeAttribute("autoplay");
-vid.pause();
-pauseButton.innerHTML = "Paused";
-}
+      if (window.matchMedia('(prefers-reduced-motion)').matches) {
+          vid.removeAttribute("autoplay");
+          vid.pause();
+          pauseButton.innerHTML = "Paused";
+      }
 
-function vidFade() {
-vid.classList.add("stopfade");
-}
+      function vidFade() {
+          vid.classList.add("stopfade");
+      }
 
-vid.addEventListener('ended', function ()
-{
-// only functional if "loop" is removed 
-vid.pause();
-// to capture IE10
-vidFade();
-});
+      vid.addEventListener('ended', function ()
+      {
+      // only functional if "loop" is removed 
+          vid.pause();
+      // to capture IE10
+          vidFade();
+      });
 
-var el = document.getElementById('pauseButton');
-if (el) {
-pauseButton.addEventListener("click", function () {
-vid.classList.toggle("stopfade");
-if (vid.paused) {
-    vid.play();
-    pauseButton.innerHTML = "Pause";
-} else {
-    vid.pause();
-    pauseButton.innerHTML = "Paused";
-}
-});
-}
+      var el = document.getElementById('pauseButton');
+      if (el) {
+          pauseButton.addEventListener("click", function () {
+              vid.classList.toggle("stopfade");
+              if (vid.paused) {
+                  vid.play();
+                  pauseButton.innerHTML = "Pause";
+              } else {
+                  vid.pause();
+                  pauseButton.innerHTML = "Paused";
+              }
+          });
+      }
         </script>
 
         @yield('scripts')

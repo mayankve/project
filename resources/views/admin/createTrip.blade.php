@@ -281,5 +281,36 @@
             $('.is-' + part + '-more').addClass('hidden');
         }
     }
+	
+	$('#form-create-trip').submit(function(event ){
+		var trip_date = $('#date').val();
+		 if(trip_date == ''){
+			 alert('Please select Trip Date');
+			 $('#date').focus();
+			 return false;
+		 }
+		var trip_return_date = $("input[name$='end_date']").val();
+		   if(trip_return_date == ''){
+			   alert("Please select trip end date");
+			   $("input[name$='end_date']").focus();
+			   return false;
+		   }
+		 else if(trip_return_date < trip_date){
+			 alert("Trip Return date should not be smaller than trip date");
+			 $("input[name$='end_date']").focus();
+			 return false;
+		 }
+		
+		//event.preventDefault();
+	});
+	
+	$('.airline_departure_date').on('change',function(){
+		var trip_return_date = $("input[name$='end_date']").val();
+		//alert($(this).val());
+		if($(this).val() > trip_return_date){
+			 alert("Airline departure should not be after Trip Return date");
+		   }
+	})
+	
 </script>
 @endsection
