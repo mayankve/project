@@ -140,7 +140,6 @@ $addonfinal_price_cost = 0;
                         <!-- trip hotel here -->
 
                         <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Trip Hotel</strong></h3>

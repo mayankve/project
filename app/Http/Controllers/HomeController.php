@@ -573,7 +573,7 @@ class HomeController extends Controller {
         $userId = Auth::id();
         //Trip Travelers details
         $tripDetails = Trip::where('id', $id)->first();
-        
+        // echo "<pre>"; print_r($tripDetails);die;
         $tripTravelers = DB::table('trip_traveler')
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
