@@ -142,7 +142,6 @@ $addonfinal_price_cost = 0;
                         <!-- trip hotel here -->
 
                         <div role="tabpanel" class="tab-pane active" id="DesignTrip">
-
                             <div class="panel panel-primary trip-design-flight">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><strong>Trip Hotel</strong></h3>
@@ -964,7 +963,7 @@ $addonfinal_price_cost = 0;
 									$trip_hotel_amount='0';
 								}
                                
-				//echo $trip_hotel_amount;
+							//echo $trip_hotel_amount;
                                 $trip_traveler = (count($tripdata['tripTravelers']) > 0) ? count($tripdata['tripTravelers']) : '';
 							// trip amount add//
                                 $trip_only_amount = ($trip_flight_amount + $trip_hotel_amount) * $trip_traveler;

@@ -24,11 +24,11 @@ class CartController extends Controller
      * @param void
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request) {
        // session_start();
        $request->session()->put('card_item', $_POST);
        return redirect('cart');
-		
     }
 	
 	 /**

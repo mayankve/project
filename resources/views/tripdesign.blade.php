@@ -83,6 +83,9 @@
                                     <!-------------Design Your Trip Section-------------------------------->
                                     <!-- flight-land-------------------Start --------------------------------------->
                                 <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
+								<input type="hidden" name="trip_date" id="trip_date"  value="$tripDetails['date']">
+								<input type="hidden" name="trip_end_date" id="trip_end_date"  value="$tripDetails['end_date']">
+								
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -169,7 +172,8 @@
                                 <p>
                                     <!-------------Design Your Trip Section-------------------------------->
                                     <!-- flight-land-------------------Start --------------------------------------->
-                                <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
+								 <input type="hidden" name="trip_id" id="trip_id"  value="{{$trip_id}}">
+								<input type="hidden" name="trip_date" id="trip_date"  value="$tripDetails['date']">
                                 <div class="panel panel-primary trip-design-flight">
                                     <div class="panel-heading">
                                         <h3 class="panel-title"><strong>Select flight or provide your flight's details</strong></h3>
@@ -449,12 +453,12 @@
                 }
 
             }
-            if ($(".selected_todo:checked").val() == undefined)
-            {
-                $('#Section2').focus();
-                alert('Please select Packing List');
-                return false;
-            }
+             if ($(".selected_todo:checked").val() == undefined)
+             {
+                 $('#Section2').focus();
+                 alert('Please select Packing List');
+                 return false;
+             }
             // end here//
         });
 		
@@ -470,18 +474,20 @@
 		});	
 // end here//			
 		
+		
+		
+
  });
-
-$('.flightdeparture').datepicker({
-	changeMonth: true,
-	changeYear: true,
-	dateFormat: 'yy-mm-dd'
-});
-
-
-	
-	
-	
+		
+		 // var trip_end_date = $('#trip_end_date').val();
+		 // var trip_date = $('#trip_date').val();
+		 // alert("trip date"+trip_end_date);
+		 
+		$('.flightdeparture').datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
 </script>
 
 <script>
@@ -583,13 +589,13 @@ $('.flightdeparture').datepicker({
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
 			
-			 $('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-		     $('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-		     addonHotelCost(sel);
+			  $('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+		      $('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+		      addonHotelCost(sel);
 			 
-			// $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive'));
-			// $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]')).removeClass('notActive').addClass('active');
-           
+			 // $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive'));
+			 // $(this).closest($('.addon_hotel a[data-toggle="' + tog + '"][data-title="' + sel + '"]')).removeClass('notActive').addClass('active');
+			 // addonHotelCost(sel);
         });
 		
 	   $('.addon_hotel .selected_hotel').click(function () {
