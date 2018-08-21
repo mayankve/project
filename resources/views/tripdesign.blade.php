@@ -521,6 +521,8 @@ $('.flightdeparture').datepicker({
             $('.trip-hotel .selected_hotel').prop('checked', false);
             $('.trip-hotel .total_hotel_cost').text('$' + '0')
             var sel = $(this).data('title');
+			//alert(sel);
+			$('.trip-hotel #yesno').val(sel);
             var tog = $(this).data('toggle');
             $('#' + tog).prop('value', sel);
 		    $('.trip-hotel a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');

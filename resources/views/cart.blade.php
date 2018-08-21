@@ -159,6 +159,18 @@ $addonfinal_price_cost = 0;
                                                 </div>
                                             </div>
                                             <!-- Airline Panel -->
+												<?php
+                                                    if (count($tripdata['tripHotels']) > 0) {
+														//echo $_SESSION['card_item']['yesno'];die;
+														if($_SESSION['card_item']['yesno']=='y')
+														{															
+															$costdisplay='style="display: none;"';
+															$solocostdisplay='';
+														}else{
+															$costdisplay='';
+															$solocostdisplay='style="display: none;"';
+														}
+                                                        ?>
                                             <div class="panel panel-default">
                                                 <div class="available-flights">
                                                     <div class="form-group pdrow-group">
@@ -177,19 +189,17 @@ $addonfinal_price_cost = 0;
                                                                     <b>Reserve Amount</b>
                                                                 </div>
 																
-                                                                <div class="col-sm-2" style="display: none;">
+                                                                <div class="col-sm-2" <?php echo !empty($costdisplay)?$costdisplay:'';?>>
                                                                     <b>Cost</b>
                                                                 </div>
 
-                                                                <div class="col-sm-2">
+                                                                <div class="col-sm-2" <?php echo !empty($solocostdisplay)?$solocostdisplay:'';?>>
                                                                     <b>Solo Cost</b>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php
-                                                    if (count($tripdata['tripHotels']) > 0) {
-                                                        ?>                                    
+                                                                                        
                                                         <div class="form-group pdrow-group parent">
                                                             <div class="col-sm-12">
                                                                 <div class="row">
@@ -216,11 +226,12 @@ $addonfinal_price_cost = 0;
 																		 <div class="col-sm-2">
 																		<?php echo !empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_reserve_amount:''; } ?>
 																		 </div>
-                                                                    <div class="col-sm-2" style="display: none;">
+																		 
+                                                                    <div class="col-sm-2" <?php echo !empty($costdisplay)?$costdisplay:'';?>>
                                                                         <?php echo!empty($tripdata['tripHotels']) ? $tripdata['tripHotels'][0]->hotel_our_cost : ''; ?>
                                                                     </div>
 																	
-                                                                    <div class="col-sm-2">
+                                                                    <div class="col-sm-2" <?php echo !empty($solocostdisplay)?$solocostdisplay:'';?>>
                                                                         <?php echo $tripdata['tripHotels'][0]->hotel_solo_cost; ?>
                                                                     </div>
 																	
@@ -228,10 +239,10 @@ $addonfinal_price_cost = 0;
                                                                     <input type="hidden" name="trip_hotel_id" value="<?php echo (count($tripdata['tripHotels']) > 0) ? $tripdata['tripHotels'][0]->id : ''; ?>">
                                                                 </div>
                                                             </div>
-                                                        </div><?php } ?>
-
+                                                        </div>
                                                 </div>                                        
-                                            </div>                                   
+                                            </div><?php } ?> 
+											
                                         </div>
                                     </div>
                                 </div>
@@ -813,8 +824,7 @@ $addonfinal_price_cost = 0;
                                                                             <div class="form-group pdrow-group">
 
                                                                                 @if(!empty($includedActivity['activity_hotel']))
-                                                                                <?php
-																			
+                                                                                <?php																			
 																				if(!empty($includedActivity['activity_hotel']))
 																					{
 																						if($includedActivity['activity_hotel']->hotel_reserve_type==1){
