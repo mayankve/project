@@ -2094,11 +2094,14 @@ $addonfinal_price_cost = 0;
 
 					<div>
 
+
 					@if (!empty($tripIncludedActivities) && $finalamount > 0) 
 						<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
 					@else
 					<button type="button" id="processtoemi"  name="checkout">Process to Checkout</button>
 					@endif
+
+
 						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 					</div>
 

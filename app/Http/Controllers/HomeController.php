@@ -524,8 +524,13 @@ class HomeController extends Controller {
             $rules["traveler.{$key}.email"] = 'required|email';
 //            $rules["traveler.{$key}.profile_image"] = 'required';
 //            $rules["traveler.{$key}.city"] = 'required';
+			$message["traveler.{$key}.first_name.required"] = 'First name is required';
+            $message["traveler.{$key}.email.required"] = 'Email is required';
         }
-        $this->validate($request, $rules);
+		
+		//echo "<pre>";print_r($message);die;
+
+        $this->validate($request,$rules,$message);
         $trip_id = $request->get('trip_id');
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
