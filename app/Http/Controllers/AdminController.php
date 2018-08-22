@@ -282,12 +282,6 @@ class AdminController extends Controller {
             'land_only_date'    => 'required'
         ];
 		
-		 // $message = [
-				 // 'name.required' => 'Yo, what should I call you?',
-				// 'date.required' => 'We need your email address also',
-				// 'end_date.required'  => 'c\'mon, you want to contact me without saying anything?',
-				// ];
-
         // Airline validation
         foreach($request->get('airline') as $key => $val)
         {

@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-                @if ($errors->any())
+            @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -35,8 +35,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
-            <!--<form method="POST" name="traveler-details" action="/aat_zend/public/book/20" id="traveler-details">-->  
+			@endif
             {!! Form::open(['url' => '/booktrip', 'files' => true, 'id' => 'form-book-trip']) !!}
             <input name="trip_id" type="hidden" value="{{$tripdata->id}}">
             <div class="row-box">
@@ -57,9 +56,12 @@
                         <div class="cust-input-group travelerDetails-row pt-4 pb-2">            
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group {{ $errors->has('traveler['.$key.'][first_name]') ? 'has-error' : ''}}">
                                         {!! Form::label('traveler['.$key.'][first_name]', 'First Name') !!}
                                         {!! Form::text('traveler['.$key.'][first_name]', null, ['class' => 'form-control traveler_name']) !!}
+										@if($errors->has('traveler['.$key.'][first_name]'))
+											<span class="help-block">{{ $errors->first('traveler['.$key.'][first_name]') }}</span>
+										@endif
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -69,9 +71,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group  {{ $errors->has('traveler['.$key.'][email]') ? 'has-error' : ''}}">
                                         {!! Form::label('traveler['.$key.'][email]', 'Email') !!}
                                         {!! Form::text('traveler['.$key.'][email]', null, ['class' => 'form-control traveler_name']) !!}
+										@if($errors->has('traveler['.$key.'][email]'))
+											<span class="help-block">{{ $errors->first('traveler['.$key.'][email]') }}</span>
+										@endif
                                     </div>
                                 </div>
                             </div>
