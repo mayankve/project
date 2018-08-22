@@ -492,7 +492,7 @@
                                                                         </div>
                                                                     </div>
 																	
-																	<input type="hidden" class="hotel_cost_activity" name="is_solo_activity[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="y">
+																	<input type="hidden" class="hotel_cost_activity" name="is_solo_activity[{{$includedActivity['tripIncludedActivities_check']->id}}]" value="Y">
 																																	
                                                                 </div>
                                                             </div>
