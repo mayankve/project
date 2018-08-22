@@ -588,7 +588,7 @@
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">
                                                                             </label>
                                                                         </div>
-																		<input type="hidden" class="hotel_cost_add_on" name="is_solo_addon[{{$addOn['tripAddons_check']->id}}]" value="y">
+																		<input type="hidden" class="hotel_cost_add_on" name="is_solo_addon[{{$addOn['tripAddons_check']->id}}]" value="Y">
                                                                     </div>
                                                                 </div>
                                                             </div>
