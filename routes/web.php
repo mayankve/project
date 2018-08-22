@@ -40,7 +40,7 @@ Route::post('/changeuserpassword', 'HomeController@changeUserPassword');
 //List Trips for guest
 Route::get('listtrip', 'HomeController@listTrip');
 
-//List Trips for guest
+//Trip View for guest
 Route::get('tripview/{id}', 'HomeController@tripView');
 
 /* * ************ User end routes start************************* */
@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']], function() {
 //Route::get('listtrip', 'HomeController@listTrip');
 
 //view Trips for users
- Route::get('tripview/{id}','HomeController@tripView');
+ // Route::get('tripview/{id}','HomeController@tripView');
  
 //Book Trip for users
     Route::get('book/{id}', 'HomeController@bookTripView');

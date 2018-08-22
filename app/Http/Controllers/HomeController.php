@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -495,7 +493,9 @@ class HomeController extends Controller {
      * @param int id
      * @return url
      */
+	 
     public function tripView($id) {
+	
         $tripData = Trip::where('id', '=', $id)->first();
         return view('viewtrip', ['tripdata' => $tripData]);
     }
