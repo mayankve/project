@@ -74,11 +74,9 @@ $addonfinal_price_cost = 0;
 
 
 
-    <?php 
+  
 
-	//echo '<pre>';echo print_r(session()->get('card_item'));die;
-
-	if (!empty(session()->get('card_item'))) { ?>
+	@if (!empty(session()->get('card_item')))
 
         <form method="post" id="myForm" >
 
@@ -1675,11 +1673,7 @@ $addonfinal_price_cost = 0;
 
                                                                                     <div class="row">
 
-
-
                                                                                         <div class="col-sm-3 text-right">
-
-
 
                                                                                         </div>
 
@@ -1694,9 +1688,6 @@ $addonfinal_price_cost = 0;
                                                                                 <div class="col-sm-12">
 
                                                                                     <div class="row">
-
-
-
                                                                                         <div class="col-sm-3">
 
                                                                                             <b>Hotel Name</b>
@@ -1727,19 +1718,11 @@ $addonfinal_price_cost = 0;
 
                                                                                         </div>
 
-
-
-
-
                                                                                         <div class="col-sm-1 hotel_solo_cost" <?php echo !empty($includedisplayhotel_solo_cost)?$includedisplayhotel_solo_cost:'';?>>
 
                                                                                             <b>Solo Cost</b>
 
                                                                                         </div>
-
-
-
-
 
                                                                                     </div>
 
@@ -1756,11 +1739,6 @@ $addonfinal_price_cost = 0;
                                                                                     <div class="col-sm-12">
 
                                                                                         <div class="row">
-
-
-
-
-
                                                                                             <div class="col-sm-3">
 
                                                                                                 {{ isset($includedActivity['activity_hotel']->hotel_name) ? $includedActivity['activity_hotel']->hotel_name : 'N/A' }}
@@ -1779,13 +1757,9 @@ $addonfinal_price_cost = 0;
 
                                                                                             </div>
 
-																							<?php
+																							
 
-																								if($includedActivity['activity_hotel']->hotel_reserve_type==1)
-
-																								{
-
-																							?>
+																						@if($includedActivity['activity_hotel']->hotel_reserve_type==1)
 
                                                                                             <div class="col-sm-1">
 
@@ -1793,9 +1767,7 @@ $addonfinal_price_cost = 0;
 
                                                                                             </div>
 
-																								<?php }else{ ?>
-
-																								
+																								@else																								
 
 																							<div class="col-sm-1">
 
@@ -1803,7 +1775,7 @@ $addonfinal_price_cost = 0;
 
                                                                                             </div>
 
-																								<?php } ?>
+																								@endif
 
                                                                                             <div class="col-sm-1" <?php echo !empty($includedisplayhotel_cost)?$includedisplayhotel_cost:'';?>>
 
@@ -1817,19 +1789,13 @@ $addonfinal_price_cost = 0;
 
                                                                                             </div>
 
-
-
                                                                                         </div>
 
-                                                                                        <input type="hidden" name="includedactivity_hotel_id[{{$id}}]" value="<?php echo $includedActivity['activity_hotel']->id; ?>">
+                                                                                        <input type="hidden" name="includedactivity_hotel_id[{{$id}}]" value="{{$includedActivity['activity_hotel']->id}}">
 
                                                                                     </div>
 
-                                                                                </div>                                                 
-
-
-
-                                                                               
+                                                                                </div>      
 
                                                                             </div>
 
@@ -1855,18 +1821,9 @@ $addonfinal_price_cost = 0;
 
 															 @endif
 
-															
-
-															
-
                                                         </div>
 
                                                     </div>
-
-
-
-
-
                                                 </div>
 
                                             </div>
@@ -1884,8 +1841,6 @@ $addonfinal_price_cost = 0;
                                 </div>
 
                                 <?php
-
-								//echo $addonfinal_price_cost;die;
 
 								// reserve code detail//
 
@@ -2083,33 +2038,21 @@ $addonfinal_price_cost = 0;
 
                                 <div class="panel-tools">
 
-
-
-
-
                                     <label style="color: black">Trip Reserve Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $trip_only_amount; ?></label></br>
-
-
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$trip_only_amount}}</label></br>
 
                                     <label style="color: black">Add on Reserve Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $addonfinal_price; ?></label></br>
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$addonfinal_price}}</label></br>
 
                                     <label style="color: black">Included Activity Reserve Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity; ?></label></br>
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$includedactivity}}</label></br>
 
                                     <label style="color: black">Total Reserve Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount_reserve; ?></label>
+                                    <label class="total_addon_cost" style="color: black">${{$final_trip_amount_reserve}}</label>
 
                                 </div>
 
@@ -2124,34 +2067,21 @@ $addonfinal_price_cost = 0;
                             <div class="update-btn">
 
                                 <div class="panel-tools">
-
-
-
-
-
                                     <label style="color: black">Trip Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $trip_only_cost; ?></label></br>
-
-
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$trip_only_cost}}</label></br>
 
                                     <label style="color: black">Add on Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $addonfinal_price_cost; ?></label></br>
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$addonfinal_price_cost}}</label></br>
 
                                     <label style="color: black">Included Activity Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $includedactivity_cost; ?></label></br>
-
-
+                                    <label class="total_addon_cost" style="color: black">${{$includedactivity_cost}}</label></br>
 
                                     <label style="color: black">Total Cost: </label>
 
-                                    <label class="total_addon_cost" style="color: black">$<?php echo $final_trip_amount_cost; ?></label>
+                                    <label class="total_addon_cost" style="color: black">${{$final_trip_amount_cost}}</label>
 
                                 </div>
 
@@ -2160,29 +2090,16 @@ $addonfinal_price_cost = 0;
                         </div>
 
                     </div>
-
 						
 
 					<div>
 
-						<?php
-
-						if (!empty($tripIncludedActivities) && $finalamount > 0) {
-
-							?>
-
-							<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
-
-					<?php }else{
-
-						?>
-
+					@if (!empty($tripIncludedActivities) && $finalamount > 0) 
+						<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
+					@else
 					<button type="button" id="processtoemi"  name="checkout">Process to Checkout</button>
-
-					<?php } ?>
-
+					@endif
 						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
-
 					</div>
 
                     </div>
@@ -2193,15 +2110,15 @@ $addonfinal_price_cost = 0;
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <input type="hidden" name="resever_pay_amount" value="<?php echo $finalamount; ?>">
+            <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">
 
         </form>	
 
-    <?php } else { ?>
+		@else 
 
         <h1>CART IS EMPTY</h1>		
+		@endif
 
-<?php } ?>
 
 
 
