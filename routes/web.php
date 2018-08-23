@@ -43,6 +43,9 @@ Route::get('listtrip', 'HomeController@listTrip');
 //Trip View for guest
 Route::get('tripview/{id}', 'HomeController@tripView');
 
+//Trip View for guest
+Route::get('registration', 'HomeController@createUser');
+
 /* * ************ User end routes start************************* */
 
 Route::group(['middleware' => ['auth']], function() {
