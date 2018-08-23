@@ -276,8 +276,10 @@ class AdminController extends Controller {
             'end_date'      => 'required',
             'about_trip'    => 'required',
             'banner_image'  => 'required|image|mimes:jpg,png,jpeg|max:2048',
+			'maximum_spots'     => 'required',
+			'minimum_spots'  =>'required',
+			'maximum_wating_spots' =>'required',
             'base_cost'     => 'required',
-            'maximum_spots'     => 'required',
             'adjustment_date'   => 'required',
             'land_only_date'    => 'required'
         ];
@@ -392,6 +394,9 @@ class AdminController extends Controller {
             $rules["addon.{$key}.addons_due_date"]        = 'required';
             $rules["addon.{$key}.addons_reserve_type"]    = 'required';
             $rules["addon.{$key}.addons_reserve_amount"]  = 'required';
+			$rules["addon.{$key}.addons_maximum_spots"]  = 'required';
+			$rules["addon.{$key}.addons_minimum_spots"]  = 'required';
+			$rules["addon.{$key}.addons_maximum_wating_spots"]  = 'required';
 			
 			
 			 $message["addon.{$key}.addons_name.required"] = 'Addon name required';
@@ -401,6 +406,9 @@ class AdminController extends Controller {
 			 $message["addon.{$key}.addons_due_date.required"] = 'Addon due date required';
 			 $message["addon.{$key}.addons_reserve_type.required"] = 'Addon reserve amount required';
 			 $message["addon.{$key}.addons_reserve_amount.required"] = 'Addon reserve amount required';
+			 $message["addon.{$key}.addons_maximum_spots.required"]  = 'Addon maximum spots';
+			$message["addon.{$key}.addons_minimum_spots.required"]  = 'Addon minimum spots';
+			$message["addon.{$key}.addons_maximum_wating_spots.required"]  = 'Addon maximum waiting spots';
 
             // Included Activity Hotels
             foreach($request->get('addon')[$key]['addons_hotels'] as $key1 => $val1)
@@ -504,7 +512,7 @@ class AdminController extends Controller {
         $this->validate($request, $rules,$message);
 
         // Create trip
-        $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
+        $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
           
         if( $request->hasFile('banner_image') )
         {
@@ -611,7 +619,10 @@ class AdminController extends Controller {
                     'addons_due_date'     => $row['addons_due_date'],
                     'addons_reserve_type' => $row['addons_reserve_type'],
                     'addons_reserve_amount' => $row['addons_reserve_amount'],
-                    'addons_image'        => $fileName
+                    'addons_image'        => $fileName,
+					'addons_maximum_spots'=>$row['addons_maximum_spots'],
+					'addons_minimum_spots'=>$row['addons_minimum_spots'],
+					'addons_maximum_wating_spots'=>$row['addons_maximum_wating_spots']
                 ))->id;
 
                 // Add Addon Hotel
@@ -787,8 +798,10 @@ class AdminController extends Controller {
             'end_date'      => 'required',
             'about_trip'    => 'required',
             'banner_image'  => 'image|mimes:jpg,png,jpeg|max:2048',
-            'base_cost'     => 'required',
-            'maximum_spots'     => 'required',
+			'maximum_spots'     => 'required',
+			'minimum_spots'  =>'required',
+			'maximum_wating_spots' =>'required',
+            'base_cost'     => 'required',            
             'adjustment_date'   => 'required',
             'land_only_date'    => 'required'
         ];
@@ -902,7 +915,9 @@ class AdminController extends Controller {
             $rules["addon.{$key}.addons_due_date"]        = 'required';
             $rules["addon.{$key}.addons_reserve_type"]    = 'required';
             $rules["addon.{$key}.addons_reserve_amount"]  = 'required';
-			
+			$rules["addon.{$key}.addons_maximum_spots"]  = 'required';
+			$rules["addon.{$key}.addons_minimum_spots"]  = 'required';
+			$rules["addon.{$key}.addons_maximum_wating_spots"]  = 'required';
 			
 			 $message["addon.{$key}.addons_name.required"] = 'Addon name required';
 			 $message["addon.{$key}.addons_detail.required"] = 'Addon detail required';
@@ -911,6 +926,10 @@ class AdminController extends Controller {
 			 $message["addon.{$key}.addons_due_date.required"] = 'Addon due date required';
 			 $message["addon.{$key}.addons_reserve_type.required"] = 'Addon reserve amount required';
 			 $message["addon.{$key}.addons_reserve_amount.required"] = 'Addon reserve amount required';
+			 $message["addon.{$key}.addons_maximum_spots.required"]  = 'Addon maximum spots';
+			$message["addon.{$key}.addons_minimum_spots.required"]  = 'Addon minimum spots';
+			$message["addon.{$key}.addons_maximum_wating_spots.required"]  = 'Addon maximum waiting spots';
+			 
 
             // Included Activity Hotels
             foreach($request->get('addon')[$key]['addons_hotels'] as $key1 => $val1)
@@ -1015,7 +1034,7 @@ class AdminController extends Controller {
         // 'UPDATE' Get trip data and update it
         $trip = Trip::findOrFail($id);
 
-        $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'base_cost', 'maximum_spots', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
+        $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
 		
         if($dataTrip['requirement_is_passport'] == '0')
         {
@@ -1042,7 +1061,7 @@ class AdminController extends Controller {
             $dataTrip['banner_image'] = $this->imageUpload($request->file('banner_image'), 'trip', 'banner-img');
            
         }
-
+	//echo '<pre>';print_r($dataTrip);die;
         $trip->update($dataTrip);
 
         
@@ -1469,7 +1488,8 @@ class AdminController extends Controller {
 
         // Get post addon
         $addon = $request->input('addon');
-
+ 
+			
         foreach($addon as $index => $row)
         {
             if( isset($row['addon_id']) && is_numeric($row['addon_id']) )
@@ -1487,6 +1507,9 @@ class AdminController extends Controller {
                     'addons_due_date'     => $row['addons_due_date'],
                     'addons_reserve_type' => $row['addons_reserve_type'],
                     'addons_reserve_amount' => $row['addons_reserve_amount'],
+					'addons_maximum_spots' =>$row['addons_maximum_spots'],
+					'addons_minimum_spots'  =>$row['addons_minimum_spots'],
+					'addons_maximum_wating_spots' =>$row['addons_maximum_wating_spots'],
                 );
 
                 if( $request->hasFile('addon.'.$index.'.addons_image') )

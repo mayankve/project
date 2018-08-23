@@ -96,16 +96,8 @@
                         {!! Form::text('banner_video', null, ['class' => 'form-control']) !!}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group {{ $errors->has('base_cost') ? 'has-error' : ''}}">
-                        {!! Form::label('base_cost', 'Trip base cost') !!}
-                        {!! Form::text('base_cost', null, ['class' => 'form-control']) !!}
-                        @if($errors->has('base_cost'))
-                        <span class="help-block">{{ $errors->first('base_cost') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-6">
+				
+				 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('maximum_spots') ? 'has-error' : ''}}">
                         {!! Form::label('maximum_spots', 'Maximum spots') !!}
                         {!! Form::text('maximum_spots', null, ['class' => 'form-control']) !!}
@@ -114,6 +106,38 @@
                         @endif
                     </div>
                 </div>
+				
+                <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('minimum_spots') ? 'has-error' : ''}}">
+                        {!! Form::label('minimum_spots', 'Minimum spots') !!}
+                        {!! Form::text('minimum_spots', null, ['class' => 'form-control']) !!}
+                        @if($errors->has('minimum_spots'))
+                        <span class="help-block">{{ $errors->first('minimum_spots') }}</span>
+                        @endif
+                    </div>
+                </div>
+               
+				
+				<div class="col-md-6">
+                    <div class="form-group {{ $errors->has('maximum_wating_spots') ? 'has-error' : ''}}">
+                        {!! Form::label('maximum_wating_spots', 'Maximum waiting spots') !!}
+                        {!! Form::text('maximum_wating_spots', null, ['class' => 'form-control']) !!}
+                        @if($errors->has('maximum_wating_spots'))
+                        <span class="help-block">{{ $errors->first('maximum_wating_spots') }}</span>
+                        @endif
+                    </div>
+                </div>
+				
+				 <div class="col-md-6">
+                    <div class="form-group {{ $errors->has('base_cost') ? 'has-error' : ''}}">
+                        {!! Form::label('base_cost', 'Trip base cost') !!}
+                        {!! Form::text('base_cost', null, ['class' => 'form-control']) !!}
+                        @if($errors->has('base_cost'))
+                        <span class="help-block">{{ $errors->first('base_cost') }}</span>
+                        @endif
+                    </div>
+                </div>
+				
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('adjustment_date') ? 'has-error' : ''}}">
                         {!! Form::label('adjustment_date', 'Adjustment Last Date') !!}
@@ -132,6 +156,8 @@
                         @endif
                     </div>
                 </div>
+				
+				
             </div>
         </div>
     </div>
