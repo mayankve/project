@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.dashboard')
 @section('title', 'Trips')
 @section('content')
 
@@ -72,11 +72,6 @@
                     </video>
                     <div><p>This trip video.</p></div>
                 </div>
-
-
-
-
-
             </div>
         </div>
     </div>

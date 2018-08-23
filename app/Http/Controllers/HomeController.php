@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 //use Illuminate\Routing\Controller as Controller;
@@ -47,7 +45,6 @@ class HomeController extends Controller {
         $userId = Auth::id();
         // Get all the trips for User which are active and whose end date is not null and trip is not deleted
         $trips = Trip::where('end_date', '!=', NULL)->where('status', '!=', '1')->paginate(6);
-
         $userTrips = DB::table('user_trip')
                 ->join('trips', 'user_trip.trip_id', '=', 'trips.id')
                 ->select('trips.*', 'user_trip.*')
@@ -495,7 +492,9 @@ class HomeController extends Controller {
      * @param int id
      * @return url
      */
+	 
     public function tripView($id) {
+	
         $tripData = Trip::where('id', '=', $id)->first();
         return view('viewtrip', ['tripdata' => $tripData]);
     }
@@ -527,9 +526,6 @@ class HomeController extends Controller {
 			$message["traveler.{$key}.first_name.required"] = 'First name is required';
             $message["traveler.{$key}.email.required"] = 'Email is required';
         }
-		
-		//echo "<pre>";print_r($message);die;
-
         $this->validate($request,$rules,$message);
         $trip_id = $request->get('trip_id');
         $user_id = Auth::id();
@@ -934,5 +930,18 @@ class HomeController extends Controller {
         $data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
         return view('traveler_profile', ['travelerprofile' => $travelerprofile, 'data' => $data]);
     }
-
+	/* 	Function to load registration view
+     * @return url
+     */
+	 public function createUser() {
+		 
+		 $countries = Country::all();
+			$data = array(
+            'countries' => $countries
+			);
+		  return view('registration',['data'=>$data]);
+	 }
+	// public function createUser(Request $request) {
+		 
+	 // }
 }
