@@ -36,6 +36,15 @@
                         </ul>
                     </div>
 			@endif
+			
+			@if ($message = Session::get('error'))
+			<div class="alert alert-danger alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>	
+					<p>{{ $message }}</p>
+			</div>
+			@endif
+			
+			
             {!! Form::open(['url' => '/booktrip', 'files' => true, 'id' => 'form-book-trip']) !!}
             <input name="trip_id" type="hidden" value="{{$tripdata->id}}">
             <div class="row-box">
@@ -149,7 +158,7 @@ $(document).on('click','.add_more_traveler',function(){
 	
 		value=value+1;
 		$('.lable_cost').html("$"+price * value);
-		$('#payamount').val(price * value);
+		//$('#payamount').val(price * value);
 });
 
 
@@ -158,7 +167,7 @@ $(document).on('click','.remove_trip_traveler',function(){
         value=value-1;
       //  alert(value);
         $('.lable_cost').html("$"+price * value);
-		$('#payamount').val(price * value);
+		//$('#payamount').val(price * value);
 });
 
 
