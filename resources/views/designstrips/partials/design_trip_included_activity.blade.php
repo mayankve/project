@@ -68,7 +68,7 @@
                                     {{ isset($includedActivity['tripIncludedActivities_check']->activity_detail) ? $includedActivity['tripIncludedActivities_check']->activity_detail : 'N/A' }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <label>${{ isset($includedActivity['tripIncludedActivities_check']->activity_cost) ? $includedActivity['tripIncludedActivities_check']->activity_cost : 'N/A' }}</label>
+                                    <label>${{ isset($includedActivity['tripIncludedActivities_check']->activity_our_cost) ? $includedActivity['tripIncludedActivities_check']->activity_our_cost : 'N/A' }}</label>
                                     <label class="addon_cost"> </label>
                                 </div>
                                 <!------ Radio button here--------------->
