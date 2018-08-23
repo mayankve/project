@@ -492,9 +492,9 @@ class HomeController extends Controller {
      * @param int id
      * @return url
      */
-	 
+
     public function tripView($id) {
-	
+
         $tripData = Trip::where('id', '=', $id)->first();
         return view('viewtrip', ['tripdata' => $tripData]);
     }
@@ -605,7 +605,7 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
                 ->orderBy('created_at')
                 ->get();
-       
+
         if (!empty($addon['tripAddons_check'])) {
             foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
@@ -615,7 +615,7 @@ class HomeController extends Controller {
                         ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
                         ->where('trip_addon_airline.status', '=', '1')
                         ->get();
-             
+
                 $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
                         ->where('trip_id', '=', $id)
                         ->where('addon_id', '=', $addonitem->id)
@@ -637,7 +637,7 @@ class HomeController extends Controller {
                 }
             }
         }
- 
+
         //Trip Included Activities Data
 
         $tripactivityarray = array();
@@ -663,8 +663,8 @@ class HomeController extends Controller {
                         ->where('status', '=', '1')
                         ->get();
             }
-           
-           
+
+
             for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
                 $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
                 foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
@@ -673,7 +673,7 @@ class HomeController extends Controller {
                 }
 
                 foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
-                   
+
                     $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
                 }
                 //$tripactivityarray[$i]['includedActivityFlights'] = !empty($activity['includedActivityFlights'][$i][0])?$activity['includedActivityFlights'][$i][0]:'';
@@ -691,7 +691,7 @@ class HomeController extends Controller {
 
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
-        
+
         $data = array(
             'tripAirlines' => $tripAirlines,
             'tripHotels' => $tripHotels,
@@ -701,14 +701,14 @@ class HomeController extends Controller {
             'tripTodo' => $tripTodo
         );
         //For Trip Customization
-        
+
         // Last Booking data
         $BookedTripDetails = DB::table('checkout')
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
                 ->orderBy('id','desc')
-                ->first(); 
+                ->first();
 
         $addonarray=array();
         $bookedData = array();
@@ -721,11 +721,11 @@ class HomeController extends Controller {
                         ->where('trip_id', '=', $id)
                         ->where('user_id', '=', $userId)
                         ->get();
-			
-			
+
+
 
           foreach($bookedAddons['add_on'] AS $addonkey=> $bookedAddon){               //Booked Addon Travelers
-			   
+
 			      $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
                               ->where('addon_id','=', $bookedAddon->add_on_id)
                               ->where('checkout_id','=',$BookedTripDetails->id)
@@ -733,7 +733,7 @@ class HomeController extends Controller {
                               ->where('user_id', '=', $userId)
                               ->get();
             }
-            
+
          // set here key value//
             foreach($bookedAddons['add_on'] as $key=>$value)
             {
@@ -745,7 +745,7 @@ class HomeController extends Controller {
 									'flight_departure_date'=>$value->flight_departure_date,
 									'flight_departure_time'=>$value->flight_departure_time
 				);
-				
+
                 $addonarray['addon_id'][]=$value->add_on_id;
                 $addonarray['flight_id'][]=$value->flight_id;
                 $addonarray['hote_id'][]=$value->hotel_id;
@@ -755,17 +755,17 @@ class HomeController extends Controller {
                 }
             }
 			// end here..//
-			
+
 			//echo '<pre>';print_r($addonarray);die;
-            
+
             //Booked Included Activities
             $bookedAcitivities = DB::table('trip_included_activity_booking')
                 ->where('checkout_id','=',$BookedTripDetails->id)
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->get();
-				
-				
+
+
 			foreach($bookedAcitivities as $activitykeyforCustom => $activityCustomValue)
 			{
 				$activitycustom['activity_data'][$activityCustomValue->activity_id]=array(
@@ -776,12 +776,12 @@ class HomeController extends Controller {
 									'flight_departure_date'=>$activityCustomValue->flight_departure_date,
 									'flight_departure_time'=>$activityCustomValue->flight_departure_time
 				);
-				
+
 				$activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
 				$activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
 				$activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
-			}	
-	
+			}
+
             $bookedData = array(
                 'bookedTrip' => $BookedTripDetails,
                 'bookedAddons' => $addonarray,
@@ -930,18 +930,23 @@ class HomeController extends Controller {
         $data['traveler_profiledata'] = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
         return view('traveler_profile', ['travelerprofile' => $travelerprofile, 'data' => $data]);
     }
-	/* 	Function to load registration view
+    /* 	Function to load registration view
      * @return url
      */
-	 public function createUser() {
-		 
-		 $countries = Country::all();
-			$data = array(
+         public function createUser() {
+
+                 $countries = Country::all();
+                        $data = array(
             'countries' => $countries
-			);
-		  return view('registration',['data'=>$data]);
-	 }
-	// public function createUser(Request $request) {
-		 
-	 // }
+                        );
+                  return view('registration',['data'=>$data]);
+         }
+         
+    /* 	Function to register the user 
+     * @param int Request
+     * @return url
+     */
+        public function registerUser(Request $request) {
+             
+        }
 }

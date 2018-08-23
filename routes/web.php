@@ -43,8 +43,12 @@ Route::get('listtrip', 'HomeController@listTrip');
 //Trip View for guest
 Route::get('tripview/{id}', 'HomeController@tripView');
 
-//Trip View for guest
+//Register View for guest
 Route::get('registration', 'HomeController@createUser');
+
+//Register View for guest
+Route::post('register-user', 'HomeController@registerUser');
+
 
 /* * ************ User end routes start************************* */
 
