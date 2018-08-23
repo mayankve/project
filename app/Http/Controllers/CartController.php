@@ -71,6 +71,7 @@ class CartController extends Controller
                 ->where('trip_id', '=', $trip)
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
+				->where('is_confirm','=','0')
                 ->get();
 				
 		//		

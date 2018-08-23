@@ -14,6 +14,7 @@ class TripTraveler extends Model
     	'age',
     	'first_name',
     	'last_name',
+		'is_confirm',
     	'email',
     	'gender',
     	'dob',

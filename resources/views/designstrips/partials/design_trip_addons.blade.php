@@ -69,7 +69,7 @@
                                         {{ isset($addOn['tripAddons_check']->addons_detail) ? $addOn['tripAddons_check']->addons_detail : 'N/A' }}
                                     </div>
                                     <div class="col-sm-3">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
@@ -89,7 +89,7 @@
                                         {{ isset($addOn['tripAddons_check']->addons_detail) ? $addOn['tripAddons_check']->addons_detail : 'N/A' }}
                                     </div>
                                     <div class="col-sm-3">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-2">
                                         <label>
@@ -101,7 +101,7 @@
                                                 }
                                             };
                                             ?> class="selected_addons" id="selected_addons">
-                                            <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_cost) ? $addOn['tripAddons_check']->addons_cost : 'N/A' }}">
+                                            <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}">
                                         </label>
                                     </div>
                                 </div>

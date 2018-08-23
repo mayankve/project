@@ -506,6 +506,7 @@ class HomeController extends Controller {
      */
     public function bookTripView($id) {
         $tripData = Trip::where('id', '=', $id)->first();
+		//echo '<pre>';print_r($tripData);die;
         return view('booktrip', ['tripdata' => $tripData]);
     }
 
@@ -528,29 +529,86 @@ class HomeController extends Controller {
         }
         $this->validate($request,$rules,$message);
         $trip_id = $request->get('trip_id');
+		$tripData = Trip::where('id', '=', $trip_id)->first();
+		
+		
+	
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
-        $resever_pay_amount = $request->get('payamount');
-        $flag = 0;
+		
+		
+        $resever_pay_amount = $request->get('payamount') * count($traveler_details) ;
+		
+		
+        $flag = 1;
         if (count($traveler_details) > 0) {
             foreach ($traveler_details as $index => $row) {
-                $trip_traveler_id = TripTraveler::create(array(
-                            'user_id' => $user_id,
-                            'trip_id' => $trip_id,
-                            'email' => $row['email'],
-                            'first_name' => $row['first_name'],
-                            'last_name' => $row['last_name'] ? $row['last_name'] : '',
-                            'gender' => $row['gender'],
-                            'created_at' => date('Y-m-d H:i:s')
-                        ))->id;
-                if (isset($trip_traveler_id)) {
-                    $user_trip_id = UserTrip::create(array(
-                                'user_id' => $user_id,
-                                'trip_id' => $trip_id,
-                                'booking_date' => date('Y-m-d')
-                            ))->id;
-                }
-            }
+					if(count($traveler_details)<=$tripData->maximum_spots)
+					{
+						$travlerdataconfirm =  TripTraveler::where('is_confirm', '0')
+									->where('trip_id',$trip_id)
+									->get();
+						
+							
+						$travlerdatapendig =  TripTraveler::where('is_confirm', '1')
+									->where('trip_id',$trip_id)
+									->get();
+									
+						$maximumspots= $tripData->maximum_spots ;
+						$remaningslot= $maximumspots - count($travlerdataconfirm);
+						
+						$remaningslotpending=$tripData->maximum_wating_spots - count($travlerdatapendig);
+					//echo $remaningslot;die;
+						if($remaningslot<=$maximumspots && $remaningslot > 0)
+						{
+							//echo $remaningslot;die;							
+							$trip_traveler_id = TripTraveler::create(array(
+										'user_id' => $user_id,
+										'trip_id' => $trip_id,
+										'email' => $row['email'],
+										'first_name' => $row['first_name'],
+										'last_name' => $row['last_name'] ? $row['last_name'] : '',
+										'is_confirm'=>'0',
+										'gender' => $row['gender'],
+										'created_at' => date('Y-m-d H:i:s')
+									))->id;
+							if (isset($trip_traveler_id)) {
+								$user_trip_id = UserTrip::create(array(
+											'user_id' => $user_id,
+											'trip_id' => $trip_id,
+											'booking_date' => date('Y-m-d')
+										))->id;
+							}
+						}elseif($remaningslotpending <= $tripData->maximum_wating_spots && $remaningslotpending > 0){
+							//echo 'mukesh';die;
+								$trip_traveler_id = TripTraveler::create(array(
+											'user_id' => $user_id,
+											'trip_id' => $trip_id,
+											'email' => $row['email'],
+											'first_name' => $row['first_name'],
+											'last_name' => $row['last_name'] ? $row['last_name'] : '',
+											'is_confirm'=>'1',
+											'gender' => $row['gender'],
+											'created_at' => date('Y-m-d H:i:s')
+										))->id;
+								if (isset($trip_traveler_id)) {
+									$user_trip_id = UserTrip::create(array(
+												'user_id' => $user_id,
+												'trip_id' => $trip_id,
+												'booking_date' => date('Y-m-d')
+											))->id;
+							}
+						}else{
+							//echo 'sfdd';die;
+								return redirect('book/'.$trip_id)
+									->with('error','you cant add other traveler now ..');
+						}
+					}else{					
+						return redirect('book/'.$trip_id)
+									->with('error','you cant add other traveler now ..');
+					}
+            $flag++; }
+			
 
             // payment info detail save//
             $paymentdata['user_id'] = $user_id;
@@ -579,6 +637,7 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
+				->where('is_confirm','=','0')
                 ->get();
 
         //Trip Flights details
@@ -791,7 +850,7 @@ class HomeController extends Controller {
         }else{
 			$bookedData='';
 		}
-	//echo "<pre>";print_r($BookedTripDetails);die;
+	//echo "<pre>";print_r($data);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 
