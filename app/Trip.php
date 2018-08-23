@@ -15,6 +15,8 @@ class Trip extends Model
 		'banner_video',
 		'base_cost',
 		'maximum_spots',
+		'minimum_spots',
+		'maximum_wating_spots',
 		'adjustment_date',
 		'land_only_date',
 		'requirement_is_passport',

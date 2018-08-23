@@ -542,11 +542,11 @@ $addonfinal_price_cost = 0;
 
                                                     $i = 1;
 
-												//	echo '<pre>';print_r(session()->get('card_item')['is_solo_addon']);die;
+													//echo '<pre>';print_r($final);die;
 
                                                     foreach ($final as $key => $value) {
 
-                                                        $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_cost:'';
+                                                        $addonprice = !empty($value['add_on_detail'])?$value['add_on_detail']->addons_our_cost:'';
 
 														if(is_array($value['flight_data'])){
 
@@ -617,7 +617,7 @@ $addonfinal_price_cost = 0;
 
 														
 
-                                                        $addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
+														$addontravler = !empty($value['travler_info']) ? count($value['travler_info']) : '0';
 
                                                         $addonfinal_price = $addonfinal_price + ($addonprice + $addonflight_price + $addonhote_price) * $addontravler;
 
@@ -661,7 +661,7 @@ $addonfinal_price_cost = 0;
 
                                                                     <div class="col-sm-3">
 
-                                                                        $<?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_cost : ''; ?>
+                                                                        $<?php echo (!empty($value['add_on_detail'])) ? $value['add_on_detail']->addons_our_cost : ''; ?>
 
                                                                     </div>
 

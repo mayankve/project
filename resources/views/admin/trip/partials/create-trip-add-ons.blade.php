@@ -78,6 +78,46 @@
 								{!! Form::file('addon['.$key.'][addons_image]', ['class' => 'form-control']) !!}
 							</div>
 						</div>
+						
+						
+						
+						
+					<div class="col-md-4">
+							<div class="form-group {{ $errors->has('addon.'.$key.'.addons_maximum_spots') ? 'has-error' : ''}}">
+								{!! Form::label('addon['.$key.'][addons_maximum_spots]', 'Maximum spots') !!}
+								{!! Form::number('addon['.$key.'][addons_maximum_spots]', null, ['class' => 'form-control']) !!}
+								@if($errors->has('addon.'.$key.'.addons_maximum_spots'))
+									<span class="help-block">{{ $errors->first('addon.'.$key.'.addons_maximum_spots') }}</span>
+								@endif
+							</div>
+						</div>
+					
+					<div class="col-md-4">
+							<div class="form-group {{ $errors->has('addon.'.$key.'.addons_minimum_spots') ? 'has-error' : ''}}">
+								{!! Form::label('addon['.$key.'][addons_minimum_spots]', 'Minimum spots') !!}
+								{!! Form::number('addon['.$key.'][addons_minimum_spots]', null, ['class' => 'form-control']) !!}
+								@if($errors->has('addon.'.$key.'.addons_minimum_spots'))
+									<span class="help-block">{{ $errors->first('addon.'.$key.'.addons_minimum_spots') }}</span>
+								@endif
+							</div>
+						</div>
+					
+					<div class="col-md-4">
+							<div class="form-group {{ $errors->has('addon.'.$key.'.addons_maximum_wating_spots') ? 'has-error' : ''}}">
+								{!! Form::label('addon['.$key.'][addons_maximum_wating_spots]', 'Minimum waiting spots') !!}
+								{!! Form::number('addon['.$key.'][addons_maximum_wating_spots]', null, ['class' => 'form-control']) !!}
+								@if($errors->has('addon.'.$key.'.addons_maximum_wating_spots'))
+									<span class="help-block">{{ $errors->first('addon.'.$key.'.addons_maximum_wating_spots') }}</span>
+								@endif
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
 					</div>
 					<div class="row">
 						<div class="col-md-12 text-right">
@@ -186,6 +226,32 @@
 							{!! Form::file('addon[0][addons_image]', ['class' => 'form-control']) !!}
 						</div>
 					</div>
+					
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							{!! Form::label('addon[0][addons_maximum_spots]', 'Maximum spots') !!}
+							{!! Form::number('addon[0][addons_maximum_spots]', null, ['class' => 'form-control']) !!}
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							{!! Form::label('addon[0][addons_minimum_spots]', 'Minimum spots') !!}
+							{!! Form::number('addon[0][addons_minimum_spots]', null, ['class' => 'form-control']) !!}
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							{!! Form::label('addon[0][addons_maximum_wating_spots]', 'Minimum Waiting spots') !!}
+							{!! Form::number('addon[0][addons_maximum_wating_spots]', null, ['class' => 'form-control']) !!}
+						</div>
+					</div>
+					
+					
+					
+					
 				</div>
 				<div class="row">
 					<div class="col-md-12 text-right">
