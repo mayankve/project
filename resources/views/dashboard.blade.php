@@ -73,7 +73,7 @@
             </div>
             <div class="col-sm-6 text-right">
                 <h3 class="userName">
-                    Welcome  <?php echo $data['user_data']['name'];?>
+                    Welcome  <?php echo session('trip_to_book'); echo $data['user_data']['first_name']." ". $data['user_data']['last_name'];?>
                 </h3>
             </div>
         </div>
@@ -238,7 +238,6 @@
                     </div>
                 </div>
             </div>
-
             <script>
                 $(function () {
                     var submitForm = "0";

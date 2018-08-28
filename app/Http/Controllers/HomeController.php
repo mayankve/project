@@ -151,13 +151,15 @@ class HomeController extends Controller {
                 // status: 1, means user is active
                 // Check the role of the logged-in user and redirect the user accordingly
                 $userId = Auth::id();
+                $trip_to_book = session('trip_to_book');
                 $user = User::find($userId);
                 // Rolewise redirection url
-                $redirectionUrl = url('/dashboard');
+                $redirectionUrl = url('/dashboard');  
                 if ($user->hasRole(['admin'])) {
                     $redirectionUrl = url('admin/dashboard');
+                }else if($trip_to_book != null) {
+                   $redirectionUrl = url('book/'.$trip_to_book);
                 }
-
                 $response['errCode'] = 0;
                 $response['errMsg'] = 'Successful login';
                 $response['redirectionUrl'] = $redirectionUrl;
@@ -286,7 +288,6 @@ class HomeController extends Controller {
         $gender = $request->input('gender');
         $dob = $request->input('dob');
         $email = $request->input('email');
-
         $passportAvailable = $request->input('passportAvailable');
         $passportExpDate = $request->input('passportExpDate');
         $issuingCountry = $request->input('issuingCountry');
@@ -313,12 +314,11 @@ class HomeController extends Controller {
                     'dob.required' => 'Please select dob',
                     'email.required' => 'Please enter email',
                     'email.email' => 'Please enter valid email'
-                        )
+            )
         );
 
         if ($validation->fails()) {  // Some data is not valid as per the defined rules
             $error = $validation->errors()->first();
-
             if (isset($error) && !empty($error)) {
                 $response['errCode'] = 1;
                 $response['errMsg'] = $error;
@@ -547,8 +547,8 @@ class HomeController extends Controller {
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
 		
-		$travlercountperspots=array();
-        
+		
+        $resever_pay_amount = $request->get('payamount') * count($traveler_details) ;
 		
 		
         $flag = 1;
@@ -570,11 +570,8 @@ class HomeController extends Controller {
 						
 						$remaningslotpending=$tripData->maximum_wating_spots - count($travlerdatapendig);
 					//echo $remaningslot;die;
-					if($remaningslot > 0 && $remaningslotpending >0)
-					{						
-						if($remaningslot<=$maximumspots)
+						if($remaningslot<=$maximumspots && $remaningslot > 0)
 						{
-							
 							//echo $remaningslot;die;							
 							$trip_traveler_id = TripTraveler::create(array(
 										'user_id' => $user_id,
@@ -587,15 +584,13 @@ class HomeController extends Controller {
 										'created_at' => date('Y-m-d H:i:s')
 									))->id;
 							if (isset($trip_traveler_id)) {
-								array_push($travlercountperspots,$trip_traveler_id);
 								$user_trip_id = UserTrip::create(array(
 											'user_id' => $user_id,
 											'trip_id' => $trip_id,
 											'booking_date' => date('Y-m-d')
 										))->id;
 							}
-						}elseif($remaningslotpending <= $tripData->maximum_wating_spots){
-						
+						}elseif($remaningslotpending <= $tripData->maximum_wating_spots && $remaningslotpending > 0){
 							//echo 'mukesh';die;
 								$trip_traveler_id = TripTraveler::create(array(
 											'user_id' => $user_id,
@@ -608,7 +603,6 @@ class HomeController extends Controller {
 											'created_at' => date('Y-m-d H:i:s')
 										))->id;
 								if (isset($trip_traveler_id)) {
-									array_push($travlercountperspots,$trip_traveler_id);
 									$user_trip_id = UserTrip::create(array(
 												'user_id' => $user_id,
 												'trip_id' => $trip_id,
@@ -616,23 +610,16 @@ class HomeController extends Controller {
 											))->id;
 							}
 						}else{
-							//echo 'sfdd';die;
-								return redirect('mytripdesign/'.$trip_id);
-									
-							}
-						}else{
-							return redirect('book/'.$trip_id)
-									->with('error','you cant add traveler sopts is full now ..');
+								return redirect('book/'.$trip_id)
+									->with('error','you cannot add more traveler to this trip');
 						}
 					}else{					
 						return redirect('book/'.$trip_id)
-									->with('error','you cant add traveler more than total sopts now ..');
+									->with('error','you cannot  add more traveler to this trip');
 					}
-		$flag++; }
-		
-		
-			//echo count($travlercountperspots);die;
-			 $resever_pay_amount = $request->get('payamount') * count($travlercountperspots);
+            $flag++; }
+			
+
             // payment info detail save//
             $paymentdata['user_id'] = $user_id;
             $paymentdata['trip_id'] = $trip_id;
@@ -645,7 +632,6 @@ class HomeController extends Controller {
         }
         return redirect('/mytripdesign/' . $trip_id);
     }
-
     /**
      * Function to return Trip Design view
      * @param int id
@@ -1043,7 +1029,6 @@ class HomeController extends Controller {
      * @return url
      */
          public function createUser() {
-
                  $countries = Country::all();
                         $data = array(
             'countries' => $countries
@@ -1051,11 +1036,41 @@ class HomeController extends Controller {
                   return view('registration',['data'=>$data]);
          }
          
-    /* 	Function to register the user 
+    /* Function to register the user 
      * @param int Request
      * @return url
      */
         public function registerUser(Request $request) {
-             
+         // Validations
+            $rules = [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'dob'  => 'required',
+                'email' => 'required|email',
+                'password' => 'required'
+            ];
+            $this->validate($request, $rules);
+            // Create User
+            $user = new User();
+            $user->name = $request->input('first_name');
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->dob  = $request->input('dob');
+            $user->email  = $request->input('email');
+            $user->password  =  Hash::make($request->input('password'));
+            $user->gender  = $request->input('gender');
+            $user->is_passport = $request->input('is_passport');
+            $user->passport_exp_date  = $request->input('passport_exp_date'); 
+            $user->issuing_country  = $request->input('issuing_country');
+            $user->country_of_birth  = $request->input('country_of_birth');
+            $id = $user->save();
+            if ($user->save()) {
+                 // $request->session()->flash('success', 'Registration is done successfully');
+                return redirect('/login');
+            } 
+            else {
+               $request->session()->flash('error', 'Error!');
+            }
+            return redirect('/registration');
         }
 }
