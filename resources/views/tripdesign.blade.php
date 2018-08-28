@@ -63,9 +63,19 @@
             </div>
         </div>
     </div>
+	
+	@if ($message = Session::get('error'))
+			<div class="alert alert-danger alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>	
+					<p>{{ $message }}</p>
+			</div>
+	@endif
+	
+	
+	<?php //echo '<pre>';print_r($bookedData['bookedAddons']['travelers_waiting']);die;?>
     <form method="post" action="{{url('setcartvalue')}}">
-        <div class="">
-            <div class="row">
+        <div class="waitingmsg">
+            <div class="row hideforwaiting">
                 <div class="col-md-12">
                     <div class="tab" role="tabpanel">
                         <!-- Nav tabs -->
@@ -466,28 +476,28 @@
 	
 // for customize functionality//
 		
-		$(".addon input[type=checkbox]:checked").each (function()
-		{
-				$(this).parents('.parent').find('.addon_flight').toggle();
-				$(this).parents('.parent').find('.addon_hotel').toggle();
-				$(this).parents('.parent').find('.addon_travler').toggle();
-		});	
+$(".addon input[type=checkbox]:checked").each (function()
+	{
+		$(this).parents('.parent').find('.addon_flight').toggle();
+		$(this).parents('.parent').find('.addon_hotel').toggle();
+		$(this).parents('.parent').find('.addon_travler').toggle();
+	});	
 // end here//			
 		
-		
-		
+<?php if(count($tripdata['tripTravelerswaiting'])>0)
+{?> 
+	$('.hideforwaiting').hide();
+	$('.waitingmsg').html('<b>Now your traveler is waiting spots so please wait ..</b>').css('color','red');
+	
+<?php } ?>		
 
- });
-		
-		 // var trip_end_date = $('#trip_end_date').val();
-		 // var trip_date = $('#trip_date').val();
-		 // alert("trip date"+trip_end_date);
+ });	
 		 
-		$('.flightdeparture').datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'yy-mm-dd'
-		});
+$('.flightdeparture').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'yy-mm-dd'
+	});
 </script>
 
 <script>

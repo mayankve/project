@@ -507,7 +507,18 @@ class HomeController extends Controller {
     public function bookTripView($id) {
         $tripData = Trip::where('id', '=', $id)->first();
 		//echo '<pre>';print_r($tripData);die;
-        return view('booktrip', ['tripdata' => $tripData]);
+		$travlerdataconfirm =  TripTraveler::where('is_confirm', '0')
+									->where('trip_id',$tripData->id)
+									->get();
+						
+							
+		$travlerdatapendig =  TripTraveler::where('is_confirm', '1')
+									->where('trip_id',$tripData->id)
+									->get();
+		
+		$remaningspots= $tripData->maximum_spots - count($travlerdataconfirm);
+		$remaningwaiting=$tripData->maximum_wating_spots-count($travlerdatapendig);
+        return view('booktrip', ['tripdata' => $tripData,'remaningwaiting'=>$remaningwaiting,'remaningspots'=>$remaningspots]);
     }
 
     /* Function to save trip booking
@@ -536,8 +547,8 @@ class HomeController extends Controller {
         $user_id = Auth::id();
         $traveler_details = $request->get('traveler');
 		
-		
-        $resever_pay_amount = $request->get('payamount') * count($traveler_details) ;
+		$travlercountperspots=array();
+        
 		
 		
         $flag = 1;
@@ -559,8 +570,11 @@ class HomeController extends Controller {
 						
 						$remaningslotpending=$tripData->maximum_wating_spots - count($travlerdatapendig);
 					//echo $remaningslot;die;
-						if($remaningslot<=$maximumspots && $remaningslot > 0)
+					if($remaningslot > 0 && $remaningslotpending >0)
+					{						
+						if($remaningslot<=$maximumspots)
 						{
+							
 							//echo $remaningslot;die;							
 							$trip_traveler_id = TripTraveler::create(array(
 										'user_id' => $user_id,
@@ -573,13 +587,15 @@ class HomeController extends Controller {
 										'created_at' => date('Y-m-d H:i:s')
 									))->id;
 							if (isset($trip_traveler_id)) {
+								array_push($travlercountperspots,$trip_traveler_id);
 								$user_trip_id = UserTrip::create(array(
 											'user_id' => $user_id,
 											'trip_id' => $trip_id,
 											'booking_date' => date('Y-m-d')
 										))->id;
 							}
-						}elseif($remaningslotpending <= $tripData->maximum_wating_spots && $remaningslotpending > 0){
+						}elseif($remaningslotpending <= $tripData->maximum_wating_spots){
+						
 							//echo 'mukesh';die;
 								$trip_traveler_id = TripTraveler::create(array(
 											'user_id' => $user_id,
@@ -592,6 +608,7 @@ class HomeController extends Controller {
 											'created_at' => date('Y-m-d H:i:s')
 										))->id;
 								if (isset($trip_traveler_id)) {
+									array_push($travlercountperspots,$trip_traveler_id);
 									$user_trip_id = UserTrip::create(array(
 												'user_id' => $user_id,
 												'trip_id' => $trip_id,
@@ -600,16 +617,22 @@ class HomeController extends Controller {
 							}
 						}else{
 							//echo 'sfdd';die;
-								return redirect('book/'.$trip_id)
-									->with('error','you cant add other traveler now ..');
+								return redirect('mytripdesign/'.$trip_id);
+									
+							}
+						}else{
+							return redirect('book/'.$trip_id)
+									->with('error','you cant add traveler sopts is full now ..');
 						}
 					}else{					
 						return redirect('book/'.$trip_id)
-									->with('error','you cant add other traveler now ..');
+									->with('error','you cant add traveler more than total sopts now ..');
 					}
-            $flag++; }
-			
-
+		$flag++; }
+		
+		
+			//echo count($travlercountperspots);die;
+			 $resever_pay_amount = $request->get('payamount') * count($travlercountperspots);
             // payment info detail save//
             $paymentdata['user_id'] = $user_id;
             $paymentdata['trip_id'] = $trip_id;
@@ -639,7 +662,15 @@ class HomeController extends Controller {
                 ->where('status', '=', '1')
 				->where('is_confirm','=','0')
                 ->get();
-
+				
+				
+		$tripTravelerswaiting = DB::table('trip_traveler')
+                ->where('trip_id', '=', $id)
+                ->where('user_id', '=', $userId)
+                ->where('status', '=', '1')
+				->where('is_confirm','=','1')
+                ->get();
+ //echo "<pre>"; print_r($tripTravelerswaiting);die;
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
                 ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
@@ -706,6 +737,7 @@ class HomeController extends Controller {
                 ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
+				//echo '<pre>';print_r($tripactivityarray);die;
 
         if (!empty($activity['tripIncludedActivities_check'])) {
             foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
@@ -735,11 +767,12 @@ class HomeController extends Controller {
 
                     $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
                 }
-                //$tripactivityarray[$i]['includedActivityFlights'] = !empty($activity['includedActivityFlights'][$i][0])?$activity['includedActivityFlights'][$i][0]:'';
-                //$tripactivityarray[$i]['includedActivityHotles'] = !empty($activity['includedActivityHotles'][$i])?$activity['includedActivityHotles'][$i]:'';
+                
             }
         }
 
+		//echo '<pre>';print_r($tripactivityarray);die;
+		
         //To Do Packing Details
         $tripTodo = DB::table('trip_todo')
                 //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
@@ -757,7 +790,8 @@ class HomeController extends Controller {
             'tripTravelers' => $tripTravelers,
             'tripAddons' => $tripaddonarray,
             'tripIncludedActivities' => $tripactivityarray,
-            'tripTodo' => $tripTodo
+            'tripTodo' => $tripTodo,
+			'tripTravelerswaiting'=>$tripTravelerswaiting
         );
         //For Trip Customization
 
@@ -787,12 +821,20 @@ class HomeController extends Controller {
 
 			      $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
                               ->where('addon_id','=', $bookedAddon->add_on_id)
-                              ->where('checkout_id','=',$BookedTripDetails->id)
                               ->where('trip_id', '=', $id)
+							  ->where('is_confirm', '=','0')
                               ->where('user_id', '=', $userId)
                               ->get();
+							  
+				 $bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
+									  ->where('addon_id','=', $bookedAddon->add_on_id)
+									   ->where('trip_id', '=', $id)
+									  ->where('is_confirm', '=','1')
+									  ->where('user_id', '=', $userId)
+									  ->get();			  
+						  
             }
-
+		//echo '<pre>';print_r($bookedAddons);die;
          // set here key value//
             foreach($bookedAddons['add_on'] as $key=>$value)
             {
@@ -804,18 +846,26 @@ class HomeController extends Controller {
 									'flight_departure_date'=>$value->flight_departure_date,
 									'flight_departure_time'=>$value->flight_departure_time
 				);
-
+				
                 $addonarray['addon_id'][]=$value->add_on_id;
                 $addonarray['flight_id'][]=$value->flight_id;
                 $addonarray['hote_id'][]=$value->hotel_id;
-                foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
-                {
-                     $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
-                }
+				if(!empty($bookedAddons['travelers'])){
+					foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
+					{
+						 $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
+					}
+				}
+				if(!empty($bookedAddons['travelers_waiting'])){
+					foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
+					{
+						 $addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
+					}
+				}
+				
             }
 			// end here..//
-
-			//echo '<pre>';print_r($addonarray);die;
+	//echo '<pre>';print_r($addonarray);die;
 
             //Booked Included Activities
             $bookedAcitivities = DB::table('trip_included_activity_booking')

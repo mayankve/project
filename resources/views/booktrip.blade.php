@@ -15,12 +15,33 @@
         <div class="container container_page">
             <div class="dashboardHeader">
                 <div class="row">
-                    <div class="col-sm-8 text-left">
-                        <ol class="breadcrumb">
-                            <li> <a class="desh-title" href="#">{{$tripdata->name}}</a> </li>
-                        </ol>
+                    <div class="col-sm-4 text-left">
+					      <div class="form-group">
+						  Trip name : <a class="desh-title" href="#">{{$tripdata->name}}</a>							
+						</div>
+						 <div class="form-group">
+						  Total spots : <a class="desh-title" href="#">{{$tripdata->maximum_spots}}</a>							
+						</div>
+
                     </div>
                     <div class="col-sm-4 text-right">
+					
+					
+						<div class="form-group">
+						  Spots available : <a class="desh-title" href="#">{{$remaningspots}}</a>							
+						</div>
+						
+                        <div class="form-group">
+						  Total waiting spots : <a class="desh-title" href="#">{{$tripdata->maximum_wating_spots}}</a>							
+						</div>
+						
+                    </div>
+					
+					<div class="col-sm-4 text-right">
+						<div class="form-group">
+						  waiting spots available : <a class="desh-title" href="#">{{$remaningwaiting}}</a>							
+						</div>
+					
                         <ol class="breadcrumb">
                             <li> <a class="desh-title">Base Cost:${{$tripdata->base_cost}}</a> </li>
                         </ol>
