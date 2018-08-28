@@ -100,7 +100,7 @@
 				 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('maximum_spots') ? 'has-error' : ''}}">
                         {!! Form::label('maximum_spots', 'Maximum spots') !!}
-                        {!! Form::text('maximum_spots', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('maximum_spots', null, ['class' => 'form-control']) !!}
                         @if($errors->has('maximum_spots'))
                         <span class="help-block">{{ $errors->first('maximum_spots') }}</span>
                         @endif
@@ -110,7 +110,7 @@
                 <div class="col-md-6">
                     <div class="form-group {{ $errors->has('minimum_spots') ? 'has-error' : ''}}">
                         {!! Form::label('minimum_spots', 'Minimum spots') !!}
-                        {!! Form::text('minimum_spots', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('minimum_spots', null, ['class' => 'form-control']) !!}
                         @if($errors->has('minimum_spots'))
                         <span class="help-block">{{ $errors->first('minimum_spots') }}</span>
                         @endif
@@ -121,7 +121,7 @@
 				<div class="col-md-6">
                     <div class="form-group {{ $errors->has('maximum_wating_spots') ? 'has-error' : ''}}">
                         {!! Form::label('maximum_wating_spots', 'Maximum waiting spots') !!}
-                        {!! Form::text('maximum_wating_spots', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('maximum_wating_spots', null, ['class' => 'form-control']) !!}
                         @if($errors->has('maximum_wating_spots'))
                         <span class="help-block">{{ $errors->first('maximum_wating_spots') }}</span>
                         @endif
