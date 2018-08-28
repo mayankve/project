@@ -27,12 +27,23 @@
 <!---  About Trip view --->
 
 <div class="container">
-<div class="descp-pera">
-<h2>About <span>Trip</span></h2>
-<p><?php echo strip_tags($tripdata->about_trip);?></p>
-<p><em>Oct 26,2017</em></p>
-<h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
-</div>
+    <div class="descp-pera">
+    <h2>About <span>Trip</span></h2>
+    <p><?php echo strip_tags($tripdata->about_trip);?></p>
+    <p><em>Oct 26,2017</em></p>
+    <?php
+        echo $userId = Auth::id();
+        if(isset($userId)){?>
+            <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
+        <?php }
+        else{
+                session(['trip_to_book' => $tripdata->id]);
+            ?>
+            <h3><a class="book-btn" href="{{url('registration')}}">Book</a></h3>
+        <?php
+            }
+        ?>
+    </div>
 </div>
 
 

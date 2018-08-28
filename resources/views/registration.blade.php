@@ -1,8 +1,18 @@
 @extends('layouts.home')
 @section('title', 'Registration')
 @section('content')
+
 <div class="wrapper">
     <div class="alert-message">
+        <?php if(session()->has('success')){
+            echo '<div style="text-align: center;color:green; border : 1px 1px 1px 1px green">';
+            echo session()->get('success');
+            echo '</div>';
+        }else{
+            echo '<div style="text-align: center;color:red; border : 1px 1px 1px 1px red">';
+            echo session()->get('error');
+            echo '</div>';
+        }?>
     </div>
     <div class="container contact-form">
         <div class="row">

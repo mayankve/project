@@ -340,7 +340,13 @@
     }
 	
 	$('#form-create-trip').submit(function(event ){
-		var trip_date = $('#date').val();
+		var trip_name = $('#date').val();
+                var trip_date = $('#name').val();
+                 if(trip_name == ''){
+			 alert('Please enter Trip Name');
+			 $('#name').focus();
+			 return false;
+		 }
 		 if(trip_date == ''){
 			 alert('Please select Trip Date');
 			 $('#date').focus();
