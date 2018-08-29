@@ -728,9 +728,9 @@ $addonfinal_price_cost = 0;
                                                                                         <?php
 
                                                                                         $j = 1;
-
+																						//print_r($value['travler_info']);die;
                                                                                         if (!empty($value['travler_info'])) {
-
+																								
                                                                                             foreach ($value['travler_info'] as $travelerkey => $traveler) {
 
                                                                                                 array_push($tavelerearray, $travelerkey);
@@ -1927,7 +1927,7 @@ $addonfinal_price_cost = 0;
 								//check emi calculation//
 
                                 $paidamount = 0;
-
+								//echo '<pre>';print_r($tripdata['payment_data']);die;
                                 if (!empty($tripdata['payment_data'])) {
 
                                     foreach ($tripdata['payment_data'] as $paymentitem) {
@@ -1956,11 +1956,11 @@ $addonfinal_price_cost = 0;
 
 								//}
 
-								//=echo $days_between;die;
+								//echo $days_between;die;
 
                                 if ($days_between < 31) {
-
-                                    $finalcost = $final_trip_amount_cost;
+				
+                                   $finalcost = $final_trip_amount_cost;
 
                                     if ($paidamount > $finalcost) {
 
@@ -1983,14 +1983,13 @@ $addonfinal_price_cost = 0;
                                     }
 
                                 } else {
-
-										
-
-                                    $basecost = $tripdata['trip_data']->base_cost;
+							//echo $paidamount;die;
+											
+                                   $basecost = $tripdata['trip_data']->base_cost;
 
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
 
-                                    $finalamount = $paybale_amount - $paidamount;
+                                   $finalamount = $paybale_amount - $paidamount;
 
 
 
@@ -2094,7 +2093,7 @@ $addonfinal_price_cost = 0;
 
 					<div>
 
-
+					<?php //echo $finalamount;die;?>
 					@if (!empty($tripIncludedActivities) && $finalamount > 0) 
 						<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Process to Checkout</button>
 					@else
