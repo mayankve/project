@@ -18,8 +18,9 @@
                         ?>                   
                         @if(count($tripdata['tripAddons'])>0)
                         @foreach ( $tripdata['tripAddons'] AS $addOn)
-
+	
 						<?php
+					//	echo '<pre>';print_r($bookedData['bookedAddons']);die;
 						if(!empty($bookedData['bookedAddons']))
 						{
 							
@@ -76,7 +77,7 @@
 											</div>
 											
 											<div class="col-sm-4">
-												<label>Cost</label>
+												<label>date</label>
 											</div>
 											<div class="col-sm-1">
 												
@@ -97,7 +98,7 @@
                                     </div>
 									
                                     <div class="col-sm-4">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_due_date) ? $addOn['tripAddons_check']->addons_due_date : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-1">
                                         <label>
@@ -118,7 +119,7 @@
                                     </div>
 									
                                     <div class="col-sm-4">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_due_date) ? $addOn['tripAddons_check']->addons_due_date : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-1">
                                         <label>
@@ -128,9 +129,9 @@
                                                 if (in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['addon_id'])) {
                                                     echo 'checked';
                                                 }
-                                            }elseif(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ };
-                                            ?> class="selected_addons" id="selected_addons">
-                                            <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}">
+                                            }elseif(!empty($bookedData['bookedAddons']['travelers_waiting'])){ if(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ } }
+                                            ?> class="selected_addons" id="selected_addons" data-date="{{ isset($addOn['tripAddons_check']->addons_due_date) ? $addOn['tripAddons_check']->addons_due_date : 'N/A' }}">
+                                            <input type="hidden" name="add_on_cost" class="add_on_cost" value="{{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}">											
                                         </label>
                                     </div>
                                 </div>
@@ -347,7 +348,7 @@
                                                                                     if (in_array($tripflight->id, $bookedData['bookedAddons']['flight_id'])) {
                                                                                         echo 'checked';
                                                                                     }
-                                                                                }elseif(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ };
+                                                                                }elseif(!empty($bookedData['bookedAddons']['travelers_waiting'])){ if(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ } }
                                                                                 ?>>
                                                                                 <input type="hidden" name="add_on_cost_flight" class="add_on_cost_flight" value="{{ isset($tripflight->airline_reserve_amount) ? $tripflight->airline_reserve_amount : 'N/A' }}">
                                                                             </label>
@@ -612,7 +613,7 @@
                                                                                     if (in_array($triphotel->id, $bookedData['bookedAddons']['hote_id'])) {
                                                                                         echo 'checked';
                                                                                     }
-                                                                                }elseif(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ };
+                                                                                }elseif(!empty($bookedData['bookedAddons']['travelers_waiting'])){ if(in_array($addOn['tripAddons_check']->id, $bookedData['bookedAddons']['travelers_waiting'])){ } }
                                                                                 ?>>
                                                                                 <input type="hidden" name="add_on_cost_hotel" class="add_on_cost_hotel" value="{{ isset($triphotel->hotel_reserve_amount) ? $triphotel->hotel_reserve_amount : 'N/A' }}">
                                                                             </label>

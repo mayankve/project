@@ -507,12 +507,12 @@ class HomeController extends Controller {
     public function bookTripView($id) {
         $tripData = Trip::where('id', '=', $id)->first();
 		//echo '<pre>';print_r($tripData);die;
-		$travlerdataconfirm =  TripTraveler::where('is_confirm', '0')
+		$travlerdataconfirm =  TripTraveler::where('is_confirm', '1')
 									->where('trip_id',$tripData->id)
 									->get();
 						
 							
-		$travlerdatapendig =  TripTraveler::where('is_confirm', '1')
+		$travlerdatapendig =  TripTraveler::where('is_confirm', '0')
 									->where('trip_id',$tripData->id)
 									->get();
 		
@@ -556,12 +556,12 @@ class HomeController extends Controller {
             foreach ($traveler_details as $index => $row) {
 					if(count($traveler_details)<=$tripData->maximum_spots)
 					{
-						$travlerdataconfirm =  TripTraveler::where('is_confirm', '0')
+						$travlerdataconfirm =  TripTraveler::where('is_confirm', '1')
 									->where('trip_id',$trip_id)
 									->get();
 						
 							
-						$travlerdatapendig =  TripTraveler::where('is_confirm', '1')
+						$travlerdatapendig =  TripTraveler::where('is_confirm', '0')
 									->where('trip_id',$trip_id)
 									->get();
 									
@@ -579,7 +579,7 @@ class HomeController extends Controller {
 										'email' => $row['email'],
 										'first_name' => $row['first_name'],
 										'last_name' => $row['last_name'] ? $row['last_name'] : '',
-										'is_confirm'=>'0',
+										'is_confirm'=>'1',
 										'gender' => $row['gender'],
 										'created_at' => date('Y-m-d H:i:s')
 									))->id;
@@ -598,7 +598,7 @@ class HomeController extends Controller {
 											'email' => $row['email'],
 											'first_name' => $row['first_name'],
 											'last_name' => $row['last_name'] ? $row['last_name'] : '',
-											'is_confirm'=>'1',
+											'is_confirm'=>'0',
 											'gender' => $row['gender'],
 											'created_at' => date('Y-m-d H:i:s')
 										))->id;
@@ -646,7 +646,7 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
-				->where('is_confirm','=','0')
+				->where('is_confirm','=','1')
                 ->get();
 				
 				
@@ -654,7 +654,7 @@ class HomeController extends Controller {
                 ->where('trip_id', '=', $id)
                 ->where('user_id', '=', $userId)
                 ->where('status', '=', '1')
-				->where('is_confirm','=','1')
+				->where('is_confirm','=','0')
                 ->get();
  //echo "<pre>"; print_r($tripTravelerswaiting);die;
         //Trip Flights details
@@ -808,14 +808,14 @@ class HomeController extends Controller {
 			      $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
                               ->where('addon_id','=', $bookedAddon->add_on_id)
                               ->where('trip_id', '=', $id)
-							  ->where('is_confirm', '=','0')
+							  ->where('is_confirm', '=','1')
                               ->where('user_id', '=', $userId)
                               ->get();
 							  
 				 $bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
 									  ->where('addon_id','=', $bookedAddon->add_on_id)
 									   ->where('trip_id', '=', $id)
-									  ->where('is_confirm', '=','1')
+									  ->where('is_confirm', '=','0')
 									  ->where('user_id', '=', $userId)
 									  ->get();			  
 						  
@@ -886,7 +886,7 @@ class HomeController extends Controller {
         }else{
 			$bookedData='';
 		}
-	//echo "<pre>";print_r($data);die;
+	//echo "<pre>";print_r($bookedData);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 

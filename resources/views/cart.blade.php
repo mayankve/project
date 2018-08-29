@@ -1983,7 +1983,7 @@ $addonfinal_price_cost = 0;
                                     }
 
                                 } else {
-
+							//echo $paidamount;die;
 											
                                    $basecost = $tripdata['trip_data']->base_cost;
 

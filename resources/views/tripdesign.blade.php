@@ -300,6 +300,7 @@
 
 			
         $('.selected_addons').click(function () {
+			var add_on_checked = $(this).parents('.parent').find('.add_on_dudate').val();
             add_on_price = 0;
             $(this).parents('.parent').find('.addon_flight').toggle();
             $(this).parents('.parent').find('.addon_hotel').toggle();
@@ -307,26 +308,42 @@
 			
             $(".addon input[type=checkbox]:checked").each(function () {
                 var add_on = $(this).parents('.parent').find('.add_on_cost').val();
-				//alert(add_on);
-                if (add_on != undefined) {
-                    //alert(add_on);
-                    add_on_price = parseInt(add_on_price) + parseInt(add_on);
-                }
+					if (add_on != undefined) {                    
+						add_on_price = parseInt(add_on_price) + parseInt(add_on);
+					}
                 // code add here//
                 addfinalvalue();
                 //end here//
-
             });
-				
-			 if (this.checked) {
-					//alert($('.addon_flight_name').parents('.flightparent').find('.add_on_cost_flight').val());
-					}else{
-						$(this).parents('.parent').find('.addon_flight_name').attr('checked',false);
-						$(this).parents('.parent').find('.selected_addon_hotel').attr('checked',false);
-						$(this).parents('.parent').find('.selected_addon_traveler').attr('checked',false);
+			
+			if( $(this).is(':checked') )
+			{
+				var selectedDate = $(this).attr('data-date');
+				$('.selected_addons').not(this).each(function(){
+					if( $(this).attr('data-date') == selectedDate )
+					{
+						$(this).prop('disabled', true);
 					}
-        });
-        $('.addon_flight_name').click(function () {
+				});
+			}
+			else
+			{
+				var selectedDate = $(this).attr('data-date');
+				$('.selected_addons').each(function(){
+					if( $(this).attr('data-date') == selectedDate )
+					{
+						$(this).prop('disabled', false);
+					}
+				});
+				
+				$(this).parents('.parent').find('.addon_flight_name').attr('checked',false);
+				$(this).parents('.parent').find('.selected_addon_hotel').attr('checked',false);
+				$(this).parents('.parent').find('.selected_addon_traveler').attr('checked',false);
+			}
+      });
+	   
+
+     $('.addon_flight_name').click(function () {
             add_flight_price = 0;
             $(".parent input[type=radio]:checked").each(function () {
                 var value = $(this).parents('.flightparent').find('.add_on_cost_flight').val(); //$(this).val();
@@ -338,7 +355,7 @@
                 addfinalvalue();
             });
         });
-        $('.selected_addon_hotel').click(function () {
+     $('.selected_addon_hotel').click(function () {
             add_hotle_price = 0;
 
             $(".parent input[type=radio]:checked").each(function () {
@@ -352,7 +369,7 @@
             });
         });
 
-        function addfinalvalue() {
+     function addfinalvalue() {
             final_price = parseInt(add_on_price) + parseInt(add_flight_price) + parseInt(add_hotle_price);
             $('.total_addon_cost').html("$" + final_price);
             $('.final_add_amount').val(final_price);
@@ -463,12 +480,12 @@
                 }
 
             }
-             if ($(".selected_todo:checked").val() == undefined)
-             {
-                 $('#Section2').focus();
-                 alert('Please select Packing List');
-                 return false;
-             }
+             // if ($(".selected_todo:checked").val() == undefined)
+             // {
+                 // $('#Section2').focus();
+                 // alert('Please select Packing List');
+                 // return false;
+             // }
             // end here//
         });
 		
@@ -499,6 +516,9 @@ $('.flightdeparture').datepicker({
 		dateFormat: 'yy-mm-dd'
 	});
 </script>
+
+
+
 
 <script>
     $(document).on('click', '.panel-heading span.clickable', function (e) {
