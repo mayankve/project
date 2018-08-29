@@ -25,7 +25,6 @@
 </div>
 
 <!---  About Trip view --->
-
 <div class="container">
     <div class="descp-pera">
     <h2>About <span>Trip</span></h2>

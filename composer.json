@@ -10,7 +10,8 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "santigarcor/laratrust": "5.0.*"
+        "santigarcor/laratrust": "5.0.*",
+		"recurly/recurly-client": "2.10.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

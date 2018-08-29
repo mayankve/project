@@ -586,6 +586,7 @@ class CartController extends Controller
 		
 		
 		// insert data here //
+                                
 				$paymentdata['user_id']=$userId;
 				$paymentdata['trip_id']=$trip;
 				$paymentdata['reserve_paid_amount']=$resever_pay_amount;
@@ -1010,5 +1011,11 @@ class CartController extends Controller
 				 echo 'Emidataupdate';die;
         
     }
-    
+    public function recurlyPaymentProcess(){
+        //echo  "hello hi bye bye";
+//        require_once('lib/recurly.php');
+//        // Required for the API
+//        Recurly_Client::$subdomain = 'https://niwedita.recurly.com';
+//        Recurly_Client::$apiKey = '886d7911953043a096d82237ba8e510c'; 
+    }
 }

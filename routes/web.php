@@ -49,8 +49,10 @@ Route::get('registration', 'HomeController@createUser');
 //Register View for guest
 Route::post('register-user', 'HomeController@registerUser');
 
+//Recurly Test Payment Process 
+Route::get('payment', 'CartController@recurlyPaymentProcess');
 
-/* * ************ User end routes start************************* */
+/*************** User end routes start************************* */
 
 Route::group(['middleware' => ['auth']], function() {
     //User Dashboard
@@ -90,7 +92,6 @@ Route::group(['middleware' => ['auth']], function() {
 
 //checkout
     Route::match(['get', 'post'], 'checkout', 'CartController@processtocheckout');
-
 
 //Airlines to be added to Cart
     Route::post('addFlightToCart', 'CartController@addFlightToCart');
