@@ -728,19 +728,17 @@ $addonfinal_price_cost = 0;
                                                                                         <?php
 
                                                                                         $j = 1;
-																						//print_r($value['travler_info']);die;
+																						//echo '<pre>';print_r($value['travler_info']);
                                                                                         if (!empty($value['travler_info'])) {
 																								
                                                                                             foreach ($value['travler_info'] as $travelerkey => $traveler) {
 
-                                                                                                array_push($tavelerearray, $travelerkey);
-
+                                                                                                //array_push($tavelerearray, $travelerkey);																										
                                                                                                 //$travelere=DB::select('select * from trip_traveler where trip_id='.$trip_id.' and status="1" and id='.$traveler.'');
 
                                                                                                 ?>
 
                                                                                                 <div class="form-group pdrow-group">
-
 
 
                                                                                                     <div class="col-sm-12 travler">
@@ -755,13 +753,13 @@ $addonfinal_price_cost = 0;
 
                                                                                                             <div class="col-sm-5">
 
-                                                                                                                <?php echo $traveler[0]->first_name; ?> <?php echo $traveler[0]->last_name; ?>
+                                                                                                                <?php echo $traveler->first_name; ?> <?php echo $traveler->last_name; ?>
 
                                                                                                             </div>
 
                                                                                                             <div class="col-sm-5">
 
-                                                                                                                <?php echo ($traveler[0]->gender == 1) ? 'Male' : 'Female'; ?>
+                                                                                                                <?php echo ($traveler->gender == 1) ? 'Male' : 'Female'; ?>
 
                                                                                                             </div>
 
@@ -769,7 +767,7 @@ $addonfinal_price_cost = 0;
 
                                                                                                         </div>
 
-                                                                                                        <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$travelerkey}}]" value="<?php echo (!empty($traveler[0]->id)) ? $traveler[0]->id : ''; ?>"> 
+                                                                                                        <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$travelerkey}}]" value="<?php echo (!empty($traveler->id)) ? $traveler->id : ''; ?>"> 
 
                                                                                                     </div>
 
@@ -2221,13 +2219,6 @@ $addonfinal_price_cost = 0;
 
 
     <!-- emi calculation detail-->
-
-
-
-
-
-
-
     <div class="modal" id="emi_model" role="dialog">
 
         <div class="modal-dialog">
@@ -2309,9 +2300,6 @@ $addonfinal_price_cost = 0;
                 </div>
 
             </div>
-
-
-
         </div>
 
     </div>
@@ -2327,15 +2315,12 @@ $addonfinal_price_cost = 0;
     $(document).ready(function () {
 
 
-
         var action = "{{url('checkout')}}";
 
         var form = $("#myForm");
 
         $('#paynow').click(function ()
-
         {
-
             $.ajax({
 
                 type: "POST",
@@ -2392,17 +2377,11 @@ $addonfinal_price_cost = 0;
 
                 }
 
-            });
-
-			
+            });	
 
 	});	
 
-		
-
-		
-
-        $('#close').click(function ()
+       $('#close').click(function ()
 
         {
 

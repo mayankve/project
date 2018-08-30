@@ -557,19 +557,22 @@ class HomeController extends Controller {
 					if(count($traveler_details)<=$tripData->maximum_spots)
 					{
 						$travlerdataconfirm =  TripTraveler::where('is_confirm', '1')
-									->where('trip_id',$trip_id)
-									->get();
+												->where('trip_id',$trip_id)
+												->get();
 						
 							
 						$travlerdatapendig =  TripTraveler::where('is_confirm', '0')
-									->where('trip_id',$trip_id)
-									->get();
+												->where('trip_id',$trip_id)
+												->get();
 									
 						$maximumspots= $tripData->maximum_spots ;
+						
 						$remaningslot= $maximumspots - count($travlerdataconfirm);
 						
-						$remaningslotpending=$tripData->maximum_wating_spots - count($travlerdatapendig);
+						$remaningslotpending= $tripData->maximum_wating_spots - count($travlerdatapendig);
+						
 					//echo $remaningslot;die;
+					//maximu=2 and pending=2
 						if($remaningslot<=$maximumspots && $remaningslot > 0)
 						{
 							//echo $remaningslot;die;							
