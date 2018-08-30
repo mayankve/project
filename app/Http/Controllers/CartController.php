@@ -74,38 +74,7 @@ class CartController extends Controller
 				->where('is_confirm','=','1')
                 ->get();
 				
-		//		
-		
-		$flightdataaddon=array();
-		if(!empty($selected_add_on_id))
-		{
-			foreach($add_on_land as $onlykey=>$onlyvalue)
-			{
-				if($onlyvalue==1)
-				{
-					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
-					{
-							//echo '<pre>';print_r($arry1);die;
-						foreach($arry1 as $arry1key=>$arry1value){
-							if(!empty($arry1value) && $arry1value != '')
-								{
-									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
-								}						 
-						}
-					}
-				}else{
-					if(!empty($selected_addon_flight)){
-						foreach($selected_addon_flight as $addonflightkey=>$addonflightvalue)
-						{
-							$flightdataaddon[$addonflightkey] = $addonflightvalue;
-						}
-					}
-				}
-			}
-			
-		}
-	//echo '<pre>';print_r($addonflightkey);die;
-		// trip flight info//
+		//				
 		
 		$data['trip_data'] = DB::table('trips')
                 ->select('trips.*')
@@ -142,7 +111,37 @@ class CartController extends Controller
 		// end here //
 		
 		
-		// here packing to do //
+		//start addon section here..//
+		
+		$flightdataaddon=array();
+		if(!empty($selected_add_on_id))
+		{
+			foreach($add_on_land as $onlykey=>$onlyvalue)
+			{
+				if($onlyvalue==1)
+				{
+					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
+					{
+							//echo '<pre>';print_r($arry1);die;
+						foreach($arry1 as $arry1key=>$arry1value){
+							if(!empty($arry1value) && $arry1value != '')
+								{
+									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
+								}						 
+						}
+					}
+				}else{
+					if(!empty($selected_addon_flight)){
+						foreach($selected_addon_flight as $addonflightkey=>$addonflightvalue)
+						{
+							$flightdataaddon[$addonflightkey] = $addonflightvalue;
+						}
+					}
+				}
+			}
+			
+		}
+	
 		$selecttodo= !empty($request->session()->get('card_item')['selected_todo'])?$request->session()->get('card_item')['selected_todo']:array();
 		foreach($selecttodo as $key=>$tripTodo){			
 			$data['to_do_packing'][$key]=DB::table('trip_todo')										
@@ -227,10 +226,13 @@ class CartController extends Controller
 					 }
 				}
 			}else{
-				$addonsetrecord='';
+				$addonsetrecord=array();
 			}
 				
 	// end here add on functionality//
+	
+	
+	
 	//echo '<pre>';print_r($addonsetrecord);die;		
 	
 	
@@ -316,7 +318,7 @@ class CartController extends Controller
 					
 				}else{
 					
-					$testactivity='';
+					$testactivity=array();
 				}
 		//echo '<pre>';print_r($testactivity);die;
 		$dashboardData = $this->dashboardElements();	
