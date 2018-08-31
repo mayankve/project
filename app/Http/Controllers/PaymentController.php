@@ -26,6 +26,15 @@ class PaymentController extends Controller
     }
 
     /**
+    * Show the payment success page.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function PaymentProcess()
+    {
+        return view('payment/payment_form');
+    }
+    /**
      * Show the payment success page.
      *
      * @return \Illuminate\Http\Response
