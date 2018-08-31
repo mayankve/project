@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth']], function() {
  
 //Book Trip for users
     Route::get('book/{id}', 'HomeController@bookTripView');
+	
+	
+	Route::get('/trip_refund_policy/{id}','HomeController@refundPolicy');
 
 //Saving Trip for users
     Route::post('booktrip', 'HomeController@bookTrip');
@@ -100,6 +103,8 @@ Route::group(['middleware' => ['auth']], function() {
     
     // EMI  calculation blade
     Route::match(['get','post'],'emi-calculation', 'CartController@emiCalculator');
+	
+	Route::match(['get', 'post'], 'view_profile', 'HomeController@viewProfile');
 });
 
 
@@ -154,9 +159,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     
     //Book Trip for users
     Route::get('/book/{id}', 'HomeController@bookTrip');
+	
 
 // traveler profile in admin dashboard	
     Route::match(['get', 'post'], 'view-traveler/{id}', 'AdminController@adminTravelerProfile');
+	
+	
 
 });
 

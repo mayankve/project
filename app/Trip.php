@@ -34,6 +34,7 @@ class Trip extends Model
 		'requirement_is_shots',
 		'requirement_shots_cost',
 		'requirement_shots_timeframe',
-		'status'
+		'status',
+		'refund_detail'
 	];
 }

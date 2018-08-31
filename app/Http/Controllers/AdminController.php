@@ -281,7 +281,8 @@ class AdminController extends Controller {
 			'maximum_wating_spots' =>'required',
             'base_cost'     => 'required',
             'adjustment_date'   => 'required',
-            'land_only_date'    => 'required'
+            'land_only_date'    => 'required',
+			'refund_detail' =>'required'
         ];
 		
         // Airline validation
@@ -512,7 +513,7 @@ class AdminController extends Controller {
         $this->validate($request, $rules,$message);
 
         // Create trip
-        $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
+        $trip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe','refund_detail']);
           
         if( $request->hasFile('banner_image') )
         {
@@ -803,7 +804,8 @@ class AdminController extends Controller {
 			'maximum_wating_spots' =>'required',
             'base_cost'     => 'required',            
             'adjustment_date'   => 'required',
-            'land_only_date'    => 'required'
+            'land_only_date'    => 'required',
+			'refund_detail' => 'required'
         ];
 
         // Airline validation
@@ -1034,7 +1036,7 @@ class AdminController extends Controller {
         // 'UPDATE' Get trip data and update it
         $trip = Trip::findOrFail($id);
 
-        $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe']);
+        $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe','refund_detail']);
 		
         if($dataTrip['requirement_is_passport'] == '0')
         {

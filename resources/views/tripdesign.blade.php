@@ -83,6 +83,7 @@
                             <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">Design Your Trip</a></li>
                             <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">Todo/Packing List</a></li>
                             <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Travelers</a></li>
+							<li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab">Refund Policy</a></li>
                         </ul>
                         
                         @if($tripDetails['adjustment_date'] < date('Y-m-d'))
@@ -162,6 +163,12 @@
                                 <p>
                                     <!-- Trip Travelers Panel -->
                                     @include('designstrips.partials.design_trip_traveler')
+                                </p>
+                            </div>
+							<div role="tabpanel" class="tab-pane fade" id="Section4">
+                                <p>
+                                    <!-- Trip Travelers Panel -->
+                                    @include('designstrips.partials.design_trip_refund_policy')
                                 </p>
                             </div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -253,6 +260,14 @@
                                     @include('designstrips.partials.design_trip_traveler')
                                 </p>
                             </div>
+							
+							 <div role="tabpanel" class="tab-pane fade" id="Section4">
+                                <p>
+                                    <!-- Trip Travelers Panel -->
+                                    @include('designstrips.partials.design_trip_refund_policy')
+                                </p>
+                            </div>
+							
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" class="traveler_count" name="travelercount" value="<?php echo count($tripdata['tripTravelers']); ?>"> 
                             <input type="hidden" class="trip_flight_id" name="trip_flight_id" value="">

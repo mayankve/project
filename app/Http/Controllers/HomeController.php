@@ -52,7 +52,7 @@ class HomeController extends Controller {
                 ->where('user_trip.status', '=', '1')
                 ->groupby('trips.id')
                 ->get();
-
+		//echo '<pre>';print_r($userTrips);die;
         //For Basic Info
         $userData = User::where('id', '=', $userId)
                 ->where('status', '=', '1')
@@ -1076,4 +1076,48 @@ class HomeController extends Controller {
             }
             return redirect('/registration');
         }
+		
+	/* Function to refund policy the user 
+     * @param int Request
+     * @return url
+     */
+	 
+	 public function refundPolicy($id)
+	 {
+		  $userId = Auth::id();
+        //Trip Travelers details
+        $tripDetails = Trip::where('id', $id)->first();
+		
+		return view('refund_policy',['tripdata'=>$tripDetails]);
+		 
+	 }
+	 
+	 	
+	/* Function to view profile the user 
+     * @param int Request
+     * @return url
+     */
+	 
+	 public function viewProfile()
+	 {
+		 
+		  $userId = Auth::id();
+		  $data = $this->dashboardElements();
+		   $userTrips['trip_detail'] = DB::table('user_trip')
+						->join('trips', 'user_trip.trip_id', '=', 'trips.id')
+						->select('trips.*', 'user_trip.*')
+						->where('user_trip.user_id', '=', $userId)
+						->where('user_trip.status', '=', '1')
+						->groupby('trips.id')
+						->get();
+			//echo '<pre>';print_r($userTrips['trip_detail']);die;			
+		foreach($userTrips['trip_detail'] as $key=>$value)
+		{
+			echo $value->trip_id;
+		}		
+		exit();
+		return view('view_profile',['tripdata'=>$userTrips,'data'=>$data]);
+		 
+	 }
+		
 }

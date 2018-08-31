@@ -15,7 +15,7 @@
         <div class="container container_page">
             <div class="dashboardHeader">
                 <div class="row">
-                    <div class="col-sm-4 text-left">
+                    <!--<div class="col-sm-4 text-left">
 					      <div class="form-group">
 						  Trip name : <a class="desh-title" href="#">{{$tripdata->name}}</a>							
 						</div>
@@ -35,12 +35,12 @@
 						  Total waiting spots : <a class="desh-title" href="#">{{$tripdata->maximum_wating_spots}}</a>							
 						</div>
 						
-                    </div>
+                    </div>-->
 					
-					<div class="col-sm-4 text-right">
-						<div class="form-group">
+					<div class="col-sm-12 text-right">
+						<!--<div class="form-group">
 						  waiting spots available : <a class="desh-title" href="#">{{$remaningwaiting}}</a>							
-						</div>
+						</div>-->
 					
                         <ol class="breadcrumb">
                             <li> <a class="desh-title">Base Cost:${{$tripdata->base_cost}}</a> </li>
@@ -121,6 +121,8 @@
                             </div>
                             <!-- Remove detail container -->
                             <div id="remove_trip_traveler"></div>
+							
+						
                         </div>
                     </div>
                     @endforeach
@@ -163,6 +165,12 @@
 					<input type="hidden" name="payamount" id="payamount" value="{{$tripdata->base_cost}}">
                     <input type="submit" name="submit" id="submitbutton" value="Book and Pay">
                 </div>
+				
+				 <div class="col-md-12">
+				 <input type="checkbox" required>
+                    <a href="{{url('trip_refund_policy/'.$tripdata->id)}}" target='blank'><p>click here to read refund policy.</p></a>
+                </div>
+				
                 <div class="col-md-12">
                     <label>Note: Once you book this trip, you can design it with available options.</label>
                 </div>
