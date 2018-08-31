@@ -2197,41 +2197,19 @@ $addonfinal_price_cost = 0;
                     </div>
 
                 </div>
-
                 <div class="modal-footer">
-
                     <button type="button" id="paynow" class="btn btn-default"  data-dismiss="modal">Pay Now</button>
-
                 </div>
-
             </div>
-
-
-
         </div>
 
     </div>
 
-
-
-
-
     <!-- end here-->
-
-
-
     <!-- emi calculation detail-->
 
-
-
-
-
-
-
     <div class="modal" id="emi_model" role="dialog">
-
         <div class="modal-dialog">
-
             <!-- Modal content-->
 
             <div class="modal-content" style=" width: 764px;margin-left: -69px;">

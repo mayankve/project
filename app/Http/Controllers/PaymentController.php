@@ -41,7 +41,7 @@ class PaymentController extends Controller
      */
     public function success()
     {
-        return view('payment/successful-payment');
+        return view('payment/payment_success');
     }
 
     /**
@@ -51,7 +51,7 @@ class PaymentController extends Controller
      */
     public function cancel()
     {
-        return view('payment/payment-cancel');
+        return view('payment/payment_cancel');
     }
 
     /**

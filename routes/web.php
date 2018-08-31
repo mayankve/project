@@ -49,8 +49,14 @@ Route::get('registration', 'HomeController@createUser');
 //Register View for guest
 Route::post('register-user', 'HomeController@registerUser');
 
-//Recurly Test Payment Process 
-Route::get('payment', 'CartController@recurlyPaymentProcess');
+//paypal Test Payment Process 
+Route::get('payment', 'PaymentController@PaymentProcess');
+
+//paypal Test Payment Process 
+Route::get('payment-success', 'PaymentController@success');
+
+//paypal Test Payment Process 
+Route::get('payment-cancel', 'PaymentController@cancel');
 
 /*************** User end routes start************************* */
 
