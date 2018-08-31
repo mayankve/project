@@ -74,38 +74,7 @@ class CartController extends Controller
 				->where('is_confirm','=','1')
                 ->get();
 				
-		//		
-		
-		$flightdataaddon=array();
-		if(!empty($selected_add_on_id))
-		{
-			foreach($add_on_land as $onlykey=>$onlyvalue)
-			{
-				if($onlyvalue==1)
-				{
-					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
-					{
-							//echo '<pre>';print_r($arry1);die;
-						foreach($arry1 as $arry1key=>$arry1value){
-							if(!empty($arry1value) && $arry1value != '')
-								{
-									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
-								}						 
-						}
-					}
-				}else{
-					if(!empty($selected_addon_flight)){
-						foreach($selected_addon_flight as $addonflightkey=>$addonflightvalue)
-						{
-							$flightdataaddon[$addonflightkey] = $addonflightvalue;
-						}
-					}
-				}
-			}
-			
-		}
-	//echo '<pre>';print_r($addonflightkey);die;
-		// trip flight info//
+		//				
 		
 		$data['trip_data'] = DB::table('trips')
                 ->select('trips.*')
@@ -142,7 +111,37 @@ class CartController extends Controller
 		// end here //
 		
 		
-		// here packing to do //
+		//start addon section here..//
+		
+		$flightdataaddon=array();
+		if(!empty($selected_add_on_id))
+		{
+			foreach($add_on_land as $onlykey=>$onlyvalue)
+			{
+				if($onlyvalue==1)
+				{
+					foreach(array($add_on_flight_name,$add_on_flight_number,$add_on_departure_date,$add_on_departure_time) as $arry1)
+					{
+							//echo '<pre>';print_r($arry1);die;
+						foreach($arry1 as $arry1key=>$arry1value){
+							if(!empty($arry1value) && $arry1value != '')
+								{
+									$flightdataaddon[$arry1key]['manualflight'][] = $arry1value;
+								}						 
+						}
+					}
+				}else{
+					if(!empty($selected_addon_flight)){
+						foreach($selected_addon_flight as $addonflightkey=>$addonflightvalue)
+						{
+							$flightdataaddon[$addonflightkey] = $addonflightvalue;
+						}
+					}
+				}
+			}
+			
+		}
+	
 		$selecttodo= !empty($request->session()->get('card_item')['selected_todo'])?$request->session()->get('card_item')['selected_todo']:array();
 		foreach($selecttodo as $key=>$tripTodo){			
 			$data['to_do_packing'][$key]=DB::table('trip_todo')										
@@ -155,17 +154,13 @@ class CartController extends Controller
 		
 		
 		
-		// add_on functionality start here ...//
+		
 		
 		$addondetail=array();
 		$addonsetkey=array();
 		$addonsetrecord = array();
 		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
 			
-			//$addonsetkey[0] = $selected_add_on_id;
-			//$addonsetkey[1] = $flightdataaddon;
-			//$addonsetkey[2] = $selected_addon_hotel;
-			//$addonsetkey[3] = $selected_addon_hotel;
 			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $keyall=>  $arr){
 						foreach($arr as $key=>$value){
 							$addonsetkey[$key][] = $value;
@@ -176,7 +171,7 @@ class CartController extends Controller
 			$addonsetkey=array();
 		}
 		
-		//echo '<pre>';print_r($addonsetkey);die;
+	//echo '<pre>';print_r($addonsetkey);die;
 		
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)
@@ -201,12 +196,15 @@ class CartController extends Controller
 																	->where('status', '=', '1')
 																	->get();																	
 						if(!empty($value[3])){
-							foreach($value[3] as $travelerkey=>$traveler){
-									$addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.' and is_confirm="1"');
-							}
+							$arrtytostring= '(' . implode(',', $value[3]) .')';
+							//echo $arrtytostring;
+							$addondetail['travler_info'][$key]= DB::select('select * from trip_traveler where id IN '.$arrtytostring.' and  trip_id='.$trip.' and status="1" and is_confirm="1"');
+							// foreach($value[3] as $travelerkey=>$traveler){
+									// $addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.' and is_confirm="1"');
+							// }
 						}						
 				}	
-								//echo '<pre>';print_r($addondetail['add_on_detail']);die;
+			//echo '<pre>';print_r($addondetail);die;
 				foreach($addondetail['add_on_detail'] as $keyofaddondetail=>$valuofaddon)
 				{		
 					$addonsetrecord[$keyofaddondetail]['add_on_detail']= (!empty($addondetail['add_on_detail'][$keyofaddondetail][0]))?$addondetail['add_on_detail'][$keyofaddondetail][0]:'';
@@ -227,10 +225,13 @@ class CartController extends Controller
 					 }
 				}
 			}else{
-				$addonsetrecord='';
+				$addonsetrecord=array();
 			}
 				
 	// end here add on functionality//
+	
+	
+	
 	//echo '<pre>';print_r($addonsetrecord);die;		
 	
 	
@@ -316,7 +317,7 @@ class CartController extends Controller
 					
 				}else{
 					
-					$testactivity='';
+					$testactivity=array();
 				}
 		//echo '<pre>';print_r($testactivity);die;
 		$dashboardData = $this->dashboardElements();	
@@ -469,7 +470,7 @@ class CartController extends Controller
 					}				
 			}	
 		}else{			
-			$addonsetkey='';
+			$addonsetkey=array();
 		}		
 		
 		//echo '<pre>';print_r($addonsetkey);die;
@@ -513,7 +514,7 @@ class CartController extends Controller
 					 }
 				}
 		}else{
-			$addonsetrecord='';
+			$addonsetrecord=array();
 		}			
 		
 		
@@ -563,7 +564,7 @@ class CartController extends Controller
 					}				
 			}	
 		}else{			
-			$activitysetkey='';
+			$activitysetkey=array();
 		}			
 		//echo '<pre>';print_r($activitysetkey);die;
 		if(!empty($activitysetkey)){
@@ -593,7 +594,7 @@ class CartController extends Controller
 					
 				}
 		}else{
-			$activitysetrecord='';
+			$activitysetrecord=array();
 		}
 		// end here to activity data//
 		//print_r($activitysetrecord);die;

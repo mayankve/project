@@ -77,7 +77,7 @@
 											</div>
 											
 											<div class="col-sm-4">
-												<label>date</label>
+												<label>Cost</label>
 											</div>
 											<div class="col-sm-1">
 												
@@ -98,7 +98,7 @@
                                     </div>
 									
                                     <div class="col-sm-4">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_due_date) ? $addOn['tripAddons_check']->addons_due_date : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-1">
                                         <label>
@@ -119,7 +119,7 @@
                                     </div>
 									
                                     <div class="col-sm-4">
-                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_due_date) ? $addOn['tripAddons_check']->addons_due_date : 'N/A' }}</label><label class="addon_cost"> </label>
+                                        <label>$ {{ isset($addOn['tripAddons_check']->addons_our_cost) ? $addOn['tripAddons_check']->addons_our_cost : 'N/A' }}</label><label class="addon_cost"> </label>
                                     </div>
                                     <div class="col-sm-1">
                                         <label>

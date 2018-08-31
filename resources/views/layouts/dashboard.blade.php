@@ -89,7 +89,7 @@
 									<img src="{{ url('/profile_img')}}/x5hOeYd6UZ.png" alt="profile pic" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;">
 									</a>
                                     <ul class="dropdown-menu" style="display: none;">
-                                        <li><a href="{{ url('/dashboard') }}">View profile</a></li>
+                                        <li><a href="{{ url('/view_profile') }}">View profile</a></li>
                                         <li><a href="{{ url('/changepassword') }}">Change password</a></li>
                                         <li><a href="{{ url('/logout') }}"> <i class="fa fa-lock" aria-hidden="true"></i> Logout </a></li>
                                     </ul>
@@ -110,7 +110,7 @@
                             <h2><div class="hombtn"><i class="fa fa-home home-icon" aria-hidden="true"></i></div>Dashboard</h2>
                         </div> 
                         <ul class="nav tablist-menu" id="accordion1">
-                            <li><a href="{{ url('/dashboard') }}" class="tablinks  active" id="my_information"><i class="fa fa-info-circle" aria-hidden="true"></i>My Information</a></li>
+                            <li><a href="{{ url('/view_profile') }}" class="tablinks  active" id="my_information"><i class="fa fa-info-circle" aria-hidden="true"></i>My Information</a></li>
 							
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
@@ -119,8 +119,8 @@
 										@foreach($data['user_trips'] as $trip)			
                                     <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
                                         <ul id="level<?php echo $trip->id;?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
-										<?php  
-											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.' Group By user_id');
+										<?php  										
+											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.'');
 											
 											foreach($results as $item):
 											//$user= DB::select('select * from users where id = '.$item->user_id.'');

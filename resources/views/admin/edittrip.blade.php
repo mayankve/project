@@ -157,6 +157,17 @@
 							@endif
 						</div>
 					</div>
+					
+					<div class="col-md-12">
+						<div class="form-group {{ $errors->has('refund_detail') ? 'has-error' : ''}}">
+							{!! Form::label('refund_detail', 'Refund Policy') !!}
+							{!! Form::textarea('refund_detail', null, ['class' => 'form-control']) !!}
+							@if($errors->has('refund_detail'))
+								<span class="help-block">{{ $errors->first('refund_detail') }}</span>
+							@endif
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>

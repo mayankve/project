@@ -52,7 +52,7 @@ class HomeController extends Controller {
                 ->where('user_trip.status', '=', '1')
                 ->groupby('trips.id')
                 ->get();
-
+		//echo '<pre>';print_r($userTrips);die;
         //For Basic Info
         $userData = User::where('id', '=', $userId)
                 ->where('status', '=', '1')
@@ -271,10 +271,63 @@ class HomeController extends Controller {
      * @return array
      */
     public function userDashboard() {
-        $data = $this->dashboardElements();
-        //echo "<pre>"; print_r($data);die;
-        return view('dashboard', ['data' => $data]);
-        // return view('dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country, 'trips' => $trips]);
+		
+		
+		
+		
+		 $tripalldetail=array();
+		 
+		  $userId = Auth::id();
+		  $data = $this->dashboardElements();
+		   $userTrips['trip_detail'] = DB::table('user_trip')
+						->join('trips', 'user_trip.trip_id', '=', 'trips.id')
+						->select('trips.*', 'user_trip.*')
+						->where('user_trip.user_id', '=', $userId)
+						->where('user_trip.status', '=', '1')
+						->groupby('trips.id')
+						->get();
+			//echo '<pre>';print_r($userTrips['trip_detail']);die;			
+		foreach($userTrips['trip_detail'] as $key=>$value)
+		{			
+			$userTrips['traveler_detail'][$key]=DB::table('trip_traveler')
+											->where('trip_id', '=', $value->trip_id)
+											->where('user_id', '=', $userId)
+											->where('status', '=', '1')
+											->where('is_confirm','=','1')
+											->get();
+			$userTrips['selected_add_on'][$key]=DB::table('trip_addon_traveler')
+											->where('trip_id', '=', $value->trip_id)
+											->where('user_id', '=', $userId)
+											->get();
+			$userTrips['paidamount'][$key]=DB::table('trip_reserve_payment')
+													->where('trip_id', '=', $value->trip_id)
+													->where('user_id', '=', $userId)
+													->get();								
+		}
+
+		for ($i = 0; $i < count($userTrips['trip_detail']); $i++) {
+			
+              $tripalldetail[$i]['trip_detail'] = $userTrips['trip_detail'][$i];
+					foreach ($userTrips['traveler_detail'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
+
+						$tripalldetail[$i]['traveler_detail'][$activityflightkey1] = $activityfilghtvalue1;
+					}
+
+					foreach ($userTrips['selected_add_on'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+
+						$tripalldetail[$i]['selected_add_on'][$activityhotelkey2] = $activityhotelvalue2;
+					}
+					 foreach ($userTrips['paidamount'][$i] as $activityhotelkey3 => $activityhotelvalue3) {
+
+							$tripalldetail[$i]['paidamount'][$activityhotelkey3] = $activityhotelvalue3;
+						}
+                
+            }
+			
+				//echo'<pre>';print_r($tripalldetail);die;
+		//exit();
+		return view('view_profile',['tripdata'=>$tripalldetail,'data'=>$data]);
+		
     }
 
     /**
@@ -557,19 +610,22 @@ class HomeController extends Controller {
 					if(count($traveler_details)<=$tripData->maximum_spots)
 					{
 						$travlerdataconfirm =  TripTraveler::where('is_confirm', '1')
-									->where('trip_id',$trip_id)
-									->get();
+												->where('trip_id',$trip_id)
+												->get();
 						
 							
 						$travlerdatapendig =  TripTraveler::where('is_confirm', '0')
-									->where('trip_id',$trip_id)
-									->get();
+												->where('trip_id',$trip_id)
+												->get();
 									
 						$maximumspots= $tripData->maximum_spots ;
+						
 						$remaningslot= $maximumspots - count($travlerdataconfirm);
 						
-						$remaningslotpending=$tripData->maximum_wating_spots - count($travlerdatapendig);
+						$remaningslotpending= $tripData->maximum_wating_spots - count($travlerdatapendig);
+						
 					//echo $remaningslot;die;
+					//maximu=2 and pending=2
 						if($remaningslot<=$maximumspots && $remaningslot > 0)
 						{
 							//echo $remaningslot;die;							
@@ -742,7 +798,7 @@ class HomeController extends Controller {
             }
 
 
-            for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
+        for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
                 $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
                 foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
 
@@ -1073,4 +1129,37 @@ class HomeController extends Controller {
             }
             return redirect('/registration');
         }
+		
+	/* Function to refund policy the user 
+     * @param int Request
+     * @return url
+     */
+	 
+	 public function refundPolicy($id)
+	 {
+		  $userId = Auth::id();
+        //Trip Travelers details
+        $tripDetails = Trip::where('id', $id)->first();
+		
+		return view('refund_policy',['tripdata'=>$tripDetails]);
+		 
+	 }
+	 
+	 	
+	/* Function to view profile the user 
+     * @param int Request
+     * @return url
+     */
+	 
+	 public function viewProfile()
+	 {
+			
+        $data = $this->dashboardElements();
+        //echo "<pre>"; print_r($data);die;
+        return view('dashboard', ['data' => $data]);
+        // return view('dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country, 'trips' => $trips]);
+		
+		 
+	 }
+		
 }
