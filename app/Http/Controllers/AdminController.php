@@ -1745,7 +1745,7 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function deleteTrip($id)
+    public function deleteTrip(Request $request,$id)
     {
         // Check if trip exist
         $trip = Trip::find($id);
@@ -1820,10 +1820,11 @@ class AdminController extends Controller {
                 TripAddon::destroy($row->id);
 
                 // Delete addon hotel
-                TripAddonHotel::where(['trip_id' => $id, 'addon_id' => $row->id])->delete();
+                TripAddonHotel::where(['trip_id' => $id])->delete();
+				TripAddonAirline::where(['trip_id' => $id])->delete();
 
                 // Delete addon airline
-                TripIncludedActivityAirline::where(['trip_id' => $id, 'addon_id' => $row->id])->delete();
+                TripIncludedActivityAirline::where(['trip_id' => $id])->delete();
             }
         }
 
