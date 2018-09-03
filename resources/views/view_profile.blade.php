@@ -40,6 +40,7 @@
             </div>
         </div>
         <div class="table-responsive">
+				@if(count($tripdata)>0)
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr>
@@ -53,25 +54,25 @@
                 </thead>
                 <tbody> 
 				<?php $amount=0;?>
-				@if(count($tripdata)>0)
+		
 					@foreach($tripdata As $key=> $tripdetail)
 						
 				<tr class="parent">
                         <td>{{$tripdetail['trip_detail']->name}}</td>
                         <td>${{$tripdetail['trip_detail']->base_cost}}</td>
                         <td>{{$tripdetail['trip_detail']->booking_date}}</td>
-                        <td><?php echo !empty($tripdetail['traveler_detail']) ? count($tripdetail['traveler_detail']): ''; ?></td>
-						<!-- <td><?php// echo !empty($amount) ? $amount: ''; ?></td>-->
+                        <td><?php echo !empty($tripdetail['traveler_detail']) ? count($tripdetail['traveler_detail']): ''; ?></td>						
 						<td><?php echo !empty($tripdetail['selected_add_on']) ? count($tripdetail['selected_add_on']): '0'; ?></td>
                 
                 </tr>		
                    
 				@endforeach
-				@else
-					<h1>No Trip Book yet..</h1>'
-				@endif
+				
                 </tbody>
             </table>
+			@else
+					<h1>No Trip Book yet..</h1>
+				@endif
         </div>
         <script>
         </script>

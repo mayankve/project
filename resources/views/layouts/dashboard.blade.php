@@ -113,8 +113,7 @@
                             <li><a href="{{ url('/view_profile') }}" class="tablinks  active" id="my_information"><i class="fa fa-info-circle" aria-hidden="true"></i>My Information</a></li>
 							
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
-                                <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
-								
+                                <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">								
 										@if(count($data['user_trips'])>0)
 										@foreach($data['user_trips'] as $trip)			
                                     <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
