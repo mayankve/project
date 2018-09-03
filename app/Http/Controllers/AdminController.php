@@ -779,7 +779,7 @@ class AdminController extends Controller {
         // Default misc expense
         $miscExpense = array('Collection Percentage', 'Shirts and Pamphlets', 'Photography');
 
-        return view('admin/editTrip', compact('airlines', 'airlinesPluck', 'miscExpense'))->with('trip', $trip);
+        return view('admin/edittrip', compact('airlines', 'airlinesPluck', 'miscExpense'))->with('trip', $trip);
     }
 
     /**
