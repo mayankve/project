@@ -120,8 +120,7 @@
                                     <li> <a data-toggle="collapse" data-parent="#accordion1" href="#level<?php echo $trip->id;?>"  class="tablinks collapsed" aria-expanded="false">{{$trip->name}}</a>
                                         <ul id="level<?php echo $trip->id;?>" class="sub-menu sub-link collapse trip-travelers-list" aria-expanded="false">
 										<?php  										
-											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.'');
-											
+											$results = DB::select('select * from trip_traveler where trip_id ='.$trip->trip_id.'');						
 											foreach($results as $item):
 											//$user= DB::select('select * from users where id = '.$item->user_id.'');
 											?>
