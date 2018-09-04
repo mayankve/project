@@ -35,6 +35,16 @@
         </div>
     </div>
     <div class="clearfix">
+	
+					
+			@if ($message = Session::get('success'))
+					<div class="alert alert-success alert-block">
+						<button type="button" class="close" data-dismiss="alert">×</button>	
+							<p>{{ $message }}</p>
+					</div>
+			@endif	
+	
+	
         <div class="panel panel-primary" style="border-bottom:none;">
             <div class="panel-heading">
                 <h3 class="panel-title">List Trip</h3>

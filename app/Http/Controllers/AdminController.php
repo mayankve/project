@@ -1029,7 +1029,7 @@ class AdminController extends Controller {
             }
         }
 
-        //echo '<pre>'; print_r($rules); exit;
+       
 
         $this->validate($request, $rules,$message);
 
@@ -1037,7 +1037,7 @@ class AdminController extends Controller {
         $trip = Trip::findOrFail($id);
 
         $dataTrip = $request->only(['name', 'date', 'end_date', 'about_trip', 'banner_video', 'maximum_spots' ,'minimum_spots', 'maximum_wating_spots', 'base_cost', 'adjustment_date', 'land_only_date', 'requirement_is_passport', 'requirement_passport_min_expiry', 'requirement_is_visa', 'requirement_visa_cost', 'requirement_visa_process', 'requirement_is_shots', 'requirement_shots_cost', 'requirement_shots_timeframe','refund_detail']);
-		
+		//echo '<pre>'; print_r($dataTrip); exit;
         if($dataTrip['requirement_is_passport'] == '0')
         {
             $dataTrip['requirement_passport_min_expiry'] = NULL;
@@ -1513,7 +1513,7 @@ class AdminController extends Controller {
 					'addons_minimum_spots'  =>$row['addons_minimum_spots'],
 					'addons_maximum_wating_spots' =>$row['addons_maximum_wating_spots'],
                 );
-
+	//	echo '<pre>';print_r($data);die;
                 if( $request->hasFile('addon.'.$index.'.addons_image') )
                 {
                     $data['addons_image'] = $this->imageUpload($request->file('addon.'.$index.'.addons_image'), 'trip', 'addons-img');
@@ -1652,7 +1652,7 @@ class AdminController extends Controller {
                 {
                     $fileName = $this->imageUpload($request->file('addon.'.$index.'.addons_image'), 'trip', 'addons-img');
                 }
-
+					
                 $addon_id = TripAddon::create(array(
                     'trip_id'               => $id,
                     'addons_name'           => $row['addons_name'],
@@ -1662,6 +1662,9 @@ class AdminController extends Controller {
                     'addons_due_date'       => $row['addons_due_date'],
                     'addons_reserve_type'   => $row['addons_reserve_type'],
                     'addons_reserve_amount' => $row['addons_reserve_amount'],
+					'addons_maximum_spots' =>$row['addons_maximum_spots'],
+					'addons_minimum_spots'  =>$row['addons_minimum_spots'],
+					'addons_maximum_wating_spots' =>$row['addons_maximum_wating_spots'],
                     'addons_image'          => $fileName
                 ))->id;
 
@@ -1745,7 +1748,7 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function deleteTrip($id)
+    public function deleteTrip(Request $request,$id)
     {
         // Check if trip exist
         $trip = Trip::find($id);
@@ -1820,10 +1823,11 @@ class AdminController extends Controller {
                 TripAddon::destroy($row->id);
 
                 // Delete addon hotel
-                TripAddonHotel::where(['trip_id' => $id, 'addon_id' => $row->id])->delete();
+                TripAddonHotel::where(['trip_id' => $id])->delete();
+				TripAddonAirline::where(['trip_id' => $id])->delete();
 
                 // Delete addon airline
-                TripIncludedActivityAirline::where(['trip_id' => $id, 'addon_id' => $row->id])->delete();
+                TripIncludedActivityAirline::where(['trip_id' => $id])->delete();
             }
         }
 
@@ -1837,6 +1841,7 @@ class AdminController extends Controller {
 
         return redirect('admin/listtrip');
     }
+
 
     /**
      * Upload file and return the name of the uploaded file

@@ -324,9 +324,9 @@ class HomeController extends Controller {
                 
             }
 			
-				//echo'<pre>';print_r($tripalldetail);die;
+		//echo'<pre>';print_r($tripalldetail);die;
 		//exit();
-		return view('view_profile',['tripdata'=>$tripalldetail,'data'=>$data]);
+		return view('dashboard',['tripdata'=>$tripalldetail,'data'=>$data]);
 		
     }
 
@@ -715,19 +715,19 @@ class HomeController extends Controller {
  //echo "<pre>"; print_r($tripTravelerswaiting);die;
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
-                ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
-                ->select('trip_airline.*', 'airlines.*')
-                ->where('trip_airline.trip_id', '=', $id)
-                ->where('trip_airline.status', '=', '1')
-                ->get();
+						->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+						->select('trip_airline.*', 'airlines.*')
+						->where('trip_airline.trip_id', '=', $id)
+						->where('trip_airline.status', '=', '1')
+						->get();
 
 
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
-                ->select('trip_hotel.*')
-                ->where('trip_hotel.trip_id', '=', $id)
-                ->where('trip_hotel.status', '=', '1')
-                ->get();
+						->select('trip_hotel.*')
+						->where('trip_hotel.trip_id', '=', $id)
+						->where('trip_hotel.status', '=', '1')
+						->get();
 
         //Trip Addon Details
         $tripaddonarray = array();
@@ -742,17 +742,17 @@ class HomeController extends Controller {
             foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
                 $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
-                        ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-                        ->where('trip_addon_airline.trip_id', '=', $id)
-                        ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
-                        ->where('trip_addon_airline.status', '=', '1')
-                        ->get();
+										->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+										->where('trip_addon_airline.trip_id', '=', $id)
+										->where('trip_addon_airline.addon_id', '=', $addonitem->id)
+										->where('trip_addon_airline.status', '=', '1')
+										->get();
 
                 $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-                        ->where('trip_id', '=', $id)
-                        ->where('addon_id', '=', $addonitem->id)
-                        ->where('status', '=', '1')
-                        ->get();
+									->where('trip_id', '=', $id)
+									->where('addon_id', '=', $addonitem->id)
+									->where('status', '=', '1')
+									->get();
             }
 
             for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
@@ -1156,8 +1156,8 @@ class HomeController extends Controller {
 			
         $data = $this->dashboardElements();
         //echo "<pre>"; print_r($data);die;
-        return view('dashboard', ['data' => $data]);
-        // return view('dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country, 'trips' => $trips]);
+        return view('view_profile', ['data' => $data]);
+        
 		
 		 
 	 }

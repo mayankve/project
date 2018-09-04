@@ -393,7 +393,7 @@ class CartController extends Controller
 	{		
 		
 		$userId = Auth::id();
-		$trip=                !empty($_POST['trip_id'])?$_POST['trip_id']:'';
+		$trip =                !empty($_POST['trip_id'])?$_POST['trip_id']:'';
 		$trip_flight_id=       !empty($_POST['trip_flight_id'])?$_POST['trip_flight_id']:'';
 		$trip_travelere=     !empty($_POST['trip_traveler_id'])?$_POST['trip_traveler_id']:'';
 		$tripis_land_only=    $request->session()->get('card_item')['is_land_only'];
