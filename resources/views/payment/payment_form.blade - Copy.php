@@ -1,9 +1,15 @@
+<!--Paypal redirection form -   
+<form action="https://secure.paypal.com/uk/cgi-bin/webscr" method="post" name="paypal" id="paypal">
+     Prepopulate the PayPal checkout page with customer details, 
+    <button type="button" id="paynow" class="btn btn-default">Pay Now</button>
+</form>-->
+
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="HUUWYPVK2VZJN">
+<input type="hidden" name="cmd" value="_xclick" />
 
-
-<input type="hidden" name="business" value="niweditajaysawal-facilitator@virtualemployee.com" />
+<input type="hidden" name="business" value="niweditajaysawal-facilitator@virualemployee.com" />
 
 <input type="hidden" name="currency_code" value="USD" />
 
