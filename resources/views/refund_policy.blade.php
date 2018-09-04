@@ -22,7 +22,7 @@
                   <div class="col-md-12">
                         <div class="cust-input-group travelerDetails-row pt-4 pb-2">            
                             <div class="row">                               
-                               <p><?php echo !empty($tripdata)?$tripdata->refund_detail:'';?></p>                         						
+                               <p><?php  echo !empty($tripdata->refund_detail)?$tripdata->refund_detail:'There is no refund policy available for this trip...';?></p>                         						
 							</div>
 						</div>             
 				</div>

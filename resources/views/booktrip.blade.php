@@ -168,7 +168,7 @@
 				
 				 <div class="col-md-12">
 				 <input type="checkbox" required>
-                    <a href="{{url('trip_refund_policy/'.$tripdata->id)}}" target='blank'><p>click here to read refund policy.</p></a>
+                    <a href="{{url('trip_refund_policy/'.$tripdata->id)}}" target="_blank"><p>click here to read refund policy.</p></a>
                 </div>
 				
                 <div class="col-md-12">

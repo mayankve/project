@@ -227,22 +227,22 @@
 							
 					<div class="col-md-4">
 						<div class="form-group">
-							{!! Form::label('addon[0][addons_maximum_spots]', 'Maximum spots') !!}
-							{!! Form::number('addon[0][addons_maximum_spots]', null, ['class' => 'form-control']) !!}
+							{!! Form::label('addon['.$key.'][addons_maximum_spots]', 'Maximum spots') !!}
+							{!! Form::number('addon['.$key.'][addons_maximum_spots]', null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 					
 					<div class="col-md-4">
 						<div class="form-group">
-							{!! Form::label('addon[0][addons_minimum_spots]', 'Minimum spots') !!}
-							{!! Form::number('addon[0][addons_minimum_spots]', null, ['class' => 'form-control']) !!}
+							{!! Form::label('addon['.$key.'][addons_minimum_spots]', 'Minimum spots') !!}
+							{!! Form::number('addon['.$key.'][addons_minimum_spots]', null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 					
 					<div class="col-md-4">
 						<div class="form-group">
-							{!! Form::label('addon[0][addons_maximum_wating_spots]', 'Minimum Waiting spots') !!}
-							{!! Form::number('addon[0][addons_maximum_wating_spots]', null, ['class' => 'form-control']) !!}
+							{!! Form::label('addon['.$key.'][addons_maximum_wating_spots]', 'Minimum Waiting spots') !!}
+							{!! Form::number('addon['.$key.'][addons_maximum_wating_spots]', null, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 							

@@ -112,7 +112,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::match(['get','post'],'emi-calculation', 'CartController@emiCalculator');
 	
 	Route::match(['get', 'post'], 'view_profile', 'HomeController@viewProfile');
+	
+	Route::get('paypal/cancel','PaypalController@paymentCancel'); 
+	Route::get('paypal/success','PaypalController@PaymentSuccess');
+		
+		
 });
+
+
+
 
 
 /* User-end routes ends */
@@ -218,6 +226,9 @@ Route::get('/addUser', 'ACLController@addUser');
 Route::get('/addRole', 'ACLController@addRole');
 Route::get('/assignRole', 'ACLController@assignRole');
 /* ACL routes ends */
+
+
+
 
 
 
