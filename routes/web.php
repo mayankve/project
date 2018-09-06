@@ -135,7 +135,7 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Dashboard page
-    Route::get('/dashboard', 'AdminController@userDashboard');
+    Route::match(['get','post'],'/dashboard', 'AdminController@userDashboard');
 
     // Create trip
     Route::get('/createtrip', 'AdminController@createTrip');

@@ -2097,36 +2097,18 @@ $addonfinal_price_cost = 0;
 					@else
 					<button type="button" id="processtoemi"  name="checkout">Process to Checkout</button>
 					@endif
-
-
 						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 					</div>
-
                     </div>
-
                 </div>
-
             </div>
-
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
             <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">
-
         </form>	
-
 		@else 
-
         <h1>CART IS EMPTY</h1>		
 		@endif
-
-
-
-
-
-
     <!-- here is model popup for Emi detail for this trip-->
-
-
 
     <!-- paymenet detail-->
 
