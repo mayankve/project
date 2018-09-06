@@ -1156,10 +1156,18 @@ class HomeController extends Controller {
 			
         $data = $this->dashboardElements();
         //echo "<pre>"; print_r($data);die;
-        return view('view_profile', ['data' => $data]);
-        
-		
+        return view('view_profile', ['data' => $data]);		
 		 
 	 }
 		
+		
+	public function cancelTrip($id)
+	{
+		 $trip = Trip::find($id);
+		 $dataTrip['status']='0';
+		 $trip->update($dataTrip);
+		 DB::table('user_trip')->where('trip_id',$id)->update($dataTrip);
+	
+		return redirect('dashboard');
+	}	
 }
