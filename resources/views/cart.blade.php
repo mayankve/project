@@ -2154,17 +2154,41 @@ $addonfinal_price_cost = 0;
                                 </div>
                             </div>
                         </div>
+						
+						
 
-                        <div class="row">
-						<div class="col-md-12">
+                     <div class="row">
+						<div class="col-md-6">
                                 <div class="cust-input-group">
                                     <label><span>Payable Amount : $<?php echo!empty($finalamount) ? $finalamount : ''; ?></span></label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+							
+							<div class="col-md-6">
+                                <div class="cust-input-group">
+                                    <label><span>Emi payment date  : 5th of each month</span></label>
+                                </div>
+                            </div>
+							
+                      </div>
+                    
 					
 
+					
+					 <div class="row">
+                            <div class="col-md-6">
+                                <div class="cust-input-group">
+                                     <label><span>No of Emi Months : <?php echo!empty($numberofmonth) ? $numberofmonth : '0'; ?></span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cust-input-group">
+                                  <label><span>Emi amount : $<?php echo!empty($emi) ? $emi : '0'; ?></span></label>
+                                </div>
+                            </div>
+                        </div>
+						
+						</div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="paynow" class="btn btn-default" >Pay Now</button>
