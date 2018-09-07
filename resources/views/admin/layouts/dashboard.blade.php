@@ -60,7 +60,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/aat/public/"><img src="{{ url('images/logo.png') }}" alt="logo"></a>
+                    <a class="navbar-brand" href="{{url('')}}"><img src="{{ url('images/logo.png') }}" alt="logo"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <!-- User profile -->
