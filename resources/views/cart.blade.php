@@ -2027,95 +2027,53 @@ $addonfinal_price_cost = 0;
 
                         </div>
 
-						<div class="row">
-
+					<div class="row">
                         <div class="col-sm-6">
-
                             <div class="update-btn">
-
                                 <div class="panel-tools">
-
                                     <label style="color: black">Trip Reserve Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$trip_only_amount}}</label></br>
-
                                     <label style="color: black">Add on Reserve Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$addonfinal_price}}</label></br>
-
                                     <label style="color: black">Included Activity Reserve Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$includedactivity}}</label></br>
-
                                     <label style="color: black">Total Reserve Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$final_trip_amount_reserve}}</label>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
 
                         <div class="col-sm-6 text-right">
-
                             <div class="update-btn">
-
                                 <div class="panel-tools">
                                     <label style="color: black">Trip Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$trip_only_cost}}</label></br>
-
                                     <label style="color: black">Add on Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$addonfinal_price_cost}}</label></br>
-
                                     <label style="color: black">Included Activity Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$includedactivity_cost}}</label></br>
-
                                     <label style="color: black">Total Cost: </label>
-
                                     <label class="total_addon_cost" style="color: black">${{$final_trip_amount_cost}}</label>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-						
-
 					<div>
-
 					<?php //echo $finalamount;die;?>
 					@if (!empty($tripIncludedActivities) && $finalamount > 0) 
 						<button type="button" id="checkout"  name="checkout">Process to Checkout</button>
 					@else
 					<button type="button" id="processtoemi"  name="checkout">Process to Checkout</button>
 					@endif
-
-
 						<a href="javascript:history.back()" id="editcart">Edit Cart</a>	
 					</div>
-
                     </div>
-
                 </div>
-
             </div>
-
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
             <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">
-
         </form>	
-
 		@else 
-
         <h1>CART IS EMPTY</h1>		
 		@endif
 
@@ -2135,9 +2093,7 @@ $addonfinal_price_cost = 0;
 ?>
 <form action="https://mukesh.recurly.com/subscribe/987542">
     <div class="modal" id="myModal12" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-
+        <div class="modal-dialog">  
             <div class="modal-content" style=" width: 764px;margin-left: -69px;">
                 <div class="modal-body">
                     <h4 class="modal-title">Payment Detail</h4>
@@ -2154,27 +2110,18 @@ $addonfinal_price_cost = 0;
                                 </div>
                             </div>
                         </div>
-						
-						
-
-                     <div class="row">
+				<div class="row">
 						<div class="col-md-6">
                                 <div class="cust-input-group">
                                     <label><span>Payable Amount : $<?php echo!empty($finalamount) ? $finalamount : ''; ?></span></label>
                                 </div>
-                            </div>
-							
+                            </div>							
 							<div class="col-md-6">
                                 <div class="cust-input-group">
                                     <label><span>Emi payment date  : 5th of each month</span></label>
                                 </div>
-                            </div>
-							
-                      </div>
-                    
-					
-
-					
+                            </div>							
+                      </div>                    
 					 <div class="row">
                             <div class="col-md-6">
                                 <div class="cust-input-group">
@@ -2186,8 +2133,7 @@ $addonfinal_price_cost = 0;
                                   <label><span>Emi amount : $<?php echo!empty($emi) ? $emi : '0'; ?></span></label>
                                 </div>
                             </div>
-                        </div>
-						
+                        </div>						
 						</div>
                 </div>
                 <div class="modal-footer">
@@ -2196,98 +2142,54 @@ $addonfinal_price_cost = 0;
             </div>
         </div>
     </div>
-	</form>
+</form>
 	
 	
 	
 
     <!-- end here-->
     <!-- emi calculation detail-->
-    <div class="modal" id="emi_model" role="dialog">
+   <div class="modal" id="emi_model" role="dialog">
         <div class="modal-dialog">
-            <!-- Modal content-->
-
             <div class="modal-content" style=" width: 764px;margin-left: -69px;">
-
                 <div class="modal-body">
-
                     <h4 class="modal-title">Payment Information</h4> <br><b><?php echo $message; ?></b>
-
                     <div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
-
-
-
                         <div class="row">
-
                             <div class="col-md-6">
-
                                 <div class="cust-input-group">
-
                                     <label><span>Trip date : <?php echo!empty($tripdata['trip_data']) ? $tripdata['trip_data']->date : ''; ?></span></label>
-
                                 </div>
-
                             </div>
-
                             <div class="col-md-6">
-
                                 <div class="cust-input-group">
-
                                     <label><span>No of Emi Months : <?php echo!empty($numberofmonth) ? $numberofmonth : '0'; ?></span></label>
-
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                         <div class="row"> 
-
                             <div class="col-md-12">
-
                                 <div class="cust-input-group">
-
                                     <label><span>Emi amount : $<?php echo!empty($emi) ? $emi : '0'; ?></span></label>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                         <div class="row">
-
                             <div class="col-md-12">
-
                                 <div class="cust-input-group">
-
                                     <label><span>Emi payment date  : 5th of each month</span></label>
-
                                 </div>
-
                             </div>
-
                         </div>	
-
                     </div>
-
                 </div>
-
                 <div class="modal-footer">
-
                     <button type="button" class="btn btn-default" id="close">Close</button>
-
                 </div>
-
             </div>
         </div>
-
     </div>
-
     <!-- end here..-->
-
 </div> 
 
 
