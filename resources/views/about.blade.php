@@ -5,7 +5,7 @@
 <div class="alert-message">
 </div>
 
-            <div class="pageBanner-bg"> <img src="/aat_zend/public/assets/img/aboutUs_bg.jpg" alt="" class="img-responsive"> </div>
+            <div class="pageBanner-bg"> <img src="{{url('')}}/images/aboutUs_bg.jpg" alt="" class="img-responsive"> </div>
 <div class="container">
     <div class="row">
     <div class="col-md-12">

@@ -162,7 +162,7 @@
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
                                         <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/passport_images/' . $travelerprofile->passport_pic }}" alt="AAT" class="img-responsive model_image">
+                                            <img src="{{ url('/') . '/passport_img/' . $travelerprofile->passport_pic }}" alt="AAT" class="img-responsive model_image">
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic"  class="form-control&#x20;image_upload" id="passport_pic">
@@ -220,7 +220,7 @@
 										<?php
 										if(!empty($data['traveler_profiledata'])){
 										?>
-                                            <img src="{{ url('/') . '/profile_images/' . $data['traveler_profiledata']->profile_pic }}" alt="tm-01" class="img-responsive model_image" />
+                                            <img src="{{ url('/') . '/profile_img/' . $data['traveler_profiledata']->profile_pic }}" alt="tm-01" class="img-responsive model_image" />
 										<?php }?>
                                         </label>
                                         <div class="profile-edit">

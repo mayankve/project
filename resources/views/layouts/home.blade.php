@@ -88,6 +88,7 @@
                             <li><a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
                         <?php } else {
                             ?> 
+							 <li><a href="{{url('/dashboard') }}"> Dashboard</a></li>
                             <div class="user-profile">
                                
                                 <li class="dropdown dropdown-hov">
