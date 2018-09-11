@@ -295,7 +295,7 @@ class HomeController extends Controller {
 											->where('status', '=', '1')
 											->where('is_confirm','=','1')
 											->get();
-			$userTrips['selected_add_on'][$key]=DB::table('trip_addon_traveler')
+			$userTrips['selected_add_on'][$key]=DB::table('trip_addon_booking')
 											->where('trip_id', '=', $value->trip_id)
 											->where('user_id', '=', $userId)
 											->get();
@@ -1257,6 +1257,11 @@ class HomeController extends Controller {
 		 
 	 }
 		
+		 	
+	/* Function to cancel trip the user 
+     * @param int Request
+     * @return url
+     */
 		
 	public function cancelTrip($id)
 	{
@@ -1266,5 +1271,90 @@ class HomeController extends Controller {
 		 DB::table('user_trip')->where('trip_id',$id)->update($dataTrip);
 	
 		return redirect('dashboard');
-	}	
+	}
+
+	
+	 	
+	/* Function to view book trip detail the user 
+     * @param int Request
+     * @return url
+     */
+	 
+	 public function tripDetail($id)
+	 {		 			
+						
+		$tripalldetail=array();
+		 
+		  $userId = Auth::id();
+		  $data = $this->dashboardElements();
+		   $userTrips['trip_detail'] =   DB::table('checkout')
+												->join('trips', 'checkout.trip_id', '=', 'trips.id')
+												->select('trips.*', 'checkout.*')
+												->where('checkout.user_id', '=', $userId)
+												->where('trips.status', '=', '1')
+												->where('trips.id', '=', $id)												
+												->first();
+			//echo '<pre>';print_r($userTrips['trip_detail']);die;
+			if(!empty($userTrips['trip_detail']))
+			{				
+			$userTrips['hotel_data']= DB::table('trip_hotel')
+										->select('trip_hotel.*')
+										->where('trip_hotel.trip_id', '=', $id)
+										 ->where('trip_hotel.id', '=', $userTrips['trip_detail']->trip_hotel_id)
+										->where('trip_hotel.status', '=', '1')
+										->first();
+												
+			if(!empty($userTrips['trip_detail']->trip_flight_id))
+			{
+				$userTrips['flight_data']=DB::table('trip_airline')
+												->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+												->select('trip_airline.*', 'airlines.*')
+												->where('trip_airline.trip_id', '=', $id)
+												->where('airlines.id', '=',$userTrips['trip_detail']->trip_flight_id)                
+												->first();
+				
+			}else{
+				$userTrips['flight_data']=array('flight_name'=>$userTrips['trip_detail']->flight_name,
+												'flight_number'=>$userTrips['trip_detail']->flight_number,
+												'flight_departure_date'=>$userTrips['trip_detail']->flight_departure_date,
+												'flight_departure_time'=>$userTrips['trip_detail']->flight_departure_time
+													
+											);
+			}				
+												
+													
+			$userTrips['traveler_detail']=DB::table('trip_traveler')
+											->where('trip_id', '=', $id)
+											->where('user_id', '=', $userId)
+											->where('status', '=', '1')
+											->where('is_confirm','=','1')
+											->get();
+											
+												
+			$userTrips['selected_add_on']=DB::table('trip_addon_booking')
+											->leftjoin('trip_addon','trip_addon_booking.add_on_id','=','trip_addon.id')	
+											->where('trip_addon_booking.trip_id', '=', $id)
+											->where('trip_addon_booking.user_id', '=', $userId)
+											->get();
+											
+			$userTrips['selected_activity']=DB::table('trip_included_activity_booking')
+											->leftjoin('trip_included_activity','trip_included_activity_booking.activity_id','=','trip_included_activity.id')	
+											->where('trip_included_activity_booking.trip_id', '=', $id)
+											->where('trip_included_activity_booking.user_id', '=', $userId)
+											->get();								
+											
+			$userTrips['paidamount']=DB::table('trip_reserve_payment')
+													->where('trip_id', '=', $id)
+													->where('user_id', '=', $userId)
+													->get();
+	
+			}else{
+				$userTrips=array();
+			}		
+		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]);	 
+		 
+		
+	 }
+
+	
 }

@@ -75,7 +75,10 @@
                         <td><?php echo !empty($tripdetail['traveler_detail']) ? count($tripdetail['traveler_detail']): ''; ?></td>
 						
 						<td><?php echo !empty($tripdetail['selected_add_on']) ? count($tripdetail['selected_add_on']): '0'; ?></td>
-						<td><a href="{{url('cancel_trip/'.$tripdetail['trip_detail']->trip_id)}}" onclick="return confirm('Are you sure?');">Cancel</a></td>
+						<td>
+							<a href="{{url('cancel_trip/'.$tripdetail['trip_detail']->trip_id)}}" onclick="return confirm('Are you sure?');"><i class="fa fa-ban" aria-hidden="true"></i></a>
+							<a href="{{url('trip_detail/'.$tripdetail['trip_detail']->trip_id)}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+						</td>
                 
                 </tr>		
                    

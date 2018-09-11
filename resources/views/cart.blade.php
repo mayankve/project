@@ -2110,7 +2110,7 @@ $addonfinal_price_cost = 0;
                                 </div>
                             </div>
                         </div>
-				<div class="row">
+					<div class="row">
 						<div class="col-md-6">
                                 <div class="cust-input-group">
                                     <label><span>Payable Amount : $<?php echo!empty($finalamount) ? $finalamount : ''; ?></span></label>
@@ -2134,7 +2134,7 @@ $addonfinal_price_cost = 0;
                                 </div>
                             </div>
                         </div>						
-						</div>
+					</div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="paynow" class="btn btn-default" >Pay Now</button>
