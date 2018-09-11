@@ -53,7 +53,9 @@
         to {opacity: 1;}
     }
 </style>
-
+<?php
+$totalcost=0;
+?>
 <div class="pageContainer">
 
     <div class="dashboardHeader">
@@ -693,8 +695,9 @@
 
 
 												@if(count($tripdata['paidamount']))
+													
 													@foreach($tripdata['paidamount'] as $paidamount)
-												
+													<?php $totalcost= $totalcost+$paidamount->reserve_paid_amount;?>
                                                     <div class="form-group pdrow-group parent">
 
                                                         <div class="col-sm-12">
@@ -744,6 +747,21 @@
                             </div>              
 
                         </div> 
+						
+						
+						<div class="row">
+                        <div class="col-sm-12">
+                            <div class="update-btn">
+                                <div class="panel-tools">
+                                    <label style="color: black">Total Paid Amount: </label>
+                                    <label class="total_addon_cost" style="color: black">${{$totalcost}}</label></br>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
 
 
 						
