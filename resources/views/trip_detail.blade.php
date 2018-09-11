@@ -110,7 +110,7 @@
 
 	@if (!empty($tripdata['trip_detail']))
 		
-	<?php //echo $tripdata['flight_data']->name;die;?>
+	<?php //echo $tripdata['flight_data']['flight_name'];die;?>
 
         <form method="post" id="myForm" >
 
@@ -236,7 +236,7 @@
                                                                 </div>
 
                                                                 <div class="col-sm-2">
-																	{{$tripdata['trip_detail']->base_cost}}
+																	${{$tripdata['trip_detail']->base_cost}}
                                                                    
 
                                                                 </div>
@@ -391,7 +391,7 @@
 																	->where('status', '=', '1')
 																	->get();
 
-														//echo '<pre>';print_r($addonhotel);					
+														//echo (count($addonflight)>0)?$addonflight[0]->name:'pankaj';					
 													?>
 
                                                     <div class="form-group pdrow-group parent">
@@ -409,24 +409,24 @@
                                                                 </div>
 
                                                                 <div class="col-sm-2">
-																	{{$addonvalue->addons_our_cost}}
+																	${{$addonvalue->addons_our_cost}}
                                                                    
 
                                                                 </div>
 
                                                                 <div class="col-sm-2">
 
-                                                                    	<?php echo (!empty($addonflight)) ? $addonflight[0]->name : $addonvalue->flight_name; ?>
+                                                                    	<?php echo (count($addonflight)>0) ? $addonflight[0]->name : $addonvalue->flight_name; ?>
 
                                                                 </div>
 
                                                                 <div class="col-sm-3">
-																		<?php echo (!empty($addonflight)) ? $addonflight[0]->airline_departure_date : $addonvalue->flight_departure_date; ?>
+																		<?php echo (count($addonflight)>0) ? $addonflight[0]->airline_departure_date : $addonvalue->flight_departure_date; ?>
                                                                   
 
                                                                 </div>
 																  <div class="col-sm-3">
-                                                                    <?php echo (!empty($addonhotel)) ? $addonhotel[0]->hotel_name : ''; ?>
+                                                                    <?php echo (count($addonhotel)>0) ? $addonhotel[0]->hotel_name : ''; ?>
 
 
                                                                 </div> 
@@ -544,12 +544,15 @@
 												@if(count($tripdata['selected_activity']))
 													@foreach($tripdata['selected_activity'] as $activity)
 												<?php
+												
+												
 														$activityflight= DB::table('trip_included_activity_airline')
-																		->where('airline_departure_date', '>', date('Y-m-d'))
-																		->where('trip_id', '=', $activity->trip_id)
-																		->where('activity_id', '=', $activity->activity_id)
-																		->where('id', $activity->activity_flight_id)
-																		->where('status', '=', '1')
+																		->join('airlines', 'trip_included_activity_airline.airline_name', '=', 'airlines.id')
+																		->where('trip_included_activity_airline.airline_departure_date', '>', date('Y-m-d'))
+																		->where('trip_included_activity_airline.trip_id', '=', $activity->trip_id)
+																		->where('trip_included_activity_airline.activity_id', '=', $activity->activity_id)
+																		->where('trip_included_activity_airline.id', $activity->activity_flight_id)
+																		->where('trip_included_activity_airline.status', '=', '1')
 																		->get();
 																		
 														$activityhotel= DB::table('trip_included_activity_hotel')
@@ -560,7 +563,7 @@
 																				->where('status', '=', '1')
 																				->get();
 
-														//echo '<pre>';print_r($activityflight);die;				
+														//echo '<pre>';print_r($activityflight);				
 													?>
                                                     <div class="form-group pdrow-group parent">
 
@@ -577,27 +580,27 @@
                                                                 </div>
 
                                                                 <div class="col-sm-2">
-																	{{$activity->activity_our_cost}}
+																	${{$activity->activity_our_cost}}
                                                                    
 
                                                                 </div>
+															<div class="col-sm-2">
 
-                                                                <div class="col-sm-2">
-
-                                                                   <?php echo (!empty($activityflight)) ? $activityflight[0]->airline_name : $activity->flight_name; ?>
+                                                                   <?php echo (count($activityflight)>0) ? $activityflight[0]->name : $activity->flight_name; ?>
 
                                                                 </div>
 
                                                                 <div class="col-sm-2">
 
-                                                                      <?php echo (!empty($activityflight)) ? $activityflight[0]->airline_departure_date : $activity->flight_departure_date; ?>
+                                                                      <?php echo (count($activityflight)>0) ? $activityflight[0]->airline_departure_date : $activity->flight_departure_date; ?>
 
                                                                 </div>
 																  <div class="col-sm-2">
-                                                                     <?php echo (!empty($activityhotel)) ? $activityhotel[0]->hotel_name : ''; ?>
+                                                                     <?php echo (count($activityhotel)>0) ? $activityhotel[0]->hotel_name : ''; ?>
 
 
-                                                                </div>
+                                                                </div>			
+                                                                
 																 
                                                             </div>
                                                         </div>
@@ -751,7 +754,7 @@
            
         </form>	
 		@else 
-        <h1>Trip Detail Empty</h1>		
+        <h3>Trip Detail Empty</h3>		
 		@endif
 
 </div> 
