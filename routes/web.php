@@ -117,6 +117,8 @@ Route::group(['middleware' => ['auth']], function() {
 	
 	Route::match(['get', 'post'], 'trip_detail/{id}', 'HomeController@tripDetail');
 	
+	Route::match(['get', 'post'], 'pay_ahead/{id}', 'HomeController@payAhead');
+	
 	Route::get('paypal/cancel','PaypalController@paymentCancel'); 
 	Route::get('paypal/success','PaypalController@PaymentSuccess');
 		

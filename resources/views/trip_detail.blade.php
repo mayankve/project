@@ -54,7 +54,7 @@
     }
 </style>
 <?php
-$totalcost=0;
+$padiamountbyuser=0;
 ?>
 <div class="pageContainer">
 
@@ -112,7 +112,7 @@ $totalcost=0;
 
 	@if (!empty($tripdata['trip_detail']))
 		
-	<?php //echo $tripdata['flight_data']['flight_name'];die;?>
+	<?php //echo $tripdata['trip_detail'];die;?>
 
         <form method="post" id="myForm" >
 
@@ -697,7 +697,7 @@ $totalcost=0;
 												@if(count($tripdata['paidamount']))
 													
 													@foreach($tripdata['paidamount'] as $paidamount)
-													<?php $totalcost= $totalcost+$paidamount->reserve_paid_amount;?>
+													<?php $padiamountbyuser= $padiamountbyuser+$paidamount->reserve_paid_amount;?>
                                                     <div class="form-group pdrow-group parent">
 
                                                         <div class="col-sm-12">
@@ -750,30 +750,142 @@ $totalcost=0;
 						
 						
 						<div class="row">
-                        <div class="col-sm-12">
-                            <div class="update-btn">
-                                <div class="panel-tools">
-                                    <label style="color: black">Total Paid Amount: </label>
-                                    <label class="total_addon_cost" style="color: black">${{$totalcost}}</label></br>
-                                    
-                                </div>
-                            </div>
-                        </div>
+							<div class="col-sm-12">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Total Paid Amount: </label>
+										<label class="total_addon_cost" style="color: black">${{$padiamountbyuser}}</label></br>
+										
+									</div>
+								</div>
+							</div>	
+							
+                      </div>
+						<?php
+						if(!empty($tripdata['trip_detail']->trip_total_cost))
+						{
+							
+							 $adjustmentdate = strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
 
-                        
-                    </div>
+                                $currentdate = strtotime(date('Y-m-d'));
 
+                                if ($adjustmentdate > date('y-m-d')) {
+                                    $days_between = ceil(abs($adjustmentdate - $currentdate) / 86400);
+                                }
+								
+							$totalbasecost=$tripdata['trip_detail']->trip_total_cost;
+							if($days_between > 31)
+							{
+								
+								if ($padiamountbyuser > $totalbasecost) {
 
+											$refund_amount = $padiamountbyuser - $totalbasecost;
+											echo $message = "You will be refunded $" . abs($refund_amount) . "";
+									} elseif ($totalbasecost > $padiamountbyuser) {
+											$numberofmonth = round($days_between / 30);
+											$result = $totalbasecost - $padiamountbyuser;
+											$emi = $result / $numberofmonth;
+											//echo $message = "<b>Your Per month emi amount is $" . $emi . "</b>";
+										} else {
+											echo $message = "<b>There is nothing to pay</b>";
+
+										}
+							}
+						if(!empty($emi))
+							{
+							?>
+						<div class="row">							
+							<div class="col-sm-6">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Per Month Emi: </label>
+										<label class="total_addon_cost" style="color: black">$<?php echo !empty($emi)?$emi:'';?></label></br>
+										
+									</div>
+								</div>
+							</div>					
+						</div>
+					  <div class="row">						
+							<div class="col-sm-12">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Emi Date: </label>
+										<label class="total_addon_cost" style="color: black">5th of each month</label></br>
+										
+									</div>
+								</div>
+							</div>	
+					  </div>
+					<div class="row">						
+							<div class="col-sm-12">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">No of Emi month: </label>
+										<label class="total_addon_cost" style="color: black"><?php echo !empty($numberofmonth)?$numberofmonth:'';?></label></br>
+										
+									</div>
+								</div>
+							</div>
+                      </div>
+					  
+					  <div class="row">						
+							<div class="col-sm-12 text-right">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<button type="button"  data-toggle="modal" data-target="#myModal12" data-backdrop="static" id="checkout"  name="checkout">Pay Now</button>										
+									</div>
+								</div>
+							</div>
+                      </div>
+						<?php } }?>
 						
 					
                     </div>
                 </div>
             </div>
            
-        </form>	
+        </form>
+
+
+<div class="modal" id="myModal12" role="dialog">
+        <div class="modal-dialog">
+		<form method="post" action="{{url('pay_ahead/'.$tripdata['trip_detail']->trip_id)}}">
+            <div class="modal-content" style=" width: 764px;margin-left: -69px;">
+                <div class="modal-body">
+                    <h4 class="modal-title">Payment Detail</h4>
+                    <div class="dashboardHeader" style="padding: 29px 13px 9px 43px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="cust-input-group">
+                                    <label><span>Payble Amount : <?php echo !empty($emi)?$emi:'';?></span></label>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="cust-input-group">
+                                   <input type="number" name="payahead" id="payahead" min="1" class="form-control" value="<?php echo !empty($emi)?$emi:'';?>" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="paynow" class="btn btn-default" >Pay Now</button>
+                </div>
+            </div>
+			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+			</form>
+        </div>
+  </div>
+
+		
 		@else 
-        <h3>Trip Detail Empty</h3>		
+        <h3>Trip Base cost paid only.</h3>		
 		@endif
+		
+ 
 
 </div> 
 @endsection

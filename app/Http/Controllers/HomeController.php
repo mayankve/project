@@ -1351,9 +1351,27 @@ class HomeController extends Controller {
 			}else{
 				$userTrips=array();
 			}		
-		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]);	 
-		 
 		
+				//echo '<pre>';print_r($userTrips);die;
+		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]); 
+		
+	 }
+	 
+	 
+	 public function payAhead(Request $request,$id)
+	 {
+			$userId = Auth::id();
+			//echo $id;die;
+				$paid_amount= $request->input('payahead');
+				$paymentdata['user_id']=$userId;
+				$paymentdata['trip_id']=$id;
+				$paymentdata['reserve_paid_amount']=$paid_amount;
+				$paymentdata['status']=1;
+				$paymentdata['txn_id']='HMX54887455212se';
+				$paymentdata['create_date']=date('y-m-d');
+				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);	
+				return redirect('trip_detail/'.$id);
+		 
 	 }
 
 	
