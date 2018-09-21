@@ -140,6 +140,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     // Dashboard page
     Route::match(['get','post'],'/dashboard', 'AdminController@userDashboard');
+	
+	 Route::match(['get','post'],'/view_profile', 'AdminController@viewProfile');
 
     // Create trip
     Route::get('/createtrip', 'AdminController@createTrip');
@@ -186,7 +188,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::match(['get', 'post'], 'view-traveler/{id}', 'AdminController@adminTravelerProfile');
 	
 	
-
+	Route::match(['get', 'post'], 'users', 'AdminController@registerUser');
+	
+	Route::match(['get','post'],'user_detail/{id}','AdminController@userDetail');
+	
+	Route::get('downloadcsv','AdminController@downloadCsv');
+	
+	
 });
 
 

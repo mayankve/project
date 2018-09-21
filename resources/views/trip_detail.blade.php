@@ -545,8 +545,7 @@ $padiamountbyuser=0;
 
 												@if(count($tripdata['selected_activity']))
 													@foreach($tripdata['selected_activity'] as $activity)
-												<?php
-												
+												<?php											
 												
 														$activityflight= DB::table('trip_included_activity_airline')
 																		->join('airlines', 'trip_included_activity_airline.airline_name', '=', 'airlines.id')
@@ -697,7 +696,12 @@ $padiamountbyuser=0;
 												@if(count($tripdata['paidamount']))
 													
 													@foreach($tripdata['paidamount'] as $paidamount)
-													<?php $padiamountbyuser= $padiamountbyuser+$paidamount->reserve_paid_amount;?>
+													
+													<?php 
+														
+													$padiamountbyuser= $padiamountbyuser+$paidamount->reserve_paid_amount;
+													
+													?>
                                                     <div class="form-group pdrow-group parent">
 
                                                         <div class="col-sm-12">
@@ -750,7 +754,7 @@ $padiamountbyuser=0;
 						
 						
 						<div class="row">
-							<div class="col-sm-12">
+							<div class="col-sm-6">
 								<div class="update-btn">
 									<div class="panel-tools">
 										<label style="color: black">Total Paid Amount: </label>
@@ -760,45 +764,117 @@ $padiamountbyuser=0;
 								</div>
 							</div>	
 							
+							<div class="col-sm-6 text-right">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Trip Total Cost: </label>
+										<label class="total_addon_cost" style="color: black">$<?php echo !empty($tripdata['trip_detail']->trip_total_cost)?$tripdata['trip_detail']->trip_total_cost:'';?></label></br>
+										
+									</div>
+								</div>
+							</div>
+							
                       </div>
 						<?php
-						if(!empty($tripdata['trip_detail']->trip_total_cost))
-						{
 							
+						 $date = date('Y-m-d', strtotime('+1 month', strtotime(date('2017-08-20'))));
+						// echo $tripdata['trip_detail']->create_date;die;
+						if(!empty($tripdata['trip_detail']->trip_total_cost))
+						{							
 							 $adjustmentdate = strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
+                                $bookdate = strtotime($tripdata['trip_detail']->create_date);
+								
 
-                                $currentdate = strtotime(date('Y-m-d'));
-
-                                if ($adjustmentdate > date('y-m-d')) {
-                                    $days_between = ceil(abs($adjustmentdate - $currentdate) / 86400);
-                                }
+								// difference between adjustment date to booking trip date//
+								
+									if ($adjustmentdate > date('y-m-d')) {
+										$days_between = ceil(abs($adjustmentdate - $bookdate) / 86400);									
+										$numberofmonth = round($days_between / 30);
+									}								
+								// end here //
+								
+						
+							
+							// difference between month booking date to current date//
+									$currentdate = strtotime(date('y-m-d'));							
+									$daysdifference = (ceil($currentdate - $bookdate)/86400);						
+									$monthfrombooked = round($daysdifference/30);
+								
+							// end here//
+							
 								
 							$totalbasecost=$tripdata['trip_detail']->trip_total_cost;
 							if($days_between > 31)
 							{
-								
+								//echo $padiamountbyuser;die;
 								if ($padiamountbyuser > $totalbasecost) {
 
 											$refund_amount = $padiamountbyuser - $totalbasecost;
-											echo $message = "You will be refunded $" . abs($refund_amount) . "";
-									} elseif ($totalbasecost > $padiamountbyuser) {
-											$numberofmonth = round($days_between / 30);
-											$result = $totalbasecost - $padiamountbyuser;
-											$emi = $result / $numberofmonth;
-											//echo $message = "<b>Your Per month emi amount is $" . $emi . "</b>";
-										} else {
+											echo $message = "You will be refunded $" . abs($refund_amount) . "";			
+											
+											
+									} elseif ($totalbasecost > $padiamountbyuser) {		
+							
+										if($daysdifference > 31 && date('y-m-d') < $date)
+											 {
+													$shouldPaidEmi = $tripdata['emidata']->emi * $monthfrombooked;
+													
+													$monthPaymetnShouldPaid = $padiamountbyuser + $shouldPaidEmi;													
+													
+													$remaningamount = $monthPaymetnShouldPaid - $padiamountbyuser;
+													
+													$emi= $remaningamount;
+													//$result = $totalbasecost - $padiamountbyuser;
+													//$emi = $result / $numberofmonth;
+											}else{
+												
+												$shouldPaidEmi = $tripdata['emidata']->emi * $monthfrombooked;
+													
+												$monthPaymetnShouldPaid = $padiamountbyuser + $shouldPaidEmi;
+												
+												$emi= $monthPaymetnShouldPaid;
+											}
+											
+											
+											
+											
+										} else {							
 											echo $message = "<b>There is nothing to pay</b>";
-
 										}
 							}
-						if(!empty($emi))
-							{
-							?>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+						// if(!empty($emi))
+							// {
+							// ?>
 						<div class="row">							
 							<div class="col-sm-6">
 								<div class="update-btn">
 									<div class="panel-tools">
-										<label style="color: black">Per Month Emi: </label>
+										<label style="color: black">Remaning Amount: </label>
+										<label class="total_addon_cost" style="color: black">$<?php echo !empty($emi)?$tripdata['trip_detail']->trip_total_cost - $padiamountbyuser :'';?></label></br>
+										
+									</div>
+								</div>
+							</div>					
+						</div>	
+							
+						<div class="row">							
+							<div class="col-sm-6">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Emi: </label>
 										<label class="total_addon_cost" style="color: black">$<?php echo !empty($emi)?$emi:'';?></label></br>
 										
 									</div>
@@ -810,7 +886,7 @@ $padiamountbyuser=0;
 								<div class="update-btn">
 									<div class="panel-tools">
 										<label style="color: black">Emi Date: </label>
-										<label class="total_addon_cost" style="color: black">5th of each month</label></br>
+										<label class="total_addon_cost" style="color: black"><?php echo $date;?></label></br>
 										
 									</div>
 								</div>
@@ -820,7 +896,7 @@ $padiamountbyuser=0;
 							<div class="col-sm-12">
 								<div class="update-btn">
 									<div class="panel-tools">
-										<label style="color: black">No of Emi month: </label>
+										<label style="color: black">Month: </label>
 										<label class="total_addon_cost" style="color: black"><?php echo !empty($numberofmonth)?$numberofmonth:'';?></label></br>
 										
 									</div>
@@ -837,7 +913,7 @@ $padiamountbyuser=0;
 								</div>
 							</div>
                       </div>
-						<?php } }?>
+						<?php } //}?>
 						
 					
                     </div>
@@ -865,7 +941,7 @@ $padiamountbyuser=0;
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="cust-input-group">
-                                   <input type="number" name="payahead" id="payahead" min="1" class="form-control" value="<?php echo !empty($emi)?$emi:'';?>" required>
+                                   <input type="number" name="payahead" id="payahead" min="1" class="form-control" value="" required>
                                 </div>
                             </div>
                         </div>
@@ -878,14 +954,10 @@ $padiamountbyuser=0;
 			 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 			</form>
         </div>
-  </div>
-
-		
-		@else 
-        <h3>Trip Base cost paid only.</h3>		
-		@endif
-		
- 
+  </div>		
+	@else 
+	<h3>Trip Base cost paid only.</h3>		
+	@endif 
 
 </div> 
 @endsection

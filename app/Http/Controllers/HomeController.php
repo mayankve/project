@@ -1294,10 +1294,14 @@ class HomeController extends Controller {
 												->where('trips.status', '=', '1')
 												->where('trips.id', '=', $id)												
 												->first();
-			//echo '<pre>';print_r($userTrips['trip_detail']);die;
+			$userTrips['emidata']=DB::table('user_emi')
+										->where('trip_id',$id)
+										->where('user_id',$userId)
+										->first();
+			
 			if(!empty($userTrips['trip_detail']))
 			{				
-			$userTrips['hotel_data']= DB::table('trip_hotel')
+				$userTrips['hotel_data']= DB::table('trip_hotel')
 										->select('trip_hotel.*')
 										->where('trip_hotel.trip_id', '=', $id)
 										 ->where('trip_hotel.id', '=', $userTrips['trip_detail']->trip_hotel_id)
@@ -1350,7 +1354,9 @@ class HomeController extends Controller {
 	
 			}else{
 				$userTrips=array();
-			}		
+			}
+
+				
 		
 				//echo '<pre>';print_r($userTrips);die;
 		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]); 

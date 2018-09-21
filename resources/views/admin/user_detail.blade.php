@@ -36,22 +36,16 @@
         <div class="panel panel-primary">
             <div class="panel-heading white-bg">
                 <h3 class="panel-title">Book Trip</h3>
-                <div class="panel-tools"> </div>	
-				<div class="text-right">
-					<a href="{{url('admin/downloadcsv')}}"><img src="{{url('images/download.png')}}" style="width: 35px;height: 35px;"></a>
-				</div>				
+                <div class="panel-tools"> </div>
             </div>
-				
-			
         </div>
         <div class="table-responsive">
 		  @if(count($tripalldetail)>0)
             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                 <thead>
                     <tr>
-						<th>User Name</th>	
-						<th>User Email</th>
-						<th>Trip Name</th>						
+						<th>Trip Name</th>
+						
 						<th>Addon Name</th>
                         <th>Paid Amount</th>
                         <th>Remaning Amount</th>		 
@@ -68,16 +62,9 @@
 					$reamingamount= $totaltripcost - $paidamount;
 					?>
                     <tr class="parent">
-						<td><?php echo !empty($tripvalue['user_detail'])?$tripvalue['user_detail'][0]->name:'';?></td>
-						<td><?php echo !empty($tripvalue['user_detail'])?$tripvalue['user_detail'][0]->email:'';?></td>
-                       <td><?php echo !empty($tripvalue['trip_detail'])?$tripvalue['trip_detail']->name:'';?></td> 
-                     
-						<td>
-						  <?php if(!empty($tripvalue['selected_add_on'])){ foreach($tripvalue['selected_add_on'] as $key=> $addvalue){?>
-						  <?php echo $addvalue->addons_name;?>,
-						  <?php } }?></td>
-						
-						
+                        <td><?php echo !empty($tripvalue['trip_detail'])?$tripvalue['trip_detail']->name:'';?></td>
+                        
+						<td><?php echo !empty($tripvalue['selected_add_on'][0])?$tripvalue['selected_add_on'][0]->addons_name:'';?></td>
 						<td  style="color: #008000;">$<?php echo $paidamount;?></td>						
 						<td  style="color: #f6ae31;">$<?php echo $reamingamount;?></td>
                 </tr>

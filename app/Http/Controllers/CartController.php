@@ -403,7 +403,9 @@ class CartController extends Controller
 		$packing_list=          !empty($_POST['packing_list'])?$_POST['packing_list']:'';
 		$add_on_flight_name=     !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
 		$resever_pay_amount=     !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
-		$trip_cost=     !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
+		$trip_cost=              !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
+		$user_emi=              !empty($_POST['user_emi'])?$_POST['user_emi']:'';
+		$user_emi_tenure=              !empty($_POST['user_emi_tenure'])?$_POST['user_emi_tenure']:'';
 		
 		// manual flight add on //		
 		
@@ -609,12 +611,25 @@ class CartController extends Controller
 				$paymentdata['status']=1;
 				$paymentdata['txn_id']='HMX54887455212se';
 				$paymentdata['create_date']=date('y-m-d');
-				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);				
-			
+				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);
+
+						
 			 if(!empty($paymentdataid))
 			 {			
 
 				DB::table('checkout')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+				DB::table('user_emi')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+				
+				// here emi datainsert//				
+					
+					$emidata['user_id']=$userId;
+					$emidata['trip_id']=$trip;
+					$emidata['trip_cost']=$trip_cost;
+					$emidata['emi']=$user_emi;
+					$emidata['tenure']=$user_emi_tenure;
+					$emidata['create_date']=date('y-m-d');
+					$insert = DB::table('user_emi')->insertGetId($emidata);					
+				// end here//				
 				
 				$checkoutdata['user_id']=$userId;
 				$checkoutdata['trip_id']=$trip;
@@ -742,6 +757,8 @@ class CartController extends Controller
 		$add_on_flight_name= !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
 		$resever_pay_amount= !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
 		$trip_cost=     !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
+		$user_emi=              !empty($_POST['user_emi'])?$_POST['user_emi']:'';
+		$user_emi_tenure=              !empty($_POST['user_emi_tenure'])?$_POST['user_emi_tenure']:'';
 		
 		// manual flight add on //		
 		
@@ -933,6 +950,21 @@ class CartController extends Controller
 		
 		
 				//echo '<pre>';print_r($addonsetrecord);die;		
+			
+				
+				// here emi datainsert//				
+					
+					$emidata['trip_cost']=$trip_cost;
+					$emidata['emi']=$user_emi;
+					$emidata['tenure']=$user_emi_tenure;
+					$emidata['create_date']=date('y-m-d');
+					$insert= DB::table('user_emi')->where('trip_id',$trip)
+														->where('user_id',$userId)
+														->update($emidata);
+					
+				// end here//			
+				
+				
 				
 				$checkoutdata['user_id']=$userId;
 				$checkoutdata['trip_id']=$trip;
@@ -954,7 +986,7 @@ class CartController extends Controller
 				$checkoutdata['trip_total_cost']=$trip_cost;
 				$checkoutdata['status']=1;
 				$checkoutdata['traveler_ids']=$trip_travelere;				
-				$checkoutdata['create_date']=date('y-m-d');
+				
 				$insertcheckoutid = DB::table('checkout')->where('trip_id',$trip)
 														->where('user_id',$userId)
 														->update($checkoutdata);			 
@@ -989,7 +1021,7 @@ class CartController extends Controller
 							$addondata['flight_id']=(!empty($addonvalue['flight_id']))?$addonvalue['flight_id']:'0';
 						 }
 						 $addondata['hotel_id']=(!empty($addonvalue['hotel_id']))?$addonvalue['hotel_id']:'';
-						 $addondata['created_date']=date('y-m-d');
+						
 						 $insertaddondataid = DB::table('trip_addon_booking')->where('trip_id',$trip)
 														->where('user_id',$userId)
 														->where('add_on_id',$addonvalue['addon_id'])
@@ -1002,7 +1034,7 @@ class CartController extends Controller
 								$traveleredata['trip_id']=$trip;
 								$traveleredata['addon_id']=$addonvalue['addon_id'];
 								$traveleredata['traveler_id']=$addonvalue1;
-								$traveleredata['created_date']=date('y-m-d');
+								
 								$traveleredata['status']='1';
 								$inserttravelerdataid =  DB::table('trip_addon_traveler')->where('trip_id',$trip)
 														->where('user_id',$userId)
@@ -1035,7 +1067,7 @@ class CartController extends Controller
 							$activitydata['activity_flight_id']=(!empty($includeacitvitfinalvalue['activity_flight_id']))?$includeacitvitfinalvalue['activity_flight_id']:'0';
 						 }
 						 $activitydata['activity_hotel_id']=(!empty($includeacitvitfinalvalue['activity_hotel_id']))?$includeacitvitfinalvalue['activity_hotel_id']:'';
-						 $activitydata['create_date']=date('y-m-d');
+						
 						 $activitydata['status']='1';
 						 $insertactivitydataid = 
 												DB::table('trip_included_activity_booking')->where('trip_id',$trip)

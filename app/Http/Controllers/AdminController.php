@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Response;
 use File;
 use App\User;
 use App\Trip;
@@ -33,6 +34,7 @@ use App\TripTraveler;
 use Validator;
 use Mail;
 
+
 class AdminController extends Controller {
 
     /**
@@ -42,109 +44,58 @@ class AdminController extends Controller {
      */
     public function userDashboard(Request $request) {
         $userId = Auth::id();
-        //For Basic Info
-		
-		 if (isset($_POST['submit'])) {
-            $data['first_name'] = !empty($request->input('first_name')) ? $request->input('first_name') : '';
-            $data['last_name'] = !empty($request->input('last_name')) ? $request->input('last_name') : '';
-            $data['gender'] = !empty($request->input('gender')) ? $request->input('gender') : '';
-            $data['dob'] = !empty($request->input('dob')) ? $request->input('dob') : '';
-            $data['email'] = !empty($request->input('email')) ? $request->input('email') : '';
-            $data['is_passport'] = !empty($request->input('is_passport')) ? $request->input('is_passport') : '';
-            $data['passport_exp_date'] = !empty($request->input('passport_exp_date')) ? $request->input('passport_exp_date') : '';
-            $passportPic = $request->file('passport_pic');
+		 $userData = User::where('id', '=', $userId)->first();
+		$tripalldetail=array();
+		 $userTrips['trip_detail'] =   DB::table('checkout')
+												->join('trips', 'checkout.trip_id', '=', 'trips.id')
+												->select('trips.*', 'checkout.*')
+												->where('trips.status', '=', '1')		
+												->get();
+												
+		foreach($userTrips['trip_detail'] as $key=>$value)
+			{
+				$userTrips['user_detail'][$key]=DB::table('users')
+													->where('id',$value->user_id)
+													->get();
+				
+				$userTrips['selected_add_on'][$key]= DB::table('trip_addon_booking')
+														->leftjoin('trip_addon','trip_addon_booking.add_on_id','=','trip_addon.id')	
+														->where('trip_addon_booking.trip_id', '=', $value->trip_id)
+														->where('trip_addon_booking.user_id', '=', $value->user_id)
+														->get();
+											
+				$userTrips['paidamount'][$key]=DB::table('trip_reserve_payment')
+													->select(DB::raw("SUM(reserve_paid_amount) as total_paid"))
+													->where('trip_id', '=', $value->trip_id)
+													->where('user_id', '=', $value->user_id)													
+													->get();									
+			}
 
-            //echo $passportPic;die;
-            if (isset($passportPic) && count($passportPic) > 0) {
-                $destinationPath = public_path() . '/passport_img/';
-                if ($passportPic->isValid()) {
-                    $fileExt = $passportPic->getClientOriginalExtension();
-                    $fileType = $passportPic->getMimeType();
-                    $fileSize = $passportPic->getSize();
-                    if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
-                        // Rename the file
-                        $fileNewName = str_random(10) . '.' . $fileExt;
-                        if ($passportPic->move($destinationPath, $fileNewName)) {
-                            $data['passport_pic'] = $fileNewName;
-                        } else {
-                            $response['errCode'] = 2;
-                            $response['errMsg'] = 'Some issue in uploading the file';
-                        }
-                    } else {
-                        $response['errCode'] = 3;
-                        $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
-                    }
-                }
-            } else {
-                $data['passport_pic'] = $request->input('oldimage');
-            }
-            User::where(['id' => $userId])->update($data);
-            return redirect('admin/dashboard');
-        }
+	for ($i = 0; $i < count($userTrips['trip_detail']); $i++) {
+			
+              $tripalldetail[$i]['trip_detail'] = $userTrips['trip_detail'][$i];
+					
 
-        //personal infomation//
-        if (isset($_POST['personalinfor'])) {
-            $personaldata['food_allergies'] = !empty($request->input('food_allergies')) ? $request->input('food_allergies') : '';
-            $personaldata['shirt_size'] = !empty($request->input('shirt_size')) ? $request->input('shirt_size') : '';
-            $personaldata['is_helth_mental'] = !empty($request->input('shirt_size')) ? $request->input('is_helth_mental') : '';
-            $personaldata['helth_mental_conditions'] = !empty($request->input('helth_mental_conditions')) ? $request->input('helth_mental_conditions') : '';
-            $personaldata['is_mental_conditions'] = !empty($request->input('is_mental_conditions')) ? $request->input('is_mental_conditions') : '';
-            $personaldata['mental_conditions'] = !empty($request->input('mental_conditions')) ? $request->input('mental_conditions') : '';
-            $personaldata['emergency_contact_name'] = !empty($request->input('emergency_contact_name')) ? $request->input('emergency_contact_name') : '';
-            $personaldata['emergency_contact_phone'] = !empty($request->input('emergency_contact_phone')) ? $request->input('emergency_contact_phone') : '';
-            $personaldata['personality_previous_travel'] = !empty($request->input('personality_previous_travel')) ? $request->input('personality_previous_travel') : '';
-            $personaldata['personality_originally_from'] = !empty($request->input('personality_originally_from')) ? $request->input('personality_originally_from') : '';
-            $personaldata['personality_school'] = !empty($request->input('personality_school')) ? $request->input('personality_school') : '';
-            $personaldata['personality_about'] = !empty($request->input('personality_about')) ? $request->input('personality_about') : '';
-            $profiletPic = !empty($request->file('profile_pic')) ? $request->file('profile_pic') : '';
+					foreach ($userTrips['selected_add_on'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
 
-            // $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
-            // $destinationPath = public_path() . '/uploads/profile_images/';
+						$tripalldetail[$i]['selected_add_on'][$activityhotelkey2] = $activityhotelvalue2;
+					}
+					 foreach ($userTrips['paidamount'][$i] as $activityhotelkey3 => $activityhotelvalue3) {
+								
+								
+							$tripalldetail[$i]['paidamount'][$activityhotelkey3] = $activityhotelvalue3;
+						}
+					foreach ($userTrips['user_detail'][$i] as $activityhotelkey4 => $activityhotelvalue4) {
 
-            $checkdataexist = DB::table('user_profile')->where('user_id', $userId)->first();
-            $destinationPath = public_path() . '/profile_img/';
-
-            if (!empty($profiletPic) && $profiletPic->isValid()) {
-                $fileExt = $profiletPic->getClientOriginalExtension();
-                $fileType = $profiletPic->getMimeType();
-                $fileSize = $profiletPic->getSize();
-                if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
-                    // Rename the file
-                    $fileNewName = str_random(10) . '.' . $fileExt;
-
-                    if ($profiletPic->move($destinationPath, $fileNewName)) {
-
-                        $personaldata['profile_pic'] = $fileNewName;
-                    } else {
-                        $response['errCode'] = 2;
-                        $response['errMsg'] = 'Some issue in uploading the file';
-                    }
-                } else {
-                    $response['errCode'] = 3;
-                    $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
-                }
-            } else {
-                $personaldata['profile_pic'] = $request->input('oldimage');
-            }
-            if (count($checkdataexist) > 0) {
-                //echo 'sdfdf';die;
-                DB::table('user_profile')->where('user_id', $userId)
-								->update($personaldata);
-            } else {
-                $personaldata['user_id'] = $userId;
-                DB::table('user_profile')->insert($personaldata);
-            }
-            return redirect('admin/dashboard/');
-        }
-		
-		
-        $userData = User::where('id', '=', $userId)->first();
-        //For Country Info
-        $countries = Country::all();
-        $user_country = User::where('id', '=', $userId)->first();
-        //For Profile Info
-        $profileData = DB::table('user_profile')->where('user_id', $userId)->first();		
-	    return view('admin/dashboard', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
+							$tripalldetail[$i]['user_detail'][$activityhotelkey4] = $activityhotelvalue4;
+						}
+                
+            }							
+												
+		//echo '<pre>';print_r($tripalldetail);die;								
+				
+				
+	    return view('admin/dashboard', ['tripalldetail' => $tripalldetail,'data'=>$userData]);
     }
 
     /**
@@ -2220,4 +2171,297 @@ class AdminController extends Controller {
 		
 	}
       
+	  
+	 /* Function to set registerUser
+     * @return url
+     */
+	  public function registerUser()
+	  {
+		  //echo 'sfd';die;
+		 $user = DB::table('users')
+					->where('status', '=', '1')					
+					->get(); 
+				
+		 return view('admin/register_user',['userdetail'=>$user]);
+	  }
+	  
+	  public function userDetail($userId)
+	  {
+		  $tripalldetail=array();
+		 
+		   $userTrips['trip_detail'] =   DB::table('checkout')
+												->join('trips', 'checkout.trip_id', '=', 'trips.id')
+												->select('trips.*', 'checkout.*')
+												->where('checkout.user_id', '=', $userId)
+												->where('trips.status', '=', '1')																							
+												->get();
+											
+			foreach($userTrips['trip_detail'] as $key=>$vlue)
+			{
+				
+				$userTrips['selected_add_on'][$key]= DB::table('trip_addon_booking')
+														->leftjoin('trip_addon','trip_addon_booking.add_on_id','=','trip_addon.id')	
+														->where('trip_addon_booking.trip_id', '=', $vlue->trip_id)
+														->where('trip_addon_booking.user_id', '=', $userId)
+														->get();
+											
+				$userTrips['paidamount'][$key]=DB::table('trip_reserve_payment')
+													->select(DB::raw("SUM(reserve_paid_amount) as total_paid"))
+													->where('trip_id', '=', $vlue->trip_id)
+													->where('user_id', '=', $userId)
+													
+													->get();	
+
+				// $userTrips['emidata'][$key]= DB::table('user_emi')
+												// ->where('trip_id',$vlue->trip_id)
+												// ->where('user_id',$userId)
+												// ->get();										
+			}
+
+	for ($i = 0; $i < count($userTrips['trip_detail']); $i++) {
+			
+              $tripalldetail[$i]['trip_detail'] = $userTrips['trip_detail'][$i];
+					
+
+					foreach ($userTrips['selected_add_on'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+
+						$tripalldetail[$i]['selected_add_on'][$activityhotelkey2] = $activityhotelvalue2;
+					}
+					 foreach ($userTrips['paidamount'][$i] as $activityhotelkey3 => $activityhotelvalue3) {
+								
+								
+							$tripalldetail[$i]['paidamount'][$activityhotelkey3] = $activityhotelvalue3;
+						}
+					// foreach ($userTrips['emidata'][$i] as $activityhotelkey4 => $activityhotelvalue4) {
+
+							// $tripalldetail[$i]['emidata'][$activityhotelkey4] = $activityhotelvalue4;
+						// }
+                
+            }
+
+				
+			//echo '<pre>';print_r($tripalldetail);die;	
+			return view('admin/user_detail',['tripalldetail'=>$tripalldetail]);
+				
+	  }
+	  
+	  /* Function to set viewprofile
+     * @return url
+     */
+	  public function viewProfile(Request $request)
+	  {
+		  $userId = Auth::id();
+        //For Basic Info
+		
+		 if (isset($_POST['submit'])) {
+            $data['first_name'] = !empty($request->input('first_name')) ? $request->input('first_name') : '';
+            $data['last_name'] = !empty($request->input('last_name')) ? $request->input('last_name') : '';
+            $data['gender'] = !empty($request->input('gender')) ? $request->input('gender') : '';
+            $data['dob'] = !empty($request->input('dob')) ? $request->input('dob') : '';
+            $data['email'] = !empty($request->input('email')) ? $request->input('email') : '';
+            $data['is_passport'] = !empty($request->input('is_passport')) ? $request->input('is_passport') : '';
+            $data['passport_exp_date'] = !empty($request->input('passport_exp_date')) ? $request->input('passport_exp_date') : '';
+            $passportPic = $request->file('passport_pic');
+
+            //echo $passportPic;die;
+            if (isset($passportPic) && count($passportPic) > 0) {
+                $destinationPath = public_path() . '/passport_img/';
+                if ($passportPic->isValid()) {
+                    $fileExt = $passportPic->getClientOriginalExtension();
+                    $fileType = $passportPic->getMimeType();
+                    $fileSize = $passportPic->getSize();
+                    if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
+                        // Rename the file
+                        $fileNewName = str_random(10) . '.' . $fileExt;
+                        if ($passportPic->move($destinationPath, $fileNewName)) {
+                            $data['passport_pic'] = $fileNewName;
+                        } else {
+                            $response['errCode'] = 2;
+                            $response['errMsg'] = 'Some issue in uploading the file';
+                        }
+                    } else {
+                        $response['errCode'] = 3;
+                        $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
+                    }
+                }
+            } else {
+                $data['passport_pic'] = $request->input('oldimage');
+            }
+            User::where(['id' => $userId])->update($data);
+            return redirect('admin/view_profile');
+        }
+
+        //personal infomation//
+        if (isset($_POST['personalinfor'])) {
+            $personaldata['food_allergies'] = !empty($request->input('food_allergies')) ? $request->input('food_allergies') : '';
+            $personaldata['shirt_size'] = !empty($request->input('shirt_size')) ? $request->input('shirt_size') : '';
+            $personaldata['is_helth_mental'] = !empty($request->input('shirt_size')) ? $request->input('is_helth_mental') : '';
+            $personaldata['helth_mental_conditions'] = !empty($request->input('helth_mental_conditions')) ? $request->input('helth_mental_conditions') : '';
+            $personaldata['is_mental_conditions'] = !empty($request->input('is_mental_conditions')) ? $request->input('is_mental_conditions') : '';
+            $personaldata['mental_conditions'] = !empty($request->input('mental_conditions')) ? $request->input('mental_conditions') : '';
+            $personaldata['emergency_contact_name'] = !empty($request->input('emergency_contact_name')) ? $request->input('emergency_contact_name') : '';
+            $personaldata['emergency_contact_phone'] = !empty($request->input('emergency_contact_phone')) ? $request->input('emergency_contact_phone') : '';
+            $personaldata['personality_previous_travel'] = !empty($request->input('personality_previous_travel')) ? $request->input('personality_previous_travel') : '';
+            $personaldata['personality_originally_from'] = !empty($request->input('personality_originally_from')) ? $request->input('personality_originally_from') : '';
+            $personaldata['personality_school'] = !empty($request->input('personality_school')) ? $request->input('personality_school') : '';
+            $personaldata['personality_about'] = !empty($request->input('personality_about')) ? $request->input('personality_about') : '';
+            $profiletPic = !empty($request->file('profile_pic')) ? $request->file('profile_pic') : '';
+
+            // $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
+            // $destinationPath = public_path() . '/uploads/profile_images/';
+
+            $checkdataexist = DB::table('user_profile')->where('user_id', $userId)->first();
+            $destinationPath = public_path() . '/profile_img/';
+
+            if (!empty($profiletPic) && $profiletPic->isValid()) {
+                $fileExt = $profiletPic->getClientOriginalExtension();
+                $fileType = $profiletPic->getMimeType();
+                $fileSize = $profiletPic->getSize();
+                if (( $fileType == 'image/jpeg' || $fileType == 'image/png' ) && $fileSize <= 3000000) {     // 3 MB = 3000000 Bytes
+                    // Rename the file
+                    $fileNewName = str_random(10) . '.' . $fileExt;
+
+                    if ($profiletPic->move($destinationPath, $fileNewName)) {
+
+                        $personaldata['profile_pic'] = $fileNewName;
+                    } else {
+                        $response['errCode'] = 2;
+                        $response['errMsg'] = 'Some issue in uploading the file';
+                    }
+                } else {
+                    $response['errCode'] = 3;
+                    $response['errMsg'] = 'Only image file with size less than 3MB is allowed';
+                }
+            } else {
+                $personaldata['profile_pic'] = $request->input('oldimage');
+            }
+            if (count($checkdataexist) > 0) {
+                //echo 'sdfdf';die;
+                DB::table('user_profile')->where('user_id', $userId)
+								->update($personaldata);
+            } else {
+                $personaldata['user_id'] = $userId;
+                DB::table('user_profile')->insert($personaldata);
+            }
+            return redirect('admin/view_profile/');
+        }
+		
+		
+        $userData = User::where('id', '=', $userId)->first();
+        //For Country Info
+        $countries = Country::all();
+        $user_country = User::where('id', '=', $userId)->first();
+        //For Profile Info
+        $profileData = DB::table('user_profile')->where('user_id', $userId)->first();		
+	    return view('admin/view_profile', ['data' => $userData, 'profile' => $profileData, 'countries' => $countries, 'user_country' => $user_country]);
+		  
+	  }
+	  
+	 /* Function to set downloadCsv
+     * @return url
+     */
+	 
+	  public function downloadCsv()
+	  {
+		  $headers = array(
+				"Content-type" => "text/csv",
+				"Content-Disposition" => "attachment; filename=file.csv",
+				"Pragma" => "no-cache",
+				"Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+				"Expires" => "0"
+			);
+			
+			// fetch data here//
+			
+		$tripalldetail=array();
+		$addonName=array();
+		 $userTrips['trip_detail'] =   DB::table('checkout')
+												->join('trips', 'checkout.trip_id', '=', 'trips.id')
+												->select('trips.*', 'checkout.*')
+												->where('trips.status', '=', '1')		
+												->get();
+												
+			foreach($userTrips['trip_detail'] as $key=>$value)
+				{
+						$userTrips['user_detail'][$key]=DB::table('users')
+															->where('id',$value->user_id)
+															->get();
+						
+						$userTrips['selected_add_on'][$key]= DB::table('trip_addon_booking')
+																->leftjoin('trip_addon','trip_addon_booking.add_on_id','=','trip_addon.id')	
+																->where('trip_addon_booking.trip_id', '=', $value->trip_id)
+																->where('trip_addon_booking.user_id', '=', $value->user_id)
+																->get();
+													
+						$userTrips['paidamount'][$key]=DB::table('trip_reserve_payment')
+															->select(DB::raw("SUM(reserve_paid_amount) as total_paid"))
+															->where('trip_id', '=', $value->trip_id)
+															->where('user_id', '=', $value->user_id)													
+															->get();									
+				}
+
+			for ($i = 0; $i < count($userTrips['trip_detail']); $i++) {
+			
+				$tripalldetail[$i]['trip_detail'] = $userTrips['trip_detail'][$i];
+					
+
+					foreach ($userTrips['selected_add_on'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+
+						$tripalldetail[$i]['selected_add_on'][$activityhotelkey2] = $activityhotelvalue2;
+					}
+					 foreach ($userTrips['paidamount'][$i] as $activityhotelkey3 => $activityhotelvalue3) {
+								
+								
+							$tripalldetail[$i]['paidamount'][$activityhotelkey3] = $activityhotelvalue3;
+						}
+					foreach ($userTrips['user_detail'][$i] as $activityhotelkey4 => $activityhotelvalue4) {
+
+							$tripalldetail[$i]['user_detail'][$activityhotelkey4] = $activityhotelvalue4;
+						}
+                
+            }		
+			
+		// end here //
+			
+			//echo '<pre>';print_r($tripalldetail);die;			
+
+		
+			$columns = array("User Name", "User Email", "Trip Name", "Paid Amount", "Remaning Amount");
+
+			$callback = function() use ($tripalldetail, $columns)
+			{
+				$file = fopen("php://output", "w");
+				fputcsv($file, $columns);
+
+				foreach($tripalldetail as $tripvalue) {
+					$userNmae = !empty($tripvalue['user_detail'])?$tripvalue['user_detail'][0]->name:'';
+					$userEmail = !empty($tripvalue['user_detail'])?$tripvalue['user_detail'][0]->email:'';
+					$tripName=  !empty($tripvalue['trip_detail'])?$tripvalue['trip_detail']->name:'';
+					$paidAmount=  !empty($tripvalue['paidamount'][0])?$tripvalue['paidamount'][0]->total_paid:'';
+					$totalTripCost = !empty($tripvalue['trip_detail'])?$tripvalue['trip_detail']->trip_total_cost:'';
+					$reamingAmount= $totalTripCost - $paidAmount;				
+					
+					 // if(!empty($tripvalue['selected_add_on']))
+					// {
+						
+						// echo print_r($tripvalue['selected_add_on']);die;
+						 // foreach($tripvalue['selected_add_on'] as $key=> $addvalue)
+						// {
+							 // array_push($addonName,$addvalue->addons_name);
+						// }
+						
+					 // }				
+					
+					
+					fputcsv($file, array($userNmae, $userEmail, $tripName, $paidAmount, $reamingAmount));
+				}
+				//print_r($addonName);die;
+				fclose($file);
+			};
+			return Response::stream($callback, 200, $headers);
+				  
+	}
+	
+	
+	
 }

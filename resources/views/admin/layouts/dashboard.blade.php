@@ -85,7 +85,7 @@
                                 <li class="dropdown dropdown-hov">
                                     <img src="{{ url('/profile_img')}}/x5hOeYd6UZ.png" alt="profile pic" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;">
                                     <ul class="dropdown-menu" style="display: none;">
-                                        <li><a href="{{ url('/admin/dashboard') }}">View profile</a></li>
+                                        <li><a href="{{ url('/admin/view_profile') }}">View profile</a></li>
                                         <li><a href="{{ url('/changepassword')}}">Change password</a></li>
                                         <li><a href="{{ url('/logout') }}"> <i class="fa fa-lock" aria-hidden="true"></i> Logout </a></li>
                                     </ul>
@@ -107,9 +107,9 @@
                             <h2><div class="hombtn"><i class="fa fa-home home-icon" aria-hidden="true"></i></div>Dashboard</h2>
                         </div>
                         <ul class="nav tablist-menu" id="accordion1">
-                            <li><a class="tablinks" href="{{ url('admin/dashboard') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
+                            <li><a class="tablinks" href="{{ url('admin/view_profile') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
 
-
+								<li><a class="tablinks" href="{{ url('admin/users') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>Register User</a></li>
 
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">
