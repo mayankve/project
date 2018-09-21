@@ -1101,6 +1101,11 @@ $addonfinal_price_cost = 0;
 
                                                                                             </div>
 
+                                                                                            <?php
+
+																							
+
+                                                                                            ?>
 
                                                                                             <div class="form-group pdrow-group hotleparent">
 
@@ -1909,10 +1914,9 @@ $addonfinal_price_cost = 0;
 
                                 $trip_only_cost = ($trip_flight_cost + $trip_hotel_cost) * $trip_traveler;
 
-								
-							
+							//	echo $activityhotelamount_cost;die;
+
                                 $includedactivity_cost = ($activityamount + $activityflightamount_cost + $activityhotelamount_cost) * $trip_traveler;
-								//echo $includedactivity_cost;die;
 
                                 $final_trip_amount_cost = $trip_only_cost + $addonfinal_price_cost + $includedactivity_cost;
 
@@ -1958,7 +1962,7 @@ $addonfinal_price_cost = 0;
                                 if ($days_between < 31) {
 				
                                    $finalcost = $final_trip_amount_cost;
-									$totalbasecost =	$final_trip_amount_cost;
+
                                     if ($paidamount > $finalcost) {
 
 										$finalamount = $finalcost - $paidamount;
@@ -1985,14 +1989,14 @@ $addonfinal_price_cost = 0;
                                    $basecost = $tripdata['trip_data']->base_cost;
 
                                     $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
-							
-                                     $finalamount = $paybale_amount - $paidamount;
+
+                                   $finalamount = $paybale_amount - $paidamount;
 
 
 
                                     //emi calculation //
 
-                                    $totalbasecost = ($final_trip_amount_cost + ($basecost * $trip_traveler)) ;
+                                    $totalbasecost = $final_trip_amount_cost + ($basecost * $trip_traveler);
 
                                     if ($paidamount > $totalbasecost) {
 
@@ -2004,7 +2008,7 @@ $addonfinal_price_cost = 0;
 
                                         $numberofmonth = round($days_between / 30);
 
-                                        $result = $totalbasecost - ($paidamount + $finalamount);
+                                        $result = $totalbasecost - $paidamount;
 
                                         $emi = $result / $numberofmonth;
 
@@ -2110,8 +2114,6 @@ $addonfinal_price_cost = 0;
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">
-			<input type="hidden" name="user_emi" value="<?php echo !empty($emi)?$emi:'';?>">
-			<input type="hidden" name="user_emi_tenure" value="<?php echo !empty($numberofmonth)?$numberofmonth:'';?>">
 			<input type="hidden" name="triptotalcost" value="<?php echo !empty($totalbasecost)?$totalbasecost:'';?>">
 
         </form>	
