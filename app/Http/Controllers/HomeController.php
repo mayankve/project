@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use Session;
 use File;
 use App\User;
 use App\Trip;
@@ -20,7 +21,7 @@ use App\Country;
 use App\TripTraveler;
 use App\UserTrip;
 use App\TripTravelerProfile;
-
+use App\UserCard;
 class HomeController extends Controller {
 
     /**
@@ -715,19 +716,19 @@ class HomeController extends Controller {
  //echo "<pre>"; print_r($tripTravelerswaiting);die;
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
-						->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
-						->select('trip_airline.*', 'airlines.*')
-						->where('trip_airline.trip_id', '=', $id)
-						->where('trip_airline.status', '=', '1')
-						->get();
+                ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+                ->select('trip_airline.*', 'airlines.*')
+                ->where('trip_airline.trip_id', '=', $id)
+                ->where('trip_airline.status', '=', '1')
+                ->get();
 
 
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
-						->select('trip_hotel.*')
-						->where('trip_hotel.trip_id', '=', $id)
-						->where('trip_hotel.status', '=', '1')
-						->get();
+                ->select('trip_hotel.*')
+                ->where('trip_hotel.trip_id', '=', $id)
+                ->where('trip_hotel.status', '=', '1')
+                ->get();
 
         //Trip Addon Details
         $tripaddonarray = array();
@@ -742,17 +743,17 @@ class HomeController extends Controller {
             foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
                 $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
-										->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-										->where('trip_addon_airline.trip_id', '=', $id)
-										->where('trip_addon_airline.addon_id', '=', $addonitem->id)
-										->where('trip_addon_airline.status', '=', '1')
-										->get();
+                        ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+                        ->where('trip_addon_airline.trip_id', '=', $id)
+                        ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
+                        ->where('trip_addon_airline.status', '=', '1')
+                        ->get();
 
                 $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-									->where('trip_id', '=', $id)
-									->where('addon_id', '=', $addonitem->id)
-									->where('status', '=', '1')
-									->get();
+                        ->where('trip_id', '=', $id)
+                        ->where('addon_id', '=', $addonitem->id)
+                        ->where('status', '=', '1')
+                        ->get();
             }
 
             for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
@@ -993,7 +994,7 @@ class HomeController extends Controller {
 
             //echo $passportPic;die;
             if (isset($passportPic) && count($passportPic) > 0) {
-                $destinationPath = public_path() . '/passport_img/';
+                 $destinationPath = public_path() . '/passport_img/';
                 if ($passportPic->isValid()) {
                     $fileExt = $passportPic->getClientOriginalExtension();
                     $fileType = $passportPic->getMimeType();
@@ -1036,10 +1037,11 @@ class HomeController extends Controller {
             $profiletPic = !empty($request->file('profile_pic')) ? $request->file('profile_pic') : '';
 
             // $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
-            // $destinationPath = public_path() . '/uploads/profile_images/';
+            // $destinationPath = storage_path() . '/uploads/profile_images/';
 
-            $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
+           $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
             $destinationPath = public_path() . '/profile_img/';
+
 
             if (!empty($profiletPic) && $profiletPic->isValid()) {
                 $fileExt = $profiletPic->getClientOriginalExtension();
@@ -1153,7 +1155,7 @@ class HomeController extends Controller {
 	 
 	 public function viewProfile(Request $request)
 	 {
-		  $userId = Auth::id();
+		$userId = Auth::id();
 		 
 		   if (isset($_POST['submit'])) {
             $data['first_name'] = !empty($request->input('first_name')) ? $request->input('first_name') : '';
@@ -1253,28 +1255,24 @@ class HomeController extends Controller {
 		//echo "<pre>"; print_r($data['traveler_profiledata']);die;
         $data = $this->dashboardElements();
      // echo "<pre>"; print_r($data);die;
-        return view('view_profile', ['data' => $data,'userprofile'=>$userprofile,'profiledata'=>$profiledata]);		
-		 
+        return view('view_profile', ['data' => $data,'userprofile'=>$userprofile,'profiledata'=>$profiledata]);	
 	 }
-		
-		 	
-	/* Function to cancel trip the user 
+	 
+	/* Function to cancel the Trip and show the refund amount 
      * @param int Request
      * @return url
      */
-		
-	public function cancelTrip($id)
+	 
+	 public function cancelTrip($id)
 	{
 		 $trip = Trip::find($id);
 		 $dataTrip['status']='0';
 		 $trip->update($dataTrip);
 		 DB::table('user_trip')->where('trip_id',$id)->update($dataTrip);
+		 return redirect('dashboard');
+	}	
 	
-		return redirect('dashboard');
-	}
-
 	
-	 	
 	/* Function to view book trip detail the user 
      * @param int Request
      * @return url
@@ -1283,7 +1281,8 @@ class HomeController extends Controller {
 	 public function tripDetail($id)
 	 {		 			
 						
-		$tripalldetail=array();
+		 
+		 $tripalldetail=array();
 		 
 		  $userId = Auth::id();
 		  $data = $this->dashboardElements();
@@ -1356,13 +1355,12 @@ class HomeController extends Controller {
 				$userTrips=array();
 			}
 
-				
-		
+
 				//echo '<pre>';print_r($userTrips);die;
 		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]); 
+
 		
 	 }
-	 
 	 
 	 public function payAhead(Request $request,$id)
 	 {
@@ -1379,6 +1377,58 @@ class HomeController extends Controller {
 				return redirect('trip_detail/'.$id);
 		 
 	 }
-
-	
+		/*
+		*User can see the card details here
+		*/
+		 public function cardDetails()
+		 {
+				$userId = Auth::id();
+				//echo $userId;die;
+				$dashboardData = $this->dashboardElements();
+				$userCard = UserCard::where('user_id', '=', $userId)->first();
+			 	return view('card_details',['data'=>$dashboardData,'cardData'=>$userCard]);	
+		 }
+		 
+		/*
+		*User insert or update the card details here
+		*params Request
+		*/
+		 public function saveCardDetails(Request $request)
+		 {
+				$rules = [
+				'card_holder_name'	 => 'required',
+				'card_number'          => 'required',
+				'expiry_month'      => 'required',
+				'expiry_year'    => 'required',
+				'cvv' =>'required'
+				];
+				$this->validate($request,$rules);
+				$userId = Auth::id();
+				
+				//echo "<pre>";print_r($request->all());die;
+				
+				$cardDetails['user_id'] = $userId ;
+				$cardDetails['card_holder_name'] =  $request->input('card_holder_name');
+				$cardDetails['card_number'] = $request->input('card_number');
+				$cardDetails['expiry_month'] = $request->input('expiry_month');
+				$cardDetails['expiry_year'] = $request->input('expiry_year');
+				$cardDetails['cvv'] = $request->input('cvv');
+				
+				$userCard = UserCard::where('user_id', '=', $userId)->first();
+				 if(isset($userCard->id)){
+					 // Update the Card 
+					 $findRow = UserCard::findOrFail($userCard->id);
+					 $findRow->update($cardDetails);
+					 Session::flash('message', 'your card details have been updated!'); 
+					 Session::flash('alert-class', 'alert-success'); 
+				 }
+				else{
+					//insert Card Details
+					UserCard::create($cardDetails);
+					 Session::flash('message', 'your card details have been saved!'); 
+					 Session::flash('alert-class', 'alert-success'); 
+				}
+			 	return redirect('/card-details');	
+		 }
+		
 }
