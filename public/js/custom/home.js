@@ -4,7 +4,6 @@ $(document).ready(function () {
     $('#frm_user_basic_info').submit(function (e) {
         e.preventDefault();
     });
-	
     $('#frm_user_basic_info').validate({
         rules: {
             first_name: {

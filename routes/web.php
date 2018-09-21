@@ -10,6 +10,16 @@
   | contains the "web" middleware group. Now create something great!
   |
  */
+ 
+ //To avoid the PHP version issue
+
+ if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+// Ignores notices and reports all other kinds... and warnings
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+}
+
+
 
 /* Front-end routes */
 
@@ -119,10 +129,37 @@ Route::group(['middleware' => ['auth']], function() {
 	
 	Route::match(['get', 'post'], 'pay_ahead/{id}', 'HomeController@payAhead');
 	
+//pay pal here //	 
 	Route::get('paypal/cancel','PaypalController@paymentCancel'); 
-	Route::get('paypal/success','PaypalController@PaymentSuccess');
+	Route::get('paypal/success','PaypalController@PaymentSuccess');	
+	Route::get('payment-status', 'PaypalController@paymentStatus');
+// end here //
+	
+
+// test recurly
+	Route::get('checkrecurly','PaypalController@checkRecurlypaypal');
+	//end here//	
+
+	//paypal Test Payment Process 
+Route::get('payment', 'PaymentController@PaymentProcess');
+
+//paypal Test Payment Process 
+Route::get('payment-success', 'PaymentController@success');
+
+//paypal Test Payment Process 
+Route::get('payment-cancel', 'PaymentController@cancel');
+
+// testing recurly 
+	Route::get('test-recurly','PaymentController@testRecurly');
+	Route::post('recurly-payment','PaymentController@paymentRecurly');
+//end here//
 		
-		
+//User Card Details View 
+	Route::get('card-details', 'HomeController@cardDetails');
+	
+//User Card save url 
+	Route::post('save-details', 'HomeController@saveCardDetails');
+	
 });
 
 
@@ -232,9 +269,6 @@ Route::get('/addUser', 'ACLController@addUser');
 Route::get('/addRole', 'ACLController@addRole');
 Route::get('/assignRole', 'ACLController@assignRole');
 /* ACL routes ends */
-
-
-
 
 
 
