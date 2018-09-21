@@ -73,9 +73,9 @@
                        <td><?php echo !empty($tripvalue['trip_detail'])?$tripvalue['trip_detail']->name:'';?></td> 
                      
 						<td>
-						  <?php if(!empty($tripvalue['selected_add_on'])){ foreach($tripvalue['selected_add_on'] as $key=> $addvalue){?>
-						  <?php echo $addvalue->addons_name;?>,
-						  <?php } }?></td>
+						  <?php if(!empty($tripvalue['selected_add_on'])){ $i=1; foreach($tripvalue['selected_add_on'] as $key=> $addvalue){?>
+						  <?php echo  '('.$i.')'.$addvalue->addons_name;?></br>
+						  <?php $i++;} }?></td>
 						
 						
 						<td  style="color: #008000;">$<?php echo $paidamount;?></td>						

@@ -826,7 +826,7 @@ $padiamountbyuser=0;
 													$emi= $remaningamount;
 													//$result = $totalbasecost - $padiamountbyuser;
 													//$emi = $result / $numberofmonth;
-											}else{
+											}elseif(date('y-m-d') > $date){
 												
 												$shouldPaidEmi = $tripdata['emidata']->emi * $monthfrombooked;
 													
@@ -841,6 +841,9 @@ $padiamountbyuser=0;
 										} else {							
 											echo $message = "<b>There is nothing to pay</b>";
 										}
+										
+										
+										
 							}
 							
 							
