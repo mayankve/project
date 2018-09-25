@@ -404,8 +404,8 @@ class CartController extends Controller
 		$add_on_flight_name=     !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
 		$resever_pay_amount=     !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
 		$trip_cost=              !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
-		$user_emi=              !empty($_POST['user_emi'])?$_POST['user_emi']:'';
-		$user_emi_tenure=              !empty($_POST['user_emi_tenure'])?$_POST['user_emi_tenure']:'';
+		$tripBaseCost=              !empty($_POST['tripbasecost'])?$_POST['tripbasecost']:'';
+	
 		
 		// manual flight add on //		
 		
@@ -617,19 +617,7 @@ class CartController extends Controller
 			 if(!empty($paymentdataid))
 			 {			
 
-				DB::table('checkout')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
-				DB::table('user_emi')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
-				
-				// here emi datainsert//				
-					
-					$emidata['user_id']=$userId;
-					$emidata['trip_id']=$trip;
-					$emidata['trip_cost']=$trip_cost;
-					$emidata['emi']=$user_emi;
-					$emidata['tenure']=$user_emi_tenure;
-					$emidata['create_date']=date('y-m-d');
-					$insert = DB::table('user_emi')->insertGetId($emidata);					
-				// end here//				
+				DB::table('checkout')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();						
 				
 				$checkoutdata['user_id']=$userId;
 				$checkoutdata['trip_id']=$trip;
@@ -645,6 +633,7 @@ class CartController extends Controller
 				$checkoutdata['trip_hotel_id']=$trip_hotel_id;
 				$checkoutdata['trip_total_cost']=$trip_cost;
 				$checkoutdata['status']=1;
+				$checkoutdata['trip_base_cost']=$tripBaseCost;
 				$checkoutdata['traveler_ids']=$trip_travelere;				
 				$checkoutdata['create_date']=date('y-m-d');
 				$checkoutdata['payment_id']=$paymentdataid;
@@ -757,8 +746,7 @@ class CartController extends Controller
 		$add_on_flight_name= !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
 		$resever_pay_amount= !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
 		$trip_cost=     !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
-		$user_emi=              !empty($_POST['user_emi'])?$_POST['user_emi']:'';
-		$user_emi_tenure=              !empty($_POST['user_emi_tenure'])?$_POST['user_emi_tenure']:'';
+		$tripBaseCost=              !empty($_POST['tripbasecost'])?$_POST['tripbasecost']:'';
 		
 		// manual flight add on //		
 		
@@ -952,19 +940,6 @@ class CartController extends Controller
 				//echo '<pre>';print_r($addonsetrecord);die;		
 			
 				
-				// here emi datainsert//				
-					
-					$emidata['trip_cost']=$trip_cost;
-					$emidata['emi']=$user_emi;
-					$emidata['tenure']=$user_emi_tenure;
-					$emidata['create_date']=date('y-m-d');
-					$insert= DB::table('user_emi')->where('trip_id',$trip)
-														->where('user_id',$userId)
-														->update($emidata);
-					
-				// end here//			
-				
-				
 				
 				$checkoutdata['user_id']=$userId;
 				$checkoutdata['trip_id']=$trip;
@@ -985,6 +960,7 @@ class CartController extends Controller
 				$checkoutdata['trip_hotel_id']=$trip_hotel_id;
 				$checkoutdata['trip_total_cost']=$trip_cost;
 				$checkoutdata['status']=1;
+				$checkoutdata['trip_base_cost']=$tripBaseCost;
 				$checkoutdata['traveler_ids']=$trip_travelere;				
 				
 				$insertcheckoutid = DB::table('checkout')->where('trip_id',$trip)

@@ -1955,7 +1955,7 @@ $addonfinal_price_cost = 0;
 
 								//echo $days_between;die;
 
-                                if ($days_between < 31) {
+                                if ($days_between < 30) {
 				
                                    $finalcost = $final_trip_amount_cost;
 									$totalbasecost =	$final_trip_amount_cost;
@@ -1982,9 +1982,9 @@ $addonfinal_price_cost = 0;
                                 } else {
 							//echo $paidamount;die;
 											
-                                   $basecost = $tripdata['trip_data']->base_cost;
+                                   $basecost = $tripdata['trip_data']->base_cost * $trip_traveler ;
 
-                                    $paybale_amount = ($basecost * $trip_traveler) + $final_trip_amount_reserve;
+                                    $paybale_amount = $basecost + $final_trip_amount_reserve;
 							
                                      $finalamount = $paybale_amount - $paidamount;
 
@@ -1992,7 +1992,7 @@ $addonfinal_price_cost = 0;
 
                                     //emi calculation //
 
-                                    $totalbasecost = ($final_trip_amount_cost + ($basecost * $trip_traveler)) ;
+                                    $totalbasecost = $final_trip_amount_cost + $basecost ;
 
                                     if ($paidamount > $totalbasecost) {
 
@@ -2109,10 +2109,9 @@ $addonfinal_price_cost = 0;
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">
-			<input type="hidden" name="user_emi" value="<?php echo !empty($emi)?$emi:'';?>">
-			<input type="hidden" name="user_emi_tenure" value="<?php echo !empty($numberofmonth)?$numberofmonth:'';?>">
+            <input type="hidden" name="resever_pay_amount" value="{{$finalamount}}">			
 			<input type="hidden" name="triptotalcost" value="<?php echo !empty($totalbasecost)?$totalbasecost:'';?>">
+			<input type="hidden" name="tripbasecost" value="<?php echo !empty($basecost)?$basecost:'';?>">
 
         </form>	
 

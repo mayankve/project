@@ -1377,6 +1377,13 @@ class HomeController extends Controller {
 				return redirect('trip_detail/'.$id);
 		 
 	 }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 		/*
 		*User can see the card details here
 		*/

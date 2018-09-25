@@ -776,12 +776,25 @@ $padiamountbyuser=0;
 							
                       </div>
 						<?php
-							
-						 $date = date('Y-m-d', strtotime('+1 month', strtotime(date('2017-08-20'))));
-						// echo $tripdata['trip_detail']->create_date;die;
+						//echo $tripdata['trip_detail']->adjustment_date;die;
+							$dates=array();
+							$emiDate= strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-8-20')))));
+							$adjustmentdate= strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
+										
+							for($second= $emiDate; $second <= $adjustmentdate; $second+=86400)
+										{	
+											$date= date('Y-m-d',$second);
+										
+											if($date == date('Y-m-20',$second)){	
+												array_push($dates,$date);
+											}	
+										}
+						 
+						//echo '<pre>';print_r($dates);
+						
 						if(!empty($tripdata['trip_detail']->trip_total_cost))
 						{							
-							 $adjustmentdate = strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
+							
                                 $bookdate = strtotime($tripdata['trip_detail']->create_date);
 								
 
@@ -791,76 +804,49 @@ $padiamountbyuser=0;
 										$days_between = ceil(abs($adjustmentdate - $bookdate) / 86400);									
 										$numberofmonth = round($days_between / 30);
 									}								
-								// end here //
+								// end here //								
 								
-						
-							
-							// difference between month booking date to current date//
-									$currentdate = strtotime(date('y-m-d'));							
-									$daysdifference = (ceil($currentdate - $bookdate)/86400);						
-									$monthfrombooked = round($daysdifference/30);
-								
-							// end here//
+
 							
 								
 							$totalbasecost=$tripdata['trip_detail']->trip_total_cost;
-							if($days_between > 31)
-							{
-								//echo $padiamountbyuser;die;
+							
+							if($days_between > 30)
+							{								
 								if ($padiamountbyuser > $totalbasecost) {
-
 											$refund_amount = $padiamountbyuser - $totalbasecost;
 											echo $message = "You will be refunded $" . abs($refund_amount) . "";			
-											
-											
-									} elseif ($totalbasecost > $padiamountbyuser) {		
-							
-										if($daysdifference > 31 && date('y-m-d') < $date)
-											 {
-													$shouldPaidEmi = $tripdata['emidata']->emi * $monthfrombooked;
+									} elseif ($totalbasecost > $padiamountbyuser) {	
+									
+										$currentDay= date('Y-m-d');									
+										$baseCost = $tripdata['trip_detail']->trip_base_cost; 		
+									
+										$toBePaid =  $totalbasecost - $baseCost;
+										$paidamount = $padiamountbyuser - $baseCost;										
+										$currentMonth=0; 
+										foreach($dates as $val)
+											{
+												if($currentDay <= $val){
+													$currentMonth++;
+												} else {
 													
-													$monthPaymetnShouldPaid = $padiamountbyuser + $shouldPaidEmi;													
-													
-													$remaningamount = $monthPaymetnShouldPaid - $padiamountbyuser;
-													
-													$emi= $remaningamount;
-													//$result = $totalbasecost - $padiamountbyuser;
-													//$emi = $result / $numberofmonth;
-											}elseif(date('y-m-d') > $date){
-												
-												$shouldPaidEmi = $tripdata['emidata']->emi * $monthfrombooked;
-													
-												$monthPaymetnShouldPaid = $padiamountbyuser + $shouldPaidEmi;
-												
-												$emi= $monthPaymetnShouldPaid;
+													$currentMonth++;
+													break;
+												}
 											}
 											
 											
+										$emi= ($toBePaid-$paidamount)*$currentMonth/count($dates);											
 											
-											
-										} else {							
+								  } else {							
 											echo $message = "<b>There is nothing to pay</b>";
-										}
-										
-										
-										
+										}		
 							}
 							
 							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-							
-						// if(!empty($emi))
-							// {
-							// ?>
+						 if(!empty($emi))
+							 {
+							 ?>
 						<div class="row">							
 							<div class="col-sm-6">
 								<div class="update-btn">
@@ -884,12 +870,25 @@ $padiamountbyuser=0;
 								</div>
 							</div>					
 						</div>
+						
+						<div class="row">							
+							<div class="col-sm-6">
+								<div class="update-btn">
+									<div class="panel-tools">
+										<label style="color: black">Emi Month: </label>
+										<label class="total_addon_cost" style="color: black"><?php echo !empty($currentMonth)?$currentMonth:'';?></label></br>
+										
+									</div>
+								</div>
+							</div>					
+						</div>
+						
 					  <div class="row">						
 							<div class="col-sm-12">
 								<div class="update-btn">
 									<div class="panel-tools">
 										<label style="color: black">Emi Date: </label>
-										<label class="total_addon_cost" style="color: black"><?php echo $date;?></label></br>
+										<label class="total_addon_cost" style="color: black"><?php echo date('Y-m-d',$emiDate);?></label></br>
 										
 									</div>
 								</div>
@@ -899,7 +898,7 @@ $padiamountbyuser=0;
 							<div class="col-sm-12">
 								<div class="update-btn">
 									<div class="panel-tools">
-										<label style="color: black">Month: </label>
+										<label style="color: black">Tenure: </label>
 										<label class="total_addon_cost" style="color: black"><?php echo !empty($numberofmonth)?$numberofmonth:'';?></label></br>
 										
 									</div>
@@ -916,7 +915,7 @@ $padiamountbyuser=0;
 								</div>
 							</div>
                       </div>
-						<?php } //}?>
+						<?php } }?>
 						
 					
                     </div>
