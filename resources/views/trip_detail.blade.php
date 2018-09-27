@@ -380,18 +380,10 @@ $padiamountbyuser=0;
 													@if(count($tripdata['selected_add_on']))
 														@foreach($tripdata['selected_add_on'] as $addonvalue)
 													<?php
-														$addonflight= DB::table('trip_addon_airline')
-																		->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-																		->where('trip_addon_airline.trip_id', '=', $addonvalue->trip_id)
-																		->where('trip_addon_airline.addon_id', '=', $addonvalue->add_on_id)
-																		->where('trip_addon_airline.status', '=', '1')
-																		->where('airlines.id', '=', $addonvalue->flight_id)
-																		->get();
-														$addonhotel= DB::table('trip_addon_hotel')
-																	->where('trip_id', '=', $addonvalue->trip_id)
-																	->where('id', '=', $addonvalue->hotel_id)
-																	->where('status', '=', '1')
-																	->get();
+														$addonflight= Helper::getAddonAirline($addonvalue->trip_id,$addonvalue->add_on_id,$addonvalue->flight_id);
+																		
+													//echo '<pre>';print_r($addonflight);die;
+														$addonhotel= Helper::getAddonHotel($addonvalue->trip_id,$addonvalue->hotel_id);
 
 														//echo (count($addonflight)>0)?$addonflight[0]->name:'pankaj';					
 													?>
@@ -547,22 +539,10 @@ $padiamountbyuser=0;
 													@foreach($tripdata['selected_activity'] as $activity)
 												<?php											
 												
-														$activityflight= DB::table('trip_included_activity_airline')
-																		->join('airlines', 'trip_included_activity_airline.airline_name', '=', 'airlines.id')
-																		->where('trip_included_activity_airline.airline_departure_date', '>', date('Y-m-d'))
-																		->where('trip_included_activity_airline.trip_id', '=', $activity->trip_id)
-																		->where('trip_included_activity_airline.activity_id', '=', $activity->activity_id)
-																		->where('trip_included_activity_airline.id', $activity->activity_flight_id)
-																		->where('trip_included_activity_airline.status', '=', '1')
-																		->get();
+														$activityflight= Helper::getIncludedActivityAir($activity->trip_id,$activity->activity_id,$activity->activity_flight_id);
 																		
-														$activityhotel= DB::table('trip_included_activity_hotel')
-																				->where('trip_id', '=', $activity->trip_id)
-																				->where('hotel_due_date', '>', date('Y-m-d'))
-																				->where('activity_id', '=', $activity->activity_id)
-																				->where('id', $activity->activity_hotel_id)
-																				->where('status', '=', '1')
-																				->get();
+														$activityhotel= Helper::getIncludedActivityAir($activity->trip_id,$activity->activity_id,$activity->activity_hotel_id); DB::table('trip_included_activity_hotel');
+																		
 
 														//echo '<pre>';print_r($activityflight);				
 													?>
@@ -776,21 +756,14 @@ $padiamountbyuser=0;
 							
                       </div>
 						<?php
-						//echo $tripdata['trip_detail']->adjustment_date;die;
-							$dates=array();
-							$emiDate= strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-8-20')))));
-							$adjustmentdate= strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
+						//echo $tripdata['trip_detail']->create_date;die;
+							
+							$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($tripdata['trip_detail']->create_date))));
+							
+							$adjustmentdate = strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
 										
-							for($second= $emiDate; $second <= $adjustmentdate; $second+=86400)
-										{	
-											$date= date('Y-m-d',$second);
-										
-											if($date == date('Y-m-20',$second)){	
-												array_push($dates,$date);
-											}	
-										}
-						 
-						//echo '<pre>';print_r($dates);
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripdata['trip_detail']->adjustment_date);
+						//echo '<pre>';print_r($dates);die;
 						
 						if(!empty($tripdata['trip_detail']->trip_total_cost))
 						{							
@@ -809,7 +782,7 @@ $padiamountbyuser=0;
 
 							
 								
-							$totalbasecost=$tripdata['trip_detail']->trip_total_cost;
+							 $totalbasecost=$tripdata['trip_detail']->trip_total_cost;
 							
 							if($days_between > 30)
 							{								
@@ -819,24 +792,27 @@ $padiamountbyuser=0;
 									} elseif ($totalbasecost > $padiamountbyuser) {	
 									
 										$currentDay= date('Y-m-d');									
-										$baseCost = $tripdata['trip_detail']->trip_base_cost; 		
+										 $baseCost = $tripdata['trip_detail']->trip_base_cost; 		
 									
 										$toBePaid =  $totalbasecost - $baseCost;
-										$paidamount = $padiamountbyuser - $baseCost;										
+										
+										$paidamount = $padiamountbyuser - $baseCost;
+										
 										$currentMonth=0; 
+										
 										foreach($dates as $val)
 											{
 												if($currentDay <= $val){
+													
 													$currentMonth++;
 												} else {
-													
+															
 													$currentMonth++;
 													break;
 												}
 											}
-											
-											
-										$emi= ($toBePaid-$paidamount)*$currentMonth/count($dates);											
+															
+										$emi= (($toBePaid/count($dates)) * $currentMonth) -  $paidamount;	
 											
 								  } else {							
 											echo $message = "<b>There is nothing to pay</b>";
@@ -864,7 +840,7 @@ $padiamountbyuser=0;
 								<div class="update-btn">
 									<div class="panel-tools">
 										<label style="color: black">Emi: </label>
-										<label class="total_addon_cost" style="color: black">$<?php echo !empty($emi)?$emi:'';?></label></br>
+										<label class="total_addon_cost" style="color: black">$<?php echo ($emi > 0)?$emi:'0';?></label></br>
 										
 									</div>
 								</div>

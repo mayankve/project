@@ -22,6 +22,7 @@ use App\TripTraveler;
 use App\UserTrip;
 use App\TripTravelerProfile;
 use App\UserCard;
+use Helper;
 class HomeController extends Controller {
 
     /**
@@ -1280,7 +1281,8 @@ class HomeController extends Controller {
 	 
 	 public function tripDetail($id)
 	 {		 			
-						
+				
+					
 		 
 		 $tripalldetail=array();
 		 

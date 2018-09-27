@@ -240,6 +240,10 @@ return [
          */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+		
+		// custom helper class
+        'Helper' => App\Helpers\Helper::class,
+		
 
     ],
 
