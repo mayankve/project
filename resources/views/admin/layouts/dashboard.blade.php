@@ -109,7 +109,7 @@
                         <ul class="nav tablist-menu" id="accordion1">
                             <li><a class="tablinks" href="{{ url('admin/view_profile') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
 
-								<li><a class="tablinks" href="{{ url('admin/users') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>Register User</a></li>
+								<li><a class="tablinks" href="{{ url('admin/users') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>Registered User</a></li>
 
                             <li class="custom-panel"><a data-toggle="collapse" data-parent="#accordion1" href="#account_info" class="" aria-expanded="true"><i class="fa fa-info-circle" aria-hidden="true"></i>Traveler Information</a>
                                 <ul id="account_info" class="sub-menu collapse trip-travelers" aria-expanded="true">

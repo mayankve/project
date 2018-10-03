@@ -1436,11 +1436,11 @@ class HomeController extends Controller {
 			 	return redirect('/card-details');	
 		 }
 		 
-		 /*
-		*User insert or update the card details here
-		*params Request
+		/*
+		*Function tosend the notification to the users for pending emis
+		*params null
 		*/
-		public function emiPendingmail()
+		public function emiPendingEmail()
 		{
 			//$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-7-23')))));
 			//echo $emiDate;die;
@@ -1526,16 +1526,12 @@ class HomeController extends Controller {
 									
 								}
 								
-								
-								
 							}
 							
 							//echo '<pre>';print_r($dates); 
-							
-
 					}
 								
-					echo '<pre>';print_r($trip_detail);	
+					//echo '<pre>';print_r($trip_detail);	
 		}		 
 		
 }
