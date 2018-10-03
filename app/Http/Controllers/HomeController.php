@@ -1453,8 +1453,8 @@ class HomeController extends Controller {
 			$trip_detail=   DB::table('checkout')
 								->join('trips', 'checkout.trip_id', '=', 'trips.id')
 								->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
-								->join('trip_traveler','checkout.trip_id', '=', 'trip_traveler.trip_id')
-								->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','trip_traveler.email','trip_traveler.first_name')
+								->join('users','checkout.user_id', '=', 'users.id')
+								->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','users.email','users.name')
 								->where('trips.status', '=', '1')
 								 ->groupBy("user_trip.trip_id")
 								->get();
