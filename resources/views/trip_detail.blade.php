@@ -685,29 +685,18 @@ $padiamountbyuser=0;
                                                     <div class="form-group pdrow-group parent">
 
                                                         <div class="col-sm-12">
-
                                                             <div class="row">
-
-                                                                <div class="col-sm-4">
-																
+                                                                <div class="col-sm-4">																
 																${{$paidamount->reserve_paid_amount}}
-																
-                                                                   
-
                                                                 </div>
 
                                                                 <div class="col-sm-4">
-																	{{$paidamount->txn_id}}
-                                                                   
-
+																	{{$paidamount->txn_id}} 
                                                                 </div>
 																
 																 <div class="col-sm-4">
 																	{{$paidamount->create_date}}
-                                                                   
-
                                                                 </div>
-
                                                                 
                                                                 </div>
 																 
@@ -715,8 +704,7 @@ $padiamountbyuser=0;
                                                         </div>
                                                    
 													@endforeach
-													@endif
-													
+													@endif													
 
                                                 </div>                                        
 
@@ -805,6 +793,7 @@ $padiamountbyuser=0;
 												if($currentDay <= $val){
 													
 													$currentMonth++;
+													
 												} else {
 															
 													$currentMonth++;
@@ -863,24 +852,13 @@ $padiamountbyuser=0;
 							<div class="col-sm-12">
 								<div class="update-btn">
 									<div class="panel-tools">
-										<label style="color: black">Emi Date: </label>
-										<label class="total_addon_cost" style="color: black"><?php echo date('Y-m-d',$emiDate);?></label></br>
+										<label style="color: black">Emi payment date : </label>
+										<label class="total_addon_cost" style="color: black"><?php echo date('d',$emiDate).'th';?> of each month</label></br>
 										
 									</div>
 								</div>
 							</div>	
-					  </div>
-					<div class="row">						
-							<div class="col-sm-12">
-								<div class="update-btn">
-									<div class="panel-tools">
-										<label style="color: black">Tenure: </label>
-										<label class="total_addon_cost" style="color: black"><?php echo !empty($numberofmonth)?$numberofmonth:'';?></label></br>
-										
-									</div>
-								</div>
-							</div>
-                      </div>
+					  </div>					
 					  
 					  <div class="row">						
 							<div class="col-sm-12 text-right">
@@ -891,13 +869,10 @@ $padiamountbyuser=0;
 								</div>
 							</div>
                       </div>
-						<?php } }?>
-						
-					
+						<?php } }?>	
                     </div>
                 </div>
-            </div>
-           
+            </div>           
         </form>
 
 

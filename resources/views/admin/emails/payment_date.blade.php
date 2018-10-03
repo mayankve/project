@@ -13,10 +13,10 @@
 					
                 @foreach($monthlytrip AS $tripdetail)
                     <tr class="parent">
-                    <td>{{$tripdetail->name}}</td>
-                    <td>{{$tripdetail->base_cost}}</td>
-                    <td>{{$tripdetail->booking_date}}</td>					
-					<td><?php echo($tripdetail->monthly_payment_date!='')?$tripdetail->monthly_payment_date:'';?></td>					
+						<td>{{$tripdetail->name}}</td>
+						<td>{{$tripdetail->base_cost}}</td>
+						<td>{{$tripdetail->booking_date}}</td>					
+						<td><?php echo($tripdetail->monthly_payment_date!='')?$tripdetail->monthly_payment_date:'';?></td>					
                     </tr>
               @endforeach
                 @endif   

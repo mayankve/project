@@ -160,6 +160,10 @@ Route::get('payment-cancel', 'PaymentController@cancel');
 //User Card save url 
 	Route::post('save-details', 'HomeController@saveCardDetails');
 	
+//set crone url emi email//
+
+	Route::get('/emipendingmail','HomeController@emiPendingmail');
+	
 });
 
 
