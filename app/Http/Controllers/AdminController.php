@@ -2163,7 +2163,7 @@ class AdminController extends Controller {
 			foreach($travelerbytrip as $travelerprofile){
 			//echo '<pre>';print_r($travelerprofile->email);die;				
 				Mail::send('admin.emails.payment_date', ['monthlytrip' => $monthlytrip], function($message) use($travelerprofile){
-					$message->to($travelerprofile->email, $travelerprofile->first_name)->subject('Welcome!');
+					$message->to('mukeshbisht98@gmail.com', $travelerprofile->first_name)->subject('Emi Date Confirmation');
 				});
 			}
 		}								

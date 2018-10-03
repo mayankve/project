@@ -23,6 +23,8 @@ use App\UserTrip;
 use App\TripTravelerProfile;
 use App\UserCard;
 use Helper;
+use Mail;
+
 class HomeController extends Controller {
 
     /**
@@ -1433,5 +1435,107 @@ class HomeController extends Controller {
 				}
 			 	return redirect('/card-details');	
 		 }
+		 
+		 /*
+		*User insert or update the card details here
+		*params Request
+		*/
+		public function emiPendingmail()
+		{
+			//$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-7-23')))));
+			//echo $emiDate;die;
+			
+			$currentMonth = date('m');			
+			
+			$trip_detail=   DB::table('checkout')
+								->join('trips', 'checkout.trip_id', '=', 'trips.id')
+								->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
+								->join('trip_traveler','checkout.trip_id', '=', 'trip_traveler.trip_id')
+								->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','trip_traveler.email','trip_traveler.first_name')
+								->where('trips.status', '=', '1')
+								 ->groupBy("user_trip.trip_id")
+								->get();
+				
+				foreach($trip_detail as $tripvalue){    
+					
+					
+				//	get here paid amount detail//
+					$paymentdetail= DB::table("trip_reserve_payment")
+													->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+													->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)
+													->sum('trip_reserve_payment.reserve_paid_amount');
+													
+					$currentMonthPayment= DB::table("trip_reserve_payment")
+											->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+											->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)	
+											->whereRaw('MONTH(create_date) = ?',[$currentMonth])
+											->get();							
+							
+						
+								$tripCost= $tripvalue->trip_total_cost;				
+												
+								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
+								$tripEmiSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';
+									
+								$setDate = !empty($tripEmiSetAdmin)?$tripEmiSetAdmin:$checkoutdate;
+								
+								$adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
+								
+								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($setDate))));
+								
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripvalue->adjustment_date);	
+							
+							if($tripCost > $paymentdetail)
+							{
+								$currentDate= date('y-m-d');
+								
+								foreach($dates as $datevalue)
+								{
+									//echo $datevalue;
+									if($currentDate > $datevalue && !empty($currentMonthPayment))
+									{
+										$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
+										
+										if($differenceDate == '3')
+										{
+											//echo 'mail';
+											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
+														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
+												});
+											
+										}elseif($differenceDate == '6'){
+											//echo 'mail';
+											
+											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
+														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
+												});
+											
+										}elseif($differenceDate == '9')
+										{
+											
+											//echo 'mail';
+											
+											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
+														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
+												});
+										}
+									}
+										
+									
+									
+									
+								}
+								
+								
+								
+							}
+							
+							//echo '<pre>';print_r($dates); 
+							
+
+					}
+								
+					echo '<pre>';print_r($trip_detail);	
+		}		 
 		
 }
