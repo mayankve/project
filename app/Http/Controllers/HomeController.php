@@ -1278,7 +1278,6 @@ class HomeController extends Controller {
      * @param int Request
      * @return url
      */
-	 
 	 public function tripDetail($id)
 	 {		 			
 				
@@ -1295,10 +1294,7 @@ class HomeController extends Controller {
 												->where('trips.status', '=', '1')
 												->where('trips.id', '=', $id)												
 												->first();
-			$userTrips['emidata']=DB::table('user_emi')
-										->where('trip_id',$id)
-										->where('user_id',$userId)
-										->first();
+			
 			
 			if(!empty($userTrips['trip_detail']))
 			{				
@@ -1361,9 +1357,12 @@ class HomeController extends Controller {
 				//echo '<pre>';print_r($userTrips);die;
 		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]); 
 
-		
 	 }
-	 
+		
+	/* Function to pay ahead for the emi by user
+     * @param int id ,array Request 
+     * @return url
+     */
 	 public function payAhead(Request $request,$id)
 	 {
 			$userId = Auth::id();
@@ -1379,11 +1378,6 @@ class HomeController extends Controller {
 				return redirect('trip_detail/'.$id);
 		 
 	 }
-	 
-	 
-	 
-	 
-	 
 	 
 	 
 		/*
