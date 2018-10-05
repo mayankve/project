@@ -1499,8 +1499,7 @@ class HomeController extends Controller {
 									{
 										$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
 										
-										if($differenceDate == '3')
-										{
+										if($differenceDate == '3'){
 											//echo 'mail';
 											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
 														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
@@ -1513,9 +1512,7 @@ class HomeController extends Controller {
 														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
 												});
 											
-										}elseif($differenceDate == '9')
-										{
-											
+										}elseif($differenceDate == '9'){											
 											//echo 'mail';
 											
 											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
@@ -1524,20 +1521,11 @@ class HomeController extends Controller {
 										}
 									}
 										
-									
-									
-									
 								}
-								
-								
 								
 							}
 							
-							//echo '<pre>';print_r($dates); 
-							
-
-					}
-								
+					}								
 					echo '<pre>';print_r($trip_detail);	
 		}		 
 		
