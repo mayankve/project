@@ -99,19 +99,27 @@ class Helper
      * @return array
      */
 	 
-	 public  static function getDateBetweenDates($emiDate,$adjustMentDate,$toCheckEmiDate)
+	 public  static function getDateBetweenDates($emiDate,$adjustMentDate,$monthlyPaymentDate=false)
 	 {	
-			//echo $toCheckEmiDate;die;
+	 
+		
 		$dates=array();
+	 
+		 $paymentday= !empty($monthlyPaymentDate)?$monthlyPaymentDate:strtotime (date('Y-m-15'));
+
 		for($second= $emiDate; $second <= $adjustMentDate; $second+=86400)
-					{	
-						$date= date('Y-m-d',$second);
+			{	
+								$date= date('Y-m-d',$second);
+								$days = date('d',$second);
 							
-						if($date == $toCheckEmiDate){	
+					if($days == date('d',$paymentday)){	
 							array_push($dates,$date);
-						}	
-					}
-			return $dates;		
+						}
+							
+						
+			}
+			
+		return $dates;		
 										
 	 }
 

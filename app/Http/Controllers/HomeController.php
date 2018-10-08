@@ -1280,7 +1280,6 @@ class HomeController extends Controller {
      * @param int Request
      * @return url
      */
-	 
 	 public function tripDetail($id)
 	 {		 			
 				
@@ -1292,7 +1291,8 @@ class HomeController extends Controller {
 		  $data = $this->dashboardElements();
 		   $userTrips['trip_detail'] =   DB::table('checkout')
 												->join('trips', 'checkout.trip_id', '=', 'trips.id')
-												->select('trips.*', 'checkout.*')
+												->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
+												->select('trips.*', 'checkout.*','user_trip.*')
 												->where('checkout.user_id', '=', $userId)
 												->where('trips.status', '=', '1')
 												->where('trips.id', '=', $id)												
@@ -1318,10 +1318,10 @@ class HomeController extends Controller {
 												->first();
 				
 			}else{
-				$userTrips['flight_data']=array('flight_name'=>$userTrips['trip_detail']->flight_name,
-												'flight_number'=>$userTrips['trip_detail']->flight_number,
-												'flight_departure_date'=>$userTrips['trip_detail']->flight_departure_date,
-												'flight_departure_time'=>$userTrips['trip_detail']->flight_departure_time
+				$userTrips['flight_data']=array('flight_name'   =>         $userTrips['trip_detail']->flight_name,
+												'flight_number'    =>          $userTrips['trip_detail']->flight_number,
+												'flight_departure_date'   =>   $userTrips['trip_detail']->flight_departure_date,
+												'flight_departure_time'   	=>     $userTrips['trip_detail']->flight_departure_time
 													
 											);
 			}				
@@ -1360,9 +1360,12 @@ class HomeController extends Controller {
 				//echo '<pre>';print_r($userTrips);die;
 		return view('trip_detail',['tripdata'=>$userTrips,'data'=>$data]); 
 
-		
 	 }
-	 
+		
+	/* Function to pay ahead for the emi by user
+     * @param int id ,array Request 
+     * @return url
+     */
 	 public function payAhead(Request $request,$id)
 	 {
 			$userId = Auth::id();
@@ -1378,11 +1381,6 @@ class HomeController extends Controller {
 				return redirect('trip_detail/'.$id);
 		 
 	 }
-	 
-	 
-	 
-	 
-	 
 	 
 	 
 		/*
@@ -1439,11 +1437,13 @@ class HomeController extends Controller {
 			 	return redirect('/card-details');	
 		 }
 		 
-		 /*
-		*User insert or update the card details here
-		*params Request
+		 
+		 
+		/*
+		*Function tosend the notification to the users for pending emis
+		*params null
 		*/
-		public function emiPendingmail()
+		public function emiPendingEmail()
 		{
 			//$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-7-23')))));
 			//echo $emiDate;die;
@@ -1478,15 +1478,14 @@ class HomeController extends Controller {
 								$tripCost= $tripvalue->trip_total_cost;				
 												
 								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
-								$tripEmiSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';
-									
-								$setDate = !empty($tripEmiSetAdmin)?$tripEmiSetAdmin:$checkoutdate;
 								
+								$tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
+															
 								$adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
 								
-								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($setDate))));
+								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
 								
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripvalue->adjustment_date);	
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);	
 							
 							if($tripCost > $paymentdetail)
 							{
@@ -1525,8 +1524,13 @@ class HomeController extends Controller {
 								
 							}
 							
+
 					}								
 					echo '<pre>';print_r($trip_detail);	
-		}		 
+
+							//echo '<pre>';print_r($dates); 
+			}
+								
+		 
 		
 }

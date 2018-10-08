@@ -284,4 +284,5 @@ Route::get('/assignRole', 'ACLController@assignRole');
 
 
 
-
+//For pending emi email
+Route::get('/emipendingmail','HomeController@emiPendingEmail');
