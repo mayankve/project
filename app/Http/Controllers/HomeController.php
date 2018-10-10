@@ -1447,7 +1447,7 @@ class HomeController extends Controller {
 			
 			$currentMonth = date('m');			
 			
-			$trip_detail=   DB::table('checkout')
+			$trip_detail = DB::table('checkout')
 								->join('trips', 'checkout.trip_id', '=', 'trips.id')
 								->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
 								->join('users','checkout.user_id', '=', 'users.id')
@@ -1455,10 +1455,10 @@ class HomeController extends Controller {
 								->where('trips.status', '=', '1')
 								 ->groupBy("user_trip.trip_id")
 								->get();
+				//echo  "<pre>";print_r($trip_detail);die;
 				
-				foreach($trip_detail as $tripvalue){    
-					
-					
+				foreach($trip_detail as $tripvalue){ 
+				
 				//	get here paid amount detail//
 					$paymentdetail= DB::table("trip_reserve_payment")
 													->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
@@ -1472,7 +1472,7 @@ class HomeController extends Controller {
 											->get();							
 							
 						
-								$tripCost= $tripvalue->trip_total_cost;				
+								$tripCost = $tripvalue->trip_total_cost;				
 												
 								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
 								$tripEmiSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';
