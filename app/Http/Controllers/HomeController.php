@@ -1487,48 +1487,56 @@ class HomeController extends Controller {
 								
 							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);	
 							
+						
+							
 							if($tripCost > $paymentdetail)
 							{
-								$currentDate= date('y-m-d');
+								$currentDate= date('Y-m-d');
 								
-								foreach($dates as $datevalue)
-								{
-									//echo $datevalue;
-									if($currentDate > $datevalue && !empty($currentMonthPayment))
-									{
-										$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
-										
-										if($differenceDate == '3'){
-											//echo 'mail';
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-											
-										}elseif($differenceDate == '6'){
-											//echo 'mail';
-											
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-											
-										}elseif($differenceDate == '9'){											
-											//echo 'mail';
-											
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-										}
+								if(count($dates)>0){
+										foreach($dates as $datevalue)
+										{
+											//echo $datevalue;
+											if($currentDate > $datevalue && !empty($currentMonthPayment))
+											{
+												$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
+												
+												if($differenceDate == '3'){
+													//echo 'mail';
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+													
+												}elseif($differenceDate == '6'){
+													//echo 'mail';
+													
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+													
+												}elseif($differenceDate == '9'){											
+													//echo 'mail';
+													
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+												}
+											}
+												
 									}
-										
+								}else{
+									
+									// full amount payment emi 
+									
+									Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+													$message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
+										});
+									
 								}
 								
 							}
-							
-
 					}								
-					echo '<pre>';print_r($trip_detail);	
-
-							//echo '<pre>';print_r($dates); 
+					echo '<pre>';print_r($trip_detail);	 
 			}
 								
 		 

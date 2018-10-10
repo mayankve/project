@@ -7,18 +7,6 @@ use Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-// use App\Category;
-// use App\Product;
-// use App\ShoppingCart;
-// use App\ShoppingCartDetail;
-// use App\PromotionDurationRule;
-// use App\PromotionBuyGetRule;
-// use App\ShoppingCartAppliedPromotionRule;
-// use App\PromotionOrderValueRule;
-// use App\PostcodeFreight;
-// use App\PromotionFreightRule;
-// use App\User;
-
 class Helper
 {
 	/**
@@ -105,7 +93,7 @@ class Helper
 		
 		$dates=array();
 	 
-		 $paymentday= !empty($monthlyPaymentDate)?$monthlyPaymentDate:strtotime (date('Y-m-15'));
+		 $paymentday= strtotime(!empty($monthlyPaymentDate)?$monthlyPaymentDate:(date('Y-m-15')));
 
 		for($second= $emiDate; $second <= $adjustMentDate; $second+=86400)
 			{	

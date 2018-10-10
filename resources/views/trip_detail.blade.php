@@ -106,10 +106,6 @@ $padiamountbyuser=0;
 
     </div>
 
-
-
-  
-
 	@if (!empty($tripdata['trip_detail']))
 		
 	<?php //echo $tripdata['trip_detail'];die;?>
@@ -173,8 +169,6 @@ $padiamountbyuser=0;
                                                         <div class="col-sm-12">
 
                                                             <div class="row">
-
-
 
                                                                 <div class="col-sm-2">
 
