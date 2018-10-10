@@ -1291,7 +1291,8 @@ class HomeController extends Controller {
 		  $data = $this->dashboardElements();
 		   $userTrips['trip_detail'] =   DB::table('checkout')
 												->join('trips', 'checkout.trip_id', '=', 'trips.id')
-												->select('trips.*', 'checkout.*')
+												->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
+												->select('trips.*', 'checkout.*','user_trip.*')
 												->where('checkout.user_id', '=', $userId)
 												->where('trips.status', '=', '1')
 												->where('trips.id', '=', $id)												
@@ -1317,10 +1318,10 @@ class HomeController extends Controller {
 												->first();
 				
 			}else{
-				$userTrips['flight_data']=array('flight_name'=>$userTrips['trip_detail']->flight_name,
-												'flight_number'=>$userTrips['trip_detail']->flight_number,
-												'flight_departure_date'=>$userTrips['trip_detail']->flight_departure_date,
-												'flight_departure_time'=>$userTrips['trip_detail']->flight_departure_time
+				$userTrips['flight_data']=array('flight_name'   =>         $userTrips['trip_detail']->flight_name,
+												'flight_number'    =>          $userTrips['trip_detail']->flight_number,
+												'flight_departure_date'   =>   $userTrips['trip_detail']->flight_departure_date,
+												'flight_departure_time'   	=>     $userTrips['trip_detail']->flight_departure_time
 													
 											);
 			}				
@@ -1436,6 +1437,8 @@ class HomeController extends Controller {
 			 	return redirect('/card-details');	
 		 }
 		 
+		 
+		 
 		/*
 		*Function tosend the notification to the users for pending emis
 		*params null
@@ -1475,63 +1478,67 @@ class HomeController extends Controller {
 								$tripCost = $tripvalue->trip_total_cost;				
 												
 								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
-								$tripEmiSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';
-									
-								$setDate = !empty($tripEmiSetAdmin)?$tripEmiSetAdmin:$checkoutdate;
 								
+								$tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
+															
 								$adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
 								
-								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($setDate))));
+								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
 								
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripvalue->adjustment_date);	
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);	
+							
+						
 							
 							if($tripCost > $paymentdetail)
 							{
-								$currentDate= date('y-m-d');
+								$currentDate= date('Y-m-d');
 								
-								foreach($dates as $datevalue)
-								{
-									//echo $datevalue;
-									if($currentDate > $datevalue && !empty($currentMonthPayment))
-									{
-										$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
-										
-										if($differenceDate == '3')
+								if(count($dates)>0){
+										foreach($dates as $datevalue)
 										{
-											//echo 'mail';
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-											
-										}elseif($differenceDate == '6'){
-											//echo 'mail';
-											
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-											
-										}elseif($differenceDate == '9')
-										{
-											
-											//echo 'mail';
-											
-											Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($trip_detail){
-														$message->to($trip_detail->email, $trip_detail->first_name)->subject('Welcome!');
-												});
-										}
+											//echo $datevalue;
+											if($currentDate > $datevalue && !empty($currentMonthPayment))
+											{
+												$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
+												
+												if($differenceDate == '3'){
+													//echo 'mail';
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+													
+												}elseif($differenceDate == '6'){
+													//echo 'mail';
+													
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+													
+												}elseif($differenceDate == '9'){											
+													//echo 'mail';
+													
+													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+														});
+												}
+											}
+												
 									}
-										
+								}else{
 									
+									// full amount payment emi 
 									
+									Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+													$message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
+										});
 									
 								}
 								
 							}
-							
-							//echo '<pre>';print_r($dates); 
-					}
+					}								
+					echo '<pre>';print_r($trip_detail);	 
+			}
 								
-					//echo '<pre>';print_r($trip_detail);	
-		}		 
+		 
 		
 }

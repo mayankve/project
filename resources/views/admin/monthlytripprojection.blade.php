@@ -45,7 +45,7 @@
                     <tr>
                         <th>Trip Name</th>
                         <th>Base Cost</th>
-                        <th>Booking Date</th>		 
+                        <th>Trip Booked Date</th>		 
                         <th>Nex Payment Date</th>
                     </tr>
                 </thead>

@@ -106,10 +106,6 @@ $padiamountbyuser=0;
 
     </div>
 
-
-
-  
-
 	@if (!empty($tripdata['trip_detail']))
 		
 	<?php //echo $tripdata['trip_detail'];die;?>
@@ -173,8 +169,6 @@ $padiamountbyuser=0;
                                                         <div class="col-sm-12">
 
                                                             <div class="row">
-
-
 
                                                                 <div class="col-sm-2">
 
@@ -744,13 +738,14 @@ $padiamountbyuser=0;
 							
                       </div>
 						<?php
-						//echo $tripdata['trip_detail']->create_date;die;
-							
+				
+							 $monthlyPaymentDate = strtotime(!empty($tripdata['trip_detail']->monthly_payment_date)?$tripdata['trip_detail']->monthly_payment_date:'');
+							 
 							$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($tripdata['trip_detail']->create_date))));
-							
+						
 							$adjustmentdate = strtotime(!empty($tripdata['trip_detail']) ? $tripdata['trip_detail']->adjustment_date : '');
 										
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripdata['trip_detail']->adjustment_date);
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$monthlyPaymentDate);
 						//echo '<pre>';print_r($dates);die;
 						
 						if(!empty($tripdata['trip_detail']->trip_total_cost))
@@ -800,9 +795,10 @@ $padiamountbyuser=0;
 													break;
 												}
 											}
-															
-										$emi= (($toBePaid/count($dates)) * $currentMonth) -  $paidamount;	
-											
+										if(count($dates)>0){											
+											$emi= (($toBePaid/count($dates)) * $currentMonth) -  $paidamount;	
+										}else{
+											$emi= $toBePaid -  $paidamount;	}											
 								  } else {							
 											echo $message = "<b>There is nothing to pay</b>";
 										}		
@@ -835,25 +831,25 @@ $padiamountbyuser=0;
 								</div>
 							</div>					
 						</div>
-						
+						<?php if(!empty($currentMonth)){?>
 						<div class="row">							
 							<div class="col-sm-6">
 								<div class="update-btn">
 									<div class="panel-tools">
 										<label style="color: black">Emi Month: </label>
-										<label class="total_addon_cost" style="color: black"><?php echo !empty($currentMonth)?$currentMonth:'';?></label></br>
+										<label class="total_addon_cost" style="color: black"><?php echo !empty($currentMonth)?$currentMonth:'0';?></label></br>
 										
 									</div>
 								</div>
 							</div>					
-						</div>
+						</div><?php }?>
 						
 					  <div class="row">						
 							<div class="col-sm-12">
 								<div class="update-btn">
 									<div class="panel-tools">
-										<label style="color: black">Emi payment date : </label>
-										<label class="total_addon_cost" style="color: black"><?php echo date('d',$emiDate).'th';?> of each month</label></br>
+										<label style="color: black">Payment date : </label>
+										<label class="total_addon_cost" style="color: black"><?php echo(!empty($currentMonth))?date('d',$monthlyPaymentDate).'th of each month': date('15').'th of this month';?></label></br>
 										
 									</div>
 								</div>

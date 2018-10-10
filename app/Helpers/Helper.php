@@ -7,18 +7,6 @@ use Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-// use App\Category;
-// use App\Product;
-// use App\ShoppingCart;
-// use App\ShoppingCartDetail;
-// use App\PromotionDurationRule;
-// use App\PromotionBuyGetRule;
-// use App\ShoppingCartAppliedPromotionRule;
-// use App\PromotionOrderValueRule;
-// use App\PostcodeFreight;
-// use App\PromotionFreightRule;
-// use App\User;
-
 class Helper
 {
 	/**
@@ -99,19 +87,27 @@ class Helper
      * @return array
      */
 	 
-	 public  static function getDateBetweenDates($emiDate,$adjustMentDate,$toCheckEmiDate)
+	 public  static function getDateBetweenDates($emiDate,$adjustMentDate,$monthlyPaymentDate=false)
 	 {	
-			//echo $toCheckEmiDate;die;
+	 
+		
 		$dates=array();
+	 
+		 $paymentday= strtotime(!empty($monthlyPaymentDate)?$monthlyPaymentDate:(date('Y-m-15')));
+
 		for($second= $emiDate; $second <= $adjustMentDate; $second+=86400)
-					{	
-						$date= date('Y-m-d',$second);
+			{	
+								$date= date('Y-m-d',$second);
+								$days = date('d',$second);
 							
-						if($date == $toCheckEmiDate){	
+					if($days == date('d',$paymentday)){	
 							array_push($dates,$date);
-						}	
-					}
-			return $dates;		
+						}
+							
+						
+			}
+			
+		return $dates;		
 										
 	 }
 
