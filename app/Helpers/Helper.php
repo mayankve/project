@@ -57,7 +57,7 @@ class Helper
 		
 		$activityflight= DB::table('trip_included_activity_airline')
 						->join('airlines', 'trip_included_activity_airline.airline_name', '=', 'airlines.id')
-						->where('trip_included_activity_airline.airline_departure_date', '>', date('Y-m-d'))
+						//->where('trip_included_activity_airline.airline_departure_date', '>', date('Y-m-d'))
 						->where('trip_included_activity_airline.trip_id', '=', $tripId)
 						->where('trip_included_activity_airline.activity_id', '=', $activityId)
 						->where('trip_included_activity_airline.id', $flightId)
@@ -73,7 +73,7 @@ class Helper
 		
 		$activityhotel= DB::table('trip_included_activity_hotel')
 						->where('trip_id', '=', $tripId)
-						->where('hotel_due_date', '>', date('Y-m-d'))
+						//->where('hotel_due_date', '>', date('Y-m-d'))
 						->where('activity_id', '=', $activityId)
 						->where('id', $hotelId)
 						->where('status', '=', '1')
@@ -88,23 +88,19 @@ class Helper
      */
 	 
 	 public  static function getDateBetweenDates($emiDate,$adjustMentDate,$monthlyPaymentDate=false)
-	 {	
-	 
+	 { 
 		
-		$dates=array();
-	 
+		 $dates=array();
+		
 		 $paymentday= strtotime(!empty($monthlyPaymentDate)?$monthlyPaymentDate:(date('Y-m-15')));
-
+		 
 		for($second= $emiDate; $second <= $adjustMentDate; $second+=86400)
 			{	
-								$date= date('Y-m-d',$second);
-								$days = date('d',$second);
-							
-					if($days == date('d',$paymentday)){	
-							array_push($dates,$date);
-						}
-							
-						
+					$date= date('Y-m-d',$second);
+					$days = date('d',$second);							
+				if($days == date('d',$paymentday)){	
+						array_push($dates,$date);
+					}			
 			}
 			
 		return $dates;		
