@@ -44,27 +44,27 @@ class CartController extends Controller
 		//session_start();				
 		
 		$userId = Auth::id();
-		$trip				=	!empty($request->session()->get('card_item')['trip_id'])	?	$request->session()->get('card_item')['trip_id']:'';
+		$trip				=	!empty($request->session()->get('card_item')['trip_id'])	?	                 $request->session()->get('card_item')['trip_id']:'';
 		$tripis_land_only	=	$request->session()->get('card_item')['is_land_only'];
-		$flight				= 	!empty($request->session()->get('card_item')['included_activity_flight'])?$request->session()->get('card_item')['included_activity_flight']:'0';
-		$trip_flight_id		=	!empty($request->session()->get('card_item')['flight_id'])?$request->session()->get('card_item')['flight_id']:'';
-		$trip_hotel_id		=	!empty($request->session()->get('card_item')['selected_hotel'])?$request->session()->get('card_item')['selected_hotel']:'';
-		$selected_add_on_id	=	!empty($request->session()->get('card_item')['selected_addons'])?$request->session()->get('card_item')['selected_addons']:'';
-		$selected_addon_travelers=	!empty($request->session()->get('card_item')['selected_addon_traveler'])?$request->session()->get('card_item')['selected_addon_traveler']:'';
-		$selected_addon_flight	=	!empty($request->session()->get('card_item')['addon_flight_name'])?$request->session()->get('card_item')['addon_flight_name']:'0';
-		$selected_addon_hotel	=	!empty($request->session()->get('card_item')['selected_addon_hotel'])?$request->session()->get('card_item')['selected_addon_hotel']:'';
-		$trip_hotel_amount		=	!empty($request->session()->get('card_item')['trip_hotel_amount'])?$request->session()->get('card_item')['trip_hotel_amount']:'';
-		$finaladd_on_amount		=	!empty($request->session()->get('card_item')['final_add_amount'])?$request->session()->get('card_item')['final_add_amount']:'';
-		$add_on_flight_name      =  !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
-		$add_on_flight_number    =  !empty($request->session()->get('card_item')['add_on_flight_number'])?$request->session()->get('card_item')['add_on_flight_number']:'';
-		$add_on_departure_date   =  !empty($request->session()->get('card_item')['add_on_departure_date'])?$request->session()->get('card_item')['add_on_departure_date']:'';
-		$add_on_departure_time   =  !empty($request->session()->get('card_item')['add_on_departure_time'])?$request->session()->get('card_item')['add_on_departure_time']:'';
-		$add_on_land             =  !empty($request->session()->get('card_item')['add_on_land-only'])?$request->session()->get('card_item')['add_on_land-only']:'';
-		$is_land_only_activity   =   !empty($request->session()->get('card_item')['is_land_only_activity_flight'])?$request->session()->get('card_item')['is_land_only_activity_flight']:'';
-		$activity_flight_name    =   !empty($request->session()->get('card_item')['activity_flight_name'])?$request->session()->get('card_item')['activity_flight_name']:'';
-		$activity_flight_number  =   !empty($request->session()->get('card_item')['activity_flight_flight_number'])?$request->session()->get('card_item')['activity_flight_flight_number']:'';
-		$activity_flight_date    =   !empty($request->session()->get('card_item')['activity_flight_departure_date'])?$request->session()->get('card_item')['activity_flight_departure_date']:'';
-		$activity_flight_time   =   !empty($request->session()->get('card_item')['activity_flight_departure_time'])?$request->session()->get('card_item')['activity_flight_departure_time']:'';
+		$flight				= 	!empty($request->session()->get('card_item')['included_activity_flight'])?       $request->session()->get('card_item')['included_activity_flight']:'0';
+		$trip_flight_id		=	!empty($request->session()->get('card_item')['flight_id'])?                    $request->session()->get('card_item')['flight_id']:'';
+		$trip_hotel_id		=	!empty($request->session()->get('card_item')['selected_hotel'])?               $request->session()->get('card_item')['selected_hotel']:'';
+		$selected_add_on_id	=	!empty($request->session()->get('card_item')['selected_addons'])?             $request->session()->get('card_item')['selected_addons']:'';
+		$selected_addon_travelers=	!empty($request->session()->get('card_item')['selected_addon_traveler'])? $request->session()->get('card_item')['selected_addon_traveler']:'';
+		$selected_addon_flight	=	!empty($request->session()->get('card_item')['addon_flight_name'])?        $request->session()->get('card_item')['addon_flight_name']:'0';
+		$selected_addon_hotel	=	!empty($request->session()->get('card_item')['selected_addon_hotel'])?     $request->session()->get('card_item')['selected_addon_hotel']:'';
+		$trip_hotel_amount		=	!empty($request->session()->get('card_item')['trip_hotel_amount'])?        $request->session()->get('card_item')['trip_hotel_amount']:'';
+		$finaladd_on_amount		=	!empty($request->session()->get('card_item')['final_add_amount'])?         $request->session()->get('card_item')['final_add_amount']:'';
+		$add_on_flight_name      =  !empty($request->session()->get('card_item')['add_on_flight_name'])?       $request->session()->get('card_item')['add_on_flight_name']:'';
+		$add_on_flight_number    =  !empty($request->session()->get('card_item')['add_on_flight_number'])?       $request->session()->get('card_item')['add_on_flight_number']:'';
+		$add_on_departure_date   =  !empty($request->session()->get('card_item')['add_on_departure_date'])?      $request->session()->get('card_item')['add_on_departure_date']:'';
+		$add_on_departure_time   =  !empty($request->session()->get('card_item')['add_on_departure_time'])?      $request->session()->get('card_item')['add_on_departure_time']:'';
+		$add_on_land             =  !empty($request->session()->get('card_item')['add_on_land-only'])?            $request->session()->get('card_item')['add_on_land-only']:'';
+		$is_land_only_activity   =   !empty($request->session()->get('card_item')['is_land_only_activity_flight'])? $request->session()->get('card_item')['is_land_only_activity_flight']:'';
+		$activity_flight_name    =   !empty($request->session()->get('card_item')['activity_flight_name'])?         $request->session()->get('card_item')['activity_flight_name']:'';
+		$activity_flight_number  =   !empty($request->session()->get('card_item')['activity_flight_flight_number'])? $request->session()->get('card_item')['activity_flight_flight_number']:'';
+		$activity_flight_date    =   !empty($request->session()->get('card_item')['activity_flight_departure_date'])? $request->session()->get('card_item')['activity_flight_departure_date']:'';
+		$activity_flight_time   =   !empty($request->session()->get('card_item')['activity_flight_departure_time'])?  $request->session()->get('card_item')['activity_flight_departure_time']:'';
 		//trip travelere info //
 		//print_r($selected_addon_travelers);die;
 		$data['tripTravelers'] = DB::table('trip_traveler')

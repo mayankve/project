@@ -43,7 +43,7 @@
             </div>
         </div>
 
- <form method="POST" name="trip-upload-video" action=""  id="trip-upload-video">  
+{!! Form::open(['url' => 'admin/store_video', 'files' => true, 'id' => 'form-create-trip', 'method'=>'post']) !!}
             <div class="form-fluid">
                 <div class="row-box">
                     <div class="col-md-12">
@@ -51,24 +51,50 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-6  cust-input-group">
-                                <label class="mycss&#x20;classes&#x20;"><span>Trip</span>
-                                    <select name="select_trip" class="form-control">
-                                        <option value="">Select Trip</option>
-                                     </select></label> 
+                              
+													 
+										<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+										{!! Form::label('name', 'Trip') !!}               
+										
+										
+										{!! Form::select('tripname', $tripDetail, null, ['class' => 'form-control']) !!}
+										@if($errors->has('name'))
+										<span class="help-block">{{ $errors->first('name') }}</span>
+										@endif
+									</div>
                             </div>
                             <div class="col-md-6  cust-input-group">
-                                <label for="trip_video">Upload Trip Video	</label><input type="file" name="trip_video" class="form-control" id="trip_video">                    </div>
+							
+                               <div class="form-group {{ $errors->has('video') ? 'has-error' : ''}}">
+									{!! Form::label('Upload Trip Video', 'Upload Trip Video') !!}
+									{!! Form::file('video', ['class' => 'form-control']) !!}
+									@if($errors->has('video'))
+									<span class="help-block">{{ $errors->first('video') }}</span>
+									@endif
+								</div>                
+
+								</div>
 
 
                         </div>
                         <div class="row ">     
                             <div class="col-md-6  cust-input-group">
-                                <label><span>About video</span><textarea name="about_video" class="form-control"></textarea></label>                    </div>
+							
+						<div class="form-group {{ $errors->has('about_trip') ? 'has-error' : ''}}">
+								{!! Form::label('about_trip', 'About Trip') !!}
+								{!! Form::textarea('about_trip', null, ['class' => 'form-control']) !!}
+								<!--<textarea class="form-control" name="about_trip" wrap="soft" ></textarea>-->
+								@if($errors->has('about_trip'))
+								<span class="help-block">{{ $errors->first('about_trip') }}</span>
+								@endif
+						</div>                 
+
+								</div>
 
                         </div>
                         <div class="row ">     
                             <div class="col-md-12 text-right ">
-                                <input type="submit" name="submit" id="submitbutton" value="Upload&#x20;Video">                    </div>
+                                 {{ Form::submit('Submit', array('class' => 'btn btn-success')) }}      </div>
 
                         </div>
                     </div>
@@ -81,7 +107,7 @@
                 </div>
 
             </div>
-        </form>
+        {!! Form::close() !!}
     </div>
     <script type="text/javascript">
         $('.confirmation').on('click', function () {

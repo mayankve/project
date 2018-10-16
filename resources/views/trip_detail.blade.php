@@ -100,11 +100,11 @@ $padiamountbyuser=0;
 
 
 
-    <div class="row text-right">
+    
 
-        <!--<h4><a href="{{url('cart')}}">Checkout this trip</a></h4>-->
 
-    </div>
+
+  
 
 	@if (!empty($tripdata['trip_detail']))
 		
@@ -169,6 +169,8 @@ $padiamountbyuser=0;
                                                         <div class="col-sm-12">
 
                                                             <div class="row">
+
+
 
                                                                 <div class="col-sm-2">
 

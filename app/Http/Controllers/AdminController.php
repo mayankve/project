@@ -2018,8 +2018,52 @@ class AdminController extends Controller {
      */
     public function uploadVideo() {
 
-        return view('admin/uploadvideo');
+	
+	
+		$tripDetail = Trip::where(['status' => '1'])->pluck('name', 'id')->toArray();
+
+             // echo '<pre>';print_r($tripDetail);die;
+        return view('admin/uploadvideo',compact('tripDetail'));
     }
+	
+	
+	
+	 /**
+     * Function to return upload video view
+     * @param void
+     * @return url
+     */
+	 
+	 
+	 public function storeVideo(Request $request)
+	 {
+		 
+		 $rules = [
+            'tripname'          => 'required',
+            'video'          => 'required'         
+			];
+			
+			//echo '<pre>'; print_r($request->all()); exit;
+			
+		$this->validate($request, $rules);
+	
+		//$trip = $request->only(['tripname', 'video']);
+		$trip['trip_id']= !empty($request->input('tripname'))?   $request->input('tripname') : '';
+		$trip['about_video'] = !empty($request->input('about_trip'))?     $request->input('about_trip')    :   '';
+		if( $request->hasFile('video') )
+        {
+            $trip['video_name'] = $this->imageUpload($request->file('video'), 'trip', 'banner-img');
+        }
+		
+		
+		 $id = DB::table('trip_video')->insertGetId($trip);
+		 
+		return redirect('admin/uploadvideo');									 
+											 
+	 }
+	
+	
+	
 
 //    public function deleteVideo(Request $request) {
 //        Trip::destroy($id);

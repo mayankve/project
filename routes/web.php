@@ -236,6 +236,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 	Route::get('downloadcsv','AdminController@downloadCsv');
 	
 	
+	// create video for trip
+	 Route::post('/store_video', 'AdminController@storeVideo');
+	  
+	
+	
 });
 
 
