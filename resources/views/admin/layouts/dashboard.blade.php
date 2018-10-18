@@ -107,7 +107,7 @@
                             <h2><div class="hombtn"><i class="fa fa-home home-icon" aria-hidden="true"></i></div>Dashboard</h2>
                         </div>
                         <ul class="nav tablist-menu" id="accordion1">
-                            <li><a class="tablinks" href="{{ url('admin/view_profile') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
+                            <li><a class="tablinks"  id="my_information" href="{{ url('admin/view_profile') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>My information</a></li>
 
 								<li><a class="tablinks" href="{{ url('admin/users') }}"><i class="fa fa-info-circle" aria-hidden="true"></i>Registered User</a></li>
 
@@ -153,7 +153,7 @@
 
 
 
-                            <li><a href="{{ url('admin/listtrip') }}" class="tablinks " id="my_information"><i class="fa fa-list margin-bottom"></i>Trips</a></li>
+                            <li><a href="{{ url('admin/listtrip') }}" class="tablinks " ><i class="fa fa-list margin-bottom"></i>Trips</a></li>
                             <li>
                                 <a data-toggle="collapse" href="#manage_trips" class="tablinks "  data-parent="#accordion1" href="#my_trip"><i class=" fa fa-cog fa-spin margin-bottom"></i>Manage Trips</a>
                                 <ul id="manage_trips" class="collapse sub-menu">
@@ -165,8 +165,8 @@
                                     <li><a href="#" class="tablinks"> Hotel Roommates</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ url('admin/createtrip') }}" class="tablinks " id="my_information"><i class=" fa fa-cog fa-spin margin-bottom"></i>Create New Trip</a></li>
-                            <li><a href="{{ url('admin/uploadvideo') }}" class="tablinks " id="my_information"><i class=" fa fa-video-camera margin-bottom"></i>Upload Trip's Video</a></li>
+                            <li><a href="{{ url('admin/createtrip') }}" class="tablinks"><i class=" fa fa-cog fa-spin margin-bottom"></i>Create New Trip</a></li>
+                            <li><a href="{{ url('admin/uploadvideo') }}" class="tablinks"><i class=" fa fa-video-camera margin-bottom"></i>Upload Trip's Video</a></li>
                         </ul>
                         <!-- Brand link-->
                         <div class="brandlink">

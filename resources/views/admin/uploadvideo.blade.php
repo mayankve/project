@@ -30,33 +30,39 @@
             </div>
             <div class="col-sm-6 text-right">
                 <h3 class="userName">
-                    Welcome Vaishnavash Shukla</h3>
+                    Welcome {{ Auth::user()->name }}
+				</h3>
             </div>
         </div>
     </div>
     <div class="clearfix create-trip">
         <div class="panel panel-primary">
             <div class="panel-heading white-bg">
-                <h3 class="panel-title">Upload Passed Trip's Video</h3>
+                <h3 class="panel-title">Upload Trip's Video</h3>
                 <div class="panel-tools">
                 </div>
             </div>
         </div>
+	@if ($message = Session::get('error'))
+			<div class="alert alert-danger alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>	
+					<p>{{ $message }}</p>
+			</div>
+	@endif
+	{!! Form::open(['url' => 'admin/store_video', 'files' => true, 'id' => 'form-create-trip', 'method'=>'post']) !!}
 
-{!! Form::open(['url' => 'admin/store_video', 'files' => true, 'id' => 'form-create-trip', 'method'=>'post']) !!}
+	@if(Session::has('message'))
+	<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+	@endif
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-fluid">
                 <div class="row-box">
                     <div class="col-md-12">
-
                         <br/>
                         <div class="row">
                             <div class="col-md-6  cust-input-group">
-                              
-													 
 										<div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
 										{!! Form::label('name', 'Trip') !!}               
-										
-										
 										{!! Form::select('tripname', $tripDetail, null, ['class' => 'form-control']) !!}
 										@if($errors->has('name'))
 										<span class="help-block">{{ $errors->first('name') }}</span>
@@ -105,7 +111,6 @@
                     </div>
                     <p></p>
                 </div>
-
             </div>
         {!! Form::close() !!}
     </div>
