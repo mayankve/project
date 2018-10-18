@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Response;
 use File;
+use Session;
 use App\User;
 use App\Trip;
 use App\UserProfile;
@@ -31,6 +32,7 @@ use App\TripTodo;
 use App\TripTravelerProfile;
 use App\TripMiscExpense;
 use App\TripTraveler;
+use App\TripVideo;
 use Validator;
 use Mail;
 
@@ -2037,29 +2039,48 @@ class AdminController extends Controller {
 	 
 	 public function storeVideo(Request $request)
 	 {
-		 
 		 $rules = [
             'tripname'          => 'required',
             'video'          => 'required'         
 			];
 			
-			//echo '<pre>'; print_r($request->all()); exit;
-			
 		$this->validate($request, $rules);
 	
 		//$trip = $request->only(['tripname', 'video']);
+		
 		$trip['trip_id']= !empty($request->input('tripname'))?   $request->input('tripname') : '';
+		
 		$trip['about_video'] = !empty($request->input('about_trip'))?     $request->input('about_trip')    :   '';
 		if( $request->hasFile('video') )
         {
             $trip['video_name'] = $this->imageUpload($request->file('video'), 'trip', 'banner-img');
         }
+		$tripExist = DB::table('trip_video')->where('trip_id', $trip['trip_id'])->first();
 		
+		$trip->trip_id = $trip['trip_id'];
+		$trip->about_video = $trip['about_video'];
+		$trip->video_name =  $trip['video_name'];
 		
-		 $id = DB::table('trip_video')->insertGetId($trip);
-		 
+		if(isset($tripExist->trip_id)){
+			//$saveId = TripVideo::save($trip);
+			$updateId = TripVideo::find($tripExist->id)->fill($trip)->save();
+		}
+		else{
+			$saveId = TripVideo::create($trip);
+		}
+		 if($saveId){
+				Session::flash('message', 'Trip Video details has been saved!!!'); 
+				Session::flash('alert-class', 'alert-success'); 
+		 }
+		 elseif($updateId){
+			  Session::flash('message', 'Trip Video details has been updated!!!'); 
+			  Session::flash('alert-class', 'alert-success'); 
+		 }
+		 else{
+			 Session::flash('message', 'Trip Video details has been updated!!!'); 
+			Session::flash('alert-class', 'alert-error');
+		 }
 		return redirect('admin/uploadvideo');									 
-											 
 	 }
 	
 	
