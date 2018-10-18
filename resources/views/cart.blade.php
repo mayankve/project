@@ -2087,9 +2087,10 @@ $addonfinal_price_cost = 0;
 
                     </div>
 						
+				
 
-					<div>
-
+					<div >
+							
 					<?php //echo $finalamount;die;?>
 					@if (!empty($tripIncludedActivities) && $finalamount > 0) 
 						<button type="button" id="checkout"  name="checkout">Process to Checkout</button>
