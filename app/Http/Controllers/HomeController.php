@@ -22,6 +22,7 @@ use App\TripTraveler;
 use App\UserTrip;
 use App\TripTravelerProfile;
 use App\UserCard;
+use App\TripVideo;
 use Helper;
 use Mail;
 
@@ -532,17 +533,24 @@ class HomeController extends Controller {
      */
     public function listTrip() {
         //for Trips
-        $trips = Trip::where('status', '1')
+        $trips['pictures'] = Trip::where('status', '1')
              ->orderBy('id', 'desc')
              ->get();
+			 
+		 $trips['videos'] = TripVideo::where('is_deleted', '0')
+		 ->orderBy('id', 'desc')
+		 ->get();
+		 
+		//echo "<pre>";print_r($trips['pictures']);die;
+		
         $userId = Auth::id();
-        //if (isset($userId)) {
-            $userData = User::where('id', '=', $userId)->first();
-            return view('triplist', ['trips' => $trips, 'data' => $userData]);
-       // } else {
-           // return view('triplist', ['trips' => $trips]);
-        //}
-    }
+			//if (isset($userId)) {
+				$userData = User::where('id', '=', $userId)->first();
+				return view('triplist', ['trips' => $trips, 'data' => $userData]);
+		   // } else {
+			   // return view('triplist', ['trips' => $trips]);
+			//}
+		}
 
     /**
      * Function to return trip view

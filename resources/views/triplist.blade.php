@@ -16,10 +16,10 @@
             <div class="text-area">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-2 text-right col-md-offset-4 trip-type active" id="trip-type">
+                        <div class="col-md-2 text-right col-md-offset-4 trip-type active trip-banner" id="trip-type">
                             Where We Are Going
                         </div>
-                        <div class="col-md-2 trip-type" id="trip-type">
+                        <div class="col-md-2 trip-type trip-video" id="trip-type">
                             Where We've Been
                         </div>
                     </div>
@@ -27,11 +27,11 @@
             </div>
         </div>
 
-        <div class="container trip-container">
+        <div class="container trip-container banner-container">
             <div class="row no-gutter">
                 <br/>
-                @if(count($trips)>0)
-                @foreach($trips AS $trip)
+                @if(count($trips['pictures'])>0)
+                @foreach($trips['pictures'] AS $trip)
                 <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
                     <img src="{{ url('/') . '/uploads/trip/' . $trip->banner_image }}" alt="trip-01" class="img-responsive" style="min-height: 289px;min-width: 387px;">
                     <div class="text-overlay">
@@ -47,37 +47,37 @@
                 @endif
             </div>
         </div>
-        <div class="container trip-container" style="display: none;">
-
+        <div class="container trip-container video-container" style="display:none">
             <div class="row no-gutter">
                 <br/>
-
-
+				@if(count($trips['videos'])>0)
+                @foreach($trips['videos'] AS $trip)
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
-                    <div><h4>Ghana, Togo, Benin & Morocco 2017</h4></div>
+                    <div><h4>{{$trip->about_video}}</h4></div>
                     <video width="400"  controls>
-                        <source src="/assets/passed_trip_videos/0ce814a3dfbd684ea9a3a6a8656b91f8.mp4" type="video/mp4">
+                        <source src="{{ url('/') . '/uploads/trip/' . $trip->video_name }}" type="video/mp4">
                         Your browser does not support HTML5 video.
                     </video>
                     <div><p>This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.</p></div>
                 </div>
-
-
-
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
-                    <div><h4>Australia New Zealand 2018</h4></div>
-                    <video width="400"  controls>
-                        <source src="/assets/passed_trip_videos/0ce814a3dfbd684ea9a3a6a8656b91f8.mp4" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
-                    <div><p>This trip video.</p></div>
-                </div>
+				@endforeach
+                @endif
             </div>
         </div>
     </div>
     <script type="text/javascript">
-        $('.confirmation').on('click', function () {
-            return confirm('Are you sure?');
+        $('.trip-video').on('click', function () {
+			$('.banner-container').hide();
+			$('.video-container').show();
+			$(this).addClass('active');
+			$('.trip-banner').removeClass('active');
+        });
+		$('.trip-banner').on('click', function () {
+			$('.banner-container').show();
+			$('.video-container').hide();
+			$(this).addClass('active');
+			$('.trip-video').removeClass('active');
+           // return confirm('Are you sure?');
         });
     </script>
 </div>
