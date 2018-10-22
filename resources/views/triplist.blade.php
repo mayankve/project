@@ -53,12 +53,12 @@
 				@if(count($trips['videos'])>0)
                 @foreach($trips['videos'] AS $trip)
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
-                    <div><h4>{{$trip->about_video}}</h4></div>
+                    <div><h4></h4></div>
                     <video width="400"  controls>
                         <source src="{{ url('/') . '/uploads/trip/' . $trip->video_name }}" type="video/mp4">
                         Your browser does not support HTML5 video.
                     </video>
-                    <div><p>This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.This trip video.</p></div>
+                    <div><p>{{$trip->about_video}}</p></div>
                 </div>
 				@endforeach
                 @endif
