@@ -618,9 +618,9 @@ class HomeController extends Controller {
 		
         $flag = 1;
         if (count($traveler_details) > 0) {
-            foreach ($traveler_details as $index => $row) {
-					if(count($traveler_details)<=$tripData->maximum_spots)
-					{
+			if(count($traveler_details)<= $tripData->maximum_spots)
+				{
+            foreach ($traveler_details as $index => $row) {					
 						$travlerdataconfirm =  TripTraveler::where('is_confirm', '1')
 												->where('trip_id',$trip_id)
 												->get();
@@ -680,12 +680,12 @@ class HomeController extends Controller {
 						}else{
 								return redirect('book/'.$trip_id)
 									->with('error','you cannot add more traveler to this trip');
-						}
-					}else{					
+						}					
+            $flag++; }
+			}else{					
 						return redirect('book/'.$trip_id)
 									->with('error','you cannot  add more traveler to this trip');
 					}
-            $flag++; }
 			
 
             // payment info detail save//
@@ -766,6 +766,8 @@ class HomeController extends Controller {
                         ->where('status', '=', '1')
                         ->get();
             }
+			
+		//echo '<pre>';print_r($addon['tripAddonFlights']);die;	
 
             for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
                 $tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
@@ -782,6 +784,8 @@ class HomeController extends Controller {
             }
         }
 
+		
+		
         //Trip Included Activities Data
 
         $tripactivityarray = array();
@@ -791,7 +795,7 @@ class HomeController extends Controller {
                 ->where('activity_due_date', '>', date('y-m-d'))
                 ->where('status', '=', '1')
                 ->get();
-				//echo '<pre>';print_r($tripactivityarray);die;
+				
 
         if (!empty($activity['tripIncludedActivities_check'])) {
             foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
@@ -1493,9 +1497,7 @@ class HomeController extends Controller {
 								
 								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
 								
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);	
-							
-						
+							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);
 							
 							if($tripCost > $paymentdetail)
 							{

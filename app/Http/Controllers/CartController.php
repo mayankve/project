@@ -199,9 +199,7 @@ class CartController extends Controller
 							$arrtytostring= '(' . implode(',', $value[3]) .')';
 							//echo $arrtytostring;
 							$addondetail['travler_info'][$key]= DB::select('select * from trip_traveler where id IN '.$arrtytostring.' and  trip_id='.$trip.' and status="1" and is_confirm="1"');
-							// foreach($value[3] as $travelerkey=>$traveler){
-									// $addondetail['travler_info'][$key][]=	DB::select('select * from trip_traveler where trip_id='.$trip.' and status="1" and id='.$traveler.' and is_confirm="1"');
-							// }
+							
 						}						
 				}	
 			//echo '<pre>';print_r($addondetail);die;
@@ -231,8 +229,12 @@ class CartController extends Controller
 	// end here add on functionality//
 	
 	
+		//echo '<pre>';print_r($addonsetrecord);die;		
 	
-	//echo '<pre>';print_r($addonsetrecord);die;		
+	
+	
+	
+	
 	
 	
 		// trip activity start here ..//

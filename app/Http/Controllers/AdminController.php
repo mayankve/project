@@ -1005,6 +1005,7 @@ class AdminController extends Controller {
             }
 
             // Included Activity Airlines
+			//echo '<pre>';print_r($request->get('addon')[$key]['addons_airlines']);
             foreach($request->get('addon')[$key]['addons_airlines'] as $key1 => $val1)
             {
                 $rules["addon.{$key}.addons_airlines.{$key1}.airline_name"]           = 'required';
