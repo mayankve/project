@@ -29,9 +29,12 @@
     <div class="descp-pera">
     <h2>About <span>Trip</span></h2>
     <p><?php echo strip_tags($tripdata->about_trip);?></p>
-    <p><em>Oct 26,2017</em></p>
+    <p><em>
+   <?php 
+     $date=date_create($tripdata->date);
+     echo "<br>".date_format($date,"M d, Y");?></em></p>
     <?php
-        echo $userId = Auth::id();
+       // echo $userId = Auth::id();
         if(isset($userId)){?>
             <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
         <?php }
@@ -50,8 +53,8 @@
 
 <div class="section section-header">
     <div class="parallax pattern-image">
-        <video poster="/assets/img/video-poster.jpg" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-            <source src="/assets/aat_panama2017.mp4" type="video/mp4">
+        <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">
+            <source src="{{ url('/') . '/uploads/trip/' . $trip->video_name }}" type="video/mp4">
         </video>
         <div class="container">
             <div class="content">
@@ -61,7 +64,8 @@
     </div>
     <a href="#" data-scroll="true" data-id="#about" class="scroll-arrow hidden-xs hidden-sm">
         <img src="/aat_zend/public/assets/img/scroll-icon.png" alt="scroll"> </a>
-</div>            <hr>
+</div>           
+<hr>
 </div>
 
 @endsection
