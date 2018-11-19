@@ -162,7 +162,7 @@ Route::get('payment-cancel', 'PaymentController@cancel');
 	
 //set crone url emi email//
 
-	Route::get('/emipendingmail','HomeController@emiPendingmail');
+	Route::get('/emipendingmail','HomeController@emiPendingEmail');
 	
 });
 

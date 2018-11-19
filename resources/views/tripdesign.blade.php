@@ -275,7 +275,7 @@
                             <input type="hidden" class="trip_hotle_id" name="trip_hotle_id" value="">
                             <input type="hidden" class="final_add_amount" name="final_add_amount" value="">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 sendbtn">
                                     <input type="submit" name="button" id="cartbutton" value="Go to cart">
                                 </div>
                             </div>
