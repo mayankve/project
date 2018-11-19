@@ -276,10 +276,6 @@ class HomeController extends Controller {
      * @return array
      */
     public function userDashboard() {
-		
-		
-		
-		
 		 $tripalldetail=array();
 		 
 		  $userId = Auth::id();
