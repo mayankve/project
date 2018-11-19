@@ -15,6 +15,7 @@ use App\Trip;
 use App\User;
 use App\Country;
 use App\UserProfile;
+use Helper;
 
 
 class CartController extends Controller
@@ -44,7 +45,7 @@ class CartController extends Controller
 		//session_start();				
 		
 		$userId = Auth::id();
-		$trip				=	!empty($request->session()->get('card_item')['trip_id'])	?	                 $request->session()->get('card_item')['trip_id']:'';
+		$trip				=	!empty($request->session()->get('card_item')['trip_id'])?	                 $request->session()->get('card_item')['trip_id']:'';
 		$tripis_land_only	=	$request->session()->get('card_item')['is_land_only'];
 		$flight				= 	!empty($request->session()->get('card_item')['included_activity_flight'])?       $request->session()->get('card_item')['included_activity_flight']:'0';
 		$trip_flight_id		=	!empty($request->session()->get('card_item')['flight_id'])?                    $request->session()->get('card_item')['flight_id']:'';
@@ -202,24 +203,39 @@ class CartController extends Controller
 							
 						}						
 				}	
-			//echo '<pre>';print_r($addondetail);die;
+			
 				foreach($addondetail['add_on_detail'] as $keyofaddondetail=>$valuofaddon)
 				{		
 					$addonsetrecord[$keyofaddondetail]['add_on_detail']= (!empty($addondetail['add_on_detail'][$keyofaddondetail][0]))?$addondetail['add_on_detail'][$keyofaddondetail][0]:'';
 					$addonsetrecord[$keyofaddondetail]['flight_data'] = (!empty($addondetail['flight_data'][$keyofaddondetail][0]))?$addondetail['flight_data'][$keyofaddondetail][0]:'';
 					 $addonsetrecord[$keyofaddondetail]['hote_data'] = (!empty($addondetail['hote_data'][$keyofaddondetail][0]))?$addondetail['hote_data'][$keyofaddondetail][0]:'';
 					 
-					 if(!empty($addondetail['travler_info'][$keyofaddondetail]))
+					 
+					 //echo '<pre>';print_r($addondetail['travler_info'][$keyofaddondetail]);die;
+					 
+					if(!empty($addondetail['travler_info'][$keyofaddondetail]) && count($addondetail['travler_info'][$keyofaddondetail])<= $valuofaddon[0]->addons_maximum_spots)
 					 {
+						 //echo 'match';die;
 						 $flag=1;
-						
-						 foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1)
-						 {
-							 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;						 
 							
-						 }
+							$bookAddonAsPerTripIdConfirm= Helper::bookAddonAsPerTripId($trip,$confirm='1');
+							$bookAddonAsPerTripIdPending = Helper::bookAddonAsPerTripId($trip,$confirm='0');
+							
+							//echo '<pre>';print_r($bookAddonAsPerTripIdPending);		
+							
+							
+							
+						//echo $valuofaddon[0]->id;
+						 foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+							 
+							 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+						}
 						// exit();
 						 
+					 }else{
+						 //echo 'sdfdfd';die;
+						return  redirect('mytripdesign/'.$trip)
+											->with('error','you cannot add more traveler of addon'.$valuofaddon[0]->addons_name);
 					 }
 				}
 			}else{
@@ -229,7 +245,7 @@ class CartController extends Controller
 	// end here add on functionality//
 	
 	
-		//echo '<pre>';print_r($addonsetrecord);die;		
+	//echo '<pre>';print_r($addonsetrecord);die;		
 	
 	
 	

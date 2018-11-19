@@ -106,6 +106,13 @@ class Helper
 		return $dates;		
 										
 	 }
+	 
+	 public static function bookAddonAsPerTripId($trip,$confirm)
+	 {
+		 
+		 $tripDetail= DB::select('select * from trip_addon_traveler where trip_id='.$trip.' and is_confirm ='.$confirm.'');
+		 return $tripDetail;
+	 }
 
    
 }
