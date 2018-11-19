@@ -171,7 +171,7 @@ class CartController extends Controller
 			$addonsetkey=array();
 		}
 		
-	//echo '<pre>';print_r($addonsetkey);die;
+	
 		
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)
