@@ -1455,96 +1455,97 @@ class HomeController extends Controller {
 		{
 			//$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-7-23')))));
 			//echo $emiDate;die;
-			
+                    
 			$currentMonth = date('m');			
-			
+			$currentDate = date('Y-m-d');
 			$trip_detail = DB::table('checkout')
-								->join('trips', 'checkout.trip_id', '=', 'trips.id')
-								->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
-								->join('users','checkout.user_id', '=', 'users.id')
-								->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','users.email','users.name')
-								->where('trips.status', '=', '1')
-								 ->groupBy("user_trip.trip_id")
-								->get();
-				//echo  "<pre>";print_r($trip_detail);die;
+                            ->join('trips', 'checkout.trip_id', '=', 'trips.id')
+                            ->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
+                            ->join('users','checkout.user_id', '=', 'users.id')
+                            ->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','users.email','users.name')
+                            ->where('trips.status', '=', '1')
+                            //->where('trips.date', '>=', $currentDate)
+                            ->groupBy("user_trip.trip_id")
+                            ->get();
+								
+                            echo "<pre>";print_r($trip_detail);die;
 				
 				foreach($trip_detail as $tripvalue){ 
 				
 				//	get here paid amount detail//
 					$paymentdetail= DB::table("trip_reserve_payment")
-													->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
-													->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)
-													->sum('trip_reserve_payment.reserve_paid_amount');
+                                                            ->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+                                                            ->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)
+                                                            ->sum('trip_reserve_payment.reserve_paid_amount');
 													
 					$currentMonthPayment= DB::table("trip_reserve_payment")
-											->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
-											->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)	
-											->whereRaw('MONTH(create_date) = ?',[$currentMonth])
-											->get();							
-							
-						
-								$tripCost = $tripvalue->trip_total_cost;				
-												
-								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
+                                                                ->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+                                                                ->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)	
+                                                                ->whereRaw('MONTH(create_date) = ?',[$currentMonth])
+                                                                ->get();							
+
+
+                                        $tripCost = $tripvalue->trip_total_cost;				
+
+                                        $checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
+
+                                        $tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
+
+                                        $adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
+
+                                        $emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
 								
-								$tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
-															
-								$adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
-								
-								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
-								
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);
-							
-							if($tripCost > $paymentdetail)
-							{
-								$currentDate= date('Y-m-d');
-								
-								if(count($dates)>0){
-										foreach($dates as $datevalue)
-										{
-											//echo $datevalue;
-											if($currentDate > $datevalue && !empty($currentMonthPayment))
-											{
-												$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
-												
-												if($differenceDate == '3'){
-													//echo 'mail';
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-													
-												}elseif($differenceDate == '6'){
-													//echo 'mail';
-													
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-													
-												}elseif($differenceDate == '9'){											
-													//echo 'mail';
-													
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-												}
-											}
-												
-									}
-								}else{
-									
-									// full amount payment emi 
-									
-									Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-													$message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
-										});
-									
-								}
-								
-							}
-					}								
-					echo '<pre>';print_r($trip_detail);	 
-			}
-								
-		 
+                                        $dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);
+
+                                        if($tripCost > $paymentdetail)
+                                        {
+                                            $currentDate= date('Y-m-d');
+
+                                            if(count($dates)>0){
+                                                            foreach($dates as $datevalue)
+                                                            {
+                                                                //echo $datevalue;
+                                                                if($currentDate > $datevalue && !empty($currentMonthPayment))
+                                                                {
+                                                                    $differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
+
+                                                                    if($differenceDate == '3'){
+                                                                            //echo 'mail';
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+
+                                                                    }elseif($differenceDate == '6'){
+                                                                            //echo 'mail';
+
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+
+                                                                    }elseif($differenceDate == '9'){											
+                                                                            //echo 'mail';
+
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+                                                                    }
+                                                                }
+                                                    }
+                                                }else{
+
+                                                        // full amount payment emi 
+
+                                                        Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                        $message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
+                                                                });
+
+                                                }
+
+                                        }
+                        }								
+                       // echo '<pre>';print_r($trip_detail);	 
+        }
+
+
 		
 }

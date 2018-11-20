@@ -14,7 +14,7 @@
     <br>
     <!---- trip-view-banner --->
 <div class="trip-view-banner">
-    <img src="/aat_zend/public/assets/trip_banner/09c8158b6ace388bd76a7355ccb8ab9f.jpg" class="img-responsive" alt="" style="min-width: 100%">
+  <!--   <img src="/aat_zend/public/assets/trip_banner/09c8158b6ace388bd76a7355ccb8ab9f.jpg" class="img-responsive" alt="" style="min-width: 100%">-->
   <div class="parallax banner-title">
     <div class="container">
       <div class="content text-center">
@@ -54,7 +54,7 @@
 <div class="section section-header">
     <div class="parallax pattern-image">
         <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-            <source src="{{ url('/') . '/uploads/trip/' . $trip->video_name }}" type="video/mp4">
+            
         </video>
         <div class="container">
             <div class="content">
@@ -63,7 +63,7 @@
         </div>
     </div>
     <a href="#" data-scroll="true" data-id="#about" class="scroll-arrow hidden-xs hidden-sm">
-        <img src="/aat_zend/public/assets/img/scroll-icon.png" alt="scroll"> </a>
+        <img src="{{ url('/') . '/images/scroll-icon.png' }}" alt="scroll"> </a>
 </div>           
 <hr>
 </div>
