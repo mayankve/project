@@ -50,10 +50,26 @@
 
 
 <!--- Video section --->
-
+<?php
+//    echo  "<pre>";
+//    print_r($tripdata);
+//    die;
+?>
 <div class="section section-header">
     <div class="parallax pattern-image">
-        <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">
+       <?php       
+            if(!is_null($tripdata->banner_image)){
+                ?>
+            <img src="{{ url('/') . '/uploads/trip/'.$trip->banner_image}}" id="bgvid" playsinline="">
+        <?php
+            }
+            else{
+            ?> 
+            <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">    
+            <?php
+            }
+       ?>
+       
             
         </video>
         <div class="container">
