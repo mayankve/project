@@ -69,8 +69,6 @@
             <?php
             }
        ?>
-       
-            
         </video>
         <div class="container">
             <div class="content">

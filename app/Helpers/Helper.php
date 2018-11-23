@@ -106,6 +106,45 @@ class Helper
 		return $dates;		
 										
 	 }
+	 
+	 public static function bookAddonAsPerTripId($trip,$confirm,$addonId)
+	 {
+		 
+		 $tripDetail= DB::select('select * from trip_addon_traveler where trip_id='.$trip.' and is_confirm ='.$confirm.' and addon_id='.$addonId.'');
+		 return $tripDetail;
+	 }
+	 
+	 public static function bookTravelerAsPerUserId($trip,$confirm,$userId,$addonId)
+	 {
+		 
+		 $traverlerDetail= DB::select('select * from trip_addon_traveler where trip_id='.$trip.' and is_confirm ='.$confirm.' and user_id='.$userId.' and addon_id='.$addonId.'');
+		 
+		 return $traverlerDetail;
+		 
+	 }
 
+	 public static function bookTravlerePendingAsPerDate($tripId,$confirm,$addonId)
+	 {
+		 $bookPending =	DB::table('trip_addon_traveler')
+						->where('trip_id', '=', $tripId)
+						->where('is_confirm', '=', $confirm)
+						->where('addon_id', '=', $addonId)
+						->orderBy('created_date','DESC')
+						->get();
+		 return $bookPending;
+		 
+	 }
+	 
+	 public static function SpotsUpdateConfirm($tripId,$addonId)
+	 {
+			$traveleredata['is_confirm']='1';
+		 
+				$queryUpdate = DB::table('trip_addon_traveler')->where('trip_id',$tripId)
+															->where('addon_id',$addonId)
+															->where('is_confirm','=','0')
+														->update($traveleredata);
+		 
+		 return $queryUpdate;
+	 }
    
 }

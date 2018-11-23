@@ -537,10 +537,10 @@ $padiamountbyuser=0;
 												
 														$activityflight= Helper::getIncludedActivityAir($activity->trip_id,$activity->activity_id,$activity->activity_flight_id);
 																		
-														$activityhotel= Helper::getIncludedActivityAir($activity->trip_id,$activity->activity_id,$activity->activity_hotel_id); DB::table('trip_included_activity_hotel');
+														$activityhotel= Helper::getIncludeActivityHotel($activity->trip_id,$activity->activity_id,$activity->activity_hotel_id);
 																		
-
-														//echo '<pre>';print_r($activityflight);				
+													//echo $activity->activity_hotel_id;
+														//echo '<pre>';print_r($activityhotel);				
 													?>
                                                     <div class="form-group pdrow-group parent">
 

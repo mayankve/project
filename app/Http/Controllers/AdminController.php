@@ -2056,17 +2056,20 @@ class AdminController extends Controller {
         {
             $trip['video_name'] = $this->imageUpload($request->file('video'), 'trip', 'banner-img');
         }
+		
 		$tripExist = DB::table('trip_video')->where('trip_id', $trip['trip_id'])->first();
 		
-		$trip->trip_id = $trip['trip_id'];
-		$trip->about_video = $trip['about_video'];
-		$trip->video_name =  $trip['video_name'];
+		//echo '<pre>';print_r($trip);die;
+		///$tripExist->trip_id = $trip['trip_id'];
+		//$tripExist->about_video = $trip['about_video'];
+		//$tripExist->video_name =  $trip['video_name'];
 		
 		if(isset($tripExist->trip_id)){
 			//$saveId = TripVideo::save($trip);
 			$updateId = TripVideo::find($tripExist->id)->fill($trip)->save();
 		}
 		else{
+			//echo '<pre>';print_r($trip);die;
 			$saveId = TripVideo::create($trip);
 		}
 		 if($saveId){

@@ -534,8 +534,8 @@ class HomeController extends Controller {
              ->get();
 			 
 		 $trips['videos'] = TripVideo::where('is_deleted', '0')
-		 ->orderBy('id', 'desc')
-		 ->get();
+							 ->orderBy('id', 'desc')
+							 ->get();
 		 
 		//echo "<pre>";print_r($trips['pictures']);die;
 		
@@ -556,7 +556,9 @@ class HomeController extends Controller {
 
     public function tripView($id) {
 
+		//echo $id;die;
         $tripData = Trip::where('id', '=', $id)->first();
+		//echo '<pre>';print_r($tripData);die;
         return view('viewtrip', ['tripdata' => $tripData]);
     }
 
@@ -1346,22 +1348,22 @@ class HomeController extends Controller {
      * @param int id ,array Request 
      * @return url
      */
-	 public function payAhead(Request $request,$id)
-	 {
-			$userId = Auth::id();
-			//echo $id;die;
-				$paid_amount= $request->input('payahead');
-				$paymentdata['user_id']=$userId;
-				$paymentdata['trip_id']=$id;
-				$paymentdata['reserve_paid_amount']=$paid_amount;
-				$paymentdata['status']=1;
-				$paymentdata['txn_id']='HMX54887455212se';
-				$paymentdata['create_date']=date('y-m-d');
-				$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);	
-				return redirect('trip_detail/'.$id);
+		 public function payAhead(Request $request,$id)
+		 {
+				$userId = Auth::id();
+				//echo $id;die;
+					$paid_amount= $request->input('payahead');
+					$paymentdata['user_id']=$userId;
+					$paymentdata['trip_id']=$id;
+					$paymentdata['reserve_paid_amount']=$paid_amount;
+					$paymentdata['status']=1;
+					$paymentdata['txn_id']='HMX54887455212se';
+					$paymentdata['create_date']=date('y-m-d');
+					$paymentdataid = DB::table('trip_reserve_payment')->insertGetId($paymentdata);	
+					return redirect('trip_detail/'.$id);
+			 
+		 }
 		 
-	 }
-	 
 	 
 		/*
 		*User can see the card details here
