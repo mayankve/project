@@ -157,6 +157,7 @@ class CartController extends Controller
 		
 		
 		
+		
 		$addondetail=array();
 		$addonsetkey=array();
 		$addonsetrecord = array();
@@ -173,6 +174,7 @@ class CartController extends Controller
 		}
 		
 	
+	//echo '<pre>';print_r($selected_addon_travelers);die;
 		
 		if(!empty($addonsetkey)){
 				foreach($addonsetkey as $key=>$value)
@@ -203,6 +205,8 @@ class CartController extends Controller
 							
 						}						
 				}	
+				
+	//echo '<pre>';print_r($addondetail);die;		
 			
 				foreach($addondetail['add_on_detail'] as $keyofaddondetail=>$valuofaddon)
 				{		
@@ -218,19 +222,91 @@ class CartController extends Controller
 						 //echo 'match';die;
 						 $flag=1;
 							
-							$bookAddonAsPerTripIdConfirm= Helper::bookAddonAsPerTripId($trip,$confirm='1');
-							$bookAddonAsPerTripIdPending = Helper::bookAddonAsPerTripId($trip,$confirm='0');
+							$allreadyTravelerExists = Helper::bookTravelerAsPerUserId($trip,$confirm='1',$userId,$valuofaddon[0]->id);
 							
-							//echo '<pre>';print_r($bookAddonAsPerTripIdPending);		
+							$bookTravelerAsPerTripIdConfirm = Helper::bookAddonAsPerTripId($trip,$confirm='1',$valuofaddon[0]->id);
+							$bookTravelerAsPerTripIdPending = Helper::bookAddonAsPerTripId($trip,$confirm='0',$valuofaddon[0]->id);
 							
-							
-							
-						//echo $valuofaddon[0]->id;
-						 foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+							//echo count($bookTravelerAsPerTripIdConfirm);die;
+							 $bookTravelerRemaningConfrim = $valuofaddon[0]->addons_maximum_spots - count($bookTravelerAsPerTripIdConfirm);
+							 $bookTravelerRemaningPending = $valuofaddon[0]->addons_maximum_wating_spots - count($bookTravelerAsPerTripIdPending);
 							 
-							 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+							 
+							 // chec if trip allready booked//
+							
+						if(!empty($allreadyTravelerExists))
+						{
+							//echo '<pre>';print_r($addondetail['travler_info'][$keyofaddondetail]);die;
+							$userBookTravelere = count($allreadyTravelerExists);
+								
+								if(count($addondetail['travler_info'][$keyofaddondetail]) <= $userBookTravelere)
+								{
+									foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+										 
+										// echo '<pre>';print_r($value1);die;
+										 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+									 }
+									
+									
+								}							
+								
+								// elseif(count($addondetail['travler_info'][$keyofaddondetail]) > $userBookTravelere)
+								// {
+									// if($bookTravelerRemaningConfrim >0)
+									// {
+										// foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+										 
+										  // $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+										// }										
+										
+									// }elseif($bookTravelerRemaningPending > 0)
+									// {
+										// foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+										 
+										  // $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+										// }
+										
+										
+									// }else{
+										// return  redirect('mytripdesign/'.$trip)
+											// ->with('error','No any spots available in addon '.$valuofaddon[0]->addons_name);	
+										
+									// }
+									
+									
+								// }
+							
+							
+							
+							
+						}else{						
+								
+							
+							if($valuofaddon[0]->addons_maximum_spots <= $bookTravelerRemaningConfrim && $bookTravelerRemaningConfrim > 0)
+							{
+									
+									foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+										 
+										 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+									}
+									// exit();											
+								
+							}elseif($valuofaddon[0]->addons_maximum_wating_spots <= $bookTravelerRemaningPending && $bookTravelerRemaningPending > 0)
+							{								
+										//echo $valuofaddon[0]->id;
+									foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1) {
+											 
+											 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;	
+										}
+									// exit();								
+								
+							}else{
+								
+								return  redirect('mytripdesign/'.$trip)
+											->with('error','No any spots available in addon '.$valuofaddon[0]->addons_name);											
+							}	
 						}
-						// exit();
+							
 						 
 					 }else{
 						 //echo 'sdfdfd';die;
@@ -285,6 +361,8 @@ class CartController extends Controller
 			}
 			
 		}
+		
+		
 	//echo '<pre>';print_r($activityflight);die;
 		
 		
@@ -411,23 +489,26 @@ class CartController extends Controller
 	{		
 		
 		$userId = Auth::id();
-		$trip=                !empty($_POST['trip_id'])?$_POST['trip_id']:'';
-		$trip_flight_id=       !empty($_POST['trip_flight_id'])?$_POST['trip_flight_id']:'';
-		$trip_travelere=     !empty($_POST['trip_traveler_id'])?$_POST['trip_traveler_id']:'';
-		$tripis_land_only=    $request->session()->get('card_item')['is_land_only'];
-		$trip_hotel_id=      !empty($_POST['trip_hotel_id'])?$_POST['trip_hotel_id']:'';
-		$trip_hotel_amount=   !empty($_POST['add_on_hotel_id'])?$_POST['add_on_hotel_id']:'';
-		$includedactivity_id=  !empty($_POST['includedactivity_id'])?$_POST['includedactivity_id']:'';
-		$packing_list=          !empty($_POST['packing_list'])?$_POST['packing_list']:'';
+		$trip=                !empty($request->input('trip_id'))?$request->input('trip_id'):'';
+		$trip_flight_id=       !empty($request->input('trip_flight_id'))?$request->input('trip_flight_id'):'';
+		$trip_travelere=     !empty($request->input('trip_traveler_id'))?$request->input('trip_traveler_id'):'';
+		$tripis_land_only=    !empty($request->session()->get('card_item')['is_land_only'])?$request->session()->get('card_item')['is_land_only']:'';
+		$trip_hotel_id=      !empty($request->input('trip_hotel_id'))?$request->input('trip_hotel_id'):'';
+		$trip_hotel_amount=   !empty($request->input('add_on_hotel_id'))?$request->input('add_on_hotel_id'):'';
+		$includedactivity_id=  !empty($request->input('includedactivity_id'))?$request->input('includedactivity_id'):'';
+		$packing_list=          !empty($request->input('packing_list'))?$request->input('packing_list'):'';
 		$add_on_flight_name=     !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
-		$resever_pay_amount=     !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
-		$trip_cost=              !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
-		$tripBaseCost=              !empty($_POST['tripbasecost'])?$_POST['tripbasecost']:'';
+		$resever_pay_amount=     !empty($request->input('resever_pay_amount'))?$request->input('resever_pay_amount'):'';
+		$trip_cost=              !empty($request->input('triptotalcost'))?$request->input('triptotalcost'):'';
+		$tripBaseCost=              !empty($request->input('tripbasecost'))?$request->input('tripbasecost'):'';
 	
 		
 		// manual flight add on //		
 		
 		$selected_add_on_id=      !empty($request->session()->get('card_item')['selected_addons'])?$request->session()->get('card_item')['selected_addons']:'';
+		
+		$cartSelectedTraveler = !empty($request->input('add_on_traveler_id'))? $request->input('add_on_traveler_id'):'';
+		
 		$selected_addon_travelers=   !empty($request->session()->get('card_item')['selected_addon_traveler'])?$request->session()->get('card_item')['selected_addon_traveler']:'';
 		$selected_addon_flight=   !empty($request->session()->get('card_item')['addon_flight_name'])?$request->session()->get('card_item')['addon_flight_name']:'0';
 		$selected_addon_hotel=  !empty($request->session()->get('card_item')['selected_addon_hotel'])?$request->session()->get('card_item')['selected_addon_hotel']:'';
@@ -449,7 +530,7 @@ class CartController extends Controller
 		
 		
 		
-		//echo '<pre>';print_r($selected_addon_flight);die;
+		//echo '<pre>';print_r($selected_addon_travelers);die;
 		
 		$flightdataaddon=array();
 		if(!empty($selected_add_on_id))
@@ -484,8 +565,8 @@ class CartController extends Controller
 		$addonsetkey=array();
 		$addondetail = array();
 		$addonsetrecord=array();
-		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $arr){
+		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($cartSelectedTraveler)){
+			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$cartSelectedTraveler) as $arr){
 					foreach($arr as $key=>$value){					
 						 $addonsetkey[$key][] = $value;
 					}				
@@ -516,7 +597,7 @@ class CartController extends Controller
 			
 			foreach($addondetail['addon_id'] as $keyofaddondetail=>$valuofaddon)
 				{
-					
+									
 					$addonsetrecord[$keyofaddondetail]['addon_id']= (!empty($addondetail['addon_id'][$keyofaddondetail]))?$addondetail['addon_id'][$keyofaddondetail]:'';
 					if(!empty($addondetail['manual_flight_id'][$keyofaddondetail]))
 					{
@@ -527,10 +608,12 @@ class CartController extends Controller
 					 $addonsetrecord[$keyofaddondetail]['hotel_id'] = (!empty($addondetail['hotel_id'][$keyofaddondetail]))?$addondetail['hotel_id'][$keyofaddondetail]:'';
 					 if(!empty($addondetail['travler_info'][$keyofaddondetail]))
 					 {
+
 						 foreach($addondetail['travler_info'][$keyofaddondetail] as $key1=>$value1)
 						 {			
 							 $addonsetrecord[$keyofaddondetail]['travler_info'][$key1] = $value1;
 						 }
+						 
 						 
 					 }
 				}
@@ -539,7 +622,7 @@ class CartController extends Controller
 		}			
 		
 		
-		//echo '<pre>';print_r($addonsetrecord);die;
+		//echo '<pre>';print_r($addondetail['addon_id']);die;
 		// end here add on detail//
 		
 		
@@ -660,8 +743,8 @@ class CartController extends Controller
 				 if(!empty($addonsetrecord))
 				 {
 					  DB::table('trip_addon_traveler')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
-					 DB::table('trip_addon_booking')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
-					
+					  
+					 					
 					 foreach($addonsetrecord as $addonkey=>$addonvalue)
 					 {
 							$getaddonvalue= DB::table('trip_addon')
@@ -696,19 +779,112 @@ class CartController extends Controller
 						 
 						 // travlere detail //
 						 
-							foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
-							{	
-								$traveleredata['user_id']=$userId;
-								$traveleredata['trip_id']=$trip;
-								$traveleredata['is_confirm']='1';
-								$traveleredata['addon_id']=$addonvalue['addon_id'];
-								$traveleredata['traveler_id']=$addonvalue1;
-								$traveleredata['checkout_id']=$insertcheckoutid;
-								$traveleredata['payment_id']=$paymentdataid;
-								$traveleredata['created_date']=date('y-m-d');
-								$traveleredata['status']='1';
-								$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);			
-							}						 
+						 
+							$addonDetail = DB::select('select * from trip_addon where trip_id='.$trip.' and status="1" and id='.$addonvalue['addon_id'].'');
+							
+						 
+							$allreadyTravelerExists = Helper::bookTravelerAsPerUserId($trip,$confirm='1',$userId,$addonvalue['addon_id']);
+							
+							$bookTravlerePendingAsPerDate= Helper::bookTravlerePendingAsPerDate($trip,$confirm='0',$addonvalue['addon_id']);
+							
+							// check spots //
+								$bookTravelerAsPerTripIdConfirm = Helper::bookAddonAsPerTripId($trip,$confirm='1',$addonvalue['addon_id']);
+								$bookTravelerAsPerTripIdPending = Helper::bookAddonAsPerTripId($trip,$confirm='0',$addonvalue['addon_id']);
+							// end here//
+							
+							// remaning spots// 
+								$bookTravelerRemaningConfrim = $addonDetail[0]->addons_maximum_spots - count($bookTravelerAsPerTripIdConfirm);
+								$bookTravelerRemaningPending = $addonDetail[0]->addons_maximum_wating_spots - count($bookTravelerAsPerTripIdPending);
+							 // end here//
+						 
+						 if(!empty($allreadyTravelerExists))
+						 {
+							 
+							 
+							 $userBookTravelere = count($allreadyTravelerExists);
+							 
+							 if(count($addonvalue['travler_info']) == $userBookTravelere)
+								{
+									
+									DB::table('trip_addon_booking')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+
+									
+									foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+									{	
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['is_confirm']='1';
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;
+											$traveleredata['checkout_id']=$insertcheckoutid;
+											$traveleredata['payment_id']=$paymentdataid;
+											$traveleredata['created_date']=date('y-m-d');
+											$traveleredata['status']='1';
+											$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);
+									}
+									
+									
+								}elseif(count($addonvalue['traveler_info']) < $userBookTravelere){
+									
+										$changePendingToConfirmSpots = 	$userBookTravelere - count($addonvalue['travler_info']);										
+										$SpotsUpdateConfirm = Helper::SpotsUpdateConfirm($trip,$addonvalue['addon_id']);
+										
+									DB::table('trip_addon_booking')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+									
+									foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+									  {	
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['is_confirm']='1';
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;
+											$traveleredata['checkout_id']=$insertcheckoutid;
+											$traveleredata['payment_id']=$paymentdataid;
+											$traveleredata['created_date']=date('y-m-d');
+											$traveleredata['status']='1';
+											$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);
+									}
+									
+								}
+							
+						 }else{
+							 
+							if($addonDetail[0]->addons_maximum_spots <= $bookTravelerRemaningConfrim && $bookTravelerRemaningConfrim > 0)
+							{
+									
+									foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+									{	
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['is_confirm']='1';
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;
+											$traveleredata['checkout_id']=$insertcheckoutid;
+											$traveleredata['payment_id']=$paymentdataid;
+											$traveleredata['created_date']=date('y-m-d');
+											$traveleredata['status']='1';
+											$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);			
+									}											
+								
+							}elseif($addonDetail[0]->addons_maximum_wating_spots <= $bookTravelerRemaningPending && $bookTravelerRemaningPending > 0)
+							{								
+								foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+									{	
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['is_confirm']='0';
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;
+											$traveleredata['checkout_id']=$insertcheckoutid;
+											$traveleredata['payment_id']=$paymentdataid;
+											$traveleredata['created_date']=date('y-m-d');
+											$traveleredata['status']='1';
+											$inserttravelerdataid = DB::table('trip_addon_traveler')->insertGetId($traveleredata);			
+									}
+								
+							}
+							  
+						 }							
 						 //end here // 
 					 }
 					 
@@ -751,25 +927,29 @@ class CartController extends Controller
      */
     public function emiCalculator(Request $request){
         
-		
+		//echo 'sfsdfdsfsdfd';die;
+		//echo '<pre>';print_r($_POST);die;	
 		$userId = Auth::id();
-		$trip=!empty($_POST['trip_id'])?$_POST['trip_id']:'';
-		$trip_flight_id=!empty($_POST['trip_flight_id'])?$_POST['trip_flight_id']:'';
-		$trip_travelere=!empty($_POST['trip_traveler_id'])?$_POST['trip_traveler_id']:'';
-		$tripis_land_only=$request->session()->get('card_item')['is_land_only'];
-		$trip_hotel_id=!empty($_POST['trip_hotel_id'])?$_POST['trip_hotel_id']:'';
-		$trip_hotel_amount=!empty($_POST['add_on_hotel_id'])?$_POST['add_on_hotel_id']:'';
-		$includedactivity_id=!empty($_POST['includedactivity_id'])?$_POST['includedactivity_id']:'';
-		$packing_list=!empty($_POST['packing_list'])?$_POST['packing_list']:'';
+		$trip=!empty($request->input('trip_id'))?$request->input('trip_id'):'';
+		$trip_flight_id=!empty($request->input('trip_flight_id'))?$request->input('trip_flight_id'):'';
+		$trip_travelere=!empty($request->input('trip_traveler_id'))?$request->input('trip_traveler_id'):'';
+		$tripis_land_only=  $request->session()->get('card_item')['is_land_only'];
+		$trip_hotel_id=!empty($request->input('trip_hotel_id'))?$request->input('trip_hotel_id'):'';
+		$trip_hotel_amount=!empty($request->input('add_on_hotel_id'))?$request->input('add_on_hotel_id'):'';
+		$includedactivity_id=!empty($request->input('includedactivity_id'))?$request->input('includedactivity_id'):'';
+		$packing_list=!empty($request->input('packing_list'))?$request->input('packing_list'):'';
 		$add_on_flight_name= !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
-		$resever_pay_amount= !empty($_POST['resever_pay_amount'])?$_POST['resever_pay_amount']:'';
-		$trip_cost=     !empty($_POST['triptotalcost'])?$_POST['triptotalcost']:'';
-		$tripBaseCost=              !empty($_POST['tripbasecost'])?$_POST['tripbasecost']:'';
+		$resever_pay_amount= !empty($request->input('resever_pay_amount'))?$request->input('resever_pay_amount'):'';
+		$trip_cost=     !empty($request->input('triptotalcost'))?$request->input('triptotalcost'):'';
+		$tripBaseCost=              !empty($request->input('tripbasecost'))?$request->input('tripbasecost'):'';
 		
 		// manual flight add on //		
 		
 		$selected_add_on_id=!empty($request->session()->get('card_item')['selected_addons'])?$request->session()->get('card_item')['selected_addons']:'';
 		$selected_addon_travelers=   !empty($request->session()->get('card_item')['selected_addon_traveler'])?$request->session()->get('card_item')['selected_addon_traveler']:'';
+		
+		$cartSelectedTraveler = !empty($request->input('add_on_traveler_id'))? $request->input('add_on_traveler_id'):'';
+		
 		$selected_addon_flight=!empty($request->session()->get('card_item')['addon_flight_name'])?$request->session()->get('card_item')['addon_flight_name']:'0';
 		$selected_addon_hotel=!empty($request->session()->get('card_item')['selected_addon_hotel'])?$request->session()->get('card_item')['selected_addon_hotel']:'';
 		$add_on_flight_name= !empty($request->session()->get('card_item')['add_on_flight_name'])?$request->session()->get('card_item')['add_on_flight_name']:'';
@@ -787,6 +967,9 @@ class CartController extends Controller
 		$activity_flight_number = !empty($request->session()->get('card_item')['activity_flight_flight_number'])?$request->session()->get('card_item')['activity_flight_flight_number']:'';
 		$activity_flight_date = !empty($request->session()->get('card_item')['activity_flight_departure_date'])?$request->session()->get('card_item')['activity_flight_departure_date']:'';
 		$activity_flight_time = !empty($request->session()->get('card_item')['activity_flight_departure_time'])?$request->session()->get('card_item')['activity_flight_departure_time']:'';
+		
+		
+		
 		
 		
 		
@@ -823,8 +1006,8 @@ class CartController extends Controller
 		$addonsetkey=array();
 		$addondetail = array();
 		$addonsetrecord=array();
-		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($selected_addon_travelers)){
-			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$selected_addon_travelers) as $arr){
+		if(!empty($selected_add_on_id) && !empty($flightdataaddon) && !empty($selected_addon_hotel) && !empty($cartSelectedTraveler)){
+			foreach(array($selected_add_on_id,$flightdataaddon,$selected_addon_hotel,$cartSelectedTraveler) as $arr){
 					foreach($arr as $key=>$value){					
 						 $addonsetkey[$key][] = $value;
 					}				
@@ -875,6 +1058,8 @@ class CartController extends Controller
 		}else{
 			$addonsetrecord='';
 		}			
+		
+		
 		
 		// end here add on detail//
 		
@@ -987,6 +1172,9 @@ class CartController extends Controller
 				 
 			if(!empty($addonsetrecord))
 				 {
+					 
+					 //echo 'sdfdfdfsdaf';die;
+					 					 
 					 foreach($addonsetrecord as $addonkey=>$addonvalue)
 					 {		
 							$getaddonvalue= DB::table('trip_addon')
@@ -995,7 +1183,7 @@ class CartController extends Controller
 														->where('status', '=', '1')
 														->first();
 											
-							$addonspots= !empty($getaddonvalue)?$getaddonvalue->addons_maximum_spots:'';
+							$addonspotsMaximum= !empty($getaddonvalue)?$getaddonvalue->addons_maximum_spots:'';
 							$addonwaitingspots= !empty($getaddonvalue)?$getaddonvalue->addons_maximum_wating_spots:'';
 
 					 
@@ -1020,22 +1208,107 @@ class CartController extends Controller
 														->where('user_id',$userId)
 														->where('add_on_id',$addonvalue['addon_id'])
 														->update($addondata);
-												
-						 
-							foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
-							{
-								$traveleredata['user_id']=$userId;
-								$traveleredata['trip_id']=$trip;
-								$traveleredata['addon_id']=$addonvalue['addon_id'];
-								$traveleredata['traveler_id']=$addonvalue1;
+									
+
+							// check here to spots//
 								
-								$traveleredata['status']='1';
-								$inserttravelerdataid =  DB::table('trip_addon_traveler')->where('trip_id',$trip)
-														->where('user_id',$userId)
-														->where('addon_id',$addonvalue['addon_id'])
-														->update($traveleredata);
-								//DB::table('trip_addon_traveler')->insertGetId($traveleredata);
-							}						 
+							
+						 
+							$allreadyTravelerExists = Helper::bookTravelerAsPerUserId($trip,$confirm='1',$userId,$addonvalue['addon_id']);
+							
+							$bookTravlerePendingAsPerDate= Helper::bookTravlerePendingAsPerDate($trip,$confirm='0',$addonvalue['addon_id']);
+							
+							// check spots //
+								$bookTravelerAsPerTripIdConfirm = Helper::bookAddonAsPerTripId($trip,$confirm='1',$addonvalue['addon_id']);
+								$bookTravelerAsPerTripIdPending = Helper::bookAddonAsPerTripId($trip,$confirm='0',$addonvalue['addon_id']);
+							// end here//
+							
+							// remaning spots// 
+								$bookTravelerRemaningConfrim = $addonspotsMaximum - count($bookTravelerAsPerTripIdConfirm);
+								$bookTravelerRemaningPending = $addonwaitingspots - count($bookTravelerAsPerTripIdPending);
+							 // end here//
+							
+							
+							if(!empty($allreadyTravelerExists))
+							{
+									 $userBookTravelere = count($allreadyTravelerExists);
+							 
+							 if(count($addonvalue['travler_info']) == $userBookTravelere)
+								{
+									
+									//echo 'dfdf';die;
+									
+									 DB::table('trip_addon_traveler')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+								
+										foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+										{																						
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;														
+											$traveleredata['status']='1';
+											$traveleredata['is_confirm']='1';
+														
+											$inserttravelerdataid =  DB::table('trip_addon_traveler')->insertGetId($traveleredata);	
+												
+										}
+										
+								}elseif(count($addonvalue['travler_info']) < $userBookTravelere)
+								{
+									 DB::table('trip_addon_traveler')->where(array('trip_id'=>$trip,'user_id'=>$userId))->delete();
+									
+										$changePendingToConfirmSpots = 	$userBookTravelere - count($addonvalue['travler_info']); 
+										
+										$spotsUpdateConfirm = Helper::SpotsUpdateConfirm($trip,$addonvalue['addon_id']);
+										foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+										{																						
+											$traveleredata['user_id']=$userId;
+											$traveleredata['trip_id']=$trip;
+											$traveleredata['addon_id']=$addonvalue['addon_id'];
+											$traveleredata['traveler_id']=$addonvalue1;														
+											$traveleredata['status']='1';
+											$traveleredata['is_confirm']='1';
+														
+											$inserttravelerdataid =  DB::table('trip_addon_traveler')->insertGetId($traveleredata);	
+												
+										}
+										
+								}								
+								
+							 }else{
+								 //echo 'mukesh';die;
+							 
+								if($addonspotsMaximum <= $bookTravelerRemaningConfrim && $bookTravelerRemaningConfrim > 0)
+									{
+												foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+												{
+														$traveleredata['user_id']=$userId;
+														$traveleredata['trip_id']=$trip;
+														$traveleredata['addon_id']=$addonvalue['addon_id'];
+														$traveleredata['traveler_id']=$addonvalue1;														
+														$traveleredata['status']='1';
+														$traveleredata['is_confirm']='1';
+														
+														$inserttravelerdataid =  DB::table('trip_addon_traveler')->insertGetId($traveleredata);	
+														
+												}
+									}elseif($addonwaitingspots <= $bookTravelerRemaningPending && $bookTravelerRemaningPending > 0){
+								
+											foreach($addonvalue['travler_info'] as $addonvaluekey=>$addonvalue1)
+												{														
+													$traveleredata['user_id']=$userId;
+													$traveleredata['trip_id']=$trip;
+													$traveleredata['is_confirm']='0';
+													$traveleredata['addon_id']=$addonvalue['addon_id'];
+													$traveleredata['traveler_id']=$addonvalue1;
+													$traveleredata['status']='1';														
+														
+													$inserttravelerdataid =  DB::table('trip_addon_traveler')->insertGetId($traveleredata);	
+														//DB::table('trip_addon_traveler')->insertGetId($traveleredata);
+												}
+									}	
+							 
+							 }				 
 						 //end here // 
 					 }
 					 

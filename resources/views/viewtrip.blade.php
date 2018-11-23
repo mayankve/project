@@ -54,7 +54,7 @@
 <div class="section section-header">
     <div class="parallax pattern-image">
         <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-            <source src="{{ url('/') . '/uploads/trip/' . $trip->video_name }}" type="video/mp4">
+            <source src="{{ url('/') . '/uploads/trip/' . $tripdata->video_name }}" type="video/mp4">
         </video>
         <div class="container">
             <div class="content">

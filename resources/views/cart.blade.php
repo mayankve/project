@@ -334,7 +334,7 @@ $addonfinal_price_cost = 0;
 
 															$solocostdisplay='';
 
-														$is_solo_cost= $tripdata['tripHotels'][0]->hotel_our_solo_cost;
+															$is_solo_cost= $tripdata['tripHotels'][0]->hotel_our_solo_cost;
 
 														}else{
 
@@ -767,7 +767,7 @@ $addonfinal_price_cost = 0;
 
                                                                                                         </div>
 
-                                                                                                        <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$travelerkey}}]" value="<?php echo (!empty($traveler->id)) ? $traveler->id : ''; ?>"> 
+                                                                                           <input type="hidden" name="add_on_traveler_id[{{$i}}][{{$j}}]" value="<?php echo (!empty($traveler->id)) ? $traveler->id : ''; ?>"> 
 
                                                                                                     </div>
 
@@ -2339,7 +2339,9 @@ $addonfinal_price_cost = 0;
 	$('#processtoemi').click(function(){
 
 		var actionemi="{{url('emi-calculation')}}";
-
+	
+		var form = $("#myForm");
+		
 			 $.ajax({
 
                 type: "POST",
@@ -2354,7 +2356,7 @@ $addonfinal_price_cost = 0;
 
                     {
 
-                        $("#emi_model").modal({backdrop: "static"});
+                       $("#emi_model").modal({backdrop: "static"});
 
                     }
 

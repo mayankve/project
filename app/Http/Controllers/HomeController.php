@@ -534,8 +534,8 @@ class HomeController extends Controller {
              ->get();
 			 
 		 $trips['videos'] = TripVideo::where('is_deleted', '0')
-		 ->orderBy('id', 'desc')
-		 ->get();
+							 ->orderBy('id', 'desc')
+							 ->get();
 		 
 		//echo "<pre>";print_r($trips['pictures']);die;
 		
@@ -556,7 +556,9 @@ class HomeController extends Controller {
 
     public function tripView($id) {
 
+		//echo $id;die;
         $tripData = Trip::where('id', '=', $id)->first();
+		//echo '<pre>';print_r($tripData);die;
         return view('viewtrip', ['tripdata' => $tripData]);
     }
 
