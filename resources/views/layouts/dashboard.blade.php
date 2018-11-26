@@ -71,6 +71,7 @@
                             </ul>-->
                         </li>
                         <!--<li><a href="#"> Testimony </a></li>-->
+						  <li><a href="#"> Testimony </a></li>
                         <li><a href="{{url('/contact') }}"> Contact</a></li>
                         <?php
                         //  log(1);

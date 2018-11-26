@@ -80,6 +80,7 @@
                         <li><a href="{{url('/login') }}"> <i class="fa fa-lock" aria-hidden="true"></i>Client login</a></li>
                         <?php } else {
                         ?> 
+						<li><a href="{{url('/dashboard') }}"> Dashboard</a></li>
                             <div class="user-profile">
                                 <li class="dropdown dropdown-hov">
                                     <a class="user-img"><img src="{{ url('/profile_img')}}/x5hOeYd6UZ.png" alt="profile pic" class="img-responsive model_image" style="max-width: 50px ;height: 50px ;"></a>

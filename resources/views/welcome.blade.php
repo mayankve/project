@@ -54,8 +54,8 @@
 		            <a href="{{ url('/tripview/' . $trip->id) }}">{{ ucwords( strtolower( $trip->name ) ) }} <span><i class="fa fa-plus" aria-hidden="true"></i></span></a>
 		        </div>
 		        <div class="mask">
-		            <h2>f</h2>
-		            <p>{{$trip->about_trip}}</p>
+		            <h2>{{ ucwords( strtolower( $trip->name ) ) }} </h2>
+		            <p>{{ strip_tags($trip->about_trip)}}</p>
 		            <a href="#" class="info">Book</a>
 		        </div>
 		    </div> 

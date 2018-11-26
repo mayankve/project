@@ -1336,8 +1336,7 @@ class CartController extends Controller
 						 $activitydata['activity_hotel_id']=(!empty($includeacitvitfinalvalue['activity_hotel_id']))?$includeacitvitfinalvalue['activity_hotel_id']:'';
 						
 						 $activitydata['status']='1';
-						 $insertactivitydataid = 
-												DB::table('trip_included_activity_booking')->where('trip_id',$trip)
+						 $insertactivitydataid = DB::table('trip_included_activity_booking')->where('trip_id',$trip)
 														->where('user_id',$userId)
 														->where('activity_id',$includeacitvitfinalvalue['activity_id'])
 														->update($activitydata);

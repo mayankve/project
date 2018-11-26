@@ -79,7 +79,9 @@
 			$('.trip-video').removeClass('active');
            // return confirm('Are you sure?');
         });
+
+		
     </script>
 </div>
-</div>
+
 @endsection
