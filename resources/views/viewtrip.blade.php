@@ -1,7 +1,7 @@
 @extends('layouts.home')
 @section('title', 'Trips')
 @section('content')
-
+<?php // echo "hello"; die; ?>
 <style type="text/css">
     .form-title {
         background-color: #e3e3e3;
@@ -34,7 +34,7 @@
      $date=date_create($tripdata->date);
      echo "<br>".date_format($date,"M d, Y");?></em></p>
     <?php
-       // echo $userId = Auth::id();
+       $userId = Auth::id();
         if(isset($userId)){?>
             <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
         <?php }
@@ -72,7 +72,6 @@
         </video>
         <div class="container">
             <div class="content">
-                
             </div>
         </div>
     </div>
