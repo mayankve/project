@@ -33,9 +33,10 @@
    <?php 
      $date=date_create($tripdata->date);
      echo "<br>".date_format($date,"M d, Y");?></em></p>
-    <?php
-       $userId = Auth::id();
-        if(isset($userId)){?>
+
+	<?php
+        $userId = Auth::id();
+        if(!empty($userId)){?>
             <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
         <?php }
         else{
