@@ -51,17 +51,14 @@
 
 
 <!--- Video section --->
-<?php
-//    echo  "<pre>";
-//    print_r($tripdata);
-//    die;
-?>
-<div class="section section-header">
+
+    <div class="section section-header">
+        
     <div class="parallax pattern-image">
        <?php       
-            if(!is_null($tripdata->banner_image)){
+            if(isset($tripdata->banner_image)){
                 ?>
-            <img src="{{ url('/') . '/uploads/trip/'.$trip->banner_image}}" id="bgvid" playsinline="">
+            <img src="{{ url('/') . '/uploads/trip/'.$tripdata->banner_image}}" id="bgvid" playsinline="">
         <?php
             }
             else{
