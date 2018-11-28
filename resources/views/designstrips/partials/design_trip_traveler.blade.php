@@ -26,12 +26,12 @@
                                     <div class="col-sm-2">
                                         <label>Gender</label>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <!--<div class="col-sm-2">
                                         <label>City</label>
                                     </div>
                                     <div class="col-sm-2">
                                         <label>Profile Image</label>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -52,12 +52,12 @@
                                     <div class="col-sm-2">
                                         {{($triptraveler->gender == '1')?'Male':'Female'}}
                                     </div>
-                                    <div class="col-sm-2">
+                                   <!-- <div class="col-sm-2">
                                         {{$triptraveler->city}}
                                     </div>
                                     <div class="col-sm-2">
                                         <img src="{{ url('/') . '/uploads/traveler_img/' .$triptraveler->passport_pic }}" alt="Profile image" class="img-responsive model_image" />
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div> 
                             <?php $sr++; ?>

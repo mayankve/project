@@ -1,7 +1,8 @@
-@extends('layouts.dashboard')
+@extends('layouts.home')
 @section('title', 'Trips')
 @section('content')
 
+<?php //echo "hello"; die; ?>
 <style type="text/css">
     .form-title {
         background-color: #e3e3e3;
@@ -10,7 +11,7 @@
     }
 </style>
 
-<div style=" margin-top: 100px; min-height: 400px">
+    <div style=" margin-top: 100px; min-height: 400px">
     <div class="section section-we-are-2">
         <div class="row">
             <div class="text-area">
@@ -30,6 +31,9 @@
         <div class="container trip-container banner-container">
             <div class="row no-gutter">
                 <br/>
+                <?php 
+                 //$trips['pictures'] = [];
+                 //  echo count($trips['pictures']); die;?>
                 @if(count($trips['pictures'])>0)
                 @foreach($trips['pictures'] AS $trip)
                 <div class="gallery_product view view-tenth col-lg-4 col-md-4 col-sm-4 col-xs-6 filter trip">
@@ -44,13 +48,19 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                 <div class="container trip-container banner-container">
+                     <center>There is no upcoming Trip.</center>
+                 </div>
                 @endif
+                
             </div>
         </div>
         <div class="container trip-container video-container" style="display:none">
             <div class="row no-gutter">
                 <br/>
-				@if(count($trips['videos'])>0)
+               
+                @if(count($trips['videos'])>0)
                 @foreach($trips['videos'] AS $trip)
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
                     <div><h4></h4></div>
@@ -60,7 +70,11 @@
                     </video>
                     <div><p>{{$trip->about_video}}</p></div>
                 </div>
-				@endforeach
+                @endforeach
+                @else
+                 <div class="container trip-container banner-container">
+                     <center>There is no past Trip.</center>
+                 </div>
                 @endif
             </div>
         </div>

@@ -1,7 +1,7 @@
 @extends('layouts.home')
 @section('title', 'Trips')
 @section('content')
-
+<?php // echo "hello"; die; ?>
 <style type="text/css">
     .form-title {
         background-color: #e3e3e3;
@@ -14,7 +14,7 @@
     <br>
     <!---- trip-view-banner --->
 <div class="trip-view-banner">
-    <img src="/aat_zend/public/assets/trip_banner/09c8158b6ace388bd76a7355ccb8ab9f.jpg" class="img-responsive" alt="" style="min-width: 100%">
+  <!--   <img src="/aat_zend/public/assets/trip_banner/09c8158b6ace388bd76a7355ccb8ab9f.jpg" class="img-responsive" alt="" style="min-width: 100%">-->
   <div class="parallax banner-title">
     <div class="container">
       <div class="content text-center">
@@ -33,8 +33,9 @@
    <?php 
      $date=date_create($tripdata->date);
      echo "<br>".date_format($date,"M d, Y");?></em></p>
+
 	<?php
-       $userId = Auth::id();
+        $userId = Auth::id();
         if(!empty($userId)){?>
             <h3><a class="book-btn" href="{{url('book').'/'.$tripdata->id}}">Book</a></h3>
         <?php }
@@ -50,20 +51,33 @@
 
 
 <!--- Video section --->
-
+<?php
+//    echo  "<pre>";
+//    print_r($tripdata);
+//    die;
+?>
 <div class="section section-header">
     <div class="parallax pattern-image">
-        <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">
-            <source src="{{ url('/') . '/uploads/trip/' . $tripdata->video_name }}" type="video/mp4">
+       <?php       
+            if(!is_null($tripdata->banner_image)){
+                ?>
+            <img src="{{ url('/') . '/uploads/trip/'.$trip->banner_image}}" id="bgvid" playsinline="">
+        <?php
+            }
+            else{
+            ?> 
+            <video poster="{{ url('/') . '/uploads/trip/video-poster.jpg'}}" id="bgvid" playsinline="" autoplay="" muted="" loop="">    
+            <?php
+            }
+       ?>
         </video>
         <div class="container">
             <div class="content">
-                
             </div>
         </div>
     </div>
     <a href="#" data-scroll="true" data-id="#about" class="scroll-arrow hidden-xs hidden-sm">
-        <img src="/aat_zend/public/assets/img/scroll-icon.png" alt="scroll"> </a>
+        <img src="{{ url('/') . '/images/scroll-icon.png' }}" alt="scroll"> </a>
 </div>           
 <hr>
 </div>

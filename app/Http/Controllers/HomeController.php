@@ -539,7 +539,7 @@ class HomeController extends Controller {
 		 
 		//echo "<pre>";print_r($trips['pictures']);die;
 		
-        $userId = Auth::id();
+            $userId = Auth::id();
 			//if (isset($userId)) {
 				$userData = User::where('id', '=', $userId)->first();
 				return view('triplist', ['trips' => $trips, 'data' => $userData]);
@@ -709,283 +709,255 @@ class HomeController extends Controller {
         $tripDetails = Trip::where('id', $id)->first();
         // echo "<pre>"; print_r($tripDetails);die;
         $tripTravelers = DB::table('trip_traveler')
-                ->where('trip_id', '=', $id)
-                ->where('user_id', '=', $userId)
-                ->where('status', '=', '1')
-				->where('is_confirm','=','1')
-                ->get();
-				
-				
-		$tripTravelerswaiting = DB::table('trip_traveler')
-                ->where('trip_id', '=', $id)
-                ->where('user_id', '=', $userId)
-                ->where('status', '=', '1')
-				->where('is_confirm','=','0')
-                ->get();
- //echo "<pre>"; print_r($tripTravelerswaiting);die;
+        ->where('trip_id', '=', $id)
+        ->where('user_id', '=', $userId)
+        ->where('status', '=', '1')
+        ->where('is_confirm','=','1')
+        ->get();
+
+
+        $tripTravelerswaiting = DB::table('trip_traveler')
+        ->where('trip_id', '=', $id)
+        ->where('user_id', '=', $userId)
+        ->where('status', '=', '1')
+        ->where('is_confirm','=','0')
+        ->get();
+        //echo "<pre>"; print_r($tripTravelerswaiting);die;
         //Trip Flights details
         $tripAirlines = DB::table('trip_airline')
-                ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
-                ->select('trip_airline.*', 'airlines.*')
-                ->where('trip_airline.trip_id', '=', $id)
-                ->where('trip_airline.status', '=', '1')
-                ->get();
+        ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+        ->select('trip_airline.*', 'airlines.*')
+        ->where('trip_airline.trip_id', '=', $id)
+        ->where('trip_airline.status', '=', '1')
+        ->get();
 
 
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
-                ->select('trip_hotel.*')
-                ->where('trip_hotel.trip_id', '=', $id)
-                ->where('trip_hotel.status', '=', '1')
-                ->get();
+        ->select('trip_hotel.*')
+        ->where('trip_hotel.trip_id', '=', $id)
+        ->where('trip_hotel.status', '=', '1')
+        ->get();
 
         //Trip Addon Details
         $tripaddonarray = array();
 
         $addon['tripAddons_check'] = DB::table('trip_addon')
-                ->where('trip_id', '=', $id)
-                ->where('status', '=', '1')
-                ->orderBy('created_at')
-                ->get();
+        ->where('trip_id', '=', $id)
+        ->where('status', '=', '1')
+        ->orderBy('created_at')
+        ->get();
 
         if (!empty($addon['tripAddons_check'])) {
-            foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
+        foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
-                $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
-                        ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-                        ->where('trip_addon_airline.trip_id', '=', $id)
-                        ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
-                        ->where('trip_addon_airline.status', '=', '1')
-                        ->get();
+        $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
+        ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+        ->where('trip_addon_airline.trip_id', '=', $id)
+        ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
+        ->where('trip_addon_airline.status', '=', '1')
+        ->get();
 
-                $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-                        ->where('trip_id', '=', $id)
-                        ->where('addon_id', '=', $addonitem->id)
-                        ->where('status', '=', '1')
-                        ->get();
-            }
-			
-		//echo '<pre>';print_r($addon['tripAddonFlights']);die;	
-
-            for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
-                $tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
-
-                foreach ($addon['tripAddonFlights'][$i] as $key1 => $value1) {
-
-                    $tripaddonarray[$i]['tripAddonFlights'][$key1] = $value1;
-                }
-
-                foreach ($addon['tripAddonHotels'][$i] as $key2 => $value2) {
-
-                    $tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
-                }
-            }
+        $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
+        ->where('trip_id', '=', $id)
+        ->where('addon_id', '=', $addonitem->id)
+        ->where('status', '=', '1')
+        ->get();
         }
 
-		
-		
+        //echo '<pre>';print_r($addon['tripAddonFlights']);die;	
+
+        for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
+        $tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
+
+        foreach ($addon['tripAddonFlights'][$i] as $key1 => $value1) {
+
+        $tripaddonarray[$i]['tripAddonFlights'][$key1] = $value1;
+        }
+
+        foreach ($addon['tripAddonHotels'][$i] as $key2 => $value2) {
+
+        $tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
+        }
+        }
+        }
+
+
+
         //Trip Included Activities Data
 
         $tripactivityarray = array();
 
         $activity['tripIncludedActivities_check'] = DB::table('trip_included_activity')
-                ->where('trip_id', '=', $id)
-                ->where('activity_due_date', '>', date('y-m-d'))
-                ->where('status', '=', '1')
-                ->get();
-				
+        ->where('trip_id', '=', $id)
+        ->where('activity_due_date', '>', date('y-m-d'))
+        ->where('status', '=', '1')
+        ->get();
+
 
         if (!empty($activity['tripIncludedActivities_check'])) {
-            foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
-                $activity['includedActivityFlights'][$activitykey] = DB::table('trip_included_activity_airline')
-                        ->where('airline_departure_date', '>', date('Y-m-d'))
-                        ->where('trip_id', '=', $id)
-                        ->where('activity_id', '=', $activityvalue->id)
-                        ->where('status', '=', '1')
-                        ->get();
-                $activity['includedActivityHotles'][$activitykey] = DB::table('trip_included_activity_hotel')
-                        ->where('trip_id', '=', $id)
-                        ->where('hotel_due_date', '>', date('Y-m-d'))
-                        ->where('activity_id', '=', $activityvalue->id)
-                        ->where('status', '=', '1')
-                        ->get();
-            }
+        foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
+        $activity['includedActivityFlights'][$activitykey] = DB::table('trip_included_activity_airline')
+        ->where('airline_departure_date', '>', date('Y-m-d'))
+        ->where('trip_id', '=', $id)
+        ->where('activity_id', '=', $activityvalue->id)
+        ->where('status', '=', '1')
+        ->get();
+        $activity['includedActivityHotles'][$activitykey] = DB::table('trip_included_activity_hotel')
+        ->where('trip_id', '=', $id)
+        ->where('hotel_due_date', '>', date('Y-m-d'))
+        ->where('activity_id', '=', $activityvalue->id)
+        ->where('status', '=', '1')
+        ->get();
+        }
 
 
         for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
-                $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
-                foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
+        $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
+        foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
 
-                    $tripactivityarray[$i]['includedActivityFlights'][$activityflightkey1] = $activityfilghtvalue1;
-                }
-
-                foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
-
-                    $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
-                }
-                
-            }
+        $tripactivityarray[$i]['includedActivityFlights'][$activityflightkey1] = $activityfilghtvalue1;
         }
 
-		//echo '<pre>';print_r($tripactivityarray);die;
-		
+        foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+
+        $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
+        }
+
+        }
+        }
+
+        //echo '<pre>';print_r($tripactivityarray);die;
+
         //To Do Packing Details
         $tripTodo = DB::table('trip_todo')
-                //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
-                ->where('trip_todo.trip_id', '=', $id)
-                // ->where('trip_todo.user_id', '=', $userId)
-                ->where('trip_todo.status', '=', '1')
-                ->get();
+        //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
+        ->where('trip_todo.trip_id', '=', $id)
+        // ->where('trip_todo.user_id', '=', $userId)
+        ->where('trip_todo.status', '=', '1')
+        ->get();
 
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
 
         $data = array(
-            'tripAirlines' => $tripAirlines,
-            'tripHotels' => $tripHotels,
-            'tripTravelers' => $tripTravelers,
-            'tripAddons' => $tripaddonarray,
-            'tripIncludedActivities' => $tripactivityarray,
-            'tripTodo' => $tripTodo,
-			'tripTravelerswaiting'=>$tripTravelerswaiting
+        'tripAirlines' => $tripAirlines,
+        'tripHotels' => $tripHotels,
+        'tripTravelers' => $tripTravelers,
+        'tripAddons' => $tripaddonarray,
+        'tripIncludedActivities' => $tripactivityarray,
+        'tripTodo' => $tripTodo,
+        'tripTravelerswaiting'=>$tripTravelerswaiting
         );
         //For Trip Customization
 
         // Last Booking data
         $BookedTripDetails = DB::table('checkout')
-                ->where('trip_id', '=', $id)
-                ->where('user_id', '=', $userId)
-                ->where('status', '=', '1')
-                ->orderBy('id','desc')
-                ->first();
+        ->where('trip_id', '=', $id)
+        ->where('user_id', '=', $userId)
+        ->where('status', '=', '1')
+        ->orderBy('id','desc')
+        ->first();
 
         $addonarray=array();
         $bookedData = array();
-		$activitycustom=array();
+        $activitycustom=array();
         //$addonarrydata=array();
         if(isset($BookedTripDetails->id)){
-         //Booked Addons
-         $bookedAddons['add_on'] = DB::table('trip_addon_booking')
-                        ->where('checkout_id','=',$BookedTripDetails->id)
-                        ->where('trip_id', '=', $id)
-                        ->where('user_id', '=', $userId)
-                        ->get();
+        //Booked Addons
+        $bookedAddons['add_on'] = DB::table('trip_addon_booking')
+        ->where('checkout_id','=',$BookedTripDetails->id)
+        ->where('trip_id', '=', $id)
+        ->where('user_id', '=', $userId)
+        ->get();
 
 
 
-          foreach($bookedAddons['add_on'] AS $addonkey=> $bookedAddon){               //Booked Addon Travelers
+        foreach($bookedAddons['add_on'] AS $addonkey=> $bookedAddon){ //Booked Addon Travelers
 
-			      $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
-                              ->where('addon_id','=', $bookedAddon->add_on_id)
-                              ->where('trip_id', '=', $id)
-							  ->where('is_confirm', '=','1')
-                              ->where('user_id', '=', $userId)
-                              ->get();
-							  
-				 $bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
-									  ->where('addon_id','=', $bookedAddon->add_on_id)
-									   ->where('trip_id', '=', $id)
-									  ->where('is_confirm', '=','0')
-									  ->where('user_id', '=', $userId)
-									  ->get();			  
-						  
-            }
-		//echo '<pre>';print_r($bookedAddons);die;
-         // set here key value//
-            foreach($bookedAddons['add_on'] as $key=>$value)
-            {
-				$addonarray['addon_data'][$value->add_on_id]=array(
-									'add_on_id'=>$value->add_on_id,
-									'flight_id'=>$value->flight_id,
-									'flight_name'=>$value->flight_name,
-									'flight_number'=>$value->flight_number,
-									'flight_departure_date'=>$value->flight_departure_date,
-									'flight_departure_time'=>$value->flight_departure_time
-				);
-				
-                $addonarray['addon_id'][]=$value->add_on_id;
-                $addonarray['flight_id'][]=$value->flight_id;
-                $addonarray['hote_id'][]=$value->hotel_id;
-				if(!empty($bookedAddons['travelers'])){
-					foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
-					{
-						 $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
-					}
-				}
-				if(!empty($bookedAddons['travelers_waiting'])){
-					foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
-					{
-						 $addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
-					}
-				}
-				
-            }
-			// end here..//
-	//echo '<pre>';print_r($addonarray);die;
+        $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
+        ->where('addon_id','=', $bookedAddon->add_on_id)
+        ->where('trip_id', '=', $id)
+        ->where('is_confirm', '=','1')
+        ->where('user_id', '=', $userId)
+        ->get();
 
-            //Booked Included Activities
-            $bookedAcitivities = DB::table('trip_included_activity_booking')
-                ->where('checkout_id','=',$BookedTripDetails->id)
-                ->where('trip_id', '=', $id)
-                ->where('user_id', '=', $userId)
-                ->get();
+        $bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
+        ->where('addon_id','=', $bookedAddon->add_on_id)
+        ->where('trip_id', '=', $id)
+        ->where('is_confirm', '=','0')
+        ->where('user_id', '=', $userId)
+        ->get();	
 
+        }
+        //echo '<pre>';print_r($bookedAddons);die;
+        // set here key value//
+        foreach($bookedAddons['add_on'] as $key=>$value)
+        {
+        $addonarray['addon_data'][$value->add_on_id]=array(
+        'add_on_id'=>$value->add_on_id,
+        'flight_id'=>$value->flight_id,
+        'flight_name'=>$value->flight_name,
+        'flight_number'=>$value->flight_number,
+        'flight_departure_date'=>$value->flight_departure_date,
+        'flight_departure_time'=>$value->flight_departure_time
+        );
 
-			foreach($bookedAcitivities as $activitykeyforCustom => $activityCustomValue)
-			{
-				$activitycustom['activity_data'][$activityCustomValue->activity_id]=array(
-									'activity_id'=>$activityCustomValue->activity_id,
-									'activity_flight_id'=>$activityCustomValue->activity_flight_id,
-									'flight_name'=>$activityCustomValue->flight_name,
-									'flight_number'=>$activityCustomValue->flight_number,
-									'flight_departure_date'=>$activityCustomValue->flight_departure_date,
-									'flight_departure_time'=>$activityCustomValue->flight_departure_time
-				);
-
-				$activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
-				$activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
-				$activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
-			}
-
-            $bookedData = array(
-                'bookedTrip' => $BookedTripDetails,
-                'bookedAddons' => $addonarray,
-				 'bookedActivities' =>$activitycustom,
-				'activitydata'=>$bookedAcitivities
-            );
-        }else{
-			$bookedData='';
-		}
-	//echo "<pre>";print_r($bookedData);die;
-        return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
-    }
-
-    /**
-     * Upload file and return the name of the uploaded file
-     *
-     * @param object $file
-     * @param object $directory
-     * @param object $startWith
-     * @return string $fileName
-     */
-    protected function imageUpload($file, $directory = null, $startWith) {
-        // SET UPLOAD PATH
-        if ($directory != NULL && $directory != '') {
-            $destinationPath = base_path() . '/public/uploads/' . $directory . '/';
-        } else {
-            $destinationPath = base_path() . '/public/uploads/';
+        $addonarray['addon_id'][]=$value->add_on_id;
+        $addonarray['flight_id'][]=$value->flight_id;
+        $addonarray['hote_id'][]=$value->hotel_id;
+        if(!empty($bookedAddons['travelers'])){
+        foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
+        {
+        $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
+        }
+        }
+        if(!empty($bookedAddons['travelers_waiting'])){
+        foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
+        {
+        $addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
+        }
         }
 
-        // GET THE FILE EXTENSION
-        $extension = $file->getClientOriginalExtension();
+        }
+        // end here..//
+        //echo '<pre>';print_r($addonarray);die;
 
-        // RENAME THE UPLOAD WITH RANDOM NUMBER
-        $fileName = $startWith . md5(time()) . '.' . $extension;
+        //Booked Included Activities
+        $bookedAcitivities = DB::table('trip_included_activity_booking')
+        ->where('checkout_id','=',$BookedTripDetails->id)
+        ->where('trip_id', '=', $id)
+        ->where('user_id', '=', $userId)
+        ->get();
 
-        // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
-        $file->move($destinationPath, $fileName);
 
-        return $fileName;
+        foreach($bookedAcitivities as $activitykeyforCustom => $activityCustomValue)
+        {
+        $activitycustom['activity_data'][$activityCustomValue->activity_id]=array(
+        'activity_id'=>$activityCustomValue->activity_id,
+        'activity_flight_id'=>$activityCustomValue->activity_flight_id,
+        'flight_name'=>$activityCustomValue->flight_name,
+        'flight_number'=>$activityCustomValue->flight_number,
+        'flight_departure_date'=>$activityCustomValue->flight_departure_date,
+        'flight_departure_time'=>$activityCustomValue->flight_departure_time
+        );
+
+        $activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
+        $activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
+        $activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
+        }
+
+        $bookedData = array(
+        'bookedTrip' => $BookedTripDetails,
+        'bookedAddons' => $addonarray,
+        'bookedActivities' =>$activitycustom,
+        'activitydata'=>$bookedAcitivities
+        );
+        }else{
+        $bookedData='';
+        }
+        //echo "<pre>";print_r($bookedData);die;
+        return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
     }
 
     /* Function to update traveler information
@@ -1286,7 +1258,7 @@ class HomeController extends Controller {
 	}	
 	
 	
-	/* Function to view book trip detail the user 
+    /* Function to view book trip detail the user 
      * @param int Request
      * @return url
      */
@@ -1457,96 +1429,97 @@ class HomeController extends Controller {
 		{
 			//$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime(date('2018-7-23')))));
 			//echo $emiDate;die;
-			
+                    
 			$currentMonth = date('m');			
-			
+			$currentDate = date('Y-m-d');
 			$trip_detail = DB::table('checkout')
-								->join('trips', 'checkout.trip_id', '=', 'trips.id')
-								->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
-								->join('users','checkout.user_id', '=', 'users.id')
-								->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','users.email','users.name')
-								->where('trips.status', '=', '1')
-								 ->groupBy("user_trip.trip_id")
-								->get();
-				//echo  "<pre>";print_r($trip_detail);die;
+                            ->join('trips', 'checkout.trip_id', '=', 'trips.id')
+                            ->join('user_trip','checkout.trip_id', '=', 'user_trip.trip_id')
+                            ->join('users','checkout.user_id', '=', 'users.id')
+                            ->select('trips.*', 'checkout.*','user_trip.monthly_payment_date','users.email','users.name')
+                            ->where('trips.status', '=', '1')
+                            //->where('trips.date', '>=', $currentDate)
+                            ->groupBy("user_trip.trip_id")
+                            ->get();
+								
+                            echo "<pre>";print_r($trip_detail);die;
 				
 				foreach($trip_detail as $tripvalue){ 
 				
 				//	get here paid amount detail//
 					$paymentdetail= DB::table("trip_reserve_payment")
-													->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
-													->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)
-													->sum('trip_reserve_payment.reserve_paid_amount');
+                                                            ->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+                                                            ->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)
+                                                            ->sum('trip_reserve_payment.reserve_paid_amount');
 													
 					$currentMonthPayment= DB::table("trip_reserve_payment")
-											->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
-											->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)	
-											->whereRaw('MONTH(create_date) = ?',[$currentMonth])
-											->get();							
-							
-						
-								$tripCost = $tripvalue->trip_total_cost;				
-												
-								$checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
+                                                                ->where('trip_reserve_payment.user_id', '=', $tripvalue->user_id)
+                                                                ->where('trip_reserve_payment.trip_id', '=', $tripvalue->trip_id)	
+                                                                ->whereRaw('MONTH(create_date) = ?',[$currentMonth])
+                                                                ->get();							
+
+
+                                        $tripCost = $tripvalue->trip_total_cost;				
+
+                                        $checkoutdate = !empty($trip_detail)?$tripvalue->create_date:'';
+
+                                        $tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
+
+                                        $adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
+
+                                        $emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
 								
-								$tripEmiDateSetAdmin = !empty($trip_detail)?$tripvalue->monthly_payment_date:'';									
-															
-								$adjustmentdate = strtotime(!empty($trip_detail) ? $tripvalue->adjustment_date : '');
-								
-								$emiDate = strtotime(date('Y-m-d', strtotime('+1 month', strtotime($checkoutdate))));
-								
-							$dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);
-							
-							if($tripCost > $paymentdetail)
-							{
-								$currentDate= date('Y-m-d');
-								
-								if(count($dates)>0){
-										foreach($dates as $datevalue)
-										{
-											//echo $datevalue;
-											if($currentDate > $datevalue && !empty($currentMonthPayment))
-											{
-												$differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
-												
-												if($differenceDate == '3'){
-													//echo 'mail';
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-													
-												}elseif($differenceDate == '6'){
-													//echo 'mail';
-													
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-													
-												}elseif($differenceDate == '9'){											
-													//echo 'mail';
-													
-													Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-																$message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
-														});
-												}
-											}
-												
-									}
-								}else{
-									
-									// full amount payment emi 
-									
-									Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
-													$message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
-										});
-									
-								}
-								
-							}
-					}								
-					echo '<pre>';print_r($trip_detail);	 
-			}
-								
-		 
+                                        $dates = Helper::getDateBetweenDates($emiDate,$adjustmentdate,$tripEmiDateSetAdmin);
+
+                                        if($tripCost > $paymentdetail)
+                                        {
+                                            $currentDate= date('Y-m-d');
+
+                                            if(count($dates)>0){
+                                                            foreach($dates as $datevalue)
+                                                            {
+                                                                //echo $datevalue;
+                                                                if($currentDate > $datevalue && !empty($currentMonthPayment))
+                                                                {
+                                                                    $differenceDate= ceil(abs($currentDate - $datevalue) / 86400);
+
+                                                                    if($differenceDate == '3'){
+                                                                            //echo 'mail';
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+
+                                                                    }elseif($differenceDate == '6'){
+                                                                            //echo 'mail';
+
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+
+                                                                    }elseif($differenceDate == '9'){											
+                                                                            //echo 'mail';
+
+                                                                            Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                                    $message->to($tripvalue->email, $tripvalue->name)->subject('Welcome!');
+                                                                                    });
+                                                                    }
+                                                                }
+                                                    }
+                                                }else{
+
+                                                        // full amount payment emi 
+
+                                                        Mail::send('admin.emails.emiPendingMail', ['trip_detail' => $trip_detail,'totalpaid'=>$paymentdetail], function($message) use($tripvalue){
+                                                                                        $message->to('mukeshbisht98@gmail.com', $tripvalue->name)->subject('Welcome!');
+                                                                });
+
+                                                }
+
+                                        }
+                        }								
+                       // echo '<pre>';print_r($trip_detail);	 
+        }
+
+
 		
 }
