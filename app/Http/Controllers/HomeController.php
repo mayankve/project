@@ -894,30 +894,30 @@ class HomeController extends Controller {
         // set here key value//
         foreach($bookedAddons['add_on'] as $key=>$value)
         {
-        $addonarray['addon_data'][$value->add_on_id]=array(
-        'add_on_id'=>$value->add_on_id,
-        'flight_id'=>$value->flight_id,
-        'flight_name'=>$value->flight_name,
-        'flight_number'=>$value->flight_number,
-        'flight_departure_date'=>$value->flight_departure_date,
-        'flight_departure_time'=>$value->flight_departure_time
-        );
+			$addonarray['addon_data'][$value->add_on_id]=array(
+			'add_on_id'=>$value->add_on_id,
+			'flight_id'=>$value->flight_id,
+			'flight_name'=>$value->flight_name,
+			'flight_number'=>$value->flight_number,
+			'flight_departure_date'=>$value->flight_departure_date,
+			'flight_departure_time'=>$value->flight_departure_time
+			);
 
-        $addonarray['addon_id'][]=$value->add_on_id;
-        $addonarray['flight_id'][]=$value->flight_id;
-        $addonarray['hote_id'][]=$value->hotel_id;
-        if(!empty($bookedAddons['travelers'])){
-        foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
-        {
-        $addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
-        }
-        }
-        if(!empty($bookedAddons['travelers_waiting'])){
-        foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
-        {
-        $addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
-        }
-        }
+			$addonarray['addon_id'][]=$value->add_on_id;
+			$addonarray['flight_id'][]=$value->flight_id;
+			$addonarray['hote_id'][]=$value->hotel_id;
+			if(!empty($bookedAddons['travelers'])){
+			foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
+			{
+			$addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
+			}
+			}
+			if(!empty($bookedAddons['travelers_waiting'])){
+			foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
+			{
+			$addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
+			}
+			}
 
         }
         // end here..//
@@ -1263,8 +1263,7 @@ class HomeController extends Controller {
      * @return url
      */
 	 public function tripDetail($id)
-	 {		 			
-				
+	 {	
 					
 		 
 		 $tripalldetail=array();

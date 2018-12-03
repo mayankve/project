@@ -111,6 +111,7 @@ function validate(){
 				<span id="userEmail-info" class="info"></span><br /> 
 			<select name="expiry_month" id="expiryMonth" class="demoSelectBox">
 				<?php
+			
 				for ($i = date("m"); $i <= 12; $i ++) {
 					$monthValue = $i;
 					if (strlen($i) < 2) {
