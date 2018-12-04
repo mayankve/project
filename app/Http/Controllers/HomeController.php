@@ -704,82 +704,83 @@ class HomeController extends Controller {
      * @return url
      */
     public function myTripDesign($id) {
+		
+		
         $userId = Auth::id();
         //Trip Travelers details
         $tripDetails = Trip::where('id', $id)->first();
         // echo "<pre>"; print_r($tripDetails);die;
         $tripTravelers = DB::table('trip_traveler')
-        ->where('trip_id', '=', $id)
-        ->where('user_id', '=', $userId)
-        ->where('status', '=', '1')
-        ->where('is_confirm','=','1')
-        ->get();
+						->where('trip_id', '=', $id)
+						->where('user_id', '=', $userId)
+						->where('status', '=', '1')
+						->where('is_confirm','=','1')
+						->get();
 
 
         $tripTravelerswaiting = DB::table('trip_traveler')
-        ->where('trip_id', '=', $id)
-        ->where('user_id', '=', $userId)
-        ->where('status', '=', '1')
-        ->where('is_confirm','=','0')
-        ->get();
-        //echo "<pre>"; print_r($tripTravelerswaiting);die;
-        //Trip Flights details
+								->where('trip_id', '=', $id)
+								->where('user_id', '=', $userId)
+								->where('status', '=', '1')
+								->where('is_confirm','=','0')
+								->get();
+        
         $tripAirlines = DB::table('trip_airline')
-        ->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
-        ->select('trip_airline.*', 'airlines.*')
-        ->where('trip_airline.trip_id', '=', $id)
-        ->where('trip_airline.status', '=', '1')
-        ->get();
+						->leftjoin('airlines', 'trip_airline.airline_name', '=', 'airlines.id')
+						->select('trip_airline.*', 'airlines.*')
+						->where('trip_airline.trip_id', '=', $id)
+						->where('trip_airline.status', '=', '1')
+						->get();
 
 
         //Trip Hotels details
         $tripHotels = DB::table('trip_hotel')
-        ->select('trip_hotel.*')
-        ->where('trip_hotel.trip_id', '=', $id)
-        ->where('trip_hotel.status', '=', '1')
-        ->get();
+					->select('trip_hotel.*')
+					->where('trip_hotel.trip_id', '=', $id)
+					->where('trip_hotel.status', '=', '1')
+					->get();
 
         //Trip Addon Details
         $tripaddonarray = array();
 
         $addon['tripAddons_check'] = DB::table('trip_addon')
-        ->where('trip_id', '=', $id)
-        ->where('status', '=', '1')
-        ->orderBy('created_at')
-        ->get();
+									->where('trip_id', '=', $id)
+									->where('status', '=', '1')
+									->orderBy('created_at')
+									->get();
 
-        if (!empty($addon['tripAddons_check'])) {
+       if (!empty($addon['tripAddons_check'])) {
         foreach ($addon['tripAddons_check'] as $addonkey => $addonitem) {
 
         $addon['tripAddonFlights'][$addonkey] = DB::table('trip_addon_airline')
-        ->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
-        ->where('trip_addon_airline.trip_id', '=', $id)
-        ->where('trip_addon_airline.addon_id', '=', $addonitem->id)
-        ->where('trip_addon_airline.status', '=', '1')
-        ->get();
+												->join('airlines', 'trip_addon_airline.airline_name', '=', 'airlines.id')
+												->where('trip_addon_airline.trip_id', '=', $id)
+												->where('trip_addon_airline.addon_id', '=', $addonitem->id)
+												->where('trip_addon_airline.status', '=', '1')
+												->get();
 
         $addon['tripAddonHotels'][$addonkey] = DB::table('trip_addon_hotel')
-        ->where('trip_id', '=', $id)
-        ->where('addon_id', '=', $addonitem->id)
-        ->where('status', '=', '1')
-        ->get();
+											->where('trip_id', '=', $id)
+											->where('addon_id', '=', $addonitem->id)
+											->where('status', '=', '1')
+											->get();
         }
 
         //echo '<pre>';print_r($addon['tripAddonFlights']);die;	
 
         for ($i = 0; $i < count($addon['tripAddons_check']); $i++) {
-        $tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
+					$tripaddonarray[$i]['tripAddons_check'] = $addon['tripAddons_check'][$i];
 
-        foreach ($addon['tripAddonFlights'][$i] as $key1 => $value1) {
+					foreach ($addon['tripAddonFlights'][$i] as $key1 => $value1) {
 
-        $tripaddonarray[$i]['tripAddonFlights'][$key1] = $value1;
-        }
+								$tripaddonarray[$i]['tripAddonFlights'][$key1] = $value1;
+					}
 
-        foreach ($addon['tripAddonHotels'][$i] as $key2 => $value2) {
+					foreach ($addon['tripAddonHotels'][$i] as $key2 => $value2) {
 
-        $tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
-        }
-        }
+								$tripaddonarray[$i]['tripAddonHotels'][$key2] = $value2;
+					}
+			}
         }
 
 
@@ -789,172 +790,172 @@ class HomeController extends Controller {
         $tripactivityarray = array();
 
         $activity['tripIncludedActivities_check'] = DB::table('trip_included_activity')
-        ->where('trip_id', '=', $id)
-        ->where('activity_due_date', '>', date('y-m-d'))
-        ->where('status', '=', '1')
-        ->get();
+													->where('trip_id', '=', $id)
+													->where('activity_due_date', '>', date('y-m-d'))
+													->where('status', '=', '1')
+													->get();
 
 
         if (!empty($activity['tripIncludedActivities_check'])) {
-        foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
-        $activity['includedActivityFlights'][$activitykey] = DB::table('trip_included_activity_airline')
-        ->where('airline_departure_date', '>', date('Y-m-d'))
-        ->where('trip_id', '=', $id)
-        ->where('activity_id', '=', $activityvalue->id)
-        ->where('status', '=', '1')
-        ->get();
-        $activity['includedActivityHotles'][$activitykey] = DB::table('trip_included_activity_hotel')
-        ->where('trip_id', '=', $id)
-        ->where('hotel_due_date', '>', date('Y-m-d'))
-        ->where('activity_id', '=', $activityvalue->id)
-        ->where('status', '=', '1')
-        ->get();
-        }
+				foreach ($activity['tripIncludedActivities_check'] as $activitykey => $activityvalue) {
+				$activity['includedActivityFlights'][$activitykey] = DB::table('trip_included_activity_airline')
+																	->where('airline_departure_date', '>', date('Y-m-d'))
+																	->where('trip_id', '=', $id)
+																	->where('activity_id', '=', $activityvalue->id)
+																	->where('status', '=', '1')
+																	->get();
+				$activity['includedActivityHotles'][$activitykey] = DB::table('trip_included_activity_hotel')
+																	->where('trip_id', '=', $id)
+																	->where('hotel_due_date', '>', date('Y-m-d'))
+																	->where('activity_id', '=', $activityvalue->id)
+																	->where('status', '=', '1')
+																	->get();
+						}
 
 
         for ($i = 0; $i < count($activity['tripIncludedActivities_check']); $i++) {
-        $tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
-        foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
+				$tripactivityarray[$i]['tripIncludedActivities_check'] = $activity['tripIncludedActivities_check'][$i];
+						foreach ($activity['includedActivityFlights'][$i] as $activityflightkey1 => $activityfilghtvalue1) {
 
-        $tripactivityarray[$i]['includedActivityFlights'][$activityflightkey1] = $activityfilghtvalue1;
-        }
+								$tripactivityarray[$i]['includedActivityFlights'][$activityflightkey1] = $activityfilghtvalue1;
+						}
 
-        foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+				foreach ($activity['includedActivityHotles'][$i] as $activityhotelkey2 => $activityhotelvalue2) {
+							$tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
+					}
 
-        $tripactivityarray[$i]['includedActivityHotles'][$activityhotelkey2] = $activityhotelvalue2;
-        }
-
-        }
+			}
         }
 
         //echo '<pre>';print_r($tripactivityarray);die;
 
         //To Do Packing Details
-        $tripTodo = DB::table('trip_todo')
-        //->join('trip_todo', 'user_trip_todo.todo_id', '=', 'trip_todo.id')
-        ->where('trip_todo.trip_id', '=', $id)
-        // ->where('trip_todo.user_id', '=', $userId)
-        ->where('trip_todo.status', '=', '1')
-        ->get();
+        $tripTodo = DB::table('trip_todo')       
+					->where('trip_todo.trip_id', '=', $id)        
+					->where('trip_todo.status', '=', '1')
+					->get();
 
         //Data to send for design my trip view
         $dashboardData = $this->dashboardElements();
 
         $data = array(
-        'tripAirlines' => $tripAirlines,
-        'tripHotels' => $tripHotels,
-        'tripTravelers' => $tripTravelers,
-        'tripAddons' => $tripaddonarray,
-        'tripIncludedActivities' => $tripactivityarray,
-        'tripTodo' => $tripTodo,
-        'tripTravelerswaiting'=>$tripTravelerswaiting
-        );
+						'tripAirlines' => $tripAirlines,
+						'tripHotels' => $tripHotels,
+						'tripTravelers' => $tripTravelers,
+						'tripAddons' => $tripaddonarray,
+						'tripIncludedActivities' => $tripactivityarray,
+						'tripTodo' => $tripTodo,
+						'tripTravelerswaiting'=>$tripTravelerswaiting
+					);
         //For Trip Customization
 
         // Last Booking data
         $BookedTripDetails = DB::table('checkout')
-        ->where('trip_id', '=', $id)
-        ->where('user_id', '=', $userId)
-        ->where('status', '=', '1')
-        ->orderBy('id','desc')
-        ->first();
+							->where('trip_id', '=', $id)
+							->where('user_id', '=', $userId)
+							->where('status', '=', '1')
+							->orderBy('id','desc')
+							->first();
 
-        $addonarray=array();
-        $bookedData = array();
-        $activitycustom=array();
-        //$addonarrydata=array();
+				
+			$addonarray=array();
+			$bookedData = array();
+			$activitycustom=array();
+        
         if(isset($BookedTripDetails->id)){
         //Booked Addons
-        $bookedAddons['add_on'] = DB::table('trip_addon_booking')
-        ->where('checkout_id','=',$BookedTripDetails->id)
-        ->where('trip_id', '=', $id)
-        ->where('user_id', '=', $userId)
-        ->get();
+			$bookedAddons['add_on'] = DB::table('trip_addon_booking')
+									->where('checkout_id','=',$BookedTripDetails->id)
+									->where('trip_id', '=', $id)
+									->where('user_id', '=', $userId)
+									->get();
 
 
 
         foreach($bookedAddons['add_on'] AS $addonkey=> $bookedAddon){ //Booked Addon Travelers
 
-        $bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
-        ->where('addon_id','=', $bookedAddon->add_on_id)
-        ->where('trip_id', '=', $id)
-        ->where('is_confirm', '=','1')
-        ->where('user_id', '=', $userId)
-        ->get();
+						$bookedAddons['travelers'][$addonkey] = DB::table('trip_addon_traveler')
+																->where('addon_id','=', $bookedAddon->add_on_id)
+																->where('trip_id', '=', $id)
+																->where('is_confirm', '=','1')
+																->where('user_id', '=', $userId)
+																->get();
 
-        $bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
-        ->where('addon_id','=', $bookedAddon->add_on_id)
-        ->where('trip_id', '=', $id)
-        ->where('is_confirm', '=','0')
-        ->where('user_id', '=', $userId)
-        ->get();	
+						$bookedAddons['travelers_waiting'][$addonkey] = DB::table('trip_addon_traveler')
+																		->where('addon_id','=', $bookedAddon->add_on_id)
+																		->where('trip_id', '=', $id)
+																		->where('is_confirm', '=','0')
+																		->where('user_id', '=', $userId)
+																		->get();	
 
         }
-        //echo '<pre>';print_r($bookedAddons);die;
+		
+		      //echo '<pre>';print_r($bookedAddons['travelers']);die;
+       
         // set here key value//
         foreach($bookedAddons['add_on'] as $key=>$value)
         {
-			$addonarray['addon_data'][$value->add_on_id]=array(
-			'add_on_id'=>$value->add_on_id,
-			'flight_id'=>$value->flight_id,
-			'flight_name'=>$value->flight_name,
-			'flight_number'=>$value->flight_number,
-			'flight_departure_date'=>$value->flight_departure_date,
-			'flight_departure_time'=>$value->flight_departure_time
-			);
+					$addonarray['addon_data'][$value->add_on_id]=array(
+													'add_on_id'=>$value->add_on_id,
+													'flight_id'=>$value->flight_id,
+													'flight_name'=>$value->flight_name,
+													'flight_number'=>$value->flight_number,
+													'flight_departure_date'=>$value->flight_departure_date,
+													'flight_departure_time'=>$value->flight_departure_time
+												);
 
-			$addonarray['addon_id'][]=$value->add_on_id;
-			$addonarray['flight_id'][]=$value->flight_id;
-			$addonarray['hote_id'][]=$value->hotel_id;
+					$addonarray['addon_id'][]=$value->add_on_id;
+					$addonarray['flight_id'][]=$value->flight_id;
+					$addonarray['hote_id'][]=$value->hotel_id;
 			if(!empty($bookedAddons['travelers'])){
-			foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
-			{
-			$addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
-			}
-			}
+						foreach($bookedAddons['travelers'][$key] as $travelerkey=>$travelervalue)
+						{
+							$addonarray['traveler'][$value->add_on_id][] = $travelervalue->traveler_id;
+						}
+				}
 			if(!empty($bookedAddons['travelers_waiting'])){
-			foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
-			{
-			$addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
-			}
-			}
+								foreach($bookedAddons['travelers_waiting'][$key] as $travelerkeywaiting=>$travelervaluewaiting)
+								{
+										$addonarray['travelers_waiting'][] = $travelervaluewaiting->addon_id;
+								}
+				}
 
         }
         // end here..//
-        //echo '<pre>';print_r($addonarray);die;
+  
 
         //Booked Included Activities
         $bookedAcitivities = DB::table('trip_included_activity_booking')
-        ->where('checkout_id','=',$BookedTripDetails->id)
-        ->where('trip_id', '=', $id)
-        ->where('user_id', '=', $userId)
-        ->get();
+							->where('checkout_id','=',$BookedTripDetails->id)
+							->where('trip_id', '=', $id)
+							->where('user_id', '=', $userId)
+							->get();
 
 
         foreach($bookedAcitivities as $activitykeyforCustom => $activityCustomValue)
-        {
-        $activitycustom['activity_data'][$activityCustomValue->activity_id]=array(
-        'activity_id'=>$activityCustomValue->activity_id,
-        'activity_flight_id'=>$activityCustomValue->activity_flight_id,
-        'flight_name'=>$activityCustomValue->flight_name,
-        'flight_number'=>$activityCustomValue->flight_number,
-        'flight_departure_date'=>$activityCustomValue->flight_departure_date,
-        'flight_departure_time'=>$activityCustomValue->flight_departure_time
-        );
+		{
+					$activitycustom['activity_data'][$activityCustomValue->activity_id]=array(
+																						'activity_id'=>$activityCustomValue->activity_id,
+																						'activity_flight_id'=>$activityCustomValue->activity_flight_id,
+																						'flight_name'=>$activityCustomValue->flight_name,
+																						'flight_number'=>$activityCustomValue->flight_number,
+																						'flight_departure_date'=>$activityCustomValue->flight_departure_date,
+																						'flight_departure_time'=>$activityCustomValue->flight_departure_time
+																						);
 
-        $activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
-        $activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
-        $activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
+					$activitycustom['activity_id'][$activitykeyforCustom]=$activityCustomValue->id;
+					$activitycustom['flight_id'][$activitykeyforCustom]=$activityCustomValue->activity_flight_id;
+					$activitycustom['hotel_id'][$activitykeyforCustom]=$activityCustomValue->activity_hotel_id;
         }
 
-        $bookedData = array(
-        'bookedTrip' => $BookedTripDetails,
-        'bookedAddons' => $addonarray,
-        'bookedActivities' =>$activitycustom,
-        'activitydata'=>$bookedAcitivities
-        );
+			$bookedData = array(
+								'bookedTrip' => $BookedTripDetails,
+								'bookedAddons' => $addonarray,
+								'bookedActivities' =>$activitycustom,
+								'activitydata'=>$bookedAcitivities
+							);
         }else{
-        $bookedData='';
+			$bookedData='';
         }
         //echo "<pre>";print_r($bookedData);die;
         return view('tripdesign', ['tripdata' => $data, 'data' => $dashboardData, 'trip_id' => $id, 'tripDetails' => $tripDetails,'bookedData'=> $bookedData]);
@@ -968,14 +969,14 @@ class HomeController extends Controller {
     public function travelerProfile($id, Request $request) {
 
         if (isset($_POST['submit'])) {
-            $data['first_name'] = !empty($request->input('first_name')) ? $request->input('first_name') : '';
-            $data['last_name'] = !empty($request->input('last_name')) ? $request->input('last_name') : '';
-            $data['gender'] = !empty($request->input('gender')) ? $request->input('gender') : '';
-            $data['dob'] = !empty($request->input('dob')) ? $request->input('dob') : '';
-            $data['email'] = !empty($request->input('email')) ? $request->input('email') : '';
-            $data['is_passport'] = !empty($request->input('is_passport')) ? $request->input('is_passport') : '';
-            $data['passport_exp_date'] = !empty($request->input('passport_exp_date')) ? $request->input('passport_exp_date') : '';
-            $passportPic = $request->file('passport_pic');
+            $data['first_name'] =               !empty($request->input('first_name')) ?                      $request->input('first_name') : '';
+            $data['last_name'] =                !empty($request->input('last_name')) ?                       $request->input('last_name') : '';
+            $data['gender'] =                   !empty($request->input('gender')) ?                          $request->input('gender') : '';
+            $data['dob'] =                      !empty($request->input('dob')) ?                             $request->input('dob') : '';
+            $data['email'] =                    !empty($request->input('email')) ?                           $request->input('email') : '';
+            $data['is_passport'] =              !empty($request->input('is_passport')) ?                     $request->input('is_passport') : '';
+            $data['passport_exp_date'] =        !empty($request->input('passport_exp_date')) ?               $request->input('passport_exp_date') : '';
+            $passportPic =                      $request->file('passport_pic');
 
             //echo $passportPic;die;
             if (isset($passportPic) && count($passportPic) > 0) {
@@ -1007,22 +1008,21 @@ class HomeController extends Controller {
 
         //personal infomation//
         if (isset($_POST['personalinfor'])) {
-            $personaldata['food_allergies'] = !empty($request->input('food_allergies')) ? $request->input('food_allergies') : '';
-            $personaldata['shirt_size'] = !empty($request->input('shirt_size')) ? $request->input('shirt_size') : '';
-            $personaldata['is_helth_mental'] = !empty($request->input('shirt_size')) ? $request->input('is_helth_mental') : '';
-            $personaldata['helth_mental_conditions'] = !empty($request->input('helth_mental_conditions')) ? $request->input('helth_mental_conditions') : '';
-            $personaldata['is_mental_conditions'] = !empty($request->input('is_mental_conditions')) ? $request->input('is_mental_conditions') : '';
-            $personaldata['mental_conditions'] = !empty($request->input('mental_conditions')) ? $request->input('mental_conditions') : '';
-            $personaldata['emergency_contact_name'] = !empty($request->input('emergency_contact_name')) ? $request->input('emergency_contact_name') : '';
-            $personaldata['emergency_contact_phone'] = !empty($request->input('emergency_contact_phone')) ? $request->input('emergency_contact_phone') : '';
-            $personaldata['personality_previous_travel'] = !empty($request->input('personality_previous_travel')) ? $request->input('personality_previous_travel') : '';
-            $personaldata['personality_originally_from'] = !empty($request->input('personality_originally_from')) ? $request->input('personality_originally_from') : '';
-            $personaldata['personality_school'] = !empty($request->input('personality_school')) ? $request->input('personality_school') : '';
-            $personaldata['personality_about'] = !empty($request->input('personality_about')) ? $request->input('personality_about') : '';
-            $profiletPic = !empty($request->file('profile_pic')) ? $request->file('profile_pic') : '';
+            $personaldata['food_allergies'] =        	!empty($request->input('food_allergies')) ?                      $request->input('food_allergies') : '';
+            $personaldata['shirt_size'] =               !empty($request->input('shirt_size')) ?                          $request->input('shirt_size') : '';
+            $personaldata['is_helth_mental'] =          !empty($request->input('shirt_size')) ?                          $request->input('is_helth_mental') : '';
+            $personaldata['helth_mental_conditions'] =  !empty($request->input('helth_mental_conditions')) ?             $request->input('helth_mental_conditions') : '';
+            $personaldata['is_mental_conditions'] =     !empty($request->input('is_mental_conditions')) ?                $request->input('is_mental_conditions') : '';
+            $personaldata['mental_conditions'] =         !empty($request->input('mental_conditions')) ?                  $request->input('mental_conditions') : '';
+            $personaldata['emergency_contact_name'] =     !empty($request->input('emergency_contact_name')) ?            $request->input('emergency_contact_name') : '';
+            $personaldata['emergency_contact_phone'] =     !empty($request->input('emergency_contact_phone')) ?          $request->input('emergency_contact_phone') : '';
+            $personaldata['personality_previous_travel'] =  !empty($request->input('personality_previous_travel')) ?      $request->input('personality_previous_travel') : '';
+            $personaldata['personality_originally_from'] =  !empty($request->input('personality_originally_from')) ?      $request->input('personality_originally_from') : '';
+            $personaldata['personality_school'] =            !empty($request->input('personality_school')) ?               $request->input('personality_school') : '';
+            $personaldata['personality_about'] =                !empty($request->input('personality_about')) ?            $request->input('personality_about') : '';
+            $profiletPic =                                    !empty($request->file('profile_pic')) ?                        $request->file('profile_pic') : '';
 
-            // $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
-            // $destinationPath = storage_path() . '/uploads/profile_images/';
+           
 
            $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
             $destinationPath = public_path() . '/profile_img/';
@@ -1143,13 +1143,13 @@ class HomeController extends Controller {
 		$userId = Auth::id();
 		 
 		   if (isset($_POST['submit'])) {
-            $data['first_name'] = !empty($request->input('first_name')) ? $request->input('first_name') : '';
-            $data['last_name'] = !empty($request->input('last_name')) ? $request->input('last_name') : '';
-            $data['gender'] = !empty($request->input('gender')) ? $request->input('gender') : '';
-            $data['dob'] = !empty($request->input('dob')) ? $request->input('dob') : '';
-            $data['email'] = !empty($request->input('email')) ? $request->input('email') : '';
-            $data['is_passport'] = !empty($request->input('is_passport')) ? $request->input('is_passport') : '';
-            $data['passport_exp_date'] = !empty($request->input('passport_exp_date')) ? $request->input('passport_exp_date') : '';
+            $data['first_name'] =     !empty($request->input('first_name')) ?              $request->input('first_name') : '';
+            $data['last_name'] =      !empty($request->input('last_name')) ?               $request->input('last_name') : '';
+            $data['gender'] =          !empty($request->input('gender')) ?                 $request->input('gender') : '';
+            $data['dob'] =             !empty($request->input('dob')) ?                    $request->input('dob') : '';
+            $data['email'] =           !empty($request->input('email')) ?                  $request->input('email') : '';
+            $data['is_passport'] =      !empty($request->input('is_passport')) ?           $request->input('is_passport') : '';
+            $data['passport_exp_date'] =  !empty($request->input('passport_exp_date')) ?   $request->input('passport_exp_date') : '';
             $passportPic = $request->file('passport_pic');
 
             //echo $passportPic;die;
@@ -1182,19 +1182,19 @@ class HomeController extends Controller {
 
         //personal infomation//
         if (isset($_POST['personalinfor'])) {
-            $personaldata['food_allergies'] = !empty($request->input('food_allergies')) ? $request->input('food_allergies') : '';
-            $personaldata['shirt_size'] = !empty($request->input('shirt_size')) ? $request->input('shirt_size') : '';
-            $personaldata['is_helth_mental'] = !empty($request->input('shirt_size')) ? $request->input('is_helth_mental') : '';
-            $personaldata['helth_mental_conditions'] = !empty($request->input('helth_mental_conditions')) ? $request->input('helth_mental_conditions') : '';
-            $personaldata['is_mental_conditions'] = !empty($request->input('is_mental_conditions')) ? $request->input('is_mental_conditions') : '';
-            $personaldata['mental_conditions'] = !empty($request->input('mental_conditions')) ? $request->input('mental_conditions') : '';
-            $personaldata['emergency_contact_name'] = !empty($request->input('emergency_contact_name')) ? $request->input('emergency_contact_name') : '';
-            $personaldata['emergency_contact_phone'] = !empty($request->input('emergency_contact_phone')) ? $request->input('emergency_contact_phone') : '';
-            $personaldata['personality_previous_travel'] = !empty($request->input('personality_previous_travel')) ? $request->input('personality_previous_travel') : '';
-            $personaldata['personality_originally_from'] = !empty($request->input('personality_originally_from')) ? $request->input('personality_originally_from') : '';
-            $personaldata['personality_school'] = !empty($request->input('personality_school')) ? $request->input('personality_school') : '';
-            $personaldata['personality_about'] = !empty($request->input('personality_about')) ? $request->input('personality_about') : '';
-            $profiletPic = !empty($request->file('profile_pic')) ? $request->file('profile_pic') : '';
+            $personaldata['food_allergies'] =                      !empty($request->input('food_allergies')) ?               $request->input('food_allergies') : '';
+            $personaldata['shirt_size'] =                          !empty($request->input('shirt_size')) ?                   $request->input('shirt_size') : '';
+            $personaldata['is_helth_mental'] =                     !empty($request->input('shirt_size')) ?                   $request->input('is_helth_mental') : '';
+            $personaldata['helth_mental_conditions'] =             !empty($request->input('helth_mental_conditions')) ?       $request->input('helth_mental_conditions') : '';
+            $personaldata['is_mental_conditions'] =                !empty($request->input('is_mental_conditions')) ?         $request->input('is_mental_conditions') : '';
+            $personaldata['mental_conditions'] =                   !empty($request->input('mental_conditions')) ?            $request->input('mental_conditions') : '';
+            $personaldata['emergency_contact_name'] =              !empty($request->input('emergency_contact_name')) ?       $request->input('emergency_contact_name') : '';
+            $personaldata['emergency_contact_phone'] =             !empty($request->input('emergency_contact_phone')) ?      $request->input('emergency_contact_phone') : '';
+            $personaldata['personality_previous_travel'] =         !empty($request->input('personality_previous_travel')) ?   $request->input('personality_previous_travel') : '';
+            $personaldata['personality_originally_from'] =         !empty($request->input('personality_originally_from')) ?   $request->input('personality_originally_from') : '';
+            $personaldata['personality_school'] =                  !empty($request->input('personality_school')) ?            $request->input('personality_school') : '';
+            $personaldata['personality_about'] =                   !empty($request->input('personality_about')) ?             $request->input('personality_about') : '';
+            $profiletPic =                                         !empty($request->file('profile_pic')) ?                    $request->file('profile_pic') : '';
 
             // $checkdataexist = DB::table('trip_traveler_profile')->where('traveler_id', $id)->first();
             // $destinationPath = public_path() . '/uploads/profile_images/';
