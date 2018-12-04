@@ -59,7 +59,6 @@
         <div class="container trip-container video-container" style="display:none">
             <div class="row no-gutter">
                 <br/>
-               
                 @if(count($trips['videos'])>0)
                 @foreach($trips['videos'] AS $trip)
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 f">
