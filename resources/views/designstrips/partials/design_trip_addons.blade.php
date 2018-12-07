@@ -44,13 +44,13 @@
 									$flight_departure_time=$bookedData['bookedAddons']['addon_data'][$addOn['tripAddons_check']->id]['flight_departure_time'];
 								}
 							}else{
-							$display='style="display: none;"';
-							$flightdisplay='';
-							$flight_name='';
-							$flight_number='';
-							$flight_departure_date='';
-							$flight_departure_time='';
-							$checkedlandonly='';
+								$display='style="display: none;"';
+								$flightdisplay='';
+								$flight_name='';
+								$flight_number='';
+								$flight_departure_date='';
+								$flight_departure_time='';
+								$checkedlandonly='';
 						}	
 					}else{
 						$display='style="display: none;"';
@@ -66,9 +66,7 @@
 								<div class="form-group pdrow-group">
 									<div class="col-sm-12">
 										<div class="row">
-											<div class="col-sm-1">
-												<label>SN.</label>
-											</div>
+											
 											<div class="col-sm-3">
 												<label>Name</label>
 											</div>
@@ -87,9 +85,7 @@
 								</div>
                                 @if(($tripDetails['adjustment_date'] < date('Y-m-d')) && ($addOn['tripAddons_check']->addons_due_date < date('Y-m-d')) )
                                 <div class="row addon">
-                                    <div class="col-sm-1">
-                                        {{$id}}
-                                    </div>
+                                    
                                     <div class="col-sm-3">
                                         {{ isset($addOn['tripAddons_check']->addons_name) ? $addOn['tripAddons_check']->addons_name: "N/A" }}
                                     </div>
@@ -108,9 +104,7 @@
                                 </div>
                                 @else
                                 <div class="row addon">
-                                    <div class="col-sm-1">
-                                        {{$id}}
-                                    </div>
+                                   
                                     <div class="col-sm-3">
                                         {{ isset($addOn['tripAddons_check']->addons_name) ? $addOn['tripAddons_check']->addons_name: "N/A" }}
                                     </div>
