@@ -161,8 +161,8 @@
                                 <div class="form-group passport_data">
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
-                                        <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/passport_img/' . $userprofile->passport_pic }}" alt="AAT" class="img-responsive model_image">
+                                        <label class=" user-view profile-view inputlabl image" style="font-weight: normal">											<?php												if(!empty($userprofile->passport_pic)){											?>
+                                            <img src="{{ url('/') . '/passport_img/' . $userprofile->passport_pic }}" alt="AAT" class="img-responsive model_image">												<?php } ?>
                                         </label>
                                         <div class="user-edit">
                                             <input type="file" name="passport_pic"  class="form-control&#x20;image_upload" id="passport_pic">
@@ -234,7 +234,8 @@
                                     <div class="col-sm-9">
                                         <label class="profile-view inputlabl" style="font-weight: normal"><?php echo (!empty($profiledata))?$profiledata->food_allergies:'';?></label>
                                         <div class="profile-edit">
-                                            <input type="text" name="food_allergies" id="food_allergies" class="form-control" value="<?php echo (!empty($profiledata))?$profiledata->food_allergies:'';?>"> 
+										<input type="text" maxlength="200" name="food_allergies" id="food_allergies" class="form-control" value="<?php echo (!empty($profiledata))?$profiledata->food_allergies:'';?>"> 
+										</textarea>
                                         </div>
                                     </div>
                                 </div>
