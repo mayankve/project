@@ -4,11 +4,22 @@
 @section('content')
 <div class="wrapper">
 <!--<div class="alert-message"></div>-->
+
+
+
  <div class="container contact-form">
   <div class="loginbox">
       <h3></h3>
     <div class="text-center login-title">
       <h2>Login</h2>
+	  
+	@if ($message = Session::get('success'))
+			<div class="alert alert-success alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>	
+					<p>{{ $message }}</p>
+			</div>
+	@endif
+
     </div>
   <form method="POST" name="login"  id="login_form">        
     <div class="row">

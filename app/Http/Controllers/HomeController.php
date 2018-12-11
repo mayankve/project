@@ -1093,27 +1093,44 @@ class HomeController extends Controller {
                 'password' => 'required'
             ];
             $this->validate($request, $rules);
+			
+			$email = !empty($request->input('email'))?$request->input('email'):'';
+			
+			$checkdataexist = DB::table('users')->where('email', $email)->first();
+		//echo '<pre>';print_r($checkdataexist);die;
+		
+				if(count($checkdataexist)>0)
+				{					
+						
+					return redirect('registration')
+										->with('error','Email address already exists with us!');					
+				}else{
+				
             // Create User
-            $user = new User();
-            $user->name = $request->input('first_name');
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
-            $user->dob  = $request->input('dob');
-            $user->email  = $request->input('email');
-            $user->password  =  Hash::make($request->input('password'));
-            $user->gender  = $request->input('gender');
-            $user->is_passport = $request->input('is_passport');
-            $user->passport_exp_date  = $request->input('passport_exp_date'); 
-            $user->issuing_country  = $request->input('issuing_country');
-            $user->country_of_birth  = $request->input('country_of_birth');
-            $id = $user->save();
-            if ($user->save()) {
-                 // $request->session()->flash('success', 'Registration is done successfully');
-                return redirect('/login');
-            } 
-            else {
-               $request->session()->flash('error', 'Error!');
-            }
+						$user = new User();
+						
+						
+						$user->name = $request->input('first_name');
+						$user->first_name = $request->input('first_name');
+						$user->last_name = $request->input('last_name');
+						$user->dob  = $request->input('dob');
+						$user->email  = $request->input('email');
+						$user->password  =  Hash::make($request->input('password'));
+						$user->gender  = $request->input('gender');
+						$user->is_passport = $request->input('is_passport');
+						$user->passport_exp_date  = $request->input('passport_exp_date'); 
+						$user->issuing_country  = $request->input('issuing_country');
+						$user->country_of_birth  = $request->input('country_of_birth');
+						$id = $user->save();
+						if ($user->save()) {
+							 // $request->session()->flash('success', 'Registration is done successfully');
+							return redirect('/login')->with('success','Registration is done successfully');
+						} 
+						else {
+						   $request->session()->flash('error', 'Error!');
+						}
+				}
+				
             return redirect('/registration');
         }
 		
