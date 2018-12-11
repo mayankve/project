@@ -161,10 +161,21 @@
                                 <div class="form-group passport_data">
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
-                                        <label class=" user-view profile-view inputlabl image" style="font-weight: normal">
-                                            <img src="{{ url('/') . '/passport_img/' . $userprofile->passport_pic }}" alt="AAT" class="img-responsive model_image">
+									
+                                        <label class=" user-view passwordimage-view inputlabl image" style="font-weight: normal">
+                                            <img src="{{ url('/') . '/passport_img/' . $userprofile->passport_pic }}" alt="AAT" class="img-responsive model_image" >
                                         </label>
-                                        <div class="user-edit">
+										
+																			
+                                        <div class="user-edit">		
+										<?php 
+											if($userprofile->passport_pic!=''){
+										?>
+											 <label class=" passwordimage-view inputlabl image" style="font-weight: normal">
+												<img src="{{ url('/') . '/passport_img/' . $userprofile->passport_pic }}" alt="AAT" class="img-responsive model_image" style="width: 38px;">
+											</label>
+											<?php } ?>
+											
                                             <input type="file" name="passport_pic"  class="form-control&#x20;image_upload" id="passport_pic">
                                             <img id="passport_pic_img" class="img-responsive model_image"  style="max-width: 80px; max-height: 80px;" />
 											<input type="hidden" name="oldimage" value="<?php echo(!empty($userprofile->passport_pic))?$userprofile->passport_pic:'';?>">
@@ -215,14 +226,24 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label custom-lbl">Profile Pic</label>
                                     <div class="col-sm-9">
-                                        <label class="profile-view inputlabl image" style="font-weight: normal">
+                                       
 										<?php
 										if(!empty($profiledata)){
 										?>
+										 <label class="profile-view inputlabl image" style="font-weight: normal">
                                             <img src="{{ url('/') . '/profile_img/' . $profiledata->profile_pic }}" alt="tm-01" class="img-responsive model_image" />
+											  </label>
 										<?php }?>
-                                        </label>
+                                      
                                         <div class="profile-edit">
+											<?php
+												if(!empty($profiledata->profile_pic!='')){
+												?>
+											<label class="  inputlabl image" style="font-weight: normal">
+												<img src="{{ url('/') . '/profile_img/' . $profiledata->profile_pic }}" alt="tm-01" class="img-responsive model_image" style="width: 38px;" />
+											  </label>
+										<?php }?>
+										
                                             <input type="file" name="profile_pic" class="form-control&#x20;image_upload" >         
                                             <img id="profile_pic_img" class="img-responsive model_image" style="max-width: 28%;" />
 											<input type="hidden" name="oldimage" value="<?php echo(!empty($profiledata))?$profiledata->profile_pic:'';?>">
