@@ -4599,6 +4599,10 @@ a.remove-row:before {
 label.profile-view.image {
 	width: 100px!important;/* height: 100px !important; */
 }
+
+label.passwordimage-view.image {
+	width: 100px!important;/* height: 100px !important; */
+}
 .no-border {
 	border-bottom: medium none !important;
 }
