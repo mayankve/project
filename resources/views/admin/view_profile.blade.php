@@ -161,7 +161,7 @@
                                 <div class="form-group passport_data">
                                     <label class="col-sm-3 control-label custom-lbl">Passport Copy</label>
                                     <div class="col-sm-9">
-                                        <label class=" user-view passwordimage-view inputlabl image" style="font-weight: normal">
+                                        <label class=" user-view passportimage-view inputlabl image" style="font-weight: normal">
                                             <img src="{{ url('/') . '/passport_img/' . $data->passport_pic }}" alt="AAT" class="img-responsive model_image" style="width: 38px;">
                                         </label>
                                         <div class="user-edit">
@@ -169,7 +169,7 @@
 										<?php 
 											if($data->passport_pic!=''){
 										?>
-											 <label class="passwordimage-view inputlabl image" style="font-weight: normal">
+											 <label class="passportimage-view inputlabl image" style="font-weight: normal">
 												<img src="{{ url('/') . '/passport_img/' . $data->passport_pic }}" alt="AAT" class="img-responsive model_image" style="width: 38px;">
 											</label>
 											<?php } ?>

@@ -3,24 +3,25 @@
 @section('content')
 
 <div class="wrapper">
-    <div class="alert-message">
-        <?php if(session()->has('success')){
-            echo '<div style="text-align: center;color:green; border : 1px 1px 1px 1px green">';
-            echo session()->get('success');
-            echo '</div>';
-        }else{
-            echo '<div style="text-align: center;color:red; border : 1px 1px 1px 1px red">';
-            echo session()->get('error');
-            echo '</div>';
-        }?>
-    </div>
+    
     <div class="container contact-form">
         <div class="row">
             <div class="col-md-12">
                 <div class="page-title text-center">
                     <h2>REGISTRATION</h2>
+						
+				
+			@if ($message = Session::get('error'))
+			<div class="alert alert-danger alert-block">
+				<button type="button" class="close" data-dismiss="alert">×</button>	
+					<p>{{ $message }}</p>
+			</div>
+			@endif
                 </div>
+			
+				
             </div>
+		
         </div>
          {!! Form::open(['url' => 'register-user', 'id' => 'form-register', 'method'=>'post']) !!}
         <div class="col-md-8 col-md-offset-2">
